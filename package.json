@@ -1,0 +1,39 @@
+{
+  "name": "yt-chan",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"npm run emulate-firebase\" \"next dev\"",
+    "emulate-firebase": "firebase emulators:start",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@next/third-parties": "^14.2.8",
+    "@react-aria/toast": "^3.0.0-beta.17",
+    "firebase": "^10.13.1",
+    "lucide-react": "^0.439.0",
+    "nanoid": "^5.0.7",
+    "next": "^14.2.15",
+    "react": "^18",
+    "react-aria-components": "^1.3.3",
+    "react-dom": "^18",
+    "react-icons": "^5.3.0",
+    "react-slick": "^0.30.2",
+    "slick-carousel": "^1.8.1",
+    "tailwind-variants": "^0.2.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "@types/react-slick": "^0.23.13",
+    "concurrently": "^9.0.1",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.7",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5"
+  }
+}
