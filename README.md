@@ -49,3 +49,6 @@ If you have bare minimum experience in React 18+ / Next.js 14+ / TypeScript / Ta
 - Firebase: https://firebase.google.com/docs
 - React Aria: https://react-spectrum.adobe.com/react-aria/getting-started.html
 
+## Code Citation
+- Toaster component: https://github.com/tale/headplane/blob/4214e14ba83aabda1ba58988be7cb614e08bd1c2/app/components/Toaster.tsx
+
