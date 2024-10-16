@@ -28,7 +28,7 @@ function DashboardPage() {
 
     getUserCatalog();
 
-    toast("Page created successfully")
+    toast(result.message)
   };
 
   return (

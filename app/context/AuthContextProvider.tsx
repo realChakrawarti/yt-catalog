@@ -18,6 +18,7 @@ import {
 import { auth } from "../lib/firebase";
 import { useRouter } from "next/navigation";
 import fetchApi from "../lib/fetch";
+import { toast } from "../components/Toast";
 
 type UserContext = {
   user: User | null;
@@ -84,7 +85,8 @@ export default function AuthContextProvider({ children }: PropsWithChildren) {
   const logout = async () => {
     signOut(auth);
     window.localStorage.clear();
-    await fetchApi("/logout");
+    const result = await fetchApi("/logout");
+    toast(result.message);
     router.push("/");
   };
 

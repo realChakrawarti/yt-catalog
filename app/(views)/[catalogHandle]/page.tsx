@@ -21,13 +21,16 @@ export async function generateMetadata(
   const catalogId = parseCatalogHandle(catalogHandle);
 
   const result = await fetchApi(`/explore?catalogId=${catalogId}`);
+  const catalogData = result.data;
 
   return {
-    title: `${result.title} | YTCatalog`,
+    title: `${catalogData.title} | YTCatalog`,
     openGraph: {
       type: "website",
-      title: result.title,
-      description: result.description,
+      title: catalogData.title,
+      url: `https://ytcatalog.707x.in/${catalogHandle}`,
+      description: catalogData.description,
+      siteName: "YTCatalog",
     },
   };
 }
@@ -41,10 +44,12 @@ export default async function CatalogHandle({ params }: PageProps) {
 
   const result = await fetchApi(`/explore?catalogId=${catalogId}`);
 
-  const videos: Record<string, any> = result.data;
-  const nextUpdate = result?.nextUpdate;
-  const catalogTitle = result.title;
-  const catalogDescription = result.description;
+  const catalogData = result.data
+
+  const videos: Record<string, any> = catalogData.data;
+  const nextUpdate = catalogData?.nextUpdate;
+  const catalogTitle = catalogData.title;
+  const catalogDescription = catalogData.description;
 
   if (!videos) {
     return (
@@ -74,26 +79,21 @@ export default async function CatalogHandle({ params }: PageProps) {
         <div className="w-full h-full space-y-1">
           <YoutubePlayer videoId={videoId} title={title} />
           <div className="flex gap-2 items-start py-2">
-          <img
-                src={channelLogo}
-                className="size-8"
-                alt={channelTitle}
-              />
-          <span className="flex flex-col gap-1">
-            <p className="text-sm md:text-base text-gray-50">{title}</p>
-            <p className="text-xs md:text-sm text-gray-300 flex gap-2 items-center">
-              <a
-                className="hover:underline"
-                href={`https://youtube.com/channel/${channelId}`}
-                target="_blank"
-              >
-                {channelTitle}
-              </a>
-              <b>•</b>
-              <span>{timeElapsed}</span>
-            </p>
-          </span>
-
+            <img src={channelLogo} className="size-8" alt={channelTitle} />
+            <span className="flex flex-col gap-1">
+              <p className="text-sm md:text-base text-gray-50">{title}</p>
+              <p className="text-xs md:text-sm text-gray-300 flex gap-2 items-center">
+                <a
+                  className="hover:underline"
+                  href={`https://youtube.com/channel/${channelId}`}
+                  target="_blank"
+                >
+                  {channelTitle}
+                </a>
+                <b>•</b>
+                <span>{timeElapsed}</span>
+              </p>
+            </span>
           </div>
         </div>
       </div>

@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
 
 import { customAlphabet } from "nanoid";
+import { NextResponse } from "next/server";
 
 export const YOUTUBE_CHANNEL_PLAYLIST_VIDEOS = (
   playlistId: string,
@@ -16,7 +17,8 @@ export const YOUTUBE_CHANNELS_INFORMATION = (
   return `https://www.googleapis.com/youtube/v3/channels?part=brandingSettings,contentDetails,id,snippet,topicDetails&maxResults=${limit}&id=${ids}&key=${process.env.YOUTUBE_API_KEY}`;
 };
 
-export const YOUTUBE_VIDEO_DATA = (videoId: string) => `https://youtube.googleapis.com/youtube/v3/videos?part=snippet&id=${videoId}&key=${process.env.YOUTUBE_API_KEY}`
+export const YOUTUBE_VIDEO_DATA = (videoId: string) =>
+  `https://youtube.googleapis.com/youtube/v3/videos?part=snippet&id=${videoId}&key=${process.env.YOUTUBE_API_KEY}`;
 
 const tokenCharacters =
   "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";

@@ -51,4 +51,6 @@ If you have bare minimum experience in React 18+ / Next.js 14+ / TypeScript / Ta
 
 ## Code Citation
 - Toaster component: https://github.com/tale/headplane/blob/4214e14ba83aabda1ba58988be7cb614e08bd1c2/app/components/Toaster.tsx
+- Ignore Vercel preview build on other branches: https://github.com/orgs/vercel/discussions/1339
+- Rainbow Border: https://codepen.io/bramus/pen/rNWByYz
 

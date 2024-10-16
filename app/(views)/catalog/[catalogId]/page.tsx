@@ -7,6 +7,7 @@ import withAuth from "@/app/context/withAuth";
 import Link from "next/link";
 import ChannelTable from "./channel-table";
 import { useRouter } from "next/navigation";
+import { toast } from "@/app/components/Toast";
 
 type CatalogPageParams = {
   catalogId: string;
@@ -30,7 +31,7 @@ function CatalogPage({ params }: { params: CatalogPageParams }) {
 
   const updateCatalogVideoData = async () => {
     const result = await fetchApi(`/catalog?catalogId=${catalogId}&refresh=1`);
-    alert(result.message)
+    toast(result.message);
   };
 
   const getChannels = async (currentPage: string) => {

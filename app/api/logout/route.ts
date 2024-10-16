@@ -1,12 +1,12 @@
-import { cookies } from "next/headers";
-import { NextResponse } from "next/server";
+import { NxResponse } from "@/app/lib/nx-response";
 
-export function GET(request: Request) {
-  const response = NextResponse.json(
-    { message: "User logged out successfully" },
-    { status: 200 }
+export function GET(_request: Request) {
+  const response = NxResponse.success<any>(
+    "User logged out successfully.",
+    {},
+    200
   );
 
-  response.cookies.delete({name: "userId", path: "/"})
+  response.cookies.delete({ name: "userId", path: "/" });
   return response;
 }

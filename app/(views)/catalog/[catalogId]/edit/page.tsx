@@ -4,6 +4,7 @@ import { Button } from "@/app/components/Button";
 import { Dialog } from "@/app/components/Dialog";
 import { Input, Label } from "@/app/components/Field";
 import { Popover } from "@/app/components/Popover";
+import { toast } from "@/app/components/Toast";
 import withAuth from "@/app/context/withAuth";
 import fetchApi from "@/app/lib/fetch";
 import { useEffect, useState } from "react";
@@ -72,7 +73,7 @@ function EditCatalog({ params }: { params: CatalogPageParams }) {
       body: JSON.stringify(payload),
     });
 
-    alert(result.message);
+    toast(result.message);
   };
 
   const validateVideoLink = async () => {
@@ -86,10 +87,16 @@ function EditCatalog({ params }: { params: CatalogPageParams }) {
 
     if (videoId) {
       const result = await fetchApi(`/catalog?videoId=${videoId}`);
+
+      if (!result.success) {
+        toast(result.message);
+        return;
+      }
       const videoData = result.data.items[0].snippet;
       const channelId = videoData.channelId;
 
-      alert(`${videoData.channelTitle}'s channel ID has been added!`);
+      toast(`${videoData.channelTitle}'s channel ID has been added!`);
+      setVideoLink("");
 
       if (!inputChannelValue) {
         setInputChannelValue(channelId);

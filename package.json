@@ -1,10 +1,9 @@
 {
-  "name": "yt-chan",
-  "version": "0.1.0",
-  "private": true,
+  "name": "ytcatalog",
+  "version": "24w42A",
   "scripts": {
     "dev": "concurrently \"npm run emulate-firebase\" \"next dev\"",
-    "emulate-firebase": "firebase emulators:start",
+    "emulate-firebase": "firebase emulators:start --project ytcatalog707",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"

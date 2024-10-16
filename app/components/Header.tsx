@@ -4,6 +4,9 @@ import { Button } from "./Button";
 import { useAuth } from "../context/AuthContextProvider";
 import { Menu, MenuSeparator, MenuItem } from "./Menu";
 import { MenuTrigger } from "react-aria-components";
+import Image from "next/image";
+import AppIcon from "../../public/icon.png";
+import Link from "next/link";
 
 const Header = () => {
   const { user, logout } = useAuth();
@@ -14,12 +17,20 @@ const Header = () => {
 
   return (
     <header className="flex justify-between items-center">
-      <h1 className="text-lg border border-gray-200 px-2">YTCatalog</h1>
+      <Link href="/dashboard">
+        <h1 className="flex gap-1">
+          <Image src={AppIcon} alt="YTCatalog" className="size-7" />
+          <p className="self-end text-lg tracking-wide">YTCatalog</p>
+        </h1>
+      </Link>
       <MenuTrigger>
         <Button variant="icon">
           <img
             className="size-10"
-            src={user?.photoURL || `https://ui-avatars.com/api/?name=${user?.displayName}&background=random&size=96`}
+            src={
+              user?.photoURL ||
+              `https://ui-avatars.com/api/?name=${user?.displayName}&background=random&size=96`
+            }
             alt={user?.displayName || ""}
           />
         </Button>
