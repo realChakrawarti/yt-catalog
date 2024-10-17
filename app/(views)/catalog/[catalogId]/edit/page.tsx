@@ -28,7 +28,7 @@ function EditCatalog({ params }: { params: CatalogPageParams }) {
   const [videoLink, setVideoLink] = useState<string>("");
 
   const getChannels = async (currentPage: string) => {
-    const result = await fetchApi(`/catalog?catalogId=${currentPage}`);
+    const result = await fetchApi(`/catalogs/${currentPage}`);
     const catalogData = result?.data;
     const channelList = catalogData?.channelList;
     setInputCatalogMetadata({
@@ -72,7 +72,7 @@ function EditCatalog({ params }: { params: CatalogPageParams }) {
       payload.channels = trimmedChannels;
     }
 
-    const result = await fetchApi(`/catalog?catalogId=${params.catalogId}`, {
+    const result = await fetchApi(`/catalogs/${params.catalogId}/update`, {
       method: "PATCH",
       body: JSON.stringify(payload),
     });
@@ -90,7 +90,7 @@ function EditCatalog({ params }: { params: CatalogPageParams }) {
     }
 
     if (videoId) {
-      const result = await fetchApi(`/catalog?videoId=${videoId}`);
+      const result = await fetchApi(`/youtube/videoId?videoId=${videoId}`);
 
       if (!result.success) {
         toast(result.message);

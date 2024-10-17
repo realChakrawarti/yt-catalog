@@ -34,12 +34,12 @@ function CatalogPage({ params }: { params: CatalogPageParams }) {
   const [catalogChannels, setCatalogChannels] = useState<any>();
 
   const updateCatalogVideoData = async () => {
-    const result = await fetchApi(`/catalog?catalogId=${catalogId}&refresh=1`);
+    const result = await fetchApi(`/catalogs/${catalogId}/update`);
     toast(result.message);
   };
 
   const getChannels = async (currentPage: string) => {
-    const result = await fetchApi(`/catalog?catalogId=${currentPage}`);
+    const result = await fetchApi(`/catalogs/${currentPage}`);
     const catalogData = result?.data;
     const channelList = catalogData?.channelList;
     if (channelList?.length) {

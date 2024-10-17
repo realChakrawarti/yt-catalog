@@ -17,7 +17,7 @@ function DashboardPage() {
 
   const getUserCatalog = async () => {
     try {
-      const result = await fetchApi("/catalog");
+      const result = await fetchApi("/catalogs");
       setCatalogs(result.data);
     } catch (err) {}
   };
@@ -27,7 +27,7 @@ function DashboardPage() {
   }, []);
 
   const createNewCatalog = async () => {
-    const result = await fetchApi("/catalog", {
+    const result = await fetchApi("/catalogs", {
       method: "POST",
     });
 
