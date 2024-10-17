@@ -1,5 +1,9 @@
 "use client";
 
+import {
+  BreadcrumbLayer,
+  BreadcrumbLayerProps,
+} from "@/app/components/Breadcrumbs";
 import { Button } from "@/app/components/Button";
 import { Dialog } from "@/app/components/Dialog";
 import { Input, Label } from "@/app/components/Field";
@@ -116,12 +120,28 @@ function EditCatalog({ params }: { params: CatalogPageParams }) {
       [e.target.name]: e.target.value,
     }));
   };
-  return (
-    <div>
-      <h1 className="text-lg md:text-xl">Edit Catalog</h1>
 
+  const bcLayers: BreadcrumbLayerProps[] = [
+    {
+      label: "Dashboard",
+      href: "/dashboard",
+    },
+    {
+      label: `Catalog/${params.catalogId}`,
+      href: `/catalog/${params.catalogId}`,
+    },
+    {
+      label: "Edit Catalog",
+      disabled: true,
+    },
+  ];
+
+  return (
+    <div className="py-10">
+      <BreadcrumbLayer layers={bcLayers} />
+      <h1 className="text-lg md:text-xl">Edit Catalog</h1>
       <div className="space-y-4 mt-5">
-        <div className="flex gap-2 items-center w-1/2">
+        <div className="flex flex-col gap-1">
           <Label htmlFor="title">Title</Label>
           <Input
             value={inputCatalogMetadata.title}
@@ -130,7 +150,7 @@ function EditCatalog({ params }: { params: CatalogPageParams }) {
             id="title"
           />
         </div>
-        <div className="flex gap-2 items-center w-1/2">
+        <div className="flex flex-col gap-1">
           <Label htmlFor="description">Description</Label>
           <Input
             value={inputCatalogMetadata.description}
@@ -139,7 +159,7 @@ function EditCatalog({ params }: { params: CatalogPageParams }) {
             id="description"
           />
         </div>
-        <div className="flex gap-2 items-center w-1/2">
+        <div className="flex flex-col gap-1">
           <Label htmlFor="add-video">Add channel from video</Label>
           <Input id="add-video" value={videoLink} onChange={handleVideoLink} />
         </div>

@@ -6,6 +6,11 @@ import { useEffect, useState } from "react";
 import CatalogTable from "./catalog-table";
 import fetchApi from "@/app/lib/fetch";
 import { toast } from "@/app/components/Toast";
+import {
+  Breadcrumb,
+  BreadcrumbLayer,
+  Breadcrumbs,
+} from "@/app/components/Breadcrumbs";
 
 function DashboardPage() {
   const [catalogs, setCatalogs] = useState<any[]>([]);
@@ -28,11 +33,19 @@ function DashboardPage() {
 
     getUserCatalog();
 
-    toast(result.message)
+    toast(result.message);
   };
+
+  const bcLayers = [
+    {
+      label: "Dashboard",
+      disabled: true,
+    },
+  ];
 
   return (
     <div className="py-10">
+      <BreadcrumbLayer layers={bcLayers} />
       <section className="flex flex-col gap-6">
         <div className="space-y-4">
           <div className="flex justify-between items-center">

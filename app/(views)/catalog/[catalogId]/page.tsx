@@ -8,6 +8,10 @@ import Link from "next/link";
 import ChannelTable from "./channel-table";
 import { useRouter } from "next/navigation";
 import { toast } from "@/app/components/Toast";
+import {
+  BreadcrumbLayer,
+  type BreadcrumbLayerProps,
+} from "@/app/components/Breadcrumbs";
 
 type CatalogPageParams = {
   catalogId: string;
@@ -54,8 +58,20 @@ function CatalogPage({ params }: { params: CatalogPageParams }) {
     }
   }, [catalogId]);
 
+  const bcLayers: BreadcrumbLayerProps[] = [
+    {
+      label: "Dashboard",
+      href: "/dashboard",
+    },
+    {
+      label: `Catalog/${catalogId}`,
+      disabled: true,
+    },
+  ];
+
   return (
     <div className="py-10">
+      <BreadcrumbLayer layers={bcLayers} />
       <div className="flex justify-between items-center">
         <section className="space-y-1">
           <div className="text-lg">{catalogMeta?.title}</div>

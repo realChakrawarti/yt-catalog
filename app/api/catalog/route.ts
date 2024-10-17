@@ -1,5 +1,5 @@
 import { getUserIdCookie, YOUTUBE_VIDEO_DATA } from "@/app/lib/server-helper";
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import {
   createCatalog,
   getCatalogById,
