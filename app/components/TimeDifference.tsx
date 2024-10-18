@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { timeDifference } from "../lib/client-helper";
+import { timeDifference } from "../../lib/client-helper";
 
 const TimeDifference = ({ date, ...rest }: any) => {
   const [time, setTime] = useState<string>("");

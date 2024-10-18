@@ -2,12 +2,16 @@
 
 import { useEffect, useState } from "react";
 import { Button } from "@/app/components/Button";
-import fetchApi from "@/app/lib/fetch";
+import fetchApi from "@/lib/fetch";
 import withAuth from "@/app/context/withAuth";
 import Link from "next/link";
 import ChannelTable from "./channel-table";
 import { useRouter } from "next/navigation";
 import { toast } from "@/app/components/Toast";
+import {
+  BreadcrumbLayer,
+  type BreadcrumbLayerProps,
+} from "@/app/components/Breadcrumbs";
 
 type CatalogPageParams = {
   catalogId: string;
@@ -30,12 +34,12 @@ function CatalogPage({ params }: { params: CatalogPageParams }) {
   const [catalogChannels, setCatalogChannels] = useState<any>();
 
   const updateCatalogVideoData = async () => {
-    const result = await fetchApi(`/catalog?catalogId=${catalogId}&refresh=1`);
+    const result = await fetchApi(`/catalogs/${catalogId}/update`);
     toast(result.message);
   };
 
   const getChannels = async (currentPage: string) => {
-    const result = await fetchApi(`/catalog?catalogId=${currentPage}`);
+    const result = await fetchApi(`/catalogs/${currentPage}`);
     const catalogData = result?.data;
     const channelList = catalogData?.channelList;
     if (channelList?.length) {
@@ -54,8 +58,20 @@ function CatalogPage({ params }: { params: CatalogPageParams }) {
     }
   }, [catalogId]);
 
+  const bcLayers: BreadcrumbLayerProps[] = [
+    {
+      label: "Dashboard",
+      href: "/dashboard",
+    },
+    {
+      label: `Catalogs/${catalogId}`,
+      disabled: true,
+    },
+  ];
+
   return (
     <div className="py-10">
+      <BreadcrumbLayer layers={bcLayers} />
       <div className="flex justify-between items-center">
         <section className="space-y-1">
           <div className="text-lg">{catalogMeta?.title}</div>

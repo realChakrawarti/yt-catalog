@@ -1,10 +1,15 @@
+import { NxResponse } from "@/lib/nx-response";
 import { NextRequest } from "next/server";
-import { getValidCatalogIds, getVideosByCatalogId } from "./models";
-import { NxResponse } from "@/app/lib/nx-response";
+import { getVideosByCatalogId } from "../../models";
 
-// TODO: Send limit in the params when making a request
-export async function GET(request: NextRequest) {
-  const catalogId = request.nextUrl.searchParams.get("catalogId");
+type ContextParams = {
+  params: {
+    catalogId: string;
+  };
+};
+
+export async function GET(_request: NextRequest, ctx: ContextParams) {
+  const { catalogId } = ctx.params;
 
   if (catalogId) {
     const data = await getVideosByCatalogId(catalogId);
@@ -26,12 +31,4 @@ export async function GET(request: NextRequest) {
       200
     );
   }
-
-  // Get valid catalog Ids
-  const pageListData = await getValidCatalogIds();
-  return NxResponse.success(
-    "Valid catalog ids fetched successfully.",
-    pageListData,
-    200
-  );
 }

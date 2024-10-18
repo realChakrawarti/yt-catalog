@@ -1,12 +1,16 @@
 "use client";
 
+import {
+  BreadcrumbLayer,
+  BreadcrumbLayerProps,
+} from "@/app/components/Breadcrumbs";
 import { Button } from "@/app/components/Button";
 import { Dialog } from "@/app/components/Dialog";
 import { Input, Label } from "@/app/components/Field";
 import { Popover } from "@/app/components/Popover";
 import { toast } from "@/app/components/Toast";
 import withAuth from "@/app/context/withAuth";
-import fetchApi from "@/app/lib/fetch";
+import fetchApi from "@/lib/fetch";
 import { useEffect, useState } from "react";
 import { DialogTrigger, TextArea } from "react-aria-components";
 
@@ -24,7 +28,7 @@ function EditCatalog({ params }: { params: CatalogPageParams }) {
   const [videoLink, setVideoLink] = useState<string>("");
 
   const getChannels = async (currentPage: string) => {
-    const result = await fetchApi(`/catalog?catalogId=${currentPage}`);
+    const result = await fetchApi(`/catalogs/${currentPage}`);
     const catalogData = result?.data;
     const channelList = catalogData?.channelList;
     setInputCatalogMetadata({
@@ -68,7 +72,7 @@ function EditCatalog({ params }: { params: CatalogPageParams }) {
       payload.channels = trimmedChannels;
     }
 
-    const result = await fetchApi(`/catalog?catalogId=${params.catalogId}`, {
+    const result = await fetchApi(`/catalogs/${params.catalogId}/update`, {
       method: "PATCH",
       body: JSON.stringify(payload),
     });
@@ -86,7 +90,7 @@ function EditCatalog({ params }: { params: CatalogPageParams }) {
     }
 
     if (videoId) {
-      const result = await fetchApi(`/catalog?videoId=${videoId}`);
+      const result = await fetchApi(`/youtube/videoId?videoId=${videoId}`);
 
       if (!result.success) {
         toast(result.message);
@@ -116,12 +120,28 @@ function EditCatalog({ params }: { params: CatalogPageParams }) {
       [e.target.name]: e.target.value,
     }));
   };
-  return (
-    <div>
-      <h1 className="text-lg md:text-xl">Edit Catalog</h1>
 
+  const bcLayers: BreadcrumbLayerProps[] = [
+    {
+      label: "Dashboard",
+      href: "/dashboard",
+    },
+    {
+      label: `Catalogs/${params.catalogId}`,
+      href: `/catalogs/${params.catalogId}`,
+    },
+    {
+      label: "Edit Catalog",
+      disabled: true,
+    },
+  ];
+
+  return (
+    <div className="py-10">
+      <BreadcrumbLayer layers={bcLayers} />
+      <h1 className="text-lg md:text-xl">Edit Catalog</h1>
       <div className="space-y-4 mt-5">
-        <div className="flex gap-2 items-center w-1/2">
+        <div className="flex flex-col gap-1">
           <Label htmlFor="title">Title</Label>
           <Input
             value={inputCatalogMetadata.title}
@@ -130,7 +150,7 @@ function EditCatalog({ params }: { params: CatalogPageParams }) {
             id="title"
           />
         </div>
-        <div className="flex gap-2 items-center w-1/2">
+        <div className="flex flex-col gap-1">
           <Label htmlFor="description">Description</Label>
           <Input
             value={inputCatalogMetadata.description}
@@ -139,7 +159,7 @@ function EditCatalog({ params }: { params: CatalogPageParams }) {
             id="description"
           />
         </div>
-        <div className="flex gap-2 items-center w-1/2">
+        <div className="flex flex-col gap-1">
           <Label htmlFor="add-video">Add channel from video</Label>
           <Input id="add-video" value={videoLink} onChange={handleVideoLink} />
         </div>
