@@ -7,3 +7,5 @@
 - Add firestore security rules for auditing using local emulation
     - https://firebase.google.com/docs/rules/unit-tests
     - https://www.youtube.com/playlist?list=PLl-K7zZEsYLnw0-bXz2f9zo6745VQ_2ep
+
+- Should we use react-query for authenticated routes? We could leverage loading and error states seamlessly also with client side request caching? https://tanstack.com/query/latest

@@ -1,8 +1,8 @@
 import { YoutubePlayer } from "./component";
 import { MdOutlineUpdate } from "react-icons/md";
-import { timeDifference } from "@/app/lib/client-helper";
+import { timeDifference } from "@/lib/client-helper";
 import TimeDifference from "@/app/components/TimeDifference";
-import fetchApi from "@/app/lib/fetch";
+import fetchApi from "@/lib/fetch";
 import { Metadata, ResolvingMetadata } from "next/types";
 
 function parseCatalogHandle(str: string) {
@@ -20,7 +20,7 @@ export async function generateMetadata(
   const catalogHandle = decodeURIComponent(params.catalogHandle);
   const catalogId = parseCatalogHandle(catalogHandle);
 
-  const result = await fetchApi(`/explore?catalogId=${catalogId}`);
+  const result = await fetchApi(`/catalogs/${catalogId}/video`);
   const catalogData = result.data;
 
   return {
@@ -42,7 +42,7 @@ export default async function CatalogHandle({ params }: PageProps) {
   const catalogHandle = decodeURIComponent(params.catalogHandle);
   const catalogId = parseCatalogHandle(catalogHandle);
 
-  const result = await fetchApi(`/explore?catalogId=${catalogId}`);
+  const result = await fetchApi(`/catalogs/${catalogId}/video`);
 
   const catalogData = result.data
 

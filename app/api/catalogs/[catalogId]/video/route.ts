@@ -1,9 +1,15 @@
-import { NxResponse } from "@/app/lib/nx-response";
+import { NxResponse } from "@/lib/nx-response";
 import { NextRequest } from "next/server";
 import { getVideosByCatalogId } from "../../models";
 
-export async function GET(request: NextRequest) {
-  const catalogId = request.nextUrl.searchParams.get("catalogId");
+type ContextParams = {
+  params: {
+    catalogId: string;
+  };
+};
+
+export async function GET(_request: NextRequest, ctx: ContextParams) {
+  const { catalogId } = ctx.params;
 
   if (catalogId) {
     const data = await getVideosByCatalogId(catalogId);

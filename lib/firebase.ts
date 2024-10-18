@@ -19,7 +19,7 @@ const auth = getAuth(app)
 // Initialize Firestore
 const db = getFirestore(app)
 
-import localFirebase from "../../firebase.json"
+import localFirebase from "../firebase.json"
 
 const authPort = localFirebase.emulators.auth.port
 const firestorePort = localFirebase.emulators.firestore.port

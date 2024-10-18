@@ -1,7 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getUserIdCookie } from "./lib/server-helper";
 
 export async function middleware(request: NextRequest) {
-  console.log("Middleware running on " + request.nextUrl.pathname);
+  const userId = getUserIdCookie();
+
+  if (!userId) {
+    console.log("Logging out ", request.nextUrl.pathname);
+    return NextResponse.redirect(new URL("/"));
+  }
 
   return NextResponse.next({
     request: {
@@ -13,6 +19,8 @@ export async function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     "/api/catalogs/:catalogId/update",
+    "/api/catalogs/:catalogId/delete",
+    "/api/logout",
     "/api/catalogs/",
     "/api/youtube/videoId",
   ],

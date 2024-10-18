@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/app/components/Button";
-import { githubProvider, googleProvider } from "@/app/lib/auth";
+import { githubProvider, googleProvider } from "@/lib/auth";
 import { useAuth } from "../context/AuthContextProvider";
 import Link from "next/link";
 

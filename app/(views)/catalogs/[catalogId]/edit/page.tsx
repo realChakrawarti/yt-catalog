@@ -10,7 +10,7 @@ import { Input, Label } from "@/app/components/Field";
 import { Popover } from "@/app/components/Popover";
 import { toast } from "@/app/components/Toast";
 import withAuth from "@/app/context/withAuth";
-import fetchApi from "@/app/lib/fetch";
+import fetchApi from "@/lib/fetch";
 import { useEffect, useState } from "react";
 import { DialogTrigger, TextArea } from "react-aria-components";
 
@@ -127,8 +127,8 @@ function EditCatalog({ params }: { params: CatalogPageParams }) {
       href: "/dashboard",
     },
     {
-      label: `Catalog/${params.catalogId}`,
-      href: `/catalog/${params.catalogId}`,
+      label: `Catalogs/${params.catalogId}`,
+      href: `/catalogs/${params.catalogId}`,
     },
     {
       label: "Edit Catalog",

@@ -1,5 +1,5 @@
-import { NxResponse } from "@/app/lib/nx-response";
-import { getUserIdCookie } from "@/app/lib/server-helper";
+import { NxResponse } from "@/lib/nx-response";
+import { getUserIdCookie } from "@/lib/server-helper";
 import { NextRequest } from "next/server";
 import { updateCatalogVideos, updateChannels } from "../../models";
 
@@ -31,11 +31,11 @@ export async function PATCH(request: NextRequest, ctx: ContextParams) {
   const userId = getUserIdCookie();
   const { catalogId } = ctx.params;
 
-  if (!userId || !catalogId) {
+  if (!catalogId) {
     return NxResponse.fail(
-      "You are not authorized. Please login again.",
-      { code: "UNAUTHORIZED", details: "User ID or Catalog ID is missing." },
-      401
+      "Catalog ID is missing from request params.",
+      { code: "BAD_REQUEST", details: "Catalog ID is missing from request params." },
+      400
     );
   }
 

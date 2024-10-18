@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Button } from "@/app/components/Button";
-import fetchApi from "@/app/lib/fetch";
+import fetchApi from "@/lib/fetch";
 import withAuth from "@/app/context/withAuth";
 import Link from "next/link";
 import ChannelTable from "./channel-table";
@@ -64,7 +64,7 @@ function CatalogPage({ params }: { params: CatalogPageParams }) {
       href: "/dashboard",
     },
     {
-      label: `Catalog/${catalogId}`,
+      label: `Catalogs/${catalogId}`,
       disabled: true,
     },
   ];

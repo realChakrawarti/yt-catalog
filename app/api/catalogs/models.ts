@@ -1,10 +1,10 @@
-import { db } from "@/app/lib/firebase";
+import { db } from "@/lib/firebase";
 import {
   COLLECTION,
   createNanoidToken,
   YOUTUBE_CHANNEL_PLAYLIST_VIDEOS,
   YOUTUBE_CHANNELS_INFORMATION,
-} from "@/app/lib/server-helper";
+} from "@/lib/server-helper";
 import {
   collection,
   doc,

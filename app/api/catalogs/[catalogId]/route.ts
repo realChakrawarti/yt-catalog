@@ -1,7 +1,7 @@
 import { NextRequest } from "next/server";
 import { getCatalogById } from "../models";
-import { getUserIdCookie } from "@/app/lib/server-helper";
-import { NxResponse } from "@/app/lib/nx-response";
+import { getUserIdCookie } from "@/lib/server-helper";
+import { NxResponse } from "@/lib/nx-response";
 
 type ContextParams = {
   params: {
