@@ -1,7 +1,6 @@
 import clsx from 'clsx'
 
 type Properties = {
-	// eslint-disable-next-line unicorn/no-keyword-prefix
 	className?: string;
 }
 
