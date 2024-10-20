@@ -18,10 +18,10 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
+    "/api/catalogs/",
     "/api/catalogs/:catalogId/update",
     "/api/catalogs/:catalogId/delete",
     "/api/logout",
-    "/api/catalogs/",
     "/api/youtube/videoId",
   ],
 };
