@@ -54,3 +54,12 @@ If you have bare minimum experience in React 18+ / Next.js 14+ / TypeScript / Ta
 - Ignore Vercel preview build on other branches: https://github.com/orgs/vercel/discussions/1339
 - Rainbow Border: https://codepen.io/bramus/pen/rNWByYz
 
+## Development dependencies guides
+- Commitlint: https://commitlint.js.org/
+    - https://github.com/conventional-changelog/commitlint
+    - https://github.com/angular/angular/blob/22b96b9/CONTRIBUTING.md#-commit-message-guidelines
+
+- Husky: https://typicode.github.io/husky/
+    - https://git-scm.com/docs/githooks
+
+

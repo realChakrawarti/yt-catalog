@@ -43,5 +43,8 @@ export async function PATCH(request: NextRequest, ctx: ContextParams) {
 
   await updateChannels(userId, catalogId, catalogPayload);
 
+  // Update the catalog
+  await updateCatalogVideos(catalogId);
+
   return NxResponse.success<any>("Channel list update successfully.", {}, 201);
 }
