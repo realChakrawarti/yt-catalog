@@ -1,12 +1,17 @@
 {
-  "name": "ytcatalog",
-  "version": "24w42A",
+  "name": "yt-catalog",
+  "version": "1.1.0",
   "scripts": {
     "dev": "concurrently \"npm run emulate-firebase\" \"next dev\"",
     "emulate-firebase": "firebase emulators:start --project ytcatalog707",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prepare": "husky",
+    "release": "standard-version",
+    "release:minor": "standard-version --release-as minor",
+    "release:patch": "standard-version --release-as patch",
+    "release:major": "standard-version --release-as major"
   },
   "dependencies": {
     "@next/third-parties": "^14.2.8",
@@ -24,6 +29,8 @@
     "tailwind-variants": "^0.2.1"
   },
   "devDependencies": {
+    "@commitlint/cli": "^19.5.0",
+    "@commitlint/config-conventional": "^19.5.0",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
@@ -31,7 +38,9 @@
     "concurrently": "^9.0.1",
     "eslint": "^8",
     "eslint-config-next": "14.2.7",
+    "husky": "^9.1.6",
     "postcss": "^8",
+    "standard-version": "^9.5.0",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
   }
