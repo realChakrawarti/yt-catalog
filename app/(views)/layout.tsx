@@ -4,7 +4,7 @@ import "./globals.css";
 import AuthContextProvider from "../context/AuthContextProvider";
 import Header from "../components/Header";
 import { Toaster } from "../components/Toast";
-import packageInfo from "../../package.json";
+import Footer from "../components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,7 +22,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html className="h-full" lang="en">
       <body
         className={`h-full w-full overflow-y-auto flex flex-col ${inter.className} py-4 md:px-6`}
       >
@@ -30,11 +30,9 @@ export default function RootLayout({
           <Header />
           <main className="flex-grow">{children}</main>
         </AuthContextProvider>
-        <Toaster />
-        <div className="text-xs absolute right-1 bottom-1 text-gray-500 tracking-wider">
-          Build - {packageInfo.version}
-        </div>
+        <Footer />
       </body>
+      <Toaster />
     </html>
   );
 }
