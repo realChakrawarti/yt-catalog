@@ -1,11 +1,9 @@
 import fetchApi from "@/lib/fetch";
 import CatalogCard from "./catalog-card";
 
-export const revalidate = 60 * 5; // 5 minutes
-
 export default async function ExplorePage() {
   const result = await fetchApi("/catalogs/valid", {
-    cache: "no-store",
+    next: { revalidate: 300 },
   });
 
   const catalogsData = result?.data ?? [];
