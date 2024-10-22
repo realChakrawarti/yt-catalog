@@ -24,7 +24,7 @@ export default function RootLayout({
   return (
     <html className="h-full" lang="en">
       <body
-        className={`h-full w-full overflow-y-auto flex flex-col ${inter.className} py-4 md:px-6`}
+        className={`min-h-full h-auto w-full overflow-y-auto flex flex-col ${inter.className} py-4 md:px-6`}
       >
         <AuthContextProvider>
           <Header />

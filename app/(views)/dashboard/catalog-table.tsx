@@ -1,20 +1,17 @@
 import { Cell, Column, Row, TableHeader, Table } from "@/app/components/Table";
 import Link from "next/link";
-import { TableBody, Tooltip, TooltipTrigger } from "react-aria-components";
+import { TableBody, Tooltip } from "react-aria-components";
 import { MdDeleteForever } from "react-icons/md";
 import { HiOutlinePencilAlt } from "react-icons/hi";
 import { IoOpenOutline } from "react-icons/io5";
-import { Button } from "@/app/components/Button";
+import { getTimeDifference } from "@/lib/client-helper";
+import { Timestamp } from "firebase/firestore";
 
 type CatalogTableProps = {
   catalogs: any[];
   onDelete: (catalogId: string) => Promise<void>;
   onEdit: (catalogId: string) => void;
 };
-
-function dateTimeString(date: Date) {
-  return date.toDateString() + " " + date.toTimeString().split("(")[0];
-}
 
 function CatalogTable({ catalogs, onDelete, onEdit }: CatalogTableProps) {
   return (
@@ -25,7 +22,7 @@ function CatalogTable({ catalogs, onDelete, onEdit }: CatalogTableProps) {
         </Column>
         <Column maxWidth={200}>Title</Column>
         <Column>Description</Column>
-        <Column>Updated at</Column>
+        <Column>Last updated</Column>
         <Column maxWidth={150}>Action</Column>
       </TableHeader>
       <TableBody
@@ -44,9 +41,7 @@ function CatalogTable({ catalogs, onDelete, onEdit }: CatalogTableProps) {
             <Cell>{catalog?.title}</Cell>
             <Cell>{catalog?.description}</Cell>
             <Cell>
-              {dateTimeString(
-                new Date(catalog?.videoData?.updatedAt?.seconds * 1000)
-              )}
+              {getTimeDifference(catalog?.videoData?.updatedAt)[1]}
             </Cell>
             <Cell>
               <div className="flex gap-2 items-center">

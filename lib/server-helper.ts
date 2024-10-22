@@ -1,5 +1,6 @@
 import { cookies } from "next/headers";
 import { customAlphabet } from "nanoid";
+import { Timestamp } from "firebase/firestore";
 
 
 export const YOUTUBE_CHANNEL_PLAYLIST_VIDEOS = (
@@ -38,3 +39,7 @@ export const COLLECTION = {
   users: "users",
   catalogs: "catalogs",
 } as const;
+
+export function toUTCString(dateTime: Timestamp) {
+  return new Date(dateTime.toDate()).toUTCString()
+} 

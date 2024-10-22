@@ -11,8 +11,7 @@ function ThumbnailCarousel({ thumbnails }: { thumbnails: string[] }) {
     slidesToScroll: 1,
     autoplay: true,
     arrows: false,
-    speed: 2000,
-    autoplaySpeed: 2000,
+    autoplaySpeed: 1500,
     cssEase: "linear",
   };
 

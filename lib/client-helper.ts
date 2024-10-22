@@ -1,50 +1,87 @@
-function checkMultiple(
-  value: number,
-  type: "minute" | "hour" | "day",
-  state: "ago" | "later"
-) {
-  let timeValue: string = "";
+function checkPural(value: number, type: "minute" | "hour" | "day") {
+  let stringValue: string = "";
   if (value > 1) {
-    timeValue = value + ` ${type}s ${state}`;
+    stringValue = value + ` ${type}s`;
   } else {
-    timeValue = value + ` ${type} ${state}`;
+    stringValue = value + ` ${type}`;
   }
 
-  return timeValue;
+  return stringValue;
 }
 
-export function timeDifference(compareTimeWith: string): string {
+function getDayHourMinute(timeDiff: number): number[] {
+  const MINUTES_PER_HOUR = 60;
+  const MINUTES_PER_DAY = 24 * MINUTES_PER_HOUR;
+
+  let daysHoursMinutes = "00/00/00";
+
+  if (timeDiff < MINUTES_PER_HOUR) {
+    daysHoursMinutes = `00/00/${timeDiff}`;
+  } else if (timeDiff < MINUTES_PER_DAY) {
+    const hours = Math.floor(timeDiff / MINUTES_PER_HOUR);
+    const minutes = Math.round(timeDiff % MINUTES_PER_HOUR);
+    daysHoursMinutes = `00/${hours}/${minutes}`;
+  } else {
+    const days = Math.floor(timeDiff / MINUTES_PER_DAY);
+    const hours = Math.floor((timeDiff % MINUTES_PER_DAY) / MINUTES_PER_HOUR);
+    const minutes = Math.round(timeDiff % MINUTES_PER_HOUR);
+    daysHoursMinutes = `${days}/${hours}/${minutes}`;
+  }
+
+  const [days, hours, minutes] = daysHoursMinutes.split("/");
+
+  return [parseInt(days), parseInt(hours), parseInt(minutes)];
+}
+
+function getDifferenceString(
+  deltaMinutes: number,
+  prefix: "ago" | "later",
+  approx: boolean = false
+) {
+  const [days, hours, minutes] = getDayHourMinute(deltaMinutes);
+  let timeDifferenceString = "";
+
+  if (days) {
+    timeDifferenceString = checkPural(days, "day") + " ";
+    if (approx) {
+      return timeDifferenceString + prefix;
+    }
+  }
+  if (hours) {
+    timeDifferenceString += checkPural(hours, "hour") + " ";
+    if (approx) {
+      return timeDifferenceString + prefix;
+    }
+  }
+  if (minutes) {
+    timeDifferenceString += checkPural(minutes, "minute") + " ";
+    if (approx) {
+      return timeDifferenceString + prefix;
+    }
+  }
+  return timeDifferenceString + prefix;
+}
+
+export function getTimeDifference(
+  compareTimeWith: string,
+  approx: boolean = false
+) {
   const currentTime = new Date().getTime();
   const serverTime = new Date(compareTimeWith).getTime();
 
-  let timeDiffActual: string | number = "";
+  const delta = currentTime - serverTime;
+  const deltaMinutes = Math.abs(delta) / (60 * 1000); // In minutes
 
-  const deltaTime = currentTime - serverTime;
-  const timeDiffMinutes = deltaTime / (60 * 1000); // In minutes
-
-  if (deltaTime >= 0) {
-    // Comparing with back time (ago)
-    if (timeDiffMinutes < 60) {
-      const timeElapsed = Math.floor(timeDiffMinutes);
-      timeDiffActual = checkMultiple(timeElapsed, "minute", "ago");
-    } else if (timeDiffMinutes > 60 && timeDiffMinutes < 60 * 24) {
-      const timeElapsed = Math.floor(timeDiffMinutes / 60);
-      timeDiffActual = checkMultiple(timeElapsed, "hour", "ago");
-    } else {
-      const timeElapsed = Math.floor(timeDiffMinutes / (60 * 24));
-      timeDiffActual = checkMultiple(timeElapsed, "day", "ago");
-    }
-  } else {
-    // Comparing with forward time (later)
-    const absTimeDiff = Math.abs(timeDiffMinutes);
-    if (absTimeDiff < 60) {
-      const timeLeft = Math.floor(absTimeDiff);
-      timeDiffActual = checkMultiple(timeLeft, "minute", "later");
-    } else if (absTimeDiff > 60 && absTimeDiff < 60 * 24) {
-      const timeLeft = Math.floor(absTimeDiff / 60);
-      timeDiffActual = checkMultiple(timeLeft, "hour", "later");
-    }
+  // Past
+  if (delta >= 0) {
+    const prefix = "ago";
+    const diffToString = getDifferenceString(deltaMinutes, prefix, approx);
+    return [-1, diffToString];
   }
-
-  return timeDiffActual;
+  // Future
+  else {
+    const prefix = "later";
+    const diffToString = getDifferenceString(deltaMinutes, prefix, approx);
+    return [1, diffToString];
+  }
 }
