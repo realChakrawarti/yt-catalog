@@ -15,14 +15,13 @@ function ThumbnailCarousel({ thumbnails }: { thumbnails: string[] }) {
     cssEase: "linear",
   };
 
-
   return (
-    <div className="">
+    <div className="h-auto overflow-hidden">
       <Slider {...settings}>
         {thumbnails?.map((thumb) => (
           <div key={thumb}>
             <img
-              className="object-contain w-80 h-60"
+              className="object-contain h-min-60 h-[400px]"
               src={thumb}
               alt="thumbnail"
             />

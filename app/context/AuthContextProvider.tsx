@@ -43,12 +43,14 @@ export default function AuthContextProvider({ children }: PropsWithChildren) {
   const [loading, setLoading] = useState<boolean>(true);
 
   const authStateChanged = async (user: User | null) => {
-    if (user) {
+    const token = await user?.getIdToken();
+    if (user && token) {
       setUserState(user);
+      setLoading(false);
     } else {
       setUserState(null);
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   useLayoutEffect(() => {
@@ -68,12 +70,11 @@ export default function AuthContextProvider({ children }: PropsWithChildren) {
       const response = await signInWithPopup(auth, provider);
       const user = response.user;
       if (user) {
-        // TODO: Add a toaster informing user has been logged in successfully or signup was successful
         const result = await fetchApi("/user", {
           method: "POST",
           body: JSON.stringify({ uid: user.uid }),
         });
-
+        toast(result.message);
         router.push("/dashboard");
       }
     } catch (err) {
