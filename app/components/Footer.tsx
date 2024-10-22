@@ -6,7 +6,7 @@ export default function Footer() {
     <footer className="px-2 md:px-0 h-4 flex justify-between items-center w-full">
       <div>
         <p className="text-xs text-gray-500">
-          Property of{" "}
+          Developed by{" "}
           <a
             className="cursor-pointer text-indigo-500"
             target="_blank"

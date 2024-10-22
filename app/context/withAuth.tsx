@@ -13,7 +13,7 @@ export default function withAuth(WrappedComponent: React.ComponentType<any>) {
       if (!user && !loading) {
         router.push("/");
       }
-    }, [user, loading]);
+    }, [user]);
 
     return <WrappedComponent {...props} />;
   };
