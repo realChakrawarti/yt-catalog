@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.1](https://github.com/realChakrawarti/YTCatalog/compare/v1.2.0...v1.2.1) (2024-10-22)
+
+
+### Bug Fixes
+
+* replaced `cache: no-store` to next `revalidate: 300`, clears vercel data cache after 5 mins ([ae12a24](https://github.com/realChakrawarti/YTCatalog/commit/ae12a24ab27e9b54c552d55972441a3f073ccf46))
+* thumbnail speed, next update time, footer and full height body ([1d1f1d2](https://github.com/realChakrawarti/YTCatalog/commit/1d1f1d2a10434152d828e4e080a0357f876a10a1))
+
 ## [1.2.0](https://github.com/realChakrawarti/YTCatalog/compare/v1.1.0...v1.2.0) (2024-10-20)
 
 ## 1.1.0 (2024-10-20)

@@ -55,6 +55,9 @@ If you have bare minimum experience in React 18+ / Next.js 14+ / TypeScript / Ta
 - Rainbow Border: https://codepen.io/bramus/pen/rNWByYz
 
 ## Development dependencies guides
+
+Reference: https://mokkapps.de/blog/how-to-automatically-generate-a-helpful-changelog-from-your-git-commit-messages
+
 - Commitlint: https://commitlint.js.org/
     - https://github.com/conventional-changelog/commitlint
     - https://github.com/angular/angular/blob/22b96b9/CONTRIBUTING.md#-commit-message-guidelines

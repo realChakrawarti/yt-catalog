@@ -1,6 +1,6 @@
 import { YoutubePlayer } from "./component";
 import { MdOutlineUpdate } from "react-icons/md";
-import { timeDifference } from "@/lib/client-helper";
+import { getTimeDifference } from "@/lib/client-helper";
 import TimeDifference from "@/app/components/TimeDifference";
 import fetchApi from "@/lib/fetch";
 import { Metadata, ResolvingMetadata } from "next/types";
@@ -24,12 +24,12 @@ export async function generateMetadata(
   const catalogData = result.data;
 
   return {
-    title: `${catalogData.title} | YTCatalog`,
+    title: `${catalogData?.title} | YTCatalog`,
     openGraph: {
       type: "website",
-      title: catalogData.title,
+      title: catalogData?.title,
       url: `https://ytcatalog.707x.in/${catalogHandle}`,
-      description: catalogData.description,
+      description: catalogData?.description,
       siteName: "YTCatalog",
     },
   };
@@ -46,10 +46,10 @@ export default async function CatalogHandle({ params }: PageProps) {
 
   const catalogData = result.data
 
-  const videos: Record<string, any> = catalogData.data;
+  const videos: Record<string, any> = catalogData?.data;
   const nextUpdate = catalogData?.nextUpdate;
-  const catalogTitle = catalogData.title;
-  const catalogDescription = catalogData.description;
+  const catalogTitle = catalogData?.title;
+  const catalogDescription = catalogData?.description;
 
   if (!videos) {
     return (
@@ -72,7 +72,7 @@ export default async function CatalogHandle({ params }: PageProps) {
       channelId,
       channelLogo,
     } = props;
-    const timeElapsed = timeDifference(publishedAt);
+    const [_, timeElapsed] = getTimeDifference(publishedAt, true);
 
     return (
       <div className="flex flex-col gap-3">

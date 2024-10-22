@@ -67,7 +67,6 @@ function DashboardPage() {
             <h1 className="text-lg lg:text-xl">Catalogs</h1>
             <Button onPress={createNewCatalog}>Create Catalog</Button>
           </div>
-
           {catalogs?.length ? (
             <section className="w-full">
               <CatalogTable

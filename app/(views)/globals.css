@@ -103,3 +103,7 @@ body {
   initial-value: 0deg;
   inherits: false;
 }
+
+.firebase-emulator-warning {
+  display: none !important;
+}

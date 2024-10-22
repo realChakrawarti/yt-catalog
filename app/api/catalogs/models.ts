@@ -2,6 +2,7 @@ import { db } from "@/lib/firebase";
 import {
   COLLECTION,
   createNanoidToken,
+  toUTCString,
   YOUTUBE_CHANNEL_PLAYLIST_VIDEOS,
   YOUTUBE_CHANNELS_INFORMATION,
 } from "@/lib/server-helper";
@@ -85,7 +86,10 @@ export async function getCatalogByUser(userId: string) {
         id: catalogId,
         title: catalogData?.title,
         description: catalogData?.description,
-        videoData: catalogData?.data,
+        videoData: {
+          updatedAt: toUTCString(catalogData?.data?.updatedAt),
+          videos: catalogData?.data?.videos,
+        },
       });
     }
   } catch (err) {

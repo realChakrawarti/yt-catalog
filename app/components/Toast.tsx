@@ -71,7 +71,7 @@ export function Toaster() {
     ? createPortal(
         state.visibleToasts.length >= 0 ? (
           <div
-            className={twMerge("fixed bottom-4 right-4", "flex flex-col gap-4")}
+            className={twMerge("fixed bottom-4 right-4", "flex flex-col gap-4", "bg-slate-900")}
             {...regionProps}
             ref={reference}
           >
