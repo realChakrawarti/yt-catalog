@@ -12,7 +12,7 @@ export default function Footer() {
             target="_blank"
             href="https://707x.in"
           >
-            707x.in
+            707x Labs
           </a>
         </p>
       </div>

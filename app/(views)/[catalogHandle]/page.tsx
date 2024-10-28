@@ -4,6 +4,7 @@ import { getTimeDifference } from "@/lib/client-helper";
 import TimeDifference from "@/app/components/TimeDifference";
 import fetchApi from "@/lib/fetch";
 import { Metadata, ResolvingMetadata } from "next/types";
+import { AddToFavorites } from "./add-to-fav";
 
 function parseCatalogHandle(str: string) {
   return str.substring(1);
@@ -44,7 +45,7 @@ export default async function CatalogHandle({ params }: PageProps) {
 
   const result = await fetchApi(`/catalogs/${catalogId}/video`);
 
-  const catalogData = result.data
+  const catalogData = result.data;
 
   const videos: Record<string, any> = catalogData?.data;
   const nextUpdate = catalogData?.nextUpdate;
@@ -116,7 +117,11 @@ export default async function CatalogHandle({ params }: PageProps) {
                 <MdOutlineUpdate />
                 Next update: <TimeDifference date={nextUpdate} />
               </p>
-              {/* <AddToFavorites /> */}
+              <AddToFavorites
+                catalogId={catalogId}
+                catalogTitle={catalogTitle}
+                catalogDescription={catalogDescription}
+              />
             </div>
           </div>
         </div>

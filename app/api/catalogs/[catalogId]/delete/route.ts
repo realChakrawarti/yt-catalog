@@ -2,6 +2,7 @@ import { db } from "@/lib/firebase";
 import { NxResponse } from "@/lib/nx-response";
 import { COLLECTION, getUserIdCookie } from "@/lib/server-helper";
 import { doc, writeBatch } from "firebase/firestore";
+import { revalidatePath } from "next/cache";
 import { NextRequest } from "next/server";
 
 type ContextParams = {
@@ -28,6 +29,8 @@ export async function DELETE(_request: NextRequest, ctx: ContextParams) {
   batch.delete(userCatalogRef);
 
   await batch.commit();
+
+  revalidatePath("/explore");
 
   return NxResponse.success("Catalog deleted successfully.", {}, 200);
 }

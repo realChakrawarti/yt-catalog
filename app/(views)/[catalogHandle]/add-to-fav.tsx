@@ -2,51 +2,70 @@
 
 import { Button } from "@/app/components/Button";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { MdFavoriteBorder } from "react-icons/md";
 import { MdFavorite } from "react-icons/md";
 
 // TODO: Fix this component
-export const AddToFavorites = () => {
-  const pathname = usePathname();
-  const catalogId = pathname.split("@")[1];
+export const AddToFavorites = ({
+  catalogId,
+  catalogDescription,
+  catalogTitle,
+}: any) => {
+  const [existingCatalogs, setExistingCatalogs] = useState<any[]>(
+    JSON.parse(window?.localStorage?.getItem("favorites") || "[]")
+  );
 
+  const [catalogExists, setCatalogExists] = useState<boolean>(false);
 
-  const [existingCatalogs, setExistingCatalogs] = useState<string[]>(JSON.parse(
-    window.localStorage.getItem("favorites") || "[]"
-  ))
-
+  useEffect(() => {
+    checkIfExists();
+  }, [existingCatalogs]);
 
   const checkIfExists = () => {
-    return existingCatalogs.includes(catalogId);
+    for (let i = 0; i < existingCatalogs?.length; i++) {
+      if (existingCatalogs[i].id === catalogId) {
+        setCatalogExists(true);
+        return;
+      }
+    }
+    setCatalogExists(false);
   };
 
   const addToFav = () => {
-    if (checkIfExists()) {
+    if (catalogExists) {
       // Remove the catalogId
       const filterCatalogIds = existingCatalogs.filter(
-        (item) => item != catalogId
+        (item: any) => item.id != catalogId
       );
 
-      window.localStorage.setItem(
+      window?.localStorage?.setItem(
         "favorites",
         JSON.stringify(filterCatalogIds)
       );
+
+      setExistingCatalogs(filterCatalogIds);
     }
     // Add the catalogId to favorites
     else {
-      window.localStorage.setItem(
+      const favCatalog = {
+        id: catalogId,
+        title: catalogTitle,
+        description: catalogDescription,
+      };
+      window?.localStorage?.setItem(
         "favorites",
-        JSON.stringify([...existingCatalogs, catalogId])
+        JSON.stringify([...existingCatalogs, favCatalog])
       );
+      setExistingCatalogs((prev) => [...prev, favCatalog]);
     }
   };
 
   return (
-    <div>
+    <div className="absolute top-0 right-1/2">
       <Button variant="icon" onPress={addToFav}>
-        {checkIfExists() ? (
+        {catalogExists ? (
           <MdFavorite size="16" />
         ) : (
           <MdFavoriteBorder size="16" />
