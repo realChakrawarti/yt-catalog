@@ -5,6 +5,7 @@ import TimeDifference from "@/app/components/TimeDifference";
 import fetchApi from "@/lib/fetch";
 import { Metadata, ResolvingMetadata } from "next/types";
 import { AddToFavorites } from "./add-to-fav";
+import FilterChannel from "./filter-channel";
 
 function parseCatalogHandle(str: string) {
   return str.substring(1);
@@ -12,6 +13,9 @@ function parseCatalogHandle(str: string) {
 
 type PageProps = {
   params: { catalogHandle: string };
+  searchParams?: {
+    channelId: string;
+  };
 };
 
 export async function generateMetadata(
@@ -39,7 +43,76 @@ export async function generateMetadata(
 // export const revalidate = 43_200;
 export const revalidate = 60 * 5;
 
-export default async function CatalogHandle({ params }: PageProps) {
+function filterChannel(
+  videoData: any,
+  channelId?: string
+): [any[], any[], any[]] {
+  const today: any[] = videoData?.day;
+  const week: any[] = videoData?.week;
+  const month: any[] = videoData?.month;
+
+  if (!channelId) {
+    return [today, week, month];
+  }
+
+  const filteredToday = today.filter((video) => video.channelId === channelId);
+  const filteredWeek = week.filter((video) => video.channelId === channelId);
+  const filteredMonth = month.filter((video) => video.channelId === channelId);
+
+  return [filteredToday, filteredWeek, filteredMonth];
+}
+
+type ChannelTag = { title: string; id: string; logo: string };
+
+function getChannels(videos: any[]) {
+  const channels = [];
+  for (let i = 0; i < videos?.length; i++) {
+    const video = videos[i];
+    const channel = {
+      title: video.channelTitle,
+      id: video.channelId,
+      logo: video.channelLogo,
+    };
+    channels.push(channel);
+  }
+
+  return channels;
+}
+
+function channelUnique(channels: ChannelTag[]) {
+  const uniqueChannels = [];
+  const _trackhannelIds: string[] = [];
+
+  for (let i = 0; i < channels?.length; i++) {
+    const channel = channels[i];
+    if (!_trackhannelIds.includes(channel.id)) {
+      _trackhannelIds.push(channel.id);
+      uniqueChannels.push(channel);
+    }
+  }
+  return uniqueChannels;
+}
+
+function getActiveChannelIds(videoData: any): ChannelTag[] {
+  const channelIds: ChannelTag[] = [];
+
+  const today: any[] = videoData?.day;
+  const week: any[] = videoData?.week;
+  const month: any[] = videoData?.month;
+
+  channelIds.push(...getChannels(today));
+  channelIds.push(...getChannels(week));
+  channelIds.push(...getChannels(month));
+
+  return channelUnique(channelIds);
+}
+
+export default async function CatalogHandle({
+  params,
+  searchParams,
+}: PageProps) {
+  const channelId = searchParams?.channelId;
+
   const catalogHandle = decodeURIComponent(params.catalogHandle);
   const catalogId = parseCatalogHandle(catalogHandle);
 
@@ -60,9 +133,9 @@ export default async function CatalogHandle({ params }: PageProps) {
     );
   }
 
-  const today: any[] = videos?.day;
-  const week: any[] = videos?.week;
-  const month: any[] = videos?.month;
+  const [today, week, month] = filterChannel(videos, channelId);
+
+  const activeChannels = getActiveChannelIds(videos);
 
   const VideoCard = (props: any) => {
     const {
@@ -125,10 +198,12 @@ export default async function CatalogHandle({ params }: PageProps) {
             </div>
           </div>
         </div>
+
+        <FilterChannel activeChannels={activeChannels} />
       </header>
 
       {/* Today */}
-      {today.length ? (
+      {today?.length ? (
         <>
           <h2 className="text-2xl px-2 md:px-0">Today</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -141,7 +216,7 @@ export default async function CatalogHandle({ params }: PageProps) {
         <></>
       )}
       {/* This week */}
-      {week.length ? (
+      {week?.length ? (
         <>
           <h2 className="text-2xl px-2 md:px-0">This week</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -154,7 +229,7 @@ export default async function CatalogHandle({ params }: PageProps) {
         <></>
       )}
       {/* This month */}
-      {month.length ? (
+      {month?.length ? (
         <>
           <h2 className="text-2xl px-2 md:px-0">This month</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
