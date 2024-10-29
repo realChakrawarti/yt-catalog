@@ -11,22 +11,23 @@ export default function FilterChannel({
   activeChannels: any;
 }) {
   const searchParams = useSearchParams();
-
   const pathname = usePathname();
   const { replace } = useRouter();
-
-  const [selectedKey, setSelectedKey] = useState<Selection>(new Set([]));
+  
+  const params = new URLSearchParams(searchParams);
+  
+  const [selectedKey, setSelectedKey] = useState<Selection>(
+    new Set([`${params.get("channelId")}`])
+  );
 
   const handleSelectionChange = (key: Selection) => {
-    const params = new URLSearchParams(searchParams);
-
     if (!key) {
       setSelectedKey(key);
       return;
     }
 
     setSelectedKey(key);
-    const selectedKeyStringify = Array.from(key)[0].toString() || "";
+    const selectedKeyStringify = Array.from(key)[0]?.toString() || "";
 
     if (selectedKeyStringify) {
       params.set("channelId", selectedKeyStringify);
@@ -38,7 +39,6 @@ export default function FilterChannel({
   };
 
   const handleOnClear = () => {
-    const params = new URLSearchParams(searchParams);
     params.delete("channelId");
 
     replace(`${pathname}?${params.toString()}`);

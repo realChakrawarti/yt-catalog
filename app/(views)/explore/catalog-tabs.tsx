@@ -6,18 +6,21 @@ import CatalogCard from "./catalog-card";
 import fetchApi from "@/lib/fetch";
 import Link from "next/link";
 
+// TODO: Make use of usehooks-ts "useLocalStorage" maybe?
 export default function CatalogTabs() {
   const [catalogsData, setCatalogsData] = useState([]);
 
-  const [favoriteCatalogs, setFavoriteCatalogs] = useState(
-    JSON.parse(window?.localStorage?.getItem("favorites") || "[]")
-  );
+  const [favoriteCatalogs, setFavoriteCatalogs] = useState([]);
 
   useEffect(() => {
     const getValidCatalogs = async () => {
       const result = await fetchApi("/catalogs/valid");
       setCatalogsData(result?.data);
     };
+
+    setFavoriteCatalogs(
+      JSON.parse(window?.localStorage?.getItem("favorites") || "[]")
+    );
 
     getValidCatalogs();
   }, []);
@@ -43,12 +46,18 @@ export default function CatalogTabs() {
       </TabPanel>
       <TabPanel id="favorite">
         <div>
-          Favorite Catalogs
+          <h1 className="text-lg">Favorite Catalogs</h1>
           {favoriteCatalogs.map((favCatalog: any) => {
             return (
               <Link href={`/@${favCatalog.id}`} key={favCatalog.id}>
-                <p>{favCatalog.title}</p>
-                <p>{favCatalog.description}</p>
+                <section className="flex px-4 py-2 border-2 border-orange-600 flex-col gap-3">
+                  <div className="space-y-1">
+                    <h1 className="text-base">{favCatalog.title}</h1>
+                    <p className="text-sm text-gray-400">
+                      {favCatalog.description}
+                    </p>
+                  </div>
+                </section>
               </Link>
             );
           })}

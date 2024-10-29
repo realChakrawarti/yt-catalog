@@ -1,21 +1,23 @@
 "use client";
 
 import { Button } from "@/app/components/Button";
-import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { MdFavoriteBorder } from "react-icons/md";
 import { MdFavorite } from "react-icons/md";
 
-// TODO: Fix this component
 export const AddToFavorites = ({
   catalogId,
   catalogDescription,
   catalogTitle,
 }: any) => {
-  const [existingCatalogs, setExistingCatalogs] = useState<any[]>(
-    JSON.parse(window?.localStorage?.getItem("favorites") || "[]")
-  );
+  const [existingCatalogs, setExistingCatalogs] = useState<any[]>([]);
+
+  useEffect(() => {
+    setExistingCatalogs(
+      JSON.parse(window?.localStorage?.getItem("favorites") || "[]")
+    );
+  }, []);
 
   const [catalogExists, setCatalogExists] = useState<boolean>(false);
 
