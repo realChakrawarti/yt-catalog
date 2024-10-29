@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.3](https://github.com/realChakrawarti/YTCatalog/compare/v1.2.2...v1.2.3) (2024-10-29)
+
+
+### Features
+
+* add to favorite catalog ([82ed50a](https://github.com/realChakrawarti/YTCatalog/commit/82ed50a313382947be4a062d725965f4ff4a7c9e))
+* filter channel ([bb5b793](https://github.com/realChakrawarti/YTCatalog/commit/bb5b793793d9d6fafe1c63735b31dd53a60f2f5d))
+
+
+### Bug Fixes
+
+* `window` undefined, searchparams in sync ([2beceb4](https://github.com/realChakrawarti/YTCatalog/commit/2beceb40324e7b1c1de9c68f183bc383b3234d2f))
+
 ### [1.2.2](https://github.com/realChakrawarti/YTCatalog/compare/v1.2.1...v1.2.2) (2024-10-22)
 
 

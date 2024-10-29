@@ -4,13 +4,19 @@ import { getTimeDifference } from "@/lib/client-helper";
 import TimeDifference from "@/app/components/TimeDifference";
 import fetchApi from "@/lib/fetch";
 import { Metadata, ResolvingMetadata } from "next/types";
-
-function parseCatalogHandle(str: string) {
-  return str.substring(1);
-}
+import { AddToFavorites } from "./add-to-fav";
+import FilterChannel from "./filter-channel";
+import {
+  filterChannel,
+  getActiveChannelIds,
+  parseCatalogHandle,
+} from "./helper-methods";
 
 type PageProps = {
   params: { catalogHandle: string };
+  searchParams?: {
+    channelId: string;
+  };
 };
 
 export async function generateMetadata(
@@ -38,13 +44,18 @@ export async function generateMetadata(
 // export const revalidate = 43_200;
 export const revalidate = 60 * 5;
 
-export default async function CatalogHandle({ params }: PageProps) {
+export default async function CatalogHandle({
+  params,
+  searchParams,
+}: PageProps) {
+  const channelId = searchParams?.channelId;
+
   const catalogHandle = decodeURIComponent(params.catalogHandle);
   const catalogId = parseCatalogHandle(catalogHandle);
 
   const result = await fetchApi(`/catalogs/${catalogId}/video`);
 
-  const catalogData = result.data
+  const catalogData = result.data;
 
   const videos: Record<string, any> = catalogData?.data;
   const nextUpdate = catalogData?.nextUpdate;
@@ -59,9 +70,9 @@ export default async function CatalogHandle({ params }: PageProps) {
     );
   }
 
-  const today: any[] = videos?.day;
-  const week: any[] = videos?.week;
-  const month: any[] = videos?.month;
+  const [today, week, month] = filterChannel(videos, channelId);
+
+  const activeChannels = getActiveChannelIds(videos);
 
   const VideoCard = (props: any) => {
     const {
@@ -116,14 +127,20 @@ export default async function CatalogHandle({ params }: PageProps) {
                 <MdOutlineUpdate />
                 Next update: <TimeDifference date={nextUpdate} />
               </p>
-              {/* <AddToFavorites /> */}
+              <AddToFavorites
+                catalogId={catalogId}
+                catalogTitle={catalogTitle}
+                catalogDescription={catalogDescription}
+              />
             </div>
           </div>
         </div>
+
+        <FilterChannel activeChannels={activeChannels} />
       </header>
 
       {/* Today */}
-      {today.length ? (
+      {today?.length ? (
         <>
           <h2 className="text-2xl px-2 md:px-0">Today</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -136,7 +153,7 @@ export default async function CatalogHandle({ params }: PageProps) {
         <></>
       )}
       {/* This week */}
-      {week.length ? (
+      {week?.length ? (
         <>
           <h2 className="text-2xl px-2 md:px-0">This week</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -149,7 +166,7 @@ export default async function CatalogHandle({ params }: PageProps) {
         <></>
       )}
       {/* This month */}
-      {month.length ? (
+      {month?.length ? (
         <>
           <h2 className="text-2xl px-2 md:px-0">This month</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

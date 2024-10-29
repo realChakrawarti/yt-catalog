@@ -5,8 +5,8 @@ export async function middleware(request: NextRequest) {
   const userId = getUserIdCookie();
 
   if (!userId) {
-    console.log("Logging out: ", request.nextUrl.pathname);
-    return NextResponse.json("", { status: 401 });
+    console.log("Not authorized: ", request.nextUrl.pathname);
+    return NextResponse.json("Not authorized", { status: 401 });
   }
 
   return NextResponse.next({
