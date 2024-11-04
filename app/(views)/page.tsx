@@ -1,9 +1,11 @@
 "use client";
 
-import { Button } from "@/app/components/Button";
 import { githubProvider, googleProvider } from "@/lib/auth";
 import { useAuth } from "../context/AuthContextProvider";
 import Link from "next/link";
+import { GrCatalog } from "react-icons/gr";
+import { SiGmail } from "react-icons/si";
+import { FaGithub } from "react-icons/fa";
 
 export default function LoginPage() {
   const { authenticateWith } = useAuth();
@@ -17,24 +19,34 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex flex-col h-full relative items-center gap-6 px-6 md:px-0">
-      <div className="text-center">
-        <h1 className="text-xl">
-          Youtube Catalog - Organize Your YouTube Universe
-        </h1>
-        <p className="text-base text-gray-400">
-          Discover new channels, curate your favorite videos, and stay
-          organized.
-        </p>
-        <Link href={"/explore"} target="_blank">
-          <p className="text-indigo-600 active:text-indigo-900 hover:text-indigo-400 text-center mt-10">
-            Explore public catalogs
-          </p>
-        </Link>
+    <div className="grid grid-cols-[repeat(1,minmax(200px,1fr))] md:grid-cols-[repeat(2,minmax(200px,1fr))] lg:grid-cols-[repeat(3,minmax(200px,1fr))] auto-rows-[200px] min-h-full gap-3">
+      <Link
+        className="bg-slate-800 p-3 flex flex-col cursor-pointer"
+        href={"/explore"}
+        target="_blank"
+      >
+        <div className="self-center flex-grow grid items-center">
+          <GrCatalog className="size-16" />
+        </div>
+        <p className="text-gray-400">Explore catalogs</p>
+      </Link>
+      <div
+        onClick={signInWithGoogle}
+        className="bg-slate-800 p-3 flex flex-col cursor-pointer"
+      >
+        <div className="self-center flex-grow grid items-center">
+          <SiGmail className="size-16" />
+        </div>
+        <p className="text-gray-400">Login with Google</p>
       </div>
-      <div className="flex h-full justify-center gap-8 flex-col items-center">
-        <Button onPress={signInWithGoogle}>Login with Google</Button>
-        <Button onPress={signInWithGitHub}>Login with GitHub</Button>
+      <div
+        onClick={signInWithGitHub}
+        className="bg-slate-800 p-3 flex flex-col cursor-pointer"
+      >
+        <div className="self-center flex-grow grid items-center">
+          <FaGithub className="size-16" />
+        </div>
+        <p className="text-gray-400">Login with GitHub</p>
       </div>
     </div>
   );

@@ -31,8 +31,8 @@ export default function CatalogTabs() {
         <Tab id="public">Public</Tab>
         <Tab id="favorite">Favorites</Tab>
       </TabList>
-      <TabPanel id="public">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pt-5">
+      <TabPanel className="p-0" id="public">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
           {catalogsData?.length ? (
             catalogsData?.map((pageData: any) => {
               if (pageData?.id) {

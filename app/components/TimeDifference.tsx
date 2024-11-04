@@ -9,7 +9,10 @@ const TimeDifference = ({ date, ...rest }: any) => {
   useEffect(() => {
     const [when, timeDiff] = getTimeDifference(date);
     if ((when as number) < 0) {
-      setTime("Updating catalog list...");
+      setTime("Automatically updating, please wait...");
+      setTimeout(() => {
+        window?.location?.reload();
+      }, 4000);
     } else {
       setTime(timeDiff as string);
     }
