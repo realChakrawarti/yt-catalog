@@ -10,7 +10,11 @@ export async function GET() {
 
 export async function POST() {
   const userId = getUserIdCookie();
-  await createCatalog(userId);
+  const catalogId = await createCatalog(userId);
 
-  return NxResponse.success<any>("Catalog page created successfully.", {}, 201);
+  return NxResponse.success<{ catalogId: string }>(
+    "Catalog page created successfully.",
+    { catalogId },
+    201
+  );
 }

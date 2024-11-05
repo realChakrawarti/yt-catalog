@@ -16,7 +16,7 @@ function ThumbnailCarousel({ thumbnails }: { thumbnails: string[] }) {
   };
 
   return (
-    <div className="size-full">
+    <div className="size-full overflow-hidden">
       <Slider {...settings}>
         {thumbnails?.map((thumb) => (
           <div key={thumb}>

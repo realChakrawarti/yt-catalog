@@ -24,15 +24,6 @@ body {
   }
 }
 
-.yt-embed-container {
-  width: 480px;
-  height: 320px;
-}
-
-.yt-embed-container iframe {
-  border: 3px solid orangered;
-}
-
 @keyframes scroll {
   0% {
     transform: translateX(0);

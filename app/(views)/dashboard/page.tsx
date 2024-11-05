@@ -2,24 +2,23 @@
 
 import { Button } from "@/app/components/Button";
 import withAuth from "@/app/context/withAuth";
-
-import { useEffect, useState } from "react";
 import CatalogTable from "./catalog-table";
 import fetchApi from "@/lib/fetch";
 import { toast } from "@/app/components/Toast";
 import { BreadcrumbLayer } from "@/app/components/Breadcrumbs";
 import { useRouter } from "next/navigation";
+import useSWR from "swr";
+import Spinner from "@/app/components/Spinner";
 
 function DashboardPage() {
-  const [catalogs, setCatalogs] = useState<any[]>([]);
   const router = useRouter();
 
-  const getUserCatalog = async () => {
-    try {
-      const result = await fetchApi("/catalogs");
-      setCatalogs(result.data);
-    } catch (err) {}
-  };
+  const {
+    data: catalogs,
+    isLoading,
+    error,
+    mutate,
+  } = useSWR("/catalogs", (url) => fetchApi<any[]>(url));
 
   const handleEdit = (catalogId: string) => {
     router.push(`/catalogs/${catalogId}/edit`);
@@ -31,24 +30,20 @@ function DashboardPage() {
         const result = await fetchApi(`/catalogs/${catalogId}/delete`, {
           method: "DELETE",
         });
-        await getUserCatalog();
+        mutate();
         toast(result.message);
       } catch (err) {}
     }
   };
 
-  useEffect(() => {
-    getUserCatalog();
-  }, []);
-
   const createNewCatalog = async () => {
-    const result = await fetchApi("/catalogs", {
+    const result = await fetchApi<any>("/catalogs", {
       method: "POST",
     });
 
-    getUserCatalog();
-
+    mutate();
     toast(result.message);
+    router.replace(`/catalogs/${result.data.catalogId}/edit`);
   };
 
   const bcLayers = [
@@ -59,7 +54,7 @@ function DashboardPage() {
   ];
 
   return (
-    <div className="py-10">
+    <div>
       <BreadcrumbLayer layers={bcLayers} />
       <section className="flex flex-col gap-6">
         <div className="space-y-4">
@@ -67,10 +62,13 @@ function DashboardPage() {
             <h1 className="text-lg lg:text-xl">Catalogs</h1>
             <Button onPress={createNewCatalog}>Create Catalog</Button>
           </div>
-          {catalogs?.length ? (
+          {error && <p>Error loading catalogs</p>}
+          {isLoading ? (
+            <Spinner className="size-8" />
+          ) : catalogs?.data?.length ? (
             <section className="w-full">
               <CatalogTable
-                catalogs={catalogs}
+                catalogs={catalogs.data}
                 onDelete={handleDelete}
                 onEdit={handleEdit}
               />

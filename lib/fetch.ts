@@ -1,22 +1,30 @@
 // TODO: Retry, throttle, cancel after 10 seconds
-function fetchApi(endpoint: string, options?: RequestInit) {
+
+import { ApiResponse } from "./nx-response";
+
+async function fetchApi<T>(endpoint: string, options?: RequestInit) {
   if (!endpoint.startsWith("/")) {
     console.error("Please append a trailing '/' on the endpoint");
-    return;
+    throw new Error("Please append a trailing '/' on the endpoint");
   }
-  try {
-    const URL = `${process.env.NEXT_PUBLIC_API_BASE_URL}${endpoint}`;
 
-    const response = fetch(URL, options).then((data) => data.json());
-    return response;
-  } catch (err) {
-    if (err instanceof Error) {
-      console.error(err.message);
-      return;
-    }
-    console.error(err);
-    return;
+  const URL = `${process.env.NEXT_PUBLIC_API_BASE_URL}${endpoint}`;
+
+  const response: Promise<ApiResponse<T>> = fetch(URL, options)
+    .then((data) => data.json())
+    .catch((err) => {
+      console.error(err);
+      throw new Error(err?.message);
+    });
+  const awaitedResponse = await response;
+
+  if (!awaitedResponse.success) {
+    const error = new Error("An error occurred while fetching the data.");
+    error.cause = response;
+    throw error;
   }
+
+  return response;
 }
 
 export default fetchApi;

@@ -412,4 +412,6 @@ export async function createCatalog(userId: string) {
     title: `Title - ${nanoidToken}`,
     description: `Description - ${nanoidToken}`,
   });
+
+  return nanoidToken;
 }
