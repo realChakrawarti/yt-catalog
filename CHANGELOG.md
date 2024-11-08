@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.4](https://github.com/realChakrawarti/YTCatalog/compare/v1.2.3...v1.2.4) (2024-11-08)
+
+
+### Features
+
+* add loading spinner using swr for client components ([e6edc9e](https://github.com/realChakrawarti/YTCatalog/commit/e6edc9e7d677101ed24cbd12d34ca4c581662311))
+* update catalog table ([4d2de15](https://github.com/realChakrawarti/YTCatalog/commit/4d2de1534a256f513c2535cb85fbe7e91ba95da5))
+
 ### [1.2.3](https://github.com/realChakrawarti/YTCatalog/compare/v1.2.2...v1.2.3) (2024-10-29)
 
 
