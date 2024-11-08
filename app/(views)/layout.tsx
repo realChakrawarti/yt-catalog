@@ -24,11 +24,11 @@ export default function RootLayout({
   return (
     <html className="h-full" lang="en">
       <body
-        className={`min-h-full h-auto w-full overflow-y-auto flex flex-col ${inter.className} py-4 md:px-6`}
+        className={`min-h-full overflow-y-auto grid gap-3 grid-rows-[100px_1fr_50px] ${inter.className} p-3`}
       >
         <AuthContextProvider>
           <Header />
-          <main className="flex-grow">{children}</main>
+          <main className="flex flex-col">{children}</main>
         </AuthContextProvider>
         <Footer />
       </body>

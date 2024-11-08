@@ -5,7 +5,7 @@ export type ApiError = {
   details: string | null;
 };
 
-type ApiResponse<T = unknown> = {
+export type ApiResponse<T = unknown> = {
   // The success boolean allows for quick checks on the request outcome
   success: boolean;
   // The message field provides clear, human-readable information about the result.

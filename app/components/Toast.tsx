@@ -10,12 +10,13 @@ import {
   type ToastState,
   useToastQueue,
 } from "@react-stately/toast";
-import { type ReactNode, useEffect, useRef, useState } from "react";
+import { type ReactNode, useRef } from "react";
 import { Button } from "react-aria-components";
 import { createPortal } from "react-dom";
 import { IoIosClose } from "react-icons/io";
 
 import { twMerge } from "tailwind-merge";
+import { useIsMounted } from "usehooks-ts";
 
 type ToastProperties = AriaToastProps<ReactNode> & {
   readonly state: ToastState<ReactNode>;
@@ -39,10 +40,7 @@ function Toast({ state, ...properties }: ToastProperties) {
       )}
     >
       <div {...titleProps}>{properties.toast.content}</div>
-      <Button
-        {...closeButtonProps}
-        className={twMerge("outline-none p-1")}
-      >
+      <Button {...closeButtonProps} className={twMerge("outline-none p-1")}>
         <IoIosClose className="size-4" />
       </Button>
     </div>
@@ -61,17 +59,17 @@ export function Toaster() {
   const reference = useRef(null);
   const state = useToastQueue(toasts);
   const { regionProps } = useToastRegion({}, state, reference);
-  const [isMounted, setIsMounted] = useState<boolean>(false);
+  const isMounted = useIsMounted();
 
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  return isMounted
+  return isMounted()
     ? createPortal(
         state.visibleToasts.length >= 0 ? (
           <div
-            className={twMerge("fixed bottom-4 right-4", "flex flex-col gap-4", "bg-slate-900")}
+            className={twMerge(
+              "fixed bottom-4 right-4",
+              "flex flex-col gap-4",
+              "bg-slate-900"
+            )}
             {...regionProps}
             ref={reference}
           >

@@ -9,10 +9,11 @@ function checkPural(value: number, type: "minute" | "hour" | "day") {
   return stringValue;
 }
 
-function getDayHourMinute(timeDiff: number): number[] {
-  const MINUTES_PER_HOUR = 60;
-  const MINUTES_PER_DAY = 24 * MINUTES_PER_HOUR;
+const MINUTES_PER_HOUR = 60;
+const MINUTES_PER_DAY = 24 * MINUTES_PER_HOUR;
+const MINUTES_PER_MONTH = MINUTES_PER_DAY * 30;
 
+function getDayHourMinute(timeDiff: number): number[] {
   let daysHoursMinutes = "00/00/00";
 
   if (timeDiff < MINUTES_PER_HOUR) {
@@ -71,6 +72,10 @@ export function getTimeDifference(
 
   const delta = currentTime - serverTime;
   const deltaMinutes = Math.abs(delta) / (60 * 1000); // In minutes
+
+  if (deltaMinutes > MINUTES_PER_MONTH) {
+    return [0, "N/A"];
+  }
 
   // Past
   if (delta >= 0) {

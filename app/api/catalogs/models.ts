@@ -7,9 +7,11 @@ import {
   YOUTUBE_CHANNELS_INFORMATION,
 } from "@/lib/server-helper";
 import {
+  arrayRemove,
   collection,
   doc,
   DocumentData,
+  FieldValue,
   getDoc,
   getDocs,
   limit,
@@ -22,82 +24,36 @@ import {
 import topicData from "./youtube-topics.json";
 import { revalidatePath } from "next/cache";
 
-/**
- * This function sends the response of a specific catalog provided a valid catalogId
- * @param catalogId
- * @param userId
- * @returns
- */
-export async function getCatalogById(catalogId: string, userId: string) {
-  // Get channel list
-  const userRef = doc(db, COLLECTION.users, userId);
+type VideoMetadata = {
+  title: string;
+  channelId: string;
+  thumbnail: any;
+  channelTitle: string;
+  videoId: string;
+  publishedAt: string;
+  channelLogo: string;
+};
 
-  let catalogResponseData = {};
+type videoListData = {
+  day: VideoMetadata[];
+  week: VideoMetadata[];
+  month: VideoMetadata[];
+};
 
-  try {
-    const userPageRef = doc(userRef, COLLECTION.catalogs, catalogId);
+type CatalogData = {
+  thumbnails: string[];
+  id: string;
+  title: string;
+  description: string;
+  updatedAt: string;
+};
 
-    const channelList = await getDoc(userPageRef);
-    const channelListData = channelList.data()?.channels;
+const SIX_HOURS = 21_600_000; // 6 hours in ms
+const ONE_DAY = SIX_HOURS * 4;
+const ONE_WEEK = ONE_DAY * 7;
+const ONE_MONTH = ONE_DAY * 30;
 
-    // Get title and description
-
-    const catalogRef = doc(db, COLLECTION.catalogs, catalogId);
-    const catalogSnap = await getDoc(catalogRef);
-    const catalogData = catalogSnap.data();
-
-    catalogResponseData = {
-      title: catalogData?.title,
-      description: catalogData?.description,
-      channelList: channelListData,
-    };
-  } catch (err) {
-    console.error(err);
-  }
-
-  return catalogResponseData;
-}
-
-/**
- * This function returns all catalogs of a user
- * @param userId
- * @returns
- */
-export async function getCatalogByUser(userId: string) {
-  let userCatalogsData: any[] = [];
-
-  const userRef = doc(db, COLLECTION.users, userId);
-  try {
-    const userCatalogsCollectionRef = collection(userRef, COLLECTION.catalogs);
-    const userCatalogsDoc = await getDocs(userCatalogsCollectionRef);
-    const catalogIds = userCatalogsDoc.docs.map((doc) => doc.id);
-
-    if (!catalogIds.length) {
-      return userCatalogsData;
-    }
-
-    for (let i = 0; i < catalogIds.length; i++) {
-      const catalogId = catalogIds[i];
-      const catalogRef = doc(db, COLLECTION.catalogs, catalogId);
-      const catalogSnap = await getDoc(catalogRef);
-      const catalogData = catalogSnap.data();
-
-      userCatalogsData.push({
-        id: catalogId,
-        title: catalogData?.title,
-        description: catalogData?.description,
-        videoData: {
-          updatedAt: toUTCString(catalogData?.data?.updatedAt),
-          videos: catalogData?.data?.videos,
-        },
-      });
-    }
-  } catch (err) {
-    console.error(err);
-  }
-
-  return userCatalogsData;
-}
+const LIMIT = 10;
 
 type TopicId = keyof typeof topicData;
 
@@ -133,84 +89,6 @@ async function getChannelsInfo(channels: string[]) {
   return channelsInfo;
 }
 
-/**
- * This function updates the channels of a specific catalogId
- * @param userId
- * @param catalogId
- * @param channels
- */
-export async function updateChannels(
-  userId: string,
-  catalogId: string,
-  catalogPayload: any
-) {
-  const userRef = doc(db, COLLECTION.users, userId);
-  const userCatalogRef = doc(userRef, COLLECTION.catalogs, catalogId);
-  const catalogRef = doc(db, COLLECTION.catalogs, catalogId);
-
-  const { channels, title, description } = catalogPayload;
-
-  try {
-    const channelsInfo = await getChannelsInfo(channels);
-
-    await updateDoc(userCatalogRef, {
-      channels: channelsInfo,
-      updatedAt: new Date(),
-    });
-
-    if (title || description) {
-      await updateDoc(catalogRef, {
-        title: title,
-        description: description,
-      });
-    }
-  } catch (err) {
-    console.error(err);
-  }
-}
-
-/**
- * This function creates a catalog page for a user
- * @param userId
- */
-export async function createCatalog(userId: string) {
-  const userRef = doc(db, COLLECTION.users, userId);
-  const nanoidToken = createNanoidToken();
-  const catalogRef = doc(db, COLLECTION.catalogs, nanoidToken);
-
-  // Add a doc to user -> page collection
-  const userPageRef = doc(userRef, COLLECTION.catalogs, nanoidToken);
-
-  // Create pages sub-collection
-  await setDoc(userPageRef, {
-    channels: [],
-    updatedAt: new Date(),
-  });
-
-  // Add a doc to pages collection
-  await setDoc(catalogRef, {
-    data: {
-      updatedAt: new Date(0),
-    },
-    videoRef: userPageRef,
-    title: `Title - ${nanoidToken}`,
-    description: `Description - ${nanoidToken}`,
-  });
-}
-
-export async function updateCatalogVideos(catalogId: string) {
-  const data = await getVideosByCatalogId(catalogId);
-  return data;
-}
-
-type CatalogData = {
-  thumbnails: string[];
-  id: string;
-  title: string;
-  description: string;
-  updatedAt: string;
-};
-
 const getCatalogMetadata = async (catalogId: string) => {
   const catalogRef = doc(db, COLLECTION.catalogs, catalogId);
   const catalogSnap = await getDoc(catalogRef);
@@ -225,64 +103,6 @@ const getVideoThumbnails = (catalogData: DocumentData) => {
   const monthThumbnails = videos.month.map((video: any) => video.thumbnail.url);
   return [...dayThumbnails, ...weekThumbnails, ...monthThumbnails];
 };
-
-export async function getValidCatalogIds() {
-  let catalogListData: CatalogData[] = [];
-  const catalogsCollectionRef = collection(db, COLLECTION.catalogs);
-
-  const validCatalogQuery = query(
-    catalogsCollectionRef,
-    where("data.videos", "!=", false),
-    limit(25)
-  );
-
-  const catalogsDoc = await getDocs(validCatalogQuery);
-  const catalogIds = catalogsDoc.docs.map((catalog) => catalog.id);
-
-  // Get the title and description of the page
-  // Awaiting using a Promise.all is done to wait for the map to execute before returning the response
-  await Promise.all(
-    catalogIds.map(async (catalogId) => {
-      const catalogData = await getCatalogMetadata(catalogId);
-      if (catalogData) {
-        const metaData: CatalogData = {
-          thumbnails: getVideoThumbnails(catalogData),
-          title: catalogData?.title,
-          description: catalogData?.description,
-          id: "@" + catalogId,
-          updatedAt: catalogData?.data.updatedAt.toDate(),
-        };
-
-        catalogListData.push(metaData);
-      }
-    })
-  );
-
-  return catalogListData;
-}
-
-type VideoMetadata = {
-  title: string;
-  channelId: string;
-  thumbnail: any;
-  channelTitle: string;
-  videoId: string;
-  publishedAt: string;
-  channelLogo: string;
-};
-
-type videoListData = {
-  day: VideoMetadata[];
-  week: VideoMetadata[];
-  month: VideoMetadata[];
-};
-
-const SIX_HOURS = 21_600_000; // 6 hours in ms
-const ONE_DAY = SIX_HOURS * 4;
-const ONE_WEEK = ONE_DAY * 7;
-const ONE_MONTH = ONE_DAY * 30;
-
-const LIMIT = 10;
 
 function createPlaylistId(channel: string) {
   return channel.substring(0, 1) + "U" + channel.substring(2);
@@ -303,7 +123,7 @@ async function getPlaylistItems(channel: any) {
       playlistItemData.push({
         title: item.snippet.title,
         channelId: item.snippet.channelId,
-        thumbnail: item.snippet.thumbnails.standard,
+        thumbnail: item.snippet.thumbnails.medium,
         channelLogo: channel.logo,
         channelTitle: item.snippet.channelTitle,
         videoId: item.contentDetails.videoId,
@@ -327,7 +147,6 @@ export async function getVideosByCatalogId(catalogId: string) {
   };
 
   const catalogRef = doc(db, COLLECTION.catalogs, catalogId);
-
   const catalogSnap = await getDoc(catalogRef);
 
   if (!catalogSnap.exists()) {
@@ -412,4 +231,202 @@ export async function getVideosByCatalogId(catalogId: string) {
     videos: videoFilterData,
     nextUpdate: new Date(recentUpdate.getTime() + SIX_HOURS).toUTCString(),
   };
+}
+
+export async function updateCatalogVideos(catalogId: string) {
+  const data = await getVideosByCatalogId(catalogId);
+  return data;
+}
+
+/**
+ * This function sends the response of a specific catalog provided a valid catalogId
+ * @param catalogId
+ * @param userId
+ * @returns
+ */
+export async function getCatalogById(catalogId: string, userId: string) {
+  // Get channel list
+  const userRef = doc(db, COLLECTION.users, userId);
+
+  let catalogResponseData = {};
+
+  try {
+    const userPageRef = doc(userRef, COLLECTION.catalogs, catalogId);
+
+    const channelList = await getDoc(userPageRef);
+    const channelListData = channelList.data()?.channels;
+
+    // Get title and description
+
+    const catalogRef = doc(db, COLLECTION.catalogs, catalogId);
+    const catalogSnap = await getDoc(catalogRef);
+    const catalogData = catalogSnap.data();
+
+    catalogResponseData = {
+      title: catalogData?.title,
+      description: catalogData?.description,
+      channelList: channelListData,
+    };
+  } catch (err) {
+    console.error(err);
+  }
+
+  return catalogResponseData;
+}
+
+/**
+ * This function returns all catalogs of a user
+ * @param userId
+ * @returns
+ */
+export async function getCatalogByUser(userId: string) {
+  let userCatalogsData: any[] = [];
+
+  const userRef = doc(db, COLLECTION.users, userId);
+  try {
+    const userCatalogsCollectionRef = collection(userRef, COLLECTION.catalogs);
+    const userCatalogsDoc = await getDocs(userCatalogsCollectionRef);
+    const catalogIds = userCatalogsDoc.docs.map((doc) => doc.id);
+
+    if (!catalogIds.length) {
+      return userCatalogsData;
+    }
+
+    for (let i = 0; i < catalogIds.length; i++) {
+      const catalogId = catalogIds[i];
+      const catalogRef = doc(db, COLLECTION.catalogs, catalogId);
+      const catalogSnap = await getDoc(catalogRef);
+      const catalogData = catalogSnap.data();
+
+      userCatalogsData.push({
+        id: catalogId,
+        title: catalogData?.title,
+        description: catalogData?.description,
+        videoData: {
+          updatedAt: toUTCString(catalogData?.data?.updatedAt),
+          videos: catalogData?.data?.videos,
+        },
+      });
+    }
+  } catch (err) {
+    console.error(err);
+  }
+
+  return userCatalogsData;
+}
+
+export async function getValidCatalogIds() {
+  let catalogListData: CatalogData[] = [];
+  const catalogsCollectionRef = collection(db, COLLECTION.catalogs);
+
+  const validCatalogQuery = query(
+    catalogsCollectionRef,
+    where("data.videos", "!=", false),
+    limit(25)
+  );
+
+  const catalogsDoc = await getDocs(validCatalogQuery);
+  const catalogIds = catalogsDoc.docs.map((catalog) => catalog.id);
+
+  // Get the title and description of the page
+  // Awaiting using a Promise.all is done to wait for the map to execute before returning the response
+  await Promise.all(
+    catalogIds.map(async (catalogId) => {
+      const catalogData = await getCatalogMetadata(catalogId);
+      if (catalogData) {
+        const metaData: CatalogData = {
+          thumbnails: getVideoThumbnails(catalogData),
+          title: catalogData?.title,
+          description: catalogData?.description,
+          id: "@" + catalogId,
+          updatedAt: catalogData?.data.updatedAt.toDate(),
+        };
+
+        catalogListData.push(metaData);
+      }
+    })
+  );
+
+  return catalogListData;
+}
+
+export async function deleteChannel(
+  userId: string,
+  catalogId: string,
+  channels: any[]
+) {
+  const userRef = doc(db, COLLECTION.users, userId);
+  const userCatalogRef = doc(userRef, COLLECTION.catalogs, catalogId);
+
+  await setDoc(userCatalogRef, {
+    channels: channels,
+    updatedAt: new Date(),
+  });
+}
+
+/**
+ * This function updates the channels of a specific catalogId
+ * @param userId
+ * @param catalogId
+ * @param channels
+ */
+export async function updateChannels(
+  userId: string,
+  catalogId: string,
+  catalogPayload: any
+) {
+  const userRef = doc(db, COLLECTION.users, userId);
+  const userCatalogRef = doc(userRef, COLLECTION.catalogs, catalogId);
+  const catalogRef = doc(db, COLLECTION.catalogs, catalogId);
+
+  const { channels, title, description } = catalogPayload;
+
+  try {
+    const channelsInfo = await getChannelsInfo(channels);
+
+    await updateDoc(userCatalogRef, {
+      channels: channelsInfo,
+      updatedAt: new Date(),
+    },);
+
+    if (title || description) {
+      await updateDoc(catalogRef, {
+        title: title,
+        description: description,
+      });
+    }
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+/**
+ * This function creates a catalog page for a user
+ * @param userId
+ */
+export async function createCatalog(userId: string) {
+  const userRef = doc(db, COLLECTION.users, userId);
+  const nanoidToken = createNanoidToken();
+  const catalogRef = doc(db, COLLECTION.catalogs, nanoidToken);
+
+  // Add a doc to user -> page collection
+  const userPageRef = doc(userRef, COLLECTION.catalogs, nanoidToken);
+
+  // Create pages sub-collection
+  await setDoc(userPageRef, {
+    channels: [],
+    updatedAt: new Date(),
+  });
+
+  // Add a doc to pages collection
+  await setDoc(catalogRef, {
+    data: {
+      updatedAt: new Date(0),
+    },
+    videoRef: userPageRef,
+    title: `Title - ${nanoidToken}`,
+    description: `Description - ${nanoidToken}`,
+  });
+
+  return nanoidToken;
 }
