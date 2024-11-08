@@ -2,7 +2,7 @@
 
 import { ApiResponse } from "./nx-response";
 
-async function fetchApi<T>(endpoint: string, options?: RequestInit) {
+async function fetchApi<T = any>(endpoint: string, options?: RequestInit) {
   if (!endpoint.startsWith("/")) {
     console.error("Please append a trailing '/' on the endpoint");
     throw new Error("Please append a trailing '/' on the endpoint");

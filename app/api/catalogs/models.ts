@@ -7,9 +7,11 @@ import {
   YOUTUBE_CHANNELS_INFORMATION,
 } from "@/lib/server-helper";
 import {
+  arrayRemove,
   collection,
   doc,
   DocumentData,
+  FieldValue,
   getDoc,
   getDocs,
   limit,
@@ -145,7 +147,6 @@ export async function getVideosByCatalogId(catalogId: string) {
   };
 
   const catalogRef = doc(db, COLLECTION.catalogs, catalogId);
-
   const catalogSnap = await getDoc(catalogRef);
 
   if (!catalogSnap.exists()) {
@@ -349,6 +350,20 @@ export async function getValidCatalogIds() {
   return catalogListData;
 }
 
+export async function deleteChannel(
+  userId: string,
+  catalogId: string,
+  channels: any[]
+) {
+  const userRef = doc(db, COLLECTION.users, userId);
+  const userCatalogRef = doc(userRef, COLLECTION.catalogs, catalogId);
+
+  await setDoc(userCatalogRef, {
+    channels: channels,
+    updatedAt: new Date(),
+  });
+}
+
 /**
  * This function updates the channels of a specific catalogId
  * @param userId
@@ -372,7 +387,7 @@ export async function updateChannels(
     await updateDoc(userCatalogRef, {
       channels: channelsInfo,
       updatedAt: new Date(),
-    });
+    },);
 
     if (title || description) {
       await updateDoc(catalogRef, {

@@ -66,3 +66,6 @@ Reference: https://mokkapps.de/blog/how-to-automatically-generate-a-helpful-chan
     - https://git-scm.com/docs/githooks
 
 
+- Dialogs: https://vaul.emilkowal.ski/getting-started
+- Radix-ui Theme: https://www.radix-ui.com/themes/playground, `<Theme accentColor="pink" grayColor="olive" radius="none">`
+

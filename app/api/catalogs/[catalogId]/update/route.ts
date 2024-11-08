@@ -1,7 +1,7 @@
 import { NxResponse } from "@/lib/nx-response";
 import { getUserIdCookie } from "@/lib/server-helper";
 import { NextRequest } from "next/server";
-import { updateCatalogVideos, updateChannels } from "../../models";
+import { deleteChannel, updateCatalogVideos, updateChannels } from "../../models";
 import { revalidatePath } from "next/cache";
 
 type ContextParams = {
@@ -28,6 +28,20 @@ export async function GET(_request: NextRequest, ctx: ContextParams) {
   );
 }
 
+export async function DELETE(request: NextRequest, ctx: ContextParams) {
+  const userId = getUserIdCookie();
+  const { catalogId } = ctx.params;
+
+  const channels = await request.json();
+
+  await deleteChannel(userId, catalogId, channels);
+
+  revalidatePath(`/@${catalogId}`)
+
+  return NxResponse.success<any>("Channel deleted successfully.", {}, 201);
+
+}
+
 export async function PATCH(request: NextRequest, ctx: ContextParams) {
   const userId = getUserIdCookie();
   const { catalogId } = ctx.params;
@@ -52,6 +66,7 @@ export async function PATCH(request: NextRequest, ctx: ContextParams) {
 
   // Revalidate the /explore route
   revalidatePath("/explore");
+  revalidatePath(`/@${catalogId}`)
 
   return NxResponse.success<any>("Channel list update successfully.", {}, 201);
 }

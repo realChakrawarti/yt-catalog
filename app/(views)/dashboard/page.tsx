@@ -18,7 +18,7 @@ function DashboardPage() {
     isLoading,
     error,
     mutate,
-  } = useSWR("/catalogs", (url) => fetchApi<any[]>(url));
+  } = useSWR("/catalogs", (url) => fetchApi(url));
 
   const handleEdit = (catalogId: string) => {
     router.push(`/catalogs/${catalogId}/edit`);
@@ -37,13 +37,17 @@ function DashboardPage() {
   };
 
   const createNewCatalog = async () => {
-    const result = await fetchApi<any>("/catalogs", {
+    const result = await fetchApi("/catalogs", {
       method: "POST",
     });
 
-    mutate();
-    toast(result.message);
-    router.replace(`/catalogs/${result.data.catalogId}/edit`);
+    if (result.success) {
+      mutate();
+      toast(result.message);
+      router.replace(`/catalogs/${result.data.catalogId}/edit`);
+    } else {
+      toast("Failed to create catalog.");
+    }
   };
 
   const bcLayers = [
