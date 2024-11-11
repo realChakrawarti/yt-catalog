@@ -28,7 +28,8 @@
     "slick-carousel": "^1.8.1",
     "swr": "^2.2.5",
     "tailwind-variants": "^0.2.1",
-    "usehooks-ts": "^3.1.0"
+    "usehooks-ts": "^3.1.0",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.5.0",
