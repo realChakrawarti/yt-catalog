@@ -29,7 +29,7 @@ function EditCatalog({ params }: { params: CatalogPageParams }) {
     mutate,
   } = useSWR(
     catalogId ? `/catalogs/${catalogId}` : null,
-    (url) => fetchApi(url),
+    (url) => fetchApi(url, { cache: "no-store" }),
     { revalidateOnFocus: false }
   );
 

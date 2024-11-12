@@ -18,7 +18,7 @@ function DashboardPage() {
     isLoading,
     error,
     mutate,
-  } = useSWR("/catalogs", (url) => fetchApi(url));
+  } = useSWR("/catalogs", (url) => fetchApi(url, { cache: "no-store" }));
 
   const handleEdit = (catalogId: string) => {
     router.push(`/catalogs/${catalogId}/edit`);

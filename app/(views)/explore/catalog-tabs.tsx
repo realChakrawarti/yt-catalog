@@ -16,7 +16,7 @@ export default function CatalogTabs() {
     data: validCatalogs,
     isLoading,
     error,
-  } = useSWR("/catalogs/valid", () => fetchApi("/catalogs/valid"));
+  } = useSWR("/catalogs/valid", () => fetchApi("/catalogs/valid", {cache: "no-store"}));
 
   useEffect(() => {
     setFavoriteCatalogs(

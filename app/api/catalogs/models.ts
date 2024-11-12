@@ -7,11 +7,9 @@ import {
   YOUTUBE_CHANNELS_INFORMATION,
 } from "@/lib/server-helper";
 import {
-  arrayRemove,
   collection,
   doc,
   DocumentData,
-  FieldValue,
   getDoc,
   getDocs,
   limit,
@@ -387,7 +385,7 @@ export async function updateChannels(
     await updateDoc(userCatalogRef, {
       channels: channelsInfo,
       updatedAt: new Date(),
-    },);
+    });
 
     if (title || description) {
       await updateDoc(catalogRef, {
