@@ -1,4 +1,4 @@
-import packageInfo from "../../package.json";
+import packageInfo from "../../../package.json";
 import { FaSquareGithub } from "react-icons/fa6";
 
 export default function Footer() {

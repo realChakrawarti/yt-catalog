@@ -10,24 +10,24 @@ const firebaseConfig: FirebaseOptions = {
   storageBucket: "ytcatalog707.appspot.com",
   messagingSenderId: "874223131522",
   appId: "1:874223131522:web:1cbe3657cb8eed060ccd9b",
-  measurementId: "G-Y3581PJJ8M"
+  measurementId: "G-Y3581PJJ8M",
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const auth = getAuth(app)
+const auth = getAuth(app);
 
 // Initialize Firestore
-const db = getFirestore(app)
+const db = getFirestore(app);
 
-import localFirebase from "../firebase.json"
+import localFirebase from "../../firebase.json";
 
-const authPort = localFirebase.emulators.auth.port
-const firestorePort = localFirebase.emulators.firestore.port
+const authPort = localFirebase.emulators.auth.port;
+const firestorePort = localFirebase.emulators.firestore.port;
 
 if (process.env.NODE_ENV === "development") {
   connectAuthEmulator(auth, `http://127.0.0.1:${authPort}`);
-  connectFirestoreEmulator(db, '127.0.0.1', firestorePort);
+  connectFirestoreEmulator(db, "127.0.0.1", firestorePort);
 }
 
-export {app, auth, db}
+export { app, auth, db };
