@@ -3,7 +3,7 @@ import { FaSquareGithub } from "react-icons/fa6";
 
 export default function Footer() {
   return (
-    <footer className="h-4 self-end flex justify-between items-center w-full">
+    <footer className="p-3 h-auto self-end flex justify-between items-center w-full">
       <div>
         <p className="text-xs text-gray-500">
           Developed by{" "}

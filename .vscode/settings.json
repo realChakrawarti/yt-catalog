@@ -12,7 +12,7 @@
         "firestore-debug.log": true,
         "next-env.d.ts": true,
         "ui-debug.log": true,
-        "package-lock.json": true,
+        "package-lock.json": false,
         "firebase.json": true,
         "postcss.config.mjs": false,
         "tailwind.config.ts": false,
