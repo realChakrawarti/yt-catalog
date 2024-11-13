@@ -1,4 +1,4 @@
-import { NxResponse } from "@/lib/nx-response";
+import { NxResponse } from "~/utils/nx-response";
 
 export function GET(_request: Request) {
   const response = NxResponse.success<any>(

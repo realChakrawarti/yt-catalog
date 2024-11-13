@@ -1,10 +1,10 @@
-import { Cell, Column, Row, TableHeader, Table } from "@/app/components/Table";
+import { Cell, Column, Row, TableHeader, Table } from "~/components/custom/Table";
 import Link from "next/link";
 import { TableBody, Tooltip } from "react-aria-components";
 import { MdDeleteForever } from "react-icons/md";
 import { HiOutlinePencilAlt } from "react-icons/hi";
 import { FaLink } from "react-icons/fa";
-import { getTimeDifference } from "@/lib/client-helper";
+import { getTimeDifference } from "~/utils/client-helper";
 
 type CatalogTableProps = {
   catalogs: any[];

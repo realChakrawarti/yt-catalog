@@ -1,8 +1,8 @@
 import { YoutubePlayer } from "./component";
 import { MdOutlineUpdate } from "react-icons/md";
-import { getTimeDifference } from "@/lib/client-helper";
-import TimeDifference from "@/app/components/TimeDifference";
-import fetchApi from "@/lib/fetch";
+import { getTimeDifference } from "~/utils/client-helper";
+import TimeDifference from "~/components/custom/TimeDifference";
+import fetchApi from "~/utils/fetch";
 import { Metadata, ResolvingMetadata } from "next/types";
 import { AddToFavorites } from "./add-to-fav";
 import FilterChannel from "./filter-channel";

@@ -1,11 +1,11 @@
-import { db } from "@/lib/firebase";
+import { db } from "~/utils/firebase";
 import {
   COLLECTION,
   createNanoidToken,
   toUTCString,
   YOUTUBE_CHANNEL_PLAYLIST_VIDEOS,
   YOUTUBE_CHANNELS_INFORMATION,
-} from "@/lib/server-helper";
+} from "~/utils/server-helper";
 import {
   collection,
   doc,

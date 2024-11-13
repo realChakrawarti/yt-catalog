@@ -1,12 +1,12 @@
 "use client";
 
-import { Button } from "@/app/components/Button";
-import { Input, Label } from "@/app/components/Field";
-import fetchApi from "@/lib/fetch";
+import { Input, Label } from "~/components/custom/Field";
+import fetchApi from "~/utils/fetch";
 import { useEffect, useState } from "react";
 import { z } from "zod";
-import { toast } from "@/app/components/Toast";
-import Spinner from "@/app/components/Spinner";
+import { toast } from "~/components/custom/Toast";
+import Spinner from "~/components/custom/Spinner";
+import { Button } from "~/components/shadcn/button";
 
 const YouTubeVideoLinkRegex =
   /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/|shorts\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*/;
@@ -231,8 +231,8 @@ export default function CatalogForm({
               onChange={handleVideoLink}
             />
             <Button
-              isDisabled={Boolean(videoLink.error || !videoLink.link)}
-              onPress={validateVideoLink}
+              disabled={Boolean(videoLink.error || !videoLink.link)}
+              onClick={validateVideoLink}
             >
               Validate
             </Button>{" "}
@@ -246,13 +246,13 @@ export default function CatalogForm({
       <div className="flex gap-2 mt-5">
         {/* TODO: Maybe update "Not Saved" channels and title/description separately */}
         <Button
-          isDisabled={Boolean(
+          disabled={Boolean(
             (!localChannel.length &&
               (catalogMetadataError.title ||
                 catalogMetadataError.description)) ||
               isSubmitting
           )}
-          onPress={handleSubmit}
+          onClick={handleSubmit}
         >
           {isSubmitting ? <Spinner className="size-4" /> : null}
           Submit

@@ -1,10 +1,10 @@
 "use client";
 
-import { Button } from "@/app/components/Button";
 import { useEffect, useState } from "react";
 
 import { MdFavoriteBorder } from "react-icons/md";
 import { MdFavorite } from "react-icons/md";
+import { Button } from "~/components/shadcn/button";
 
 export const AddToFavorites = ({
   catalogId,
@@ -66,7 +66,7 @@ export const AddToFavorites = ({
 
   return (
     <div className="absolute top-0 right-1/2">
-      <Button variant="icon" onPress={addToFav}>
+      <Button onClick={addToFav}>
         {catalogExists ? (
           <MdFavorite size="16" />
         ) : (

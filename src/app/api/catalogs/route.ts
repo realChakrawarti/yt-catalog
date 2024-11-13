@@ -1,6 +1,6 @@
-import { NxResponse } from "@/lib/nx-response";
+import { NxResponse } from "~/utils/nx-response";
 import { createCatalog, getCatalogByUser } from "./models";
-import { getUserIdCookie } from "@/lib/server-helper";
+import { getUserIdCookie } from "~/utils/server-helper";
 
 export async function GET() {
   const userId = getUserIdCookie();

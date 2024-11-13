@@ -15,10 +15,10 @@ import {
   useLayoutEffect,
   useState,
 } from "react";
-import { auth } from "../../lib/firebase";
+import { auth } from "../../utils/firebase";
 import { useRouter } from "next/navigation";
-import fetchApi from "../../lib/fetch";
-import { toast } from "../components/Toast";
+import fetchApi from "../../utils/fetch";
+import { toast } from "../../components/custom/Toast";
 
 type UserContext = {
   user: User | null;

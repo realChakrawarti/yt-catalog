@@ -1,14 +1,14 @@
 "use client";
 
-import Spinner from "@/app/components/Spinner";
-import { toast } from "@/app/components/Toast";
-import withAuth from "@/app/context/withAuth";
-import fetchApi from "@/lib/fetch";
+import Spinner from "~/components/custom/Spinner";
+import { toast } from "~/components/custom/Toast";
+import fetchApi from "~/utils/fetch";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
 import ChannelTable from "./channel-table";
 import Link from "next/link";
 import CatalogForm from "./catalog-form";
+import withAuth from "~/app/auth/with-auth-hoc";
 
 type CatalogPageParams = {
   catalogId: string;

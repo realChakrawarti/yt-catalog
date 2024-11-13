@@ -1,6 +1,6 @@
 "use client";
 
-import { Tag, TagGroup } from "@/app/components/TagGroup";
+import { Tag, TagGroup } from "~/components/custom/TagGroup";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { Selection } from "react-aria-components";

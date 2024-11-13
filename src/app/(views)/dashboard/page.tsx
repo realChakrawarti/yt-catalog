@@ -1,14 +1,14 @@
 "use client";
 
-import { Button } from "@/app/components/Button";
-import withAuth from "@/app/context/withAuth";
 import CatalogTable from "./catalog-table";
-import fetchApi from "@/lib/fetch";
-import { toast } from "@/app/components/Toast";
-import { BreadcrumbLayer } from "@/app/components/Breadcrumbs";
+import fetchApi from "~/utils/fetch";
+import { toast } from "~/components/custom/Toast";
+import { BreadcrumbLayer } from "~/components/custom/Breadcrumbs";
 import { useRouter } from "next/navigation";
 import useSWR from "swr";
-import Spinner from "@/app/components/Spinner";
+import Spinner from "~/components/custom/Spinner";
+import withAuth from "~/app/auth/with-auth-hoc";
+import { Button } from "~/components/shadcn/button";
 
 function DashboardPage() {
   const router = useRouter();
@@ -64,7 +64,7 @@ function DashboardPage() {
         <div className="space-y-4">
           <div className="flex justify-between items-center">
             <h1 className="text-lg lg:text-xl">Catalogs</h1>
-            <Button onPress={createNewCatalog}>Create Catalog</Button>
+            <Button onClick={createNewCatalog}>Create Catalog</Button>
           </div>
           {error && <p>Error loading catalogs</p>}
           {isLoading ? (

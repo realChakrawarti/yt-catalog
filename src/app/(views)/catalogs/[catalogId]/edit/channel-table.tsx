@@ -1,4 +1,4 @@
-import { Cell, Column, Row, TableHeader, Table } from "@/app/components/Table";
+import { Cell, Column, Row, TableHeader, Table } from "~/components/custom/Table";
 import { TableBody } from "react-aria-components";
 
 function ChannelTable({ channels, handleDelete }: any) {

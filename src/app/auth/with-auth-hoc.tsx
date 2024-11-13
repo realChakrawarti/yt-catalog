@@ -1,7 +1,7 @@
 "use client";
 
 import { ReactNode, useEffect } from "react";
-import { useAuth } from "./AuthContextProvider";
+import { useAuth } from "./context-provider";
 import { useRouter } from "next/navigation";
 
 export default function withAuth(WrappedComponent: React.ComponentType<any>) {

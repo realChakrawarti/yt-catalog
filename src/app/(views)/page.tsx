@@ -1,11 +1,19 @@
 "use client";
 
-import { githubProvider, googleProvider } from "@/lib/auth";
-import { useAuth } from "../context/AuthContextProvider";
+import { githubProvider, googleProvider } from "../auth/service-providers";
+import { useAuth } from "../auth/context-provider";
 import Link from "next/link";
 import { GrCatalog } from "react-icons/gr";
 import { SiGmail } from "react-icons/si";
 import { FaGithub } from "react-icons/fa";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "~/components/shadcn/card";
 
 export default function LoginPage() {
   const { authenticateWith } = useAuth();
@@ -48,6 +56,18 @@ export default function LoginPage() {
         </div>
         <p className="text-gray-400">Login with GitHub</p>
       </div>
+      <Card>
+        <CardHeader>
+          <CardTitle>Card Title</CardTitle>
+          <CardDescription>Card Description</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <p>Card Content</p>
+        </CardContent>
+        <CardFooter>
+          <p>Card Footer</p>
+        </CardFooter>
+      </Card>
     </div>
   );
 }

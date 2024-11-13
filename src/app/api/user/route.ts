@@ -1,4 +1,4 @@
-import { NxResponse } from "@/lib/nx-response";
+import { NxResponse } from "~/utils/nx-response";
 import { NextRequest } from "next/server";
 import { createUserDocument, TWELEVE_HOURS } from "./models";
 

@@ -1,10 +1,11 @@
+import "~/app/styles/globals.css";
+
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
-import AuthContextProvider from "../context/AuthContextProvider";
-import Header from "../components/Header";
-import { Toaster } from "../components/Toast";
-import Footer from "../components/Footer";
+import Header from "../../components/custom/Header";
+import { Toaster } from "../../components/custom/Toast";
+import Footer from "../../components/custom/Footer";
+import Providers from "./context";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,15 +23,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html className="h-full" lang="en">
+    <html className="h-full" lang="en" suppressHydrationWarning>
       <body
         className={`min-h-full overflow-y-auto grid gap-3 grid-rows-[100px_1fr_50px] ${inter.className} p-3`}
       >
-        <AuthContextProvider>
+        <Providers>
           <Header />
           <main className="flex flex-col">{children}</main>
-        </AuthContextProvider>
-        <Footer />
+          <Footer />
+        </Providers>
       </body>
       <Toaster />
     </html>

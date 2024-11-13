@@ -1,5 +1,5 @@
-import { NxResponse } from "@/lib/nx-response";
-import { getUserIdCookie } from "@/lib/server-helper";
+import { NxResponse } from "~/utils/nx-response";
+import { getUserIdCookie } from "~/utils/server-helper";
 import { NextRequest } from "next/server";
 import { deleteChannel, updateCatalogVideos, updateChannels } from "../../models";
 import { revalidatePath } from "next/cache";
