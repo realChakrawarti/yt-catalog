@@ -1,0 +1,25 @@
+{
+    "files.exclude": {
+        ".next": true,
+        "node_modules": false,
+        ".commitlintrc.json": true,
+        ".env.example": true,
+        ".eslintrc.json": false,
+        ".gitignore": true,
+        ".versionrc.json": true,
+        "CHANGELOG.md": true,
+        "firebase-debug.log": true,
+        "firestore-debug.log": true,
+        "next-env.d.ts": true,
+        "ui-debug.log": true,
+        "package-lock.json": false,
+        "firebase.json": true,
+        "postcss.config.mjs": false,
+        "tailwind.config.ts": false,
+        "/D:/Personal/yt-catalog": true,
+        "tsconfig.json": false,
+        "next.config.mjs": false,
+        "DEPENDENCIES.md": true,
+        ".husky": true
+    }
+}
