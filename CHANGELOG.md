@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.5](https://github.com/realChakrawarti/YTCatalog/compare/v1.2.4...v1.2.5) (2024-11-14)
+
+
+### Features
+
+* add import-order, add shadcn components, update homepage & styling changes ([b219730](https://github.com/realChakrawarti/YTCatalog/commit/b2197302fe8780954d39fb1d860bbbd1fc019ec6))
+
+
+### Bug Fixes
+
+* `swr` fetcher with cache control `no-store` ([a8e0f3c](https://github.com/realChakrawarti/YTCatalog/commit/a8e0f3c23dcc2b94c18ed9a871bd3c9715fba597))
+* zod catalog validation, loading submit button while submitting ([3f28614](https://github.com/realChakrawarti/YTCatalog/commit/3f2861485a4316989f6a9b9ec19eb5bf3e2dba3e))
+
 ### [1.2.4](https://github.com/realChakrawarti/YTCatalog/compare/v1.2.3...v1.2.4) (2024-11-08)
 
 
