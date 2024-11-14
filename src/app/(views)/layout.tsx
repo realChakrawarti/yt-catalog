@@ -4,8 +4,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
 import BackgroundPattern from "~/components/custom/background-pattern";
-import Footer from "~/components/custom/footer";
-import Header from "~/components/custom/header";
+import Header from "~/components/custom/header.client";
+import Footer from "~/components/custom/site-footer";
 import { Toaster } from "~/components/shadcn/toaster";
 
 import Providers from "./context";
