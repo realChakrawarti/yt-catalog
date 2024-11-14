@@ -1,102 +1,51 @@
-import { useId } from "react";
+// Reference: https://ui.aceternity.com/components/feature-sections
 
-export default function FeatureList() {
-  return (
-    <div className="py-20 lg:py-40">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 md:gap-2 max-w-7xl mx-auto">
-        {grid.map((feature) => (
-          <div
-            key={feature.title}
-            className="relative bg-gradient-to-b dark:from-neutral-900 from-neutral-100 dark:to-neutral-950 to-white p-6 rounded-3xl overflow-hidden"
-          >
-            <Grid size={20} />
-            <p className="text-base font-bold text-neutral-800 dark:text-white relative z-20">
-              {feature.title}
-            </p>
-            <p className="text-neutral-600 dark:text-neutral-400 mt-4 text-base font-normal relative z-20">
-              {feature.description}
-            </p>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
+import { useId } from "react";
 
 const grid = [
   {
-    title: "HIPAA and SOC2 Compliant",
+    title: "Personalized Catalogs",
     description:
-      "Our applications are HIPAA and SOC2 compliant, your data is safe with us, always.",
+      "Create custom catalogs for your favorite channels, tailored to your interests.",
   },
   {
-    title: "Automated Social Media Posting",
+    title: "Automated Updates",
     description:
-      "Schedule and automate your social media posts across multiple platforms to save time and maintain a consistent online presence.",
+      "Stay up-to-date with the latest videos from your channels, automatically updated every 6 hours.",
   },
   {
-    title: "Advanced Analytics",
+    title: "Simple and Intuitive Interface",
     description:
-      "Gain insights into your social media performance with detailed analytics and reporting tools to measure engagement and ROI.",
+      "A clean and user-friendly design makes it easy to navigate and find the videos you want.",
   },
   {
-    title: "Content Calendar",
+    title: "Shareable Catalogs",
     description:
-      "Plan and organize your social media content with an intuitive calendar view, ensuring you never miss a post.",
+      "Share your curated catalogs with friends and family, making it easy to discover new content together.",
   },
   {
-    title: "Audience Targeting",
+    title: "Ad-Free Experience",
     description:
-      "Reach the right audience with advanced targeting options, including demographics, interests, and behaviors.",
+      "Enjoy a seamless viewing experience without interruptions from ads.",
   },
   {
-    title: "Social Listening",
+    title: "Dark Mode",
     description:
-      "Monitor social media conversations and trends to stay informed about what your audience is saying and respond in real-time.",
+      "Reduce eye strain and enhance your viewing experience with dark mode.",
   },
   {
-    title: "Customizable Templates",
+    title: "Mobile-Friendly",
     description:
-      "Create stunning social media posts with our customizable templates, designed to fit your brand's unique style and voice.",
+      "Access your curated catalogs on your smartphone or tablet, anytime, anywhere.",
   },
   {
-    title: "Collaboration Tools",
+    title: "Privacy-Focused",
     description:
-      "Work seamlessly with your team using our collaboration tools, allowing you to assign tasks, share drafts, and provide feedback in real-time.",
+      "Your data privacy is our top priority. We use industry-standard security measures to protect your information.",
   },
 ];
 
-export const Grid = ({
-  pattern,
-  size,
-}: {
-  pattern?: number[][];
-  size?: number;
-}) => {
-  const p = pattern ?? [
-    [Math.floor(Math.random() * 4) + 7, Math.floor(Math.random() * 6) + 1],
-    [Math.floor(Math.random() * 4) + 7, Math.floor(Math.random() * 6) + 1],
-    [Math.floor(Math.random() * 4) + 7, Math.floor(Math.random() * 6) + 1],
-    [Math.floor(Math.random() * 4) + 7, Math.floor(Math.random() * 6) + 1],
-    [Math.floor(Math.random() * 4) + 7, Math.floor(Math.random() * 6) + 1],
-  ];
-  return (
-    <div className="pointer-events-none absolute left-1/2 top-0  -ml-20 -mt-2 h-full w-full [mask-image:linear-gradient(white,transparent)]">
-      <div className="absolute inset-0 bg-gradient-to-r  [mask-image:radial-gradient(farthest-side_at_top,white,transparent)] dark:from-zinc-900/30 from-zinc-100/30 to-zinc-300/30 dark:to-zinc-900/30 opacity-100">
-        <GridPattern
-          width={size ?? 20}
-          height={size ?? 20}
-          x="-12"
-          y="4"
-          squares={p}
-          className="absolute inset-0 h-full w-full  mix-blend-overlay dark:fill-white/10 dark:stroke-white/10 stroke-black/10 fill-black/10"
-        />
-      </div>
-    </div>
-  );
-};
-
-export function GridPattern({ width, height, x, y, squares, ...props }: any) {
+function GridPattern({ width, height, x, y, squares, ...props }: any) {
   const patternId = useId();
 
   return (
@@ -134,5 +83,52 @@ export function GridPattern({ width, height, x, y, squares, ...props }: any) {
         </svg>
       )}
     </svg>
+  );
+}
+
+const Grid = ({ pattern, size }: { pattern?: number[][]; size?: number }) => {
+  const p = pattern ?? [
+    [Math.floor(Math.random() * 4) + 7, Math.floor(Math.random() * 6) + 1],
+    [Math.floor(Math.random() * 4) + 7, Math.floor(Math.random() * 6) + 1],
+    [Math.floor(Math.random() * 4) + 7, Math.floor(Math.random() * 6) + 1],
+    [Math.floor(Math.random() * 4) + 7, Math.floor(Math.random() * 6) + 1],
+    [Math.floor(Math.random() * 4) + 7, Math.floor(Math.random() * 6) + 1],
+  ];
+  return (
+    <div className="pointer-events-none absolute left-1/2 top-0  -ml-20 -mt-2 h-full w-full [mask-image:linear-gradient(white,transparent)]">
+      <div className="absolute inset-0 bg-gradient-to-r  [mask-image:radial-gradient(farthest-side_at_top,white,transparent)] dark:from-zinc-900/30 from-zinc-100/30 to-zinc-300/30 dark:to-zinc-900/30 opacity-100">
+        <GridPattern
+          width={size ?? 20}
+          height={size ?? 20}
+          x="-12"
+          y="4"
+          squares={p}
+          className="absolute inset-0 h-full w-full  mix-blend-overlay dark:fill-white/10 dark:stroke-white/10 stroke-black/10 fill-black/10"
+        />
+      </div>
+    </div>
+  );
+};
+
+export default function FeatureList() {
+  return (
+    <div className="">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 md:gap-3 max-w-7xl mx-auto">
+        {grid.map((feature) => (
+          <div
+            key={feature.title}
+            className="relative bg-gradient-to-b dark:from-neutral-900 from-neutral-100 dark:to-neutral-950 to-white p-6 rounded-3xl overflow-hidden"
+          >
+            <Grid size={20} />
+            <p className="text-base font-bold text-neutral-800 dark:text-white relative z-20">
+              {feature.title}
+            </p>
+            <p className="text-neutral-600 dark:text-neutral-400 mt-4 text-base font-normal relative z-20">
+              {feature.description}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }

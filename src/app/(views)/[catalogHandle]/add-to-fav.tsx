@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
 import { MdFavoriteBorder } from "react-icons/md";
 import { MdFavorite } from "react-icons/md";
+
 import { Button } from "~/components/shadcn/button";
 
 export const AddToFavorites = ({
@@ -23,6 +23,7 @@ export const AddToFavorites = ({
 
   useEffect(() => {
     checkIfExists();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [existingCatalogs]);
 
   const checkIfExists = () => {

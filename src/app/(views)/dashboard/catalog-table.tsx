@@ -1,9 +1,17 @@
-import { Cell, Column, Row, TableHeader, Table } from "~/components/custom/Table";
 import Link from "next/link";
-import { TableBody, Tooltip } from "react-aria-components";
-import { MdDeleteForever } from "react-icons/md";
-import { HiOutlinePencilAlt } from "react-icons/hi";
-import { FaLink } from "react-icons/fa";
+
+import { DeleteIcon, EditIcon, LinkIcon } from "~/components/custom/icons";
+import JustTip from "~/components/custom/just-the-tip";
+import { Button } from "~/components/shadcn/button";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "~/components/shadcn/table";
 import { getTimeDifference } from "~/utils/client-helper";
 
 type CatalogTableProps = {
@@ -14,47 +22,78 @@ type CatalogTableProps = {
 
 function CatalogTable({ catalogs, onDelete, onEdit }: CatalogTableProps) {
   return (
-    <Table className="w-full" aria-label="Catalogs">
-      <TableHeader className="py-2">
-        <Column maxWidth={200}>Title</Column>
-        <Column maxWidth={150} isRowHeader>
-          Catalog ID
-        </Column>
-        <Column>Description</Column>
-        <Column>Last updated</Column>
-        <Column maxWidth={150}>Action</Column>
+    <Table>
+      <TableCaption>A list of catalogs.</TableCaption>
+      <TableHeader>
+        <TableRow>
+          <TableHead className="max-w-[200px] font-semibold">Title</TableHead>
+          <TableHead className="max-w-[150px] font-semibold">
+            Catalog ID
+          </TableHead>
+          <TableHead className="font-semibold">Description</TableHead>
+          <TableHead className="text-center font-semibold">
+            Last updated
+          </TableHead>
+          <TableHead></TableHead>
+        </TableRow>
       </TableHeader>
-      <TableBody
-        renderEmptyState={() => <div className="text-center">Loading</div>}
-      >
-        {catalogs?.map((catalog) => (
-          <Row className="py-2" key={catalog?.id}>
-            <Cell>{catalog?.title}</Cell>
-            <Cell>{catalog?.id}</Cell>
-            <Cell>{catalog?.description}</Cell>
-            <Cell>{getTimeDifference(catalog?.videoData?.updatedAt)[1]}</Cell>
-            <Cell>
-              <div className="flex gap-2 items-center">
-                <HiOutlinePencilAlt
-                  onClick={() => onEdit(catalog?.id)}
-                  size="18"
-                  className="text-sky-700 hover:text-sky-500 cursor-pointer"
-                />
-                <Tooltip>Edit Catalog</Tooltip>
+      <TableBody>
+        {catalogs?.length === 0 ? (
+          <TableRow>
+            <TableCell colSpan={5} className="h-4 text-center">
+              No catalog added yet.
+            </TableCell>
+          </TableRow>
+        ) : (
+          catalogs?.map((catalog) => (
+            <TableRow key={catalog?.id}>
+              <TableCell>{catalog?.title}</TableCell>
+              <TableCell>{catalog?.id}</TableCell>
+              <TableCell>{catalog?.description}</TableCell>
+              <TableCell className="text-center">
+                {getTimeDifference(catalog?.videoData?.updatedAt)[1]}
+              </TableCell>
+              <TableCell>
+                <div className="flex gap-2 items-center justify-end">
+                  <JustTip label="Edit Catalog">
+                    <Button
+                      variant="outline"
+                      onClick={() => onEdit(catalog?.id)}
+                    >
+                      <EditIcon
+                        size={24}
+                        className="text-sky-700 hover:text-sky-500 cursor-pointer"
+                      />
+                    </Button>
+                  </JustTip>
 
-                <MdDeleteForever
-                  onClick={() => onDelete(catalog?.id)}
-                  size="18"
-                  className="text-red-700 hover:text-red-500 cursor-pointer"
-                />
+                  <JustTip label="Remove Catalog">
+                    <Button
+                      variant="outline"
+                      onClick={() => onDelete(catalog?.id)}
+                    >
+                      <DeleteIcon
+                        size={24}
+                        className="text-red-700 hover:text-red-500 cursor-pointer"
+                      />
+                    </Button>
+                  </JustTip>
 
-                <Link href={`/@${catalog?.id}`}>
-                <FaLink size="18" className="cursor-pointer text-gray-400" /> 
-                </Link>
-              </div>
-            </Cell>
-          </Row>
-        ))}
+                  <JustTip label="Visit Catalog">
+                    <Link href={`/@${catalog?.id}`}>
+                      <Button variant="outline">
+                        <LinkIcon
+                          size={24}
+                          className="cursor-pointer text-gray-400"
+                        />
+                      </Button>
+                    </Link>
+                  </JustTip>
+                </div>
+              </TableCell>
+            </TableRow>
+          ))
+        )}
       </TableBody>
     </Table>
   );

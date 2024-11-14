@@ -1,4 +1,5 @@
 import Link from "next/link";
+
 import ThumbnailCarousel from "./carousel-thumbnails";
 
 export default function CatalogCard({ pageData }: any) {

@@ -4,7 +4,7 @@
         "node_modules": false,
         ".commitlintrc.json": true,
         ".env.example": true,
-        ".eslintrc.json": true,
+        ".eslintrc.json": false,
         ".gitignore": true,
         ".versionrc.json": true,
         "CHANGELOG.md": true,

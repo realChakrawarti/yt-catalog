@@ -1,14 +1,16 @@
 "use client";
 
-import Spinner from "~/components/custom/Spinner";
-import { toast } from "~/components/custom/Toast";
-import fetchApi from "~/utils/fetch";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
-import ChannelTable from "./channel-table";
-import Link from "next/link";
-import CatalogForm from "./catalog-form";
+
 import withAuth from "~/app/auth/with-auth-hoc";
+import Spinner from "~/components/custom/Spinner";
+import { useToast } from "~/hooks/use-toast";
+import fetchApi from "~/utils/fetch";
+
+import CatalogForm from "./catalog-form";
+import ChannelTable from "./channel-table";
 
 type CatalogPageParams = {
   catalogId: string;
@@ -21,6 +23,8 @@ type LocalChannel = {
 
 function EditCatalog({ params }: { params: CatalogPageParams }) {
   const { catalogId } = params;
+
+  const { toast } = useToast()
 
   const {
     data: catalogData,
@@ -59,10 +63,10 @@ function EditCatalog({ params }: { params: CatalogPageParams }) {
       });
 
       if (result.success) {
-        toast(`${deleteChannel.title}'s channel deleted from the catalog.`);
+        toast({title: `${deleteChannel.title}'s channel deleted from the catalog.`});
         mutate();
       } else {
-        toast("Something went wrong.");
+        toast({title: "Something went wrong."});
       }
     }
   };
@@ -75,10 +79,14 @@ function EditCatalog({ params }: { params: CatalogPageParams }) {
   };
 
   return (
-    <div>
+    <div className="p-3">
       <h1 className="text-lg md:text-xl">Edit Catalog</h1>
       {error && <p>Something went wrong!</p>}
-      {isLoading && <Spinner className="size-8" />}
+      {isLoading && (
+        <div className="size-full grid items-center">
+          <Spinner className="size-8" />
+        </div>
+      )}
       {!isLoading && !error && (
         <div>
           <div className="flex gap-2 items-center">
@@ -98,17 +106,13 @@ function EditCatalog({ params }: { params: CatalogPageParams }) {
           />
 
           <div className="pt-5">
-            {savedChannels?.length ? (
-              <>
-                <h2>Saved</h2>
-                <ChannelTable
-                  channels={savedChannels}
-                  handleDelete={handleDeleteSaved}
-                />
-              </>
-            ) : (
-              <p>No channels added yet</p>
-            )}
+            <>
+              <h2>Saved</h2>
+              <ChannelTable
+                channels={savedChannels}
+                handleDelete={handleDeleteSaved}
+              />
+            </>
           </div>
           <div className="pt-5">
             {localChannel?.length ? (

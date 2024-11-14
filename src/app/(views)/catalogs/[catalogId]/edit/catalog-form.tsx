@@ -1,12 +1,13 @@
 "use client";
 
-import { Input, Label } from "~/components/custom/Field";
-import fetchApi from "~/utils/fetch";
 import { useEffect, useState } from "react";
 import { z } from "zod";
-import { toast } from "~/components/custom/Toast";
+
+import { Input, Label } from "~/components/custom/Field";
 import Spinner from "~/components/custom/Spinner";
 import { Button } from "~/components/shadcn/button";
+import { useToast } from "~/hooks/use-toast";
+import fetchApi from "~/utils/fetch";
 
 const YouTubeVideoLinkRegex =
   /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/|shorts\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*/;
@@ -61,6 +62,8 @@ export default function CatalogForm({
 
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
+  const { toast } = useToast();
+
   useEffect(() => {
     setCatalogMetadata({
       title: catalogData?.title,
@@ -93,7 +96,7 @@ export default function CatalogForm({
       revalidateCatalog();
     }
 
-    toast(result.message);
+    toast({ title: result.message });
     setIsSubmitting(false);
     setLocalChannel([]);
   };
@@ -109,7 +112,7 @@ export default function CatalogForm({
       const result = await fetchApi(`/youtube/videoId?videoId=${videoId}`);
 
       if (!result.success) {
-        toast(result.message);
+        toast({ title: result.message });
         return;
       }
       const videoData = result.data.items[0].snippet;
@@ -129,11 +132,13 @@ export default function CatalogForm({
           ...prev,
           { id: channelId, title: channelTitle },
         ]);
-        toast(`${channelTitle}'s channel added to the list.`);
+        toast({ title: `${channelTitle}'s channel added to the list.` });
       } else if (alreadyExists) {
-        toast(`${channelTitle}'s channel already added to the list.`);
+        toast({
+          title: `${channelTitle}'s channel already added to the list.`,
+        });
       } else if (alreadySaved) {
-        toast(`${channelTitle}'s channel already saved.`);
+        toast({ title: `${channelTitle}'s channel already saved.` });
       }
 
       setVideoLink({

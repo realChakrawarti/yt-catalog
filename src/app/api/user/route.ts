@@ -1,5 +1,7 @@
-import { NxResponse } from "~/utils/nx-response";
 import { NextRequest } from "next/server";
+
+import { NxResponse } from "~/utils/nx-response";
+
 import { createUserDocument, TWELEVE_HOURS } from "./models";
 
 export async function POST(request: NextRequest) {

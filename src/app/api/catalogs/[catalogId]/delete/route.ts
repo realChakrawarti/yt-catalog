@@ -1,9 +1,10 @@
-import { db } from "~/utils/firebase";
-import { NxResponse } from "~/utils/nx-response";
-import { COLLECTION, getUserIdCookie } from "~/utils/server-helper";
 import { doc, writeBatch } from "firebase/firestore";
 import { revalidatePath } from "next/cache";
 import { NextRequest } from "next/server";
+
+import { db } from "~/utils/firebase";
+import { NxResponse } from "~/utils/nx-response";
+import { COLLECTION, getUserIdCookie } from "~/utils/server-helper";
 
 type ContextParams = {
   params: {

@@ -8,6 +8,7 @@ import {
   signOut,
   type User,
 } from "firebase/auth";
+import { useRouter } from "next/navigation";
 import {
   createContext,
   type PropsWithChildren,
@@ -15,10 +16,11 @@ import {
   useLayoutEffect,
   useState,
 } from "react";
-import { auth } from "../../utils/firebase";
-import { useRouter } from "next/navigation";
+
+import { useToast } from "~/hooks/use-toast";
+
 import fetchApi from "../../utils/fetch";
-import { toast } from "../../components/custom/Toast";
+import { auth } from "../../utils/firebase";
 
 type UserContext = {
   user: User | null;
@@ -38,6 +40,7 @@ const AuthContext = createContext<UserContext>({
 
 export default function AuthContextProvider({ children }: PropsWithChildren) {
   const router = useRouter();
+  const { toast } = useToast();
 
   const [userState, setUserState] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -74,7 +77,7 @@ export default function AuthContextProvider({ children }: PropsWithChildren) {
           method: "POST",
           body: JSON.stringify({ uid: user.uid }),
         });
-        toast(result.message);
+        toast({ title: result.message });
         router.push("/dashboard");
       }
     } catch (err) {
@@ -87,7 +90,7 @@ export default function AuthContextProvider({ children }: PropsWithChildren) {
     signOut(auth);
     window.localStorage.clear();
     const result = await fetchApi("/logout");
-    toast(result.message);
+    toast({ title: result.message });
     router.push("/");
   };
 

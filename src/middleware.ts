@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+
 import { getUserIdCookie } from "./utils/server-helper";
 
 export async function middleware(request: NextRequest) {

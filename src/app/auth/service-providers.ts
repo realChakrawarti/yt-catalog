@@ -1,5 +1,6 @@
-import { GoogleAuthProvider, GithubAuthProvider } from "firebase/auth";
+import { GithubAuthProvider,GoogleAuthProvider } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
+
 import { app } from "../../utils/firebase";
 
 // Initialize Firestore

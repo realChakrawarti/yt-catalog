@@ -1,11 +1,3 @@
-import { db } from "~/utils/firebase";
-import {
-  COLLECTION,
-  createNanoidToken,
-  toUTCString,
-  YOUTUBE_CHANNEL_PLAYLIST_VIDEOS,
-  YOUTUBE_CHANNELS_INFORMATION,
-} from "~/utils/server-helper";
 import {
   collection,
   doc,
@@ -18,9 +10,18 @@ import {
   updateDoc,
   where,
 } from "firebase/firestore";
+import { revalidatePath } from "next/cache";
+
+import { db } from "~/utils/firebase";
+import {
+  COLLECTION,
+  createNanoidToken,
+  toUTCString,
+  YOUTUBE_CHANNEL_PLAYLIST_VIDEOS,
+  YOUTUBE_CHANNELS_INFORMATION,
+} from "~/utils/server-helper";
 
 import topicData from "./youtube-topics.json";
-import { revalidatePath } from "next/cache";
 
 type VideoMetadata = {
   title: string;

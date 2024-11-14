@@ -1,8 +1,10 @@
+import { revalidatePath } from "next/cache";
+import { NextRequest } from "next/server";
+
 import { NxResponse } from "~/utils/nx-response";
 import { getUserIdCookie } from "~/utils/server-helper";
-import { NextRequest } from "next/server";
+
 import { deleteChannel, updateCatalogVideos, updateChannels } from "../../models";
-import { revalidatePath } from "next/cache";
 
 type ContextParams = {
   params: {

@@ -1,10 +1,13 @@
-import { YoutubePlayer } from "./component";
-import { MdOutlineUpdate } from "react-icons/md";
-import { getTimeDifference } from "~/utils/client-helper";
-import TimeDifference from "~/components/custom/TimeDifference";
-import fetchApi from "~/utils/fetch";
+/* eslint-disable @next/next/no-img-element */
 import { Metadata, ResolvingMetadata } from "next/types";
+import { MdOutlineUpdate } from "react-icons/md";
+
+import TimeDifference from "~/components/custom/TimeDifference";
+import { getTimeDifference } from "~/utils/client-helper";
+import fetchApi from "~/utils/fetch";
+
 import { AddToFavorites } from "./add-to-fav";
+import { YoutubePlayer } from "./component";
 import FilterChannel from "./filter-channel";
 import {
   filterChannel,
@@ -113,7 +116,7 @@ export default async function CatalogHandle({
 
   return (
     <div className="space-y-4 pb-6">
-      <header className="px-2 md:px-0">
+      <h1 className="px-2 md:px-0">
         <div className="space-y-0">
           <div className="flex flex-col gap-3 lg:flex-row lg:justify-between lg:items-center">
             <div className="space-y-1">
@@ -137,7 +140,7 @@ export default async function CatalogHandle({
         </div>
 
         <FilterChannel activeChannels={activeChannels} />
-      </header>
+      </h1>
 
       {/* Today */}
       {today?.length ? (

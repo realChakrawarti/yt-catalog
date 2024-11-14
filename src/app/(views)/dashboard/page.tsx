@@ -1,17 +1,20 @@
 "use client";
 
-import CatalogTable from "./catalog-table";
-import fetchApi from "~/utils/fetch";
-import { toast } from "~/components/custom/Toast";
-import { BreadcrumbLayer } from "~/components/custom/Breadcrumbs";
 import { useRouter } from "next/navigation";
 import useSWR from "swr";
-import Spinner from "~/components/custom/Spinner";
+
 import withAuth from "~/app/auth/with-auth-hoc";
+import { CatalogAddIcon } from "~/components/custom/icons";
+import Spinner from "~/components/custom/Spinner";
 import { Button } from "~/components/shadcn/button";
+import { useToast } from "~/hooks/use-toast";
+import fetchApi from "~/utils/fetch";
+
+import CatalogTable from "./catalog-table";
 
 function DashboardPage() {
   const router = useRouter();
+  const { toast } = useToast();
 
   const {
     data: catalogs,
@@ -31,7 +34,7 @@ function DashboardPage() {
           method: "DELETE",
         });
         mutate();
-        toast(result.message);
+        toast({ title: result.message });
       } catch (err) {}
     }
   };
@@ -43,45 +46,41 @@ function DashboardPage() {
 
     if (result.success) {
       mutate();
-      toast(result.message);
-      router.replace(`/catalogs/${result.data.catalogId}/edit`);
+      toast({ title: result.message });
+      router.push(`/catalogs/${result.data.catalogId}/edit`);
     } else {
-      toast("Failed to create catalog.");
+      toast({ title: "Failed to create catalog." });
     }
   };
 
-  const bcLayers = [
-    {
-      label: "Dashboard",
-      disabled: true,
-    },
-  ];
-
+  // TODO: Maybe a search bar to search through catalogs and curate
   return (
-    <div>
-      <BreadcrumbLayer layers={bcLayers} />
-      <section className="flex flex-col gap-6">
-        <div className="space-y-4">
-          <div className="flex justify-between items-center">
-            <h1 className="text-lg lg:text-xl">Catalogs</h1>
-            <Button onClick={createNewCatalog}>Create Catalog</Button>
-          </div>
-          {error && <p>Error loading catalogs</p>}
-          {isLoading ? (
-            <Spinner className="size-8" />
-          ) : catalogs?.data?.length ? (
-            <section className="w-full">
-              <CatalogTable
-                catalogs={catalogs.data}
-                onDelete={handleDelete}
-                onEdit={handleEdit}
-              />
-            </section>
-          ) : (
-            <div>No catalog was found!</div>
-          )}
+    <div className="p-3 flex flex-col gap-3">
+      <h1 className="text-2xl font-semibold tracking-tight">Dashboard</h1>
+      <div className="space-y-4">
+        <div className="flex justify-between items-center">
+          <h1 className="text-lg lg:text-xl">Catalogs</h1>
+          <Button onClick={createNewCatalog}>
+            <span className="flex items-center gap-2">
+              <CatalogAddIcon size={24} />
+              Create Catalog
+            </span>
+          </Button>
         </div>
-      </section>
+        {error && <p>Error loading catalogs</p>}
+        {isLoading ? (
+          <Spinner className="size-8" />
+        ) : (
+          <section className="w-full rounded-lg">
+            {/* TODO: Maybe add a skeleton? */}
+            <CatalogTable
+              catalogs={catalogs?.data}
+              onDelete={handleDelete}
+              onEdit={handleEdit}
+            />
+          </section>
+        )}
+      </div>
     </div>
   );
 }

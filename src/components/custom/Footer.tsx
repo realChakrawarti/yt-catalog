@@ -1,5 +1,5 @@
 import packageInfo from "../../../package.json";
-import { FaSquareGithub } from "react-icons/fa6";
+import { GithubIcon } from "./icons";
 
 export default function Footer() {
   return (
@@ -8,7 +8,7 @@ export default function Footer() {
         <p className="text-xs text-gray-500">
           Developed by{" "}
           <a
-            className="cursor-pointer text-indigo-500"
+            className="cursor-pointer text-[hsl(var(--primary))] hover:text-[hsl(var(--primary))]/70"
             target="_blank"
             href="https://707x.in"
           >
@@ -16,20 +16,24 @@ export default function Footer() {
           </a>
         </p>
       </div>
-      <div className="flex gap-2 items-end">
+      <div className="flex gap-2 items-center text-xs text-gray-500">
         <a
-          className="cursor-pointer"
+          className="cursor-pointer hover:text-gray-300"
           href="https://github.com/realChakrawarti/yt-catalog"
           target="_blank"
         >
-          <FaSquareGithub
-            className="text-slate-700 hover:text-slate-500"
-            size="18"
-          />
+          <span className="flex gap-2 items-center tracking-tight">
+            Open Source on GitHub
+            <GithubIcon size={18} />
+          </span>
         </a>
-        <p className="text-xs text-gray-500 tracking-wider">
-          v{packageInfo.version}
-        </p>
+        <a
+          className="cursor-pointer hover:text-gray-300"
+          href="https://github.com/realChakrawarti/yt-catalog/blob/main/CHANGELOG.md"
+          target="_blank"
+        >
+          <p className="tracking-wider">v{packageInfo.version}</p>
+        </a>
       </div>
     </footer>
   );

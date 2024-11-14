@@ -5,9 +5,10 @@
  * @returns
  */
 
+import { doc, getDoc, setDoc } from "firebase/firestore";
+
 import { db } from "~/utils/firebase";
 import { COLLECTION } from "~/utils/server-helper";
-import { doc, getDoc, setDoc } from "firebase/firestore";
 
 // TODO: Batch firebase calls so its atomic in nature
 export const createUserDocument = async (uid: string): Promise<string> => {

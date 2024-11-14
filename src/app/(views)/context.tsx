@@ -1,7 +1,8 @@
 "use client";
 
-import AuthContextProvider from "~/app/auth/context-provider";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
+
+import AuthContextProvider from "~/app/auth/context-provider";
 
 export default function Providers({
   children,

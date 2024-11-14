@@ -1,12 +1,14 @@
 "use client";
 
-import { Tab, TabList, TabPanel, Tabs } from "~/components/custom/Tabs";
-import { useEffect, useState } from "react";
-import CatalogCard from "./catalog-card";
-import fetchApi from "~/utils/fetch";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import useSWR from "swr";
+
 import Spinner from "~/components/custom/Spinner";
+import { Tab, TabList, TabPanel, Tabs } from "~/components/custom/Tabs";
+import fetchApi from "~/utils/fetch";
+
+import CatalogCard from "./catalog-card";
 
 // TODO: Make use of usehooks-ts "useLocalStorage" maybe?
 export default function CatalogTabs() {

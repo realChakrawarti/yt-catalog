@@ -1,7 +1,8 @@
+import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useIsClient } from "usehooks-ts";
+
 import { Button } from "../shadcn/button";
-import { Moon, Sun } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,

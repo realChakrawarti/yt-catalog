@@ -1,13 +1,9 @@
 import { useAuth } from "~/app/auth/context-provider";
 import { githubProvider, googleProvider } from "~/app/auth/service-providers";
-import { GithubIcon, GmailIcon } from "./icons";
+
 import { Button } from "../shadcn/button";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "../shadcn/tooltip";
+import { GithubIcon, GmailIcon } from "./icons";
+import JustTip from "./just-the-tip";
 
 export default function AuthButton() {
   const { authenticateWith } = useAuth();
@@ -22,31 +18,16 @@ export default function AuthButton() {
 
   return (
     <div className="flex items-center gap-3">
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button variant="outline" size="icon" onClick={signInWithGoogle}>
-              <GmailIcon size={24} />
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>Login with Google</p>
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
-
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button variant="outline" size="icon" onClick={signInWithGitHub}>
-              <GithubIcon size={24} />
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>Login with GitHub</p>
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
+      <JustTip label="Login with Google">
+        <Button variant="outline" size="icon" onClick={signInWithGoogle}>
+          <GmailIcon size={24} />
+        </Button>
+      </JustTip>
+      <JustTip label="Login with GitHub">
+        <Button variant="outline" size="icon" onClick={signInWithGitHub}>
+          <GithubIcon size={24} />
+        </Button>
+      </JustTip>
     </div>
   );
 }

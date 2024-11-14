@@ -1,18 +1,18 @@
 import { XIcon } from 'lucide-react';
 import React, { createContext, useContext } from 'react';
 import {
+  Button,
+  composeRenderProps,
   Tag as AriaTag,
   TagGroup as AriaTagGroup,
   TagGroupProps as AriaTagGroupProps,
-  TagProps as AriaTagProps,
-  Button,
   TagList,
   TagListProps,
-  Text,
-  composeRenderProps
-} from 'react-aria-components';
+  TagProps as AriaTagProps,
+  Text} from 'react-aria-components';
 import { twMerge } from 'tailwind-merge';
 import { tv } from 'tailwind-variants';
+
 import { Description, Label } from './Field';
 import { focusRing } from './utils';
 
