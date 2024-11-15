@@ -1,10 +1,11 @@
-import CatalogTabs from "./catalog-tabs";
+import CatalogExplore from "./catalog-explore";
+import { CatalogExplorer } from "./catalog-explorer";
 
 export default async function ExplorePage() {
   return (
     <div className="p-3">
-      <h1 className="text-lg md:text-xl">Explore Catalog</h1>
-      <CatalogTabs />
+      <h1 className="text-2xl font-semibold tracking-tight">Explore Catalog</h1>
+      <CatalogExplorer />
     </div>
   );
 }

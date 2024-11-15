@@ -1,8 +1,7 @@
 "use client";
 
+import { Star } from "lucide-react";
 import { useEffect, useState } from "react";
-import { MdFavoriteBorder } from "react-icons/md";
-import { MdFavorite } from "react-icons/md";
 
 import { Button } from "~/components/shadcn/button";
 
@@ -23,7 +22,7 @@ export const AddToFavorites = ({
 
   useEffect(() => {
     checkIfExists();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [existingCatalogs]);
 
   const checkIfExists = () => {
@@ -66,14 +65,21 @@ export const AddToFavorites = ({
   };
 
   return (
-    <div className="absolute top-0 right-1/2">
-      <Button onClick={addToFav}>
-        {catalogExists ? (
-          <MdFavorite size="16" />
-        ) : (
-          <MdFavoriteBorder size="16" />
-        )}
-      </Button>
-    </div>
+    <Button
+      variant="outline"
+      size="icon"
+      onClick={addToFav}
+      aria-label={
+        catalogExists
+          ? "Remove catalog from favorites"
+          : "Add catalog to favorites"
+      }
+    >
+      <Star
+        className={`h-4 w-4 ${
+          catalogExists ? "fill-primary text-primary" : ""
+        }`}
+      />
+    </Button>
   );
 };

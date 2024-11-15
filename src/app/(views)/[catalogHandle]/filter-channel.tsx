@@ -1,10 +1,18 @@
 "use client";
 
+import { Filter } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
-import { Selection } from "react-aria-components";
 
-import { Tag, TagGroup } from "~/components/custom/TagGroup";
+import { Button } from "~/components/shadcn/button";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "~/components/shadcn/sheet";
 
 export default function FilterChannel({
   activeChannels,
@@ -14,24 +22,21 @@ export default function FilterChannel({
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
-  
-  const params = new URLSearchParams(searchParams);
-  
-  const [selectedKey, setSelectedKey] = useState<Selection>(
-    new Set([`${params.get("channelId")}`])
-  );
 
-  const handleSelectionChange = (key: Selection) => {
+  const params = new URLSearchParams(searchParams);
+
+  const [selectedKey, setSelectedKey] = useState<string>("");
+
+  const handleSelectionChange = (key: string) => {
     if (!key) {
       setSelectedKey(key);
       return;
     }
 
     setSelectedKey(key);
-    const selectedKeyStringify = Array.from(key)[0]?.toString() || "";
 
-    if (selectedKeyStringify) {
-      params.set("channelId", selectedKeyStringify);
+    if (key) {
+      params.set("channelId", key);
     } else {
       params.delete("channelId");
     }
@@ -44,27 +49,50 @@ export default function FilterChannel({
 
     replace(`${pathname}?${params.toString()}`);
 
-    setSelectedKey(new Set([]));
+    setSelectedKey("");
   };
 
   return (
-    <div>
-      <TagGroup
-        label="Filter Channel"
-        selectionMode="single"
-        selectedKeys={selectedKey}
-        selectionBehavior="replace"
-        onSelectionChange={handleSelectionChange}
-      >
-        {activeChannels.map((channel: any) => {
-          return (
-            <Tag id={channel.id} key={channel.id}>
-              {channel.title}
-            </Tag>
-          );
-        })}
-      </TagGroup>
-      <button onClick={handleOnClear}>Clear all</button>
-    </div>
+    <Sheet>
+      <SheetTrigger asChild>
+        <Button variant="outline" className="h-9 px-4 lg:px-6">
+          <Filter className="h-4 w-4 lg:mr-2" />
+          <span className="hidden lg:inline">Filter Channel</span>
+        </Button>
+      </SheetTrigger>
+      <SheetContent className="w-[280px] sm:w-[400px]">
+        <SheetHeader>
+          <SheetTitle>Filter Channels</SheetTitle>
+          <SheetDescription>
+            Select a channel to filter the content
+          </SheetDescription>
+        </SheetHeader>
+        <div className="mt-6 space-y-4">
+          {selectedKey && (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={handleOnClear}
+              className="w-full justify-start"
+            >
+              Clear filter
+            </Button>
+          )}
+          <div className="flex flex-col space-y-2">
+            {activeChannels.map((channel: any) => (
+              <Button
+                key={channel.id}
+                variant={channel.id === selectedKey ? "default" : "outline"}
+                size="sm"
+                onClick={() => handleSelectionChange(channel.id)}
+                className="justify-start"
+              >
+                {channel.title}
+              </Button>
+            ))}
+          </div>
+        </div>
+      </SheetContent>
+    </Sheet>
   );
 }
