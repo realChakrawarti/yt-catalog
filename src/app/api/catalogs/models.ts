@@ -24,6 +24,7 @@ import {
 import topicData from "./youtube-topics.json";
 
 type VideoMetadata = {
+  description: string;
   title: string;
   channelId: string;
   thumbnail: any;
@@ -126,6 +127,7 @@ async function getPlaylistItems(channel: any) {
         channelLogo: channel.logo,
         channelTitle: item.snippet.channelTitle,
         videoId: item.contentDetails.videoId,
+        description: item.snippet.description,
         publishedAt: item.contentDetails.videoPublishedAt,
       });
     }
