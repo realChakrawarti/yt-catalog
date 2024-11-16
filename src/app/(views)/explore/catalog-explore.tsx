@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
 
-import Spinner from "~/components/custom/spinner";
+import Spinner from "~/components/custom/spinner.client";
 import { Button } from "~/components/shadcn/button";
 import {
   SheetContent,
