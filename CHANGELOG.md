@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.9](https://github.com/realChakrawarti/YTCatalog/compare/v1.2.8...v1.2.9) (2024-11-16)
+
+
+### Bug Fixes
+
+* build error due to weird file capitalization ([cbe3524](https://github.com/realChakrawarti/YTCatalog/commit/cbe352408a7b7a2549029e42b70cdcb17d242ec7))
+
 ### [1.2.8](https://github.com/realChakrawarti/YTCatalog/compare/v1.2.7...v1.2.8) (2024-11-16)
 
 
