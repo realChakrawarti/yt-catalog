@@ -2,8 +2,13 @@
 
 import { Filter } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "~/components/shadcn/avatar";
 import { Button } from "~/components/shadcn/button";
 import {
   Sheet,
@@ -23,17 +28,21 @@ export default function FilterChannel({
   const pathname = usePathname();
   const { replace } = useRouter();
 
-  const params = new URLSearchParams(searchParams);
+  const params = useMemo(
+    () => new URLSearchParams(searchParams),
+    [searchParams]
+  );
+  const channelId = params.get("channelId");
 
-  const [selectedKey, setSelectedKey] = useState<string>("");
+  const [selectedChannelId, setSelectedChannelId] = useState<string>("");
 
   const handleSelectionChange = (key: string) => {
     if (!key) {
-      setSelectedKey(key);
+      setSelectedChannelId(key);
       return;
     }
 
-    setSelectedKey(key);
+    setSelectedChannelId(key);
 
     if (key) {
       params.set("channelId", key);
@@ -49,8 +58,14 @@ export default function FilterChannel({
 
     replace(`${pathname}?${params.toString()}`);
 
-    setSelectedKey("");
+    setSelectedChannelId("");
   };
+
+  useEffect(() => {
+    if (channelId) {
+      setSelectedChannelId(channelId);
+    }
+  }, [channelId]);
 
   return (
     <Sheet>
@@ -61,14 +76,14 @@ export default function FilterChannel({
         </Button>
       </SheetTrigger>
       <SheetContent className="w-[280px] sm:w-[400px]">
-        <SheetHeader>
+        <SheetHeader className="text-left">
           <SheetTitle>Filter Channels</SheetTitle>
           <SheetDescription>
             Select a channel to filter the content
           </SheetDescription>
         </SheetHeader>
         <div className="mt-6 space-y-4">
-          {selectedKey && (
+          {selectedChannelId && (
             <Button
               variant="ghost"
               size="sm"
@@ -82,7 +97,9 @@ export default function FilterChannel({
             {activeChannels.map((channel: any) => (
               <Button
                 key={channel.id}
-                variant={channel.id === selectedKey ? "default" : "outline"}
+                variant={
+                  channel.id === selectedChannelId ? "default" : "outline"
+                }
                 size="sm"
                 onClick={() => handleSelectionChange(channel.id)}
                 className="justify-start"
@@ -95,4 +112,44 @@ export default function FilterChannel({
       </SheetContent>
     </Sheet>
   );
+}
+
+export function CurrentActive({ activeChannels }: { activeChannels: any }) {
+  const searchParams = useSearchParams();
+
+  const params = useMemo(
+    () => new URLSearchParams(searchParams),
+    [searchParams]
+  );
+  const channelId = params.get("channelId");
+  const [activeFilteredChannel, setActiveFilteredChannel] = useState<any>(null);
+
+  useEffect(() => {
+    if (channelId) {
+      const filterChannel = activeChannels.find(
+        (channel: any) => channel.id === channelId
+      );
+
+      setActiveFilteredChannel(filterChannel);
+    } else {
+      setActiveFilteredChannel(null);
+    }
+  }, [activeChannels, channelId]);
+
+  if (activeFilteredChannel) {
+    return (
+      <div className="flex gap-2 items-center">
+        <Avatar className="h-8 w-8 rounded-lg">
+          <AvatarImage
+            src={activeFilteredChannel.logo}
+            alt={activeFilteredChannel.title}
+          />
+          <AvatarFallback>{activeFilteredChannel.title}</AvatarFallback>
+        </Avatar>
+        <h4 className="text-2xl font-bold">{activeFilteredChannel.title}</h4>
+      </div>
+    );
+  }
+
+  return <></>;
 }

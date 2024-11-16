@@ -27,7 +27,7 @@ const Header = () => {
         <div className="flex gap-3 items-center">
           {user ? (
             <>
-              <Avatar className="size-8">
+              <Avatar className="size-8 rounded-lg">
                 <AvatarImage
                   src={
                     user?.photoURL ||

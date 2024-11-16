@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { z } from "zod";
 
 import { Input, Label } from "~/components/custom/Field";
-import Spinner from "~/components/custom/Spinner";
+import Spinner from "~/components/custom/spinner";
 import { Button } from "~/components/shadcn/button";
 import { useToast } from "~/hooks/use-toast";
 import fetchApi from "~/utils/fetch";
