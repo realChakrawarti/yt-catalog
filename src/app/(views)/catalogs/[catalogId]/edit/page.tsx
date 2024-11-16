@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import useSWR from "swr";
 
 import withAuth from "~/app/auth/with-auth-hoc";
-import Spinner from "~/components/custom/spinner";
+import Spinner from "~/components/custom/spinner.client";
 import { EditCatalogComponent } from "~/components/edit-catalog";
 import { useToast } from "~/hooks/use-toast";
 import fetchApi from "~/utils/fetch";
