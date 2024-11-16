@@ -12,7 +12,7 @@ import {
 import fetchApi from "~/utils/fetch";
 
 import { AddToFavorites } from "./add-to-fav";
-import FilterChannel from "./filter-channel";
+import FilterChannel, { CurrentActive } from "./filter-channel";
 import {
   filterChannel,
   getActiveChannelIds,
@@ -82,15 +82,15 @@ export default async function CatalogHandle({
   const activeChannels = getActiveChannelIds(videos);
 
   return (
-    <div className="space-y-4 pb-6">
+    <div className="space-y-4 pb-6 pt-7">
       <section className="px-0 md:px-3">
         <div className="space-y-0">
           <div className="flex flex-col gap-3 lg:flex-row lg:justify-between lg:items-center">
             <div className="space-y-1">
-              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
+              <h1 className="text-2xl font-semibold tracking-tight">
                 {catalogTitle}
               </h1>
-              <p className="text-base sm:text-lg text-muted-foreground">
+              <p className="text-base text-muted-foreground">
                 {catalogDescription}
               </p>
             </div>
@@ -120,42 +120,44 @@ export default async function CatalogHandle({
         </div>
       </section>
 
+      <CurrentActive activeChannels={activeChannels} />
+
       {/* Today */}
       {today?.length ? (
-        <>
-          <h2 className="text-2xl px-2 md:px-0">Today</h2>
+        <section className="px-0 md:px-3 space-y-3">
+          <h2 className="text-lg">Today</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {today.map((video) => (
               <YouTubeCard key={video.videoId} {...video} />
             ))}
           </div>
-        </>
+        </section>
       ) : (
         <></>
       )}
       {/* This week */}
       {week?.length ? (
-        <>
-          <h2 className="text-2xl px-2 md:px-0">This week</h2>
+        <section className="px-0 md:px-3 space-y-3">
+          <h2 className="text-lg">This week</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {week.map((video) => (
               <YouTubeCard key={video.videoId} {...video} />
             ))}
           </div>
-        </>
+        </section>
       ) : (
         <></>
       )}
       {/* This month */}
       {month?.length ? (
-        <>
-          <h2 className="text-2xl px-2 md:px-0">This month</h2>
+        <section className="px-0 md:px-3 space-y-3">
+          <h2 className="text-lg">This month</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {month.map((video) => (
               <YouTubeCard key={video.videoId} {...video} />
             ))}
           </div>
-        </>
+        </section>
       ) : (
         <></>
       )}

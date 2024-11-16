@@ -5,7 +5,8 @@ import { useEffect, useState } from "react";
 import useSWR from "swr";
 
 import withAuth from "~/app/auth/with-auth-hoc";
-import Spinner from "~/components/custom/Spinner";
+import Spinner from "~/components/custom/spinner";
+import { EditCatalogComponent } from "~/components/edit-catalog";
 import { useToast } from "~/hooks/use-toast";
 import fetchApi from "~/utils/fetch";
 
@@ -24,7 +25,7 @@ type LocalChannel = {
 function EditCatalog({ params }: { params: CatalogPageParams }) {
   const { catalogId } = params;
 
-  const { toast } = useToast()
+  const { toast } = useToast();
 
   const {
     data: catalogData,
@@ -63,10 +64,12 @@ function EditCatalog({ params }: { params: CatalogPageParams }) {
       });
 
       if (result.success) {
-        toast({title: `${deleteChannel.title}'s channel deleted from the catalog.`});
+        toast({
+          title: `${deleteChannel.title}'s channel deleted from the catalog.`,
+        });
         mutate();
       } else {
-        toast({title: "Something went wrong."});
+        toast({ title: "Something went wrong." });
       }
     }
   };
@@ -79,6 +82,7 @@ function EditCatalog({ params }: { params: CatalogPageParams }) {
   };
 
   return (
+    // <EditCatalogComponent />
     <div className="p-3">
       <h1 className="text-lg md:text-xl">Edit Catalog</h1>
       {error && <p>Something went wrong!</p>}

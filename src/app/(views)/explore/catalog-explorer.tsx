@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
 
-import Spinner from "~/components/custom/Spinner";
+import Spinner from "~/components/custom/spinner";
 import fetchApi from "~/utils/fetch";
 
 import { Button } from "../../../components/shadcn/button";

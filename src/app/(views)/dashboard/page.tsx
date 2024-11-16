@@ -5,7 +5,7 @@ import useSWR from "swr";
 
 import withAuth from "~/app/auth/with-auth-hoc";
 import { CatalogAddIcon } from "~/components/custom/icons";
-import Spinner from "~/components/custom/Spinner";
+import Spinner from "~/components/custom/spinner";
 import { Button } from "~/components/shadcn/button";
 import { useToast } from "~/hooks/use-toast";
 import fetchApi from "~/utils/fetch";
