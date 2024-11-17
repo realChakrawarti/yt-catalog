@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.11](https://github.com/realChakrawarti/YTCatalog/compare/v1.2.10...v1.2.11) (2024-11-17)
+
+
+### Bug Fixes
+
+* build error due to redundant requirement of `react-aria` ([29a1671](https://github.com/realChakrawarti/YTCatalog/commit/29a167132ac8508bbec77b00b0e3c5df4530e262))
+
 ### [1.2.10](https://github.com/realChakrawarti/YTCatalog/compare/v1.2.9...v1.2.10) (2024-11-17)
 
 
