@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.10](https://github.com/realChakrawarti/YTCatalog/compare/v1.2.9...v1.2.10) (2024-11-17)
+
+
+### Bug Fixes
+
+* edit catalog styling, description sheet ([5878524](https://github.com/realChakrawarti/YTCatalog/commit/5878524560c6ce93796a11c1b7cc5de7f92376e8))
+
 ### [1.2.9](https://github.com/realChakrawarti/YTCatalog/compare/v1.2.8...v1.2.9) (2024-11-16)
 
 
