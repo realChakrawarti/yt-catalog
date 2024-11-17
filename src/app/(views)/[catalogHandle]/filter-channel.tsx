@@ -4,6 +4,7 @@ import { Filter } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 
+import JustTip from "~/components/custom/just-the-tip";
 import {
   Avatar,
   AvatarFallback,
@@ -69,12 +70,14 @@ export default function FilterChannel({
 
   return (
     <Sheet>
-      <SheetTrigger asChild>
-        <Button variant="outline" className="h-9 px-4 lg:px-6">
-          <Filter className="h-4 w-4 lg:mr-2" />
-          <span className="hidden lg:inline">Filter Channel</span>
-        </Button>
-      </SheetTrigger>
+      <JustTip label="Filter Channel">
+        <SheetTrigger asChild>
+          <Button variant="outline">
+            <Filter className="size-8" />
+            <p className="sr-only">Filter Channel</p>
+          </Button>
+        </SheetTrigger>
+      </JustTip>
       <SheetContent className="w-[280px] sm:w-[400px]">
         <SheetHeader className="text-left">
           <SheetTitle>Filter Channels</SheetTitle>
@@ -138,7 +141,7 @@ export function CurrentActive({ activeChannels }: { activeChannels: any }) {
 
   if (activeFilteredChannel) {
     return (
-      <div className="flex gap-2 items-center">
+      <div className="flex gap-2 items-center px-0 md:px-3">
         <Avatar className="h-8 w-8 rounded-lg">
           <AvatarImage
             src={activeFilteredChannel.logo}

@@ -78,17 +78,6 @@ function CatalogTable({ catalogs, onDelete, onEdit }: CatalogTableProps) {
                       />
                     </Button>
                   </JustTip>
-
-                  <JustTip label="Visit Catalog">
-                    <Link href={`/@${catalog?.id}`}>
-                      <Button variant="outline">
-                        <LinkIcon
-                          size={24}
-                          className="cursor-pointer text-gray-400"
-                        />
-                      </Button>
-                    </Link>
-                  </JustTip>
                 </div>
               </TableCell>
             </TableRow>

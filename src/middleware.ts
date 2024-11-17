@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
+import { NxResponse } from "./utils/nx-response";
 import { getUserIdCookie } from "./utils/server-helper";
 
 export async function middleware(request: NextRequest) {
@@ -7,7 +8,11 @@ export async function middleware(request: NextRequest) {
 
   if (!userId) {
     console.log("Not authorized: ", request.nextUrl.pathname);
-    return NextResponse.json("Not authorized", { status: 401 });
+    return NxResponse.fail(
+      "Not authorized",
+      { code: "UNAUTHORIZED", details: "Not authorized" },
+      401
+    );
   }
 
   return NextResponse.next({

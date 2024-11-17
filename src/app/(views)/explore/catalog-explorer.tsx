@@ -1,29 +1,31 @@
 "use client";
 
 import { Star } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
 
-import Spinner from "~/components/custom/spinner.client";
-import fetchApi from "~/utils/fetch";
-
-import { Button } from "../../../components/shadcn/button";
+import JustTip from "~/components/custom/just-the-tip";
+import Spinner from "~/components/custom/spinner";
+import { Button } from "~/components/shadcn/button";
 import {
   Sheet,
+  SheetClose,
   SheetContent,
   SheetDescription,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "../../../components/shadcn/sheet";
+} from "~/components/shadcn/sheet";
+import { Tabs, TabsList, TabsTrigger } from "~/components/shadcn/tabs";
 import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "../../../components/shadcn/tabs";
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "~/components/shadcn/tooltip";
+import fetchApi from "~/utils/fetch";
+
 import CatalogCard from "./catalog-card";
 
 export function CatalogExplorer() {
@@ -43,7 +45,7 @@ export function CatalogExplorer() {
     );
   }, []);
 
-  const [activeTab, setActiveTab] = useState("public");
+  const [activeTab, setActiveTab] = useState<string>("catalog");
 
   return (
     <div className="w-full pt-7">
@@ -55,16 +57,18 @@ export function CatalogExplorer() {
             className="w-[300px]"
           >
             <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="public">Public</TabsTrigger>
-              <TabsTrigger value="favorites">Favorites</TabsTrigger>
+              <TabsTrigger value="catalog">Catalog</TabsTrigger>
+              <TabsTrigger value="curate">Curate</TabsTrigger>
             </TabsList>
           </Tabs>
           <Sheet>
-            <SheetTrigger asChild>
-              <Button variant="outline" size="icon">
-                <Star className="h-4 w-4" />
-              </Button>
-            </SheetTrigger>
+            <JustTip label="Favorite Catalogs">
+              <SheetTrigger asChild>
+                <Button variant="outline">
+                  <Star className="h-4 w-4" />
+                </Button>
+              </SheetTrigger>
+            </JustTip>
             <SheetContent side="left">
               <SheetHeader>
                 <SheetTitle className="flex items-center gap-2">
@@ -77,16 +81,19 @@ export function CatalogExplorer() {
               </SheetHeader>
               <div className="mt-6">
                 <div className="grid gap-4">
+                  <div className="grid gap-4"></div>
                   {favoriteCatalogs.map((favCatalog: any) => {
                     return (
-                      <Link href={`/@${favCatalog.id}`} key={favCatalog.id}>
-                        <section className="flex px-4 py-2 border-2 border-orange-600 flex-col gap-3">
-                          <div className="space-y-1">
-                            <h1 className="text-base">{favCatalog.title}</h1>
-                            <p className="text-sm text-gray-400">
-                              {favCatalog.description}
-                            </p>
-                          </div>
+                      <Link
+                        className="flex items-start space-x-4 p-4 rounded-lg border bg-card"
+                        href={`/@${favCatalog.id}`}
+                        key={favCatalog.id}
+                      >
+                        <section>
+                          <h3 className="font-semibold">{favCatalog.title}</h3>
+                          <p className="text-sm text-muted-foreground">
+                            {favCatalog.description}
+                          </p>
                         </section>
                       </Link>
                     );
@@ -98,12 +105,17 @@ export function CatalogExplorer() {
         </div>
       </div>
       <div>
-        {activeTab === "public" ? (
-          <Catalogs
-            isLoading={isLoading}
-            error={error}
-            catalogs={validCatalogs}
-          />
+        {activeTab === "catalog" ? (
+          <>
+            {isLoading && <Spinner className="size-8" />}
+            {!error && !isLoading && (
+              <Catalogs
+                isLoading={isLoading}
+                error={error}
+                catalogs={validCatalogs}
+              />
+            )}
+          </>
         ) : (
           <div>Coming soon...</div>
         )}

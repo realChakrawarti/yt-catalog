@@ -37,9 +37,9 @@ export default function HeroSection() {
               </div>
               {/* Buttons */}
               <div className="mt-8 gap-3 flex justify-center">
-                <Button size={"lg"}>
-                  <Link href="/explore">Explore Catalogs</Link>
-                </Button>
+                <Link href="/explore">
+                  <Button size={"lg"}>Explore</Button>
+                </Link>
               </div>
               {/* End Buttons */}
             </div>

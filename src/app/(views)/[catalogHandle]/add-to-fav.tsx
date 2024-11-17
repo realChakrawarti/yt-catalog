@@ -3,7 +3,9 @@
 import { Star } from "lucide-react";
 import { useEffect, useState } from "react";
 
+import JustTip from "~/components/custom/just-the-tip";
 import { Button } from "~/components/shadcn/button";
+import { toast } from "~/hooks/use-toast";
 
 export const AddToFavorites = ({
   catalogId,
@@ -42,6 +44,8 @@ export const AddToFavorites = ({
         (item: any) => item.id != catalogId
       );
 
+      toast({ title: "Catalog removed from favorites." });
+
       window?.localStorage?.setItem(
         "favorites",
         JSON.stringify(filterCatalogIds)
@@ -61,25 +65,28 @@ export const AddToFavorites = ({
         JSON.stringify([...existingCatalogs, favCatalog])
       );
       setExistingCatalogs((prev) => [...prev, favCatalog]);
+      toast({ title: "Catalog added to favorites." });
     }
   };
 
   return (
-    <Button
-      variant="outline"
-      size="icon"
-      onClick={addToFav}
-      aria-label={
-        catalogExists
-          ? "Remove catalog from favorites"
-          : "Add catalog to favorites"
-      }
+    <JustTip
+      label={catalogExists ? "Remove from favorites" : "Add to favorites"}
     >
-      <Star
-        className={`h-4 w-4 ${
-          catalogExists ? "fill-primary text-primary" : ""
-        }`}
-      />
-    </Button>
+      <Button
+        variant="outline"
+        size="icon"
+        onClick={addToFav}
+        aria-label={
+          catalogExists ? "Remove from favorites" : "Add to favorites"
+        }
+      >
+        <Star
+          className={`h-4 w-4 ${
+            catalogExists ? "fill-primary text-primary" : ""
+          }`}
+        />
+      </Button>
+    </JustTip>
   );
 };
