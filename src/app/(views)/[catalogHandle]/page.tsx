@@ -1,14 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
-import { Clock } from "lucide-react";
 import { Metadata, ResolvingMetadata } from "next/types";
 
-import TimeDifference from "~/components/custom/TimeDifference";
-import { Button } from "~/components/shadcn/button";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "~/components/shadcn/popover";
 import fetchApi from "~/utils/fetch";
 
 import { AddToFavorites } from "./add-to-fav";
@@ -18,6 +10,8 @@ import {
   getActiveChannelIds,
   parseCatalogHandle,
 } from "./helper-methods";
+import NextUpdate from "./next-update";
+import ShareCatalog from "./share-catalog";
 import YouTubeCard from "./youtube-card";
 
 type PageProps = {
@@ -96,24 +90,17 @@ export default async function CatalogHandle({
             </div>
 
             <div className="mt-4 sm:mt-0 flex items-center gap-4">
+              <ShareCatalog
+                catalogId={catalogId}
+                catalogTitle={catalogTitle}
+                catalogDescription={catalogDescription}
+              />
               <AddToFavorites
                 catalogId={catalogId}
                 catalogTitle={catalogTitle}
                 catalogDescription={catalogDescription}
               />
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button variant="outline" size="sm" className="h-9">
-                    <Clock className="h-4 w-4 mr-2" />
-                    Next update
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto">
-                  <p>
-                    Next update: <TimeDifference date={nextUpdate} />
-                  </p>
-                </PopoverContent>
-              </Popover>
+              <NextUpdate dateTime={nextUpdate} />
               <FilterChannel activeChannels={activeChannels} />
             </div>
           </div>

@@ -19,6 +19,7 @@ import {
 import {
   Sheet,
   SheetContent,
+  SheetDescription,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -73,9 +74,10 @@ export default function YouTubeCard(props: any) {
                 <Info className="h-4 w-4 text-white" />
               </Button>
             </SheetTrigger>
-            <SheetContent className="overflow-y-auto min-w-[500px] w-auto">
+            <SheetContent className="overflow-y-auto w-full md:max-w-[450px]">
               <SheetHeader className="text-left">
                 <SheetTitle>{title}</SheetTitle>
+                <SheetDescription className="sr-only">{title}</SheetDescription>
               </SheetHeader>
               <div className="mt-4">
                 <pre
@@ -123,13 +125,14 @@ export default function YouTubeCard(props: any) {
                 align="end"
                 className="w-[200px] border-none rounded-lg p-1"
               >
-                <div
-                  className="flex gap-2 items-center hover:bg-accent rounded-lg p-2 text-xs"
+                <Button
+                  variant="ghost"
+                  className="flex gap-2 justify-start hover:bg-accent rounded-lg p-2 text-xs cursor-pointer w-full"
                   onClick={() => copyLink(videoId)}
                 >
                   <Link className="h-4 w-4 mr-2" />
                   Copy link
-                </div>
+                </Button>
               </PopoverContent>
             </Popover>
           </div>
