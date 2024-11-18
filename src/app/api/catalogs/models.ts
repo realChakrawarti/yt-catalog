@@ -10,7 +10,7 @@ import {
   updateDoc,
   where,
 } from "firebase/firestore";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, unstable_noStore } from "next/cache";
 
 import { db } from "~/utils/firebase";
 import {
@@ -48,8 +48,11 @@ type CatalogData = {
   updatedAt: string;
 };
 
-const SIX_HOURS = 21_600_000; // 6 hours in ms
-const ONE_DAY = SIX_HOURS * 4;
+const ONE_HOUR = 3_600_000;
+const FOUR_HOURS = 4 * ONE_HOUR;
+// const SIX_HOURS = 6 * ONE_HOUR
+
+const ONE_DAY = ONE_HOUR * 24;
 const ONE_WEEK = ONE_DAY * 7;
 const ONE_MONTH = ONE_DAY * 30;
 
@@ -168,7 +171,7 @@ export async function getVideosByCatalogId(catalogId: string) {
 
   // Get last updated, check if time has been 6 hours or not, if so make call to YouTube API, if not fetch from firestore
   const currentTime = Date.now();
-  const deltaTime = SIX_HOURS;
+  const deltaTime = FOUR_HOURS;
 
   const lastUpdated = catalogSnapData.data.updatedAt.toDate();
   const lastUpdatedTime = new Date(lastUpdated).getTime();
@@ -221,7 +224,7 @@ export async function getVideosByCatalogId(catalogId: string) {
     recentUpdate = lastUpdated;
     console.log(
       `Returning cached data, next update on ${new Date(
-        lastUpdatedTime + SIX_HOURS
+        lastUpdatedTime + FOUR_HOURS
       )}`
     );
   }
@@ -230,7 +233,7 @@ export async function getVideosByCatalogId(catalogId: string) {
     title: catalogSnapData.title,
     description: catalogSnapData.description,
     videos: videoFilterData,
-    nextUpdate: new Date(recentUpdate.getTime() + SIX_HOURS).toUTCString(),
+    nextUpdate: new Date(recentUpdate.getTime() + FOUR_HOURS).toUTCString(),
   };
 }
 
@@ -317,6 +320,7 @@ export async function getCatalogByUser(userId: string) {
 }
 
 export async function getValidCatalogIds() {
+  unstable_noStore();
   let catalogListData: CatalogData[] = [];
   const catalogsCollectionRef = collection(db, COLLECTION.catalogs);
 
