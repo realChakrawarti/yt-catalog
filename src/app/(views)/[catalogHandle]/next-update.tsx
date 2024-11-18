@@ -58,7 +58,7 @@ function ShowBanner({ showBanner, setShowBanner }: any) {
 
 export default function NextUpdate({ dateTime }: any) {
   const [time, setTime] = useState<string>("");
-  const [showBanner, setShowBanner] = useState(true);
+  const [showBanner, setShowBanner] = useState(false);
 
   useEffect(() => {
     const [when, timeDiff] = getTimeDifference(dateTime);

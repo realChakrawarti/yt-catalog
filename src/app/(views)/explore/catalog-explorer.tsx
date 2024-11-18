@@ -10,7 +10,6 @@ import Spinner from "~/components/custom/spinner";
 import { Button } from "~/components/shadcn/button";
 import {
   Sheet,
-  SheetClose,
   SheetContent,
   SheetDescription,
   SheetHeader,
@@ -18,12 +17,6 @@ import {
   SheetTrigger,
 } from "~/components/shadcn/sheet";
 import { Tabs, TabsList, TabsTrigger } from "~/components/shadcn/tabs";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "~/components/shadcn/tooltip";
 import fetchApi from "~/utils/fetch";
 
 import CatalogCard from "./catalog-card";
