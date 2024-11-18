@@ -11,7 +11,7 @@ const grid = [
   {
     title: "Automated Updates",
     description:
-      "Stay up-to-date with the latest videos from your channels, automatically updated every 6 hours.",
+      "Stay up-to-date with the latest videos from your channels, automatically updated every 4 hours.",
   },
   {
     title: "Simple and Intuitive Interface",
