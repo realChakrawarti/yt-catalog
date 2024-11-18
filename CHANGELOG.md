@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/realChakrawarti/YTCatalog/compare/v1.2.12...v1.3.0) (2024-11-18)
+
+
+### Bug Fixes
+
+* **docs:** update README, ROADMAP & marketing page feature list ([d959ac0](https://github.com/realChakrawarti/YTCatalog/commit/d959ac07407b21aa15a2e2ea4cf4f5ccb59ad07b))
+
 ### [1.2.12](https://github.com/realChakrawarti/YTCatalog/compare/v1.2.11...v1.2.12) (2024-11-18)
 
 
