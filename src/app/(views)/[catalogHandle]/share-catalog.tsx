@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 
 import { CopyIcon, ShareIcon } from "~/components/custom/icons";
 import JustTip from "~/components/custom/just-the-tip";
@@ -8,9 +8,7 @@ import { Button } from "~/components/shadcn/button";
 import { toast } from "~/hooks/use-toast";
 
 export default function ShareCatalog(props: any) {
-  const [isNativeShare, setIsNativeShare] = useState<boolean>(false);
-
-  const share = useMemo(
+  const shareData = useMemo(
     () => ({
       title: props.catalogTitle,
       text: props.catalogDescription,
@@ -20,7 +18,7 @@ export default function ShareCatalog(props: any) {
   );
 
   const copyLink = () => {
-    navigator.clipboard.writeText(share.url);
+    window.navigator.clipboard.writeText(shareData.url);
     toast({
       title: "Link copied",
       description: "The video link has been copied to your clipboard.",
@@ -29,7 +27,7 @@ export default function ShareCatalog(props: any) {
 
   const shareLink = async () => {
     try {
-      await navigator.share(share);
+      await window.navigator.share(shareData);
     } catch (err) {
       if (err instanceof Error) {
         return toast({ title: err.message });
@@ -39,14 +37,7 @@ export default function ShareCatalog(props: any) {
     }
   };
 
-  useEffect(() => {
-    if (navigator.canShare(share)) {
-      setIsNativeShare(true);
-    }
-  }, [share]);
-
-  // TODO: Share doesn't seem to work? Only copy is rendering
-  if (isNativeShare) {
+  if (!window.navigator.canShare(shareData)) {
     return (
       <JustTip label="Copy to clipboard">
         <Button variant="outline" onClick={copyLink}>

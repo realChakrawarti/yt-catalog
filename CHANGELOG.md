@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.2](https://github.com/realChakrawarti/YTCatalog/compare/v1.3.1...v1.3.2) (2024-11-20)
+
+
+### Features
+
+* linkify the video description links ([0be3a69](https://github.com/realChakrawarti/YTCatalog/commit/0be3a69b899a24a7a7fbe49e9b29e17b9894ed76))
+
+
+### Bug Fixes
+
+* navigator.canShare TypeError, share component dynamic import with ssr false ([b560139](https://github.com/realChakrawarti/YTCatalog/commit/b560139d75dfea60a13a711b01375d2aa32993c9))
+
 ### [1.3.1](https://github.com/realChakrawarti/YTCatalog/compare/v1.3.0...v1.3.1) (2024-11-20)
 
 ## [1.3.0](https://github.com/realChakrawarti/YTCatalog/compare/v1.2.12...v1.3.0) (2024-11-18)

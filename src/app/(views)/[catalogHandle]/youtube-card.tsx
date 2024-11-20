@@ -1,9 +1,8 @@
 "use client";
 
-/* eslint-disable @next/next/no-img-element */
+import Linkify from "linkify-react";
 import { Info, Link, MoreVertical } from "lucide-react";
 import { Inter } from "next/font/google";
-import { useState } from "react";
 
 import {
   Avatar,
@@ -42,13 +41,6 @@ export default function YouTubeCard(props: any) {
     description,
   } = props;
   const [_, timeElapsed] = getTimeDifference(publishedAt, true);
-  const [openDescriptions, setOpenDescriptions] = useState<number[]>([]);
-
-  const toggleDescription = (id: number) => {
-    setOpenDescriptions((prev) =>
-      prev.includes(id) ? prev.filter((openId) => openId !== id) : [...prev, id]
-    );
-  };
 
   const copyLink = (id: string) => {
     navigator.clipboard.writeText(`https://www.youtube.com/watch?v=${id}`);
@@ -69,7 +61,6 @@ export default function YouTubeCard(props: any) {
                 variant="ghost"
                 size="icon"
                 className="absolute top-2 left-2 h-8 w-8 bg-black/50 hover:bg-black/70"
-                onClick={() => toggleDescription(videoId)}
               >
                 <Info className="h-4 w-4 text-white" />
               </Button>
@@ -80,11 +71,17 @@ export default function YouTubeCard(props: any) {
                 <SheetDescription className="sr-only">{title}</SheetDescription>
               </SheetHeader>
               <div className="mt-4">
-                <pre
+                <Linkify
                   className={`text-xs whitespace-pre-wrap ${inter.className}`}
+                  as="pre"
+                  options={{
+                    target: "_blank",
+                    className:
+                      "cursor-pointer text-[hsl(var(--primary))] hover:text-[hsl(var(--primary))]/70",
+                  }}
                 >
                   {description}
-                </pre>
+                </Linkify>
               </div>
             </SheetContent>
           </Sheet>
