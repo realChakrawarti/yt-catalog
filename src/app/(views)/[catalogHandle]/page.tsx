@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import dynamic from "next/dynamic";
 import { Metadata, ResolvingMetadata } from "next/types";
 
 import fetchApi from "~/utils/fetch";
@@ -11,8 +12,12 @@ import {
   parseCatalogHandle,
 } from "./helper-methods";
 import NextUpdate from "./next-update";
-import ShareCatalog from "./share-catalog";
 import YouTubeCard from "./youtube-card";
+
+// Refer: https://nextjs.org/docs/pages/building-your-application/optimizing/lazy-loading#with-no-ssr
+const DynamicShareCatalog = dynamic(() => import("./share-catalog"), {
+  ssr: false,
+});
 
 type PageProps = {
   params: { catalogHandle: string };
@@ -90,7 +95,7 @@ export default async function CatalogHandle({
             </div>
 
             <div className="mt-4 sm:mt-0 flex items-center gap-4">
-              <ShareCatalog
+              <DynamicShareCatalog
                 catalogId={catalogId}
                 catalogTitle={catalogTitle}
                 catalogDescription={catalogDescription}
