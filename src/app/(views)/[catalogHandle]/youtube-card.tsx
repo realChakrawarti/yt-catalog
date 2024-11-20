@@ -99,14 +99,14 @@ export default function YouTubeCard(props: any) {
               <h3 className="font-semibold leading-tight text-sm">{title}</h3>
               <div className="flex items-center gap-2 text-xs text-muted-foreground">
                 <a
-                  className="hover:underline"
+                  className="hover:underline text-nowrap"
                   href={`https://youtube.com/channel/${channelId}`}
                   target="_blank"
                 >
                   {channelTitle}
                 </a>
                 <b>•</b>
-                <span>{timeElapsed}</span>
+                <span className="text-nowrap">{timeElapsed}</span>
               </div>
             </div>
             <Popover>

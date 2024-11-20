@@ -3,6 +3,7 @@ import { Clock, RotateCw, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
+import JustTip from "~/components/custom/just-the-tip";
 import { Button } from "~/components/shadcn/button";
 import {
   Popover,
@@ -76,11 +77,13 @@ export default function NextUpdate({ dateTime }: any) {
     <>
       <ShowBanner showBanner={showBanner} setShowBanner={setShowBanner} />
       <Popover>
-        <PopoverTrigger asChild>
-          <Button variant="outline" size="sm" className="h-9">
-            <Clock className="h-4 w-4" />
-          </Button>
-        </PopoverTrigger>
+        <JustTip label={`Next update: ${time}`}>
+          <PopoverTrigger asChild>
+            <Button variant="outline" size="sm" className="h-9">
+              <Clock className="h-4 w-4" />
+            </Button>
+          </PopoverTrigger>
+        </JustTip>
         <PopoverContent className="w-auto text-sm p-2">
           <p>
             <b>Next update:</b> {time}

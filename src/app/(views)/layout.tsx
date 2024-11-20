@@ -28,12 +28,14 @@ export default function RootLayout({
   return (
     <html className="h-full" lang="en" suppressHydrationWarning>
       <body
-        className={`min-h-full flex flex-col overflow-y-auto ${inter.className} container mx-auto`}
+        className={`min-h-full flex flex-col overflow-y-auto ${inter.className}`}
       >
         <BackgroundPattern />
         <Providers>
           <Header />
-          <main className="flex-1 overflow-y-auto">{children}</main>
+          <main className="flex-1 overflow-y-auto container mx-auto">
+            {children}
+          </main>
           <Footer />
         </Providers>
         <Toaster />
