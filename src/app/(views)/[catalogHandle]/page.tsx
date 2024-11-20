@@ -43,7 +43,7 @@ export async function generateMetadata(
   };
 }
 
-export const revalidate = 60 * 5;
+export const revalidate = 60 * 10; // Cache the page for 10 minutes, unless revalidated on updates
 
 export default async function CatalogHandle({
   params,

@@ -36,39 +36,45 @@ function getDayHourMinute(timeDiff: number): number[] {
 
 function getDifferenceString(
   deltaMinutes: number,
-  prefix: "ago" | "later",
-  approx: boolean = false
+  suffix: "ago" | "later",
+  suffixEnabled: boolean = false
 ) {
   const [days, hours, minutes] = getDayHourMinute(deltaMinutes);
   let timeDifferenceString = "";
 
   if (days) {
     timeDifferenceString = checkPural(days, "day") + " ";
-    if (approx) {
-      return timeDifferenceString + prefix;
+    if (suffixEnabled) {
+      return timeDifferenceString + suffix;
     }
   }
   if (hours) {
     timeDifferenceString += checkPural(hours, "hour") + " ";
-    if (approx) {
-      return timeDifferenceString + prefix;
+    if (suffixEnabled) {
+      return timeDifferenceString + suffix;
     }
   }
   if (minutes) {
     timeDifferenceString += checkPural(minutes, "minute") + " ";
-    if (approx) {
-      return timeDifferenceString + prefix;
+    if (suffixEnabled) {
+      return timeDifferenceString + suffix;
     }
   }
-  return timeDifferenceString + prefix;
+  return timeDifferenceString + suffix;
 }
 
+/**
+ *
+ * @param {string} compareWithCurrent - Compare with current time
+ * @param {boolean} [suffixEnabled=false] - Approximate time difference with `ago` and `later` appended
+ * @returns {(string | number)[]}
+ */
 export function getTimeDifference(
-  compareTimeWith: string,
-  approx: boolean = false
+  compareWithCurrent: string,
+  suffixEnabled: boolean = false
 ) {
   const currentTime = new Date().getTime();
-  const serverTime = new Date(compareTimeWith).getTime();
+  const serverTime = new Date(compareWithCurrent).getTime();
 
   const delta = currentTime - serverTime;
   const deltaMinutes = Math.abs(delta) / (60 * 1000); // In minutes
@@ -79,14 +85,22 @@ export function getTimeDifference(
 
   // Past
   if (delta >= 0) {
-    const prefix = "ago";
-    const diffToString = getDifferenceString(deltaMinutes, prefix, approx);
+    const suffix = "ago";
+    const diffToString = getDifferenceString(
+      deltaMinutes,
+      suffix,
+      suffixEnabled
+    );
     return [-1, diffToString];
   }
   // Future
   else {
-    const prefix = "later";
-    const diffToString = getDifferenceString(deltaMinutes, prefix, approx);
+    const suffix = "later";
+    const diffToString = getDifferenceString(
+      deltaMinutes,
+      suffix,
+      suffixEnabled
+    );
     return [1, diffToString];
   }
 }

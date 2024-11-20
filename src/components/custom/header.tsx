@@ -17,7 +17,7 @@ const Header = () => {
 
   return (
     <header className="h-14 sticky z-50 top-0 w-full border-b border-border/40 self-start flex justify-between items-center bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 dark:border-border">
-      <div className="flex-1 flex justify-between items-end px-3">
+      <div className="flex-1 flex justify-between items-end px-3 container mx-auto">
         <Link href={user ? "/dashboard" : "/"}>
           <h1 className="flex gap-1">
             <Image src={AppIcon} alt="YTCatalog" className="size-7" />
