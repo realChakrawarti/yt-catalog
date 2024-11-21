@@ -77,13 +77,11 @@ export default function NextUpdate({ dateTime }: any) {
     <>
       <ShowBanner showBanner={showBanner} setShowBanner={setShowBanner} />
       <Popover>
-        <JustTip label={`Next update: ${time}`}>
-          <PopoverTrigger asChild>
-            <Button variant="outline" size="sm" className="h-9">
-              <Clock className="h-4 w-4" />
-            </Button>
-          </PopoverTrigger>
-        </JustTip>
+        <PopoverTrigger asChild>
+          <Button variant="outline" size="sm" className="h-9">
+            <Clock className="h-4 w-4" />
+          </Button>
+        </PopoverTrigger>
         <PopoverContent className="w-auto text-sm p-2">
           <p>
             <b>Next update:</b> {time}

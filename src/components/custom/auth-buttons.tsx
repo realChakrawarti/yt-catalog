@@ -19,12 +19,22 @@ export default function AuthButton() {
   return (
     <div className="flex items-center gap-3">
       <JustTip label="Login with Google">
-        <Button variant="outline" size="icon" onClick={signInWithGoogle}>
+        <Button
+          className="flex items-center gap-3"
+          variant="outline"
+          onClick={signInWithGoogle}
+        >
+          <p>Google</p>
           <GmailIcon size={24} />
         </Button>
       </JustTip>
       <JustTip label="Login with GitHub">
-        <Button variant="outline" size="icon" onClick={signInWithGitHub}>
+        <Button
+          className="flex items-center gap-3"
+          variant="outline"
+          onClick={signInWithGitHub}
+        >
+          <p>GitHub</p>
           <GithubIcon size={24} />
         </Button>
       </JustTip>

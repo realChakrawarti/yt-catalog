@@ -86,7 +86,7 @@ export default function YouTubeCard(props: any) {
             </SheetContent>
           </Sheet>
         </div>
-        <div className="p-3">
+        <div className="p-3 px-0 md:px-3">
           <div className="flex items-start gap-3">
             <Avatar className="h-8 w-8 rounded-lg">
               <AvatarImage src={channelLogo} alt={channelTitle} />

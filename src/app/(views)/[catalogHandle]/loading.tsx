@@ -1,5 +1,9 @@
+import Spinner from "~/components/custom/spinner";
+
 export default function CatalogPublicLoading() {
   return (
-    <div className="h-full w-full grid place-items-center">Loading...</div>
+    <div className="h-full flex flex-col items-center mt-7">
+      <Spinner label="Catalog videos are getting updated." className="size-7" />
+    </div>
   );
 }
