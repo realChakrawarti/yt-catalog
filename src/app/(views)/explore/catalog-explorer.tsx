@@ -3,10 +3,8 @@
 import { Star } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import useSWR from "swr";
 
 import JustTip from "~/components/custom/just-the-tip";
-import Spinner from "~/components/custom/spinner";
 import { Button } from "~/components/shadcn/button";
 import {
   Sheet,
@@ -17,20 +15,11 @@ import {
   SheetTrigger,
 } from "~/components/shadcn/sheet";
 import { Tabs, TabsList, TabsTrigger } from "~/components/shadcn/tabs";
-import fetchApi from "~/utils/fetch";
 
 import CatalogCard from "./catalog-card";
 
-export function CatalogExplorer() {
+export function CatalogExplorer({ validCatalogs }: any) {
   const [favoriteCatalogs, setFavoriteCatalogs] = useState([]);
-
-  const {
-    data: validCatalogs,
-    isLoading,
-    error,
-  } = useSWR("/catalogs/valid", () =>
-    fetchApi("/catalogs/valid", { cache: "no-store" })
-  );
 
   useEffect(() => {
     setFavoriteCatalogs(
@@ -100,14 +89,7 @@ export function CatalogExplorer() {
       <div>
         {activeTab === "catalog" ? (
           <>
-            {isLoading && <Spinner className="size-8" />}
-            {!error && !isLoading && (
-              <Catalogs
-                isLoading={isLoading}
-                error={error}
-                catalogs={validCatalogs}
-              />
-            )}
+            <Catalogs catalogs={validCatalogs} />
           </>
         ) : (
           <div>Coming soon...</div>
@@ -117,23 +99,20 @@ export function CatalogExplorer() {
   );
 }
 
-function Catalogs({ isLoading, error, catalogs }: any) {
+function Catalogs({ catalogs }: any) {
   return (
     <>
-      {isLoading && <Spinner className="size-8" />}
-      {!error && !isLoading && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-          {catalogs?.data?.length ? (
-            catalogs?.data?.map((pageData: any) => {
-              if (pageData?.id) {
-                return <CatalogCard key={pageData.id} pageData={pageData} />;
-              }
-            })
-          ) : (
-            <div>No catalogs found</div>
-          )}
-        </div>
-      )}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+        {catalogs?.data?.length ? (
+          catalogs?.data?.map((pageData: any) => {
+            if (pageData?.id) {
+              return <CatalogCard key={pageData.id} pageData={pageData} />;
+            }
+          })
+        ) : (
+          <div>No catalogs found</div>
+        )}
+      </div>
     </>
   );
 }
