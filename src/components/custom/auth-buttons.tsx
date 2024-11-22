@@ -24,8 +24,8 @@ export default function AuthButton() {
           variant="outline"
           onClick={signInWithGoogle}
         >
-          <p>Google</p>
           <GmailIcon size={24} />
+          <p className="hidden md:block">Google</p>
         </Button>
       </JustTip>
       <JustTip label="Login with GitHub">
@@ -34,8 +34,8 @@ export default function AuthButton() {
           variant="outline"
           onClick={signInWithGitHub}
         >
-          <p>GitHub</p>
           <GithubIcon size={24} />
+          <p className="hidden md:block">GitHub</p>
         </Button>
       </JustTip>
     </div>
