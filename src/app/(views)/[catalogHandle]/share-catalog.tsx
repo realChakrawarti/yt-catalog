@@ -37,19 +37,23 @@ export default function ShareCatalog(props: any) {
     }
   };
 
-  if (!window.navigator.canShare(shareData)) {
+  // Firefox doesn't support it yet, 23-11-2024
+  if (
+    typeof window.navigator.canShare === "function" &&
+    window.navigator.canShare(shareData)
+  ) {
     return (
-      <JustTip label="Copy to clipboard">
-        <Button variant="outline" onClick={copyLink}>
-          <CopyIcon className="size-8" />
+      <JustTip label="Share catalog">
+        <Button variant="outline" onClick={shareLink}>
+          <ShareIcon className="size-8" />
         </Button>
       </JustTip>
     );
   } else {
     return (
-      <JustTip label="Share catalog">
-        <Button variant="outline" onClick={shareLink}>
-          <ShareIcon className="size-8" />
+      <JustTip label="Copy to clipboard">
+        <Button variant="outline" onClick={copyLink}>
+          <CopyIcon className="size-8" />
         </Button>
       </JustTip>
     );
