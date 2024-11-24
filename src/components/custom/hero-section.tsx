@@ -4,11 +4,31 @@ import Link from "next/link";
 
 import { Button } from "../shadcn/button";
 
+function GlobeBackground() {
+  return (
+    <video
+      disablePictureInPicture
+      muted
+      autoPlay
+      loop
+      playsInline
+      preload="metadata"
+      controls={false}
+      className="mx-auto my-16 absolute inset-0 size-auto mix-blend-plus-lighter aspect-square opacity-60"
+    >
+      <source src="background.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+  );
+}
+
 export default function HeroSection() {
   return (
     <>
       {/* Hero */}
       <div className="relative overflow-hidden py-24 lg:py-32">
+        {/* Background Video */}
+        <GlobeBackground />
         {/* Gradients */}
         <div
           aria-hidden="true"
