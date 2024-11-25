@@ -4,6 +4,7 @@ import { Star } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
+import { HeartListIcon } from "~/components/custom/icons";
 import JustTip from "~/components/custom/just-the-tip";
 import { Button } from "~/components/shadcn/button";
 import {
@@ -46,15 +47,15 @@ export function CatalogExplorer({ validCatalogs }: any) {
           <Sheet>
             <JustTip label="Favorite Catalogs">
               <SheetTrigger asChild>
-                <Button variant="outline">
-                  <Star className="h-4 w-4" />
+                <Button>
+                  <HeartListIcon size={32} />
                 </Button>
               </SheetTrigger>
             </JustTip>
             <SheetContent side="left">
               <SheetHeader>
                 <SheetTitle className="flex items-center gap-2">
-                  <Star className="w-5 h-5 fill-primary" />
+                  <Star className="w-5 h-5" />
                   Favorite Catalogs
                 </SheetTitle>
                 <SheetDescription>
