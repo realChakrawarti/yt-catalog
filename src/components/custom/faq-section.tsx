@@ -42,8 +42,8 @@ export default function FAQSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <section className="w-full py-12 md:py-24 lg:py-32 bg-transparent">
-      <div className="container px-4 md:px-6">
+    <section className="w-full py-24 lg:py-32 bg-transparent">
+      <div className="container">
         <div className="flex flex-col items-center justify-center space-y-4 text-center">
           <div className="space-y-2">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
@@ -55,22 +55,24 @@ export default function FAQSection() {
             </p>
           </div>
         </div>
-        <div className="mx-auto max-w-3xl mt-8 space-y-4">
+        <div className="mx-auto max-w-3xl mt-8 space-y-1">
           {faqs.map((faq, index) => (
-            <div key={index} className="rounded-lg border transition-colors">
+            <div key={index} className="transition-colors">
               <button
-                className="flex w-full items-center justify-between p-6"
+                className="flex w-full items-start justify-between p-6"
                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
                 aria-expanded={openIndex === index}
                 aria-controls={`faq-${index}`}
               >
-                <span className="font-medium">{faq.question}</span>
-                <ChevronDown
-                  className={cn(
-                    "h-5 w-5 transition-transform duration-200",
-                    openIndex === index && "rotate-180"
-                  )}
-                />
+                <span className="font-medium text-left">{faq.question}</span>
+                <span className="font-medium">
+                  <ChevronDown
+                    className={cn(
+                      "h-5 w-5 transition-transform duration-200",
+                      openIndex === index && "rotate-180"
+                    )}
+                  />
+                </span>
               </button>
               <div
                 id={`faq-${index}`}

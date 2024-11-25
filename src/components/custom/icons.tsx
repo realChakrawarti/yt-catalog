@@ -6,6 +6,7 @@ import { IoIosCopy as CopyIcon } from "react-icons/io";
 import { IoShareSocial as ShareIcon } from "react-icons/io5";
 import { MdOutlineLogout as LogoutIcon } from "react-icons/md";
 import { MdDeleteForever as DeleteIcon } from "react-icons/md";
+import { PiListHeart as HeartListIcon } from "react-icons/pi";
 import { RiFileAddLine as CatalogAddIcon } from "react-icons/ri";
 
 export {
@@ -15,6 +16,8 @@ export {
   EditIcon,
   GithubIcon,
   GmailIcon,
+  HeartListIcon,
   LinkIcon,
   LogoutIcon,
-  ShareIcon};
+  ShareIcon,
+};
