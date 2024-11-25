@@ -1,3 +1,5 @@
+import { NextRequest } from "next/server";
+
 import { NxResponse } from "~/utils/nx-response";
 import { getUserIdCookie } from "~/utils/server-helper";
 
@@ -9,9 +11,12 @@ export async function GET() {
   return NxResponse.success("Catalogs data fetched successfully.", data, 200);
 }
 
-export async function POST() {
+export async function POST(request: NextRequest) {
   const userId = getUserIdCookie();
-  const catalogId = await createCatalog(userId);
+
+  const catalogMeta = await request.json();
+
+  const catalogId = await createCatalog(userId, catalogMeta);
 
   return NxResponse.success<{ catalogId: string }>(
     "Catalog page created successfully.",

@@ -19,6 +19,7 @@ import { Tabs, TabsList, TabsTrigger } from "~/components/shadcn/tabs";
 
 import CatalogCard from "./catalog-card";
 
+// TODO: A compact list for catalogs w/ toggle button
 export function CatalogExplorer({ validCatalogs }: any) {
   const [favoriteCatalogs, setFavoriteCatalogs] = useState([]);
 

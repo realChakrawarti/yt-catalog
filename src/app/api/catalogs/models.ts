@@ -405,11 +405,16 @@ export async function updateChannels(
   }
 }
 
+type CatalogMeta = {
+  title: string;
+  description: string;
+};
+
 /**
  * This function creates a catalog page for a user
  * @param userId
  */
-export async function createCatalog(userId: string) {
+export async function createCatalog(userId: string, catalogMeta: CatalogMeta) {
   const userRef = doc(db, COLLECTION.users, userId);
   const nanoidToken = createNanoidToken();
   const catalogRef = doc(db, COLLECTION.catalogs, nanoidToken);
@@ -429,8 +434,8 @@ export async function createCatalog(userId: string) {
       updatedAt: new Date(0),
     },
     videoRef: userPageRef,
-    title: `Title - ${nanoidToken}`,
-    description: `Description - ${nanoidToken}`,
+    title: catalogMeta.title,
+    description: catalogMeta.description,
   });
 
   return nanoidToken;
