@@ -9,7 +9,6 @@ import JustTip from "~/components/custom/just-the-tip";
 import Spinner from "~/components/custom/spinner";
 import { Badge } from "~/components/shadcn/badge";
 import { Button } from "~/components/shadcn/button";
-import { Separator } from "~/components/shadcn/separator";
 import { useToast } from "~/hooks/use-toast";
 import fetchApi from "~/utils/fetch";
 
@@ -100,7 +99,6 @@ export default function CatalogEditor({ catalogId }: any) {
           />
         </div>
       </div>
-      <Separator className="my-3" />
       {error && <p>Something went wrong!</p>}
       {isLoading && (
         <div className="size-full grid items-center">

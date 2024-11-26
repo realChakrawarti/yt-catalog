@@ -41,8 +41,8 @@ export function CatalogExplorer({ validCatalogs }: any) {
             className="w-[300px]"
           >
             <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="catalog">Catalog</TabsTrigger>
-              <TabsTrigger value="curate">Curate</TabsTrigger>
+              <TabsTrigger value="catalog">Catalogs</TabsTrigger>
+              <TabsTrigger value="archive">Archives</TabsTrigger>
             </TabsList>
           </Tabs>
           <Sheet>

@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { z } from "zod";
 
 import { CatalogAddIcon } from "~/components/custom/icons";
 import { Button } from "~/components/shadcn/button";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -28,6 +30,12 @@ const CatalogSchema = z.object({
 
 type CatalogMeta = z.infer<typeof CatalogSchema>;
 
+const initialState = {
+  title: "",
+  description: "",
+};
+
+// TODO: Consider using reducer to handle state updates, revalidate and show notification
 export default function CreateCatalogDialog({ revalidateCatalogs }: any) {
   const [catalogMeta, setCatalogMeta] = useState<CatalogMeta>({
     title: "",
@@ -39,16 +47,21 @@ export default function CreateCatalogDialog({ revalidateCatalogs }: any) {
     description: "",
   });
 
-  const createNewCatalog = async () => {
+  const createNewCatalog = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     const result = await fetchApi("/catalogs", {
       method: "POST",
-      body: JSON.stringify({ title: "", description: "" }),
+      body: JSON.stringify({
+        title: catalogMeta.title,
+        description: catalogMeta.description,
+      }),
     });
 
     if (result.success) {
       revalidateCatalogs();
       toast({ title: result.message });
-      //   router.push(`/catalogs/${result.data.catalogId}/edit`);
+      setCatalogMeta(initialState);
+      setCatalogMetaError(initialState);
     } else {
       toast({ title: "Failed to create catalog." });
     }
@@ -94,9 +107,12 @@ export default function CreateCatalogDialog({ revalidateCatalogs }: any) {
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Add a catalog</DialogTitle>
+          <DialogTitle>Add catalog</DialogTitle>
         </DialogHeader>
-        <div className="flex flex-col gap-2">
+        <form
+          className="flex flex-col gap-2"
+          onSubmit={(e) => createNewCatalog(e)}
+        >
           <div className="space-y-2">
             <Label htmlFor="title">Title</Label>
             <Input
@@ -126,9 +142,12 @@ export default function CreateCatalogDialog({ revalidateCatalogs }: any) {
               </p>
             ) : null}
           </div>
-
-          <Button onClick={createNewCatalog}>Create</Button>
-        </div>
+          <DialogFooter>
+            <DialogClose>
+              <Button type="submit">Create</Button>
+            </DialogClose>
+          </DialogFooter>
+        </form>
       </DialogContent>
     </Dialog>
   );

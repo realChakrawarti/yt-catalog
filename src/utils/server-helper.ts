@@ -23,8 +23,8 @@ export const YOUTUBE_VIDEO_DATA = (videoId: string) =>
 const tokenCharacters =
   "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
-export function createNanoidToken(): string {
-  const nanoid = customAlphabet(tokenCharacters, 6);
+export function createNanoidToken(length: number): string {
+  const nanoid = customAlphabet(tokenCharacters, length);
   return nanoid();
 }
 
@@ -38,6 +38,7 @@ export function getUserIdCookie(): string {
 export const COLLECTION = {
   users: "users",
   catalogs: "catalogs",
+  archives: "archives"
 } as const;
 
 export function toUTCString(dateTime: Timestamp) {
