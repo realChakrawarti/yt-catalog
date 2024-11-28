@@ -12,7 +12,7 @@ export default function ShareCatalog(props: any) {
     () => ({
       title: props.catalogTitle,
       text: props.catalogDescription,
-      url: `https://ytcatalog.707x.in/@${props.catalogId}`,
+      url: `https://ytcatalog.707x.in/c/${props.catalogId}`,
     }),
     [props]
   );

@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.8](https://github.com/realChakrawarti/YTCatalog/compare/v1.3.7...v1.3.8) (2024-11-28)
+
+
+### Features
+
+* add archive youtube video list ([224e39d](https://github.com/realChakrawarti/YTCatalog/commit/224e39db145d9706aa0635302490f9959ae87c05))
+* change path of archive & catalog to `/a` & `/c` respectively ([b03da56](https://github.com/realChakrawarti/YTCatalog/commit/b03da56a35dfab92184f54eaf2c4e707bf39055a))
+
 ### [1.3.7](https://github.com/realChakrawarti/YTCatalog/compare/v1.3.6...v1.3.7) (2024-11-25)
 
 

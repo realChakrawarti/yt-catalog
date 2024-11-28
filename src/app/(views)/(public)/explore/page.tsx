@@ -6,10 +6,11 @@ export const revalidate = 60 * 5; // Cache the page for 5 minutes, unless revali
 
 export default async function ExplorePage() {
   const catalogs = await fetchApi("/catalogs/valid");
+  const archives = await fetchApi("/archives/valid")
   return (
     <div className="p-3">
       <h1 className="text-2xl font-semibold tracking-tight">Explore</h1>
-      <CatalogExplorer validCatalogs={catalogs} />
+      <CatalogExplorer validArchives={archives} validCatalogs={catalogs} />
     </div>
   );
 }

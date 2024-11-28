@@ -255,9 +255,9 @@ export async function getCatalogById(catalogId: string, userId: string) {
   let catalogResponseData = {};
 
   try {
-    const userPageRef = doc(userRef, COLLECTION.catalogs, catalogId);
+    const userCatalogRef = doc(userRef, COLLECTION.catalogs, catalogId);
 
-    const channelList = await getDoc(userPageRef);
+    const channelList = await getDoc(userCatalogRef);
     const channelListData = channelList.data()?.channels;
 
     // Get title and description
@@ -343,7 +343,7 @@ export async function getValidCatalogIds() {
           thumbnails: getVideoThumbnails(catalogData),
           title: catalogData?.title,
           description: catalogData?.description,
-          id: "@" + catalogId,
+          id: catalogId,
           updatedAt: catalogData?.data.updatedAt.toDate(),
         };
 
@@ -411,29 +411,29 @@ type CatalogMeta = {
 };
 
 /**
- * This function creates a catalog page for a user
+ * This function creates a catalog for a user
  * @param userId
  */
 export async function createCatalog(userId: string, catalogMeta: CatalogMeta) {
   const userRef = doc(db, COLLECTION.users, userId);
-  const nanoidToken = createNanoidToken();
+  const nanoidToken = createNanoidToken(6);
   const catalogRef = doc(db, COLLECTION.catalogs, nanoidToken);
 
-  // Add a doc to user -> page collection
-  const userPageRef = doc(userRef, COLLECTION.catalogs, nanoidToken);
+  // Add a doc to user -> catalog collection
+  const userCatalogRef = doc(userRef, COLLECTION.catalogs, nanoidToken);
 
-  // Create pages sub-collection
-  await setDoc(userPageRef, {
+  // Create catalog sub-collection
+  await setDoc(userCatalogRef, {
     channels: [],
     updatedAt: new Date(),
   });
 
-  // Add a doc to pages collection
+  // Add a doc to catalog collection
   await setDoc(catalogRef, {
     data: {
       updatedAt: new Date(0),
     },
-    videoRef: userPageRef,
+    videoRef: userCatalogRef,
     title: catalogMeta.title,
     description: catalogMeta.description,
   });

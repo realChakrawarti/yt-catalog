@@ -2,11 +2,12 @@ import Link from "next/link";
 
 import ThumbnailCarousel from "./carousel-thumbnails";
 
-export default function CatalogCard({ pageData }: any) {
+export default function DetailsCard({ pageData, path }: any) {
+
   return (
     <Link
       key={pageData?.id}
-      href={pageData?.id}
+      href={path}
       className="group relative overflow-hidden rounded-lg border bg-card transition-colors hover:bg-accent"
     >
       <section className="aspect-video">

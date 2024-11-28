@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
   const catalogId = await createCatalog(userId, catalogMeta);
 
   return NxResponse.success<{ catalogId: string }>(
-    "Catalog page created successfully.",
+    "Catalog created successfully.",
     { catalogId },
     201
   );

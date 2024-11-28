@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { z } from "zod";
 
 import { CatalogAddIcon } from "~/components/custom/icons";
 import { Button } from "~/components/shadcn/button";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -15,7 +17,7 @@ import { Label } from "~/components/shadcn/label";
 import { toast } from "~/hooks/use-toast";
 import fetchApi from "~/utils/fetch";
 
-const CatalogSchema = z.object({
+const ArchiveSchema = z.object({
   title: z
     .string()
     .min(4, { message: "Title must be at least 4 characters long." })
@@ -26,56 +28,67 @@ const CatalogSchema = z.object({
     .max(64, { message: "Description must be at most 64 characters long." }),
 });
 
-type CatalogMeta = z.infer<typeof CatalogSchema>;
+type ArchiveMeta = z.infer<typeof ArchiveSchema>;
 
-export default function CreateCatalogDialog({ revalidateCatalogs }: any) {
-  const [catalogMeta, setCatalogMeta] = useState<CatalogMeta>({
+const initialState = {
+  title: "",
+  description: "",
+};
+
+// TODO: Consider using reducer to handle state updates, revalidate and show notification
+export default function CreateArchiveDialog({ revalidateCatalogs }: any) {
+  const [archiveMeta, setArchiveMeta] = useState<ArchiveMeta>({
     title: "",
     description: "",
   });
 
-  const [catalogMetaError, setCatalogMetaError] = useState<CatalogMeta>({
+  const [archiveMetaError, setArchiveMetaError] = useState<ArchiveMeta>({
     title: "",
     description: "",
   });
 
-  const createNewCatalog = async () => {
-    const result = await fetchApi("/catalogs", {
+  const createNewArchive = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const result = await fetchApi("/archives", {
       method: "POST",
-      body: JSON.stringify({ title: "", description: "" }),
+      body: JSON.stringify({
+        title: archiveMeta.title,
+        description: archiveMeta.description,
+      }),
     });
 
     if (result.success) {
       revalidateCatalogs();
       toast({ title: result.message });
-      //   router.push(`/catalogs/${result.data.catalogId}/edit`);
+      setArchiveMeta(initialState);
+      setArchiveMetaError(initialState);
     } else {
-      toast({ title: "Failed to create catalog." });
+      toast({ title: "Failed to create archive." });
     }
   };
 
   const handleMetaUpdate = (e: any) => {
-    setCatalogMeta((prev) => ({
+    setArchiveMeta((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
     }));
 
     const parseCatalogMetadata = {
-      ...catalogMeta,
+      ...archiveMeta,
       [e.target.name]: e.target.value,
     };
 
-    const result = CatalogSchema.safeParse(parseCatalogMetadata);
+    const result = ArchiveSchema.safeParse(parseCatalogMetadata);
 
     if (!result.success) {
       const { title = { _errors: [""] }, description = { _errors: [""] } } =
         result.error.format();
-      setCatalogMetaError({
+      setArchiveMetaError({
         title: title._errors[0],
         description: description._errors[0],
       });
     } else {
-      setCatalogMetaError({
+      setArchiveMetaError({
         title: "",
         description: "",
       });
@@ -88,26 +101,29 @@ export default function CreateCatalogDialog({ revalidateCatalogs }: any) {
         <Button>
           <span className="flex items-center gap-2">
             <CatalogAddIcon size={24} />
-            Create Catalog
+            Create Archive
           </span>
         </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Add a catalog</DialogTitle>
+          <DialogTitle>Add archive</DialogTitle>
         </DialogHeader>
-        <div className="flex flex-col gap-2">
+        <form
+          className="flex flex-col gap-2"
+          onSubmit={(e) => createNewArchive(e)}
+        >
           <div className="space-y-2">
             <Label htmlFor="title">Title</Label>
             <Input
               id="title"
-              value={catalogMeta.title}
+              value={archiveMeta.title}
               name="title"
               onChange={handleMetaUpdate}
             />
-            {catalogMetaError.title ? (
+            {archiveMetaError.title ? (
               <p className="text-sm text-[hsl(var(--primary))]">
-                {catalogMetaError.title}
+                {archiveMetaError.title}
               </p>
             ) : null}
           </div>
@@ -116,19 +132,23 @@ export default function CreateCatalogDialog({ revalidateCatalogs }: any) {
             <Label htmlFor="description">Description</Label>
             <Input
               id="description"
-              value={catalogMeta.description}
+              value={archiveMeta.description}
               name="description"
               onChange={handleMetaUpdate}
             />
-            {catalogMetaError.description ? (
+            {archiveMetaError.description ? (
               <p className="text-sm text-[hsl(var(--primary))]">
-                {catalogMetaError.description}
+                {archiveMetaError.description}
               </p>
             ) : null}
           </div>
 
-          <Button onClick={createNewCatalog}>Create</Button>
-        </div>
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button type="submit">Create</Button>
+            </DialogClose>
+          </DialogFooter>
+        </form>
       </DialogContent>
     </Dialog>
   );

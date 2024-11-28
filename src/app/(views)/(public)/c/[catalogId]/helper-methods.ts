@@ -63,7 +63,3 @@ export function getActiveChannelIds(videoData: any): ChannelTag[] {
 
   return channelUnique(channelIds);
 }
-
-export function parseCatalogHandle(str: string) {
-  return str.substring(1);
-}
