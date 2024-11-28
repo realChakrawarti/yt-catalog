@@ -7,6 +7,7 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -142,9 +143,11 @@ export default function CreateArchiveDialog({ revalidateCatalogs }: any) {
             ) : null}
           </div>
 
-          <DialogClose>
-            <Button type="submit">Create</Button>
-          </DialogClose>
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button type="submit">Create</Button>
+            </DialogClose>
+          </DialogFooter>
         </form>
       </DialogContent>
     </Dialog>

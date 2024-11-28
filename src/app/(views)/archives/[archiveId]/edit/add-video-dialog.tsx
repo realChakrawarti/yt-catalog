@@ -1,4 +1,3 @@
-import { ListPlus } from "lucide-react";
 import { useState } from "react";
 
 import { Button } from "~/components/shadcn/button";
@@ -21,11 +20,13 @@ type VideoLink = {
 const YouTubeVideoLinkRegex =
   /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/|shorts\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*/;
 
-export default function ValidateVideoDialog({
-  localChannel,
-  savedChannels,
-  setLocalChannel,
-}: any) {
+export default function AddVideoDialog({
+  archiveId,
+  revalidateArchive,
+}: {
+  archiveId: string;
+  revalidateArchive: () => void;
+}) {
   const [videoLink, setVideoLink] = useState<VideoLink>({
     link: "",
     error: "",
@@ -51,7 +52,7 @@ export default function ValidateVideoDialog({
     }
   };
 
-  const validateVideoLink = async () => {
+  const addVideoLink = async () => {
     const found = videoLink.link.match(YouTubeVideoLinkRegex);
     let videoId = "";
     if (found?.length) {
@@ -66,30 +67,28 @@ export default function ValidateVideoDialog({
         return;
       }
       const videoData = result.data.items[0].snippet;
-      const channelId = videoData.channelId;
-      const channelTitle = videoData.channelTitle;
 
-      const alreadyExists = localChannel.find(
-        (item: any) => item.id === channelId
-      );
+      const videoMeta = {
+        title: videoData.title,
+        description: videoData.description,
+        videoId: videoId,
+        channelTitle: videoData.channelTitle,
+        channelId: videoData.channelId,
+        thumbnail: videoData.thumbnails.medium.url,
+        publishedAt: videoData.publishedAt
+      };
 
-      const alreadySaved = savedChannels?.find(
-        (channel: any) => channel.id === channelId
-      );
+      const resultAdd = await fetchApi(`/archives/${archiveId}/update`, {
+        method: "PATCH",
+        body: JSON.stringify(videoMeta),
+      });
 
-      if (!alreadyExists && !alreadySaved) {
-        setLocalChannel((prev: any) => [
-          ...prev,
-          { id: channelId, title: channelTitle },
-        ]);
-        toast({ title: `${channelTitle}'s channel added to the list.` });
-      } else if (alreadyExists) {
-        toast({
-          title: `${channelTitle}'s channel already added to the list.`,
-        });
-      } else if (alreadySaved) {
-        toast({ title: `${channelTitle}'s channel already saved.` });
+      if (resultAdd.success) {
+        toast({ title: resultAdd.message });
+        revalidateArchive();
       }
+
+      // Add doc to archive
 
       setVideoLink({
         link: "",
@@ -101,12 +100,7 @@ export default function ValidateVideoDialog({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">
-          <div className="flex gap-2 items-center">
-            <ListPlus className="size-8" />
-            <p>Add channel from video</p>
-          </div>
-        </Button>
+        <Button>Add video</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -121,9 +115,9 @@ export default function ValidateVideoDialog({
             />
             <Button
               disabled={Boolean(videoLink.error || !videoLink.link)}
-              onClick={validateVideoLink}
+              onClick={addVideoLink}
             >
-              Validate
+              Add
             </Button>
           </div>
           {videoLink.error ? (

@@ -1,7 +1,8 @@
 "use client";
 
+import { YouTubeEmbed } from "@next/third-parties/google";
 import Linkify from "linkify-react";
-import { Info, Link, MoreVertical } from "lucide-react";
+import { Info, Link, MoreVertical, Trash2 } from "lucide-react";
 import { Inter } from "next/font/google";
 
 import {
@@ -26,7 +27,17 @@ import {
 import { toast } from "~/hooks/use-toast";
 import { getTimeDifference } from "~/utils/client-helper";
 
-import { YoutubePlayer } from "./component";
+const YoutubePlayer = (props: any) => {
+  const { videoId, title } = props;
+
+  return (
+    <YouTubeEmbed
+      params="rel=0&playsinline=1&cc_load_policy=0"
+      videoid={videoId}
+      playlabel={title}
+    />
+  );
+};
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -39,6 +50,7 @@ export default function YouTubeCard(props: any) {
     channelId,
     channelLogo,
     description,
+    removeVideo,
   } = props;
   const [_, timeElapsed] = getTimeDifference(publishedAt, true);
 
@@ -88,10 +100,12 @@ export default function YouTubeCard(props: any) {
         </div>
         <div className="p-3 px-0 md:px-3">
           <div className="flex items-start gap-3">
-            <Avatar className="h-8 w-8 rounded-lg">
-              <AvatarImage src={channelLogo} alt={channelTitle} />
-              <AvatarFallback>{channelTitle}</AvatarFallback>
-            </Avatar>
+            {channelLogo ? (
+              <Avatar className="h-8 w-8 rounded-lg">
+                <AvatarImage src={channelLogo} alt={channelTitle} />
+                <AvatarFallback>{channelTitle}</AvatarFallback>
+              </Avatar>
+            ) : null}
             <div className="flex-1 space-y-1">
               <h3 className="font-semibold leading-tight text-sm">{title}</h3>
               <div className="flex items-center gap-2 text-xs text-muted-foreground">
@@ -122,6 +136,16 @@ export default function YouTubeCard(props: any) {
                 align="end"
                 className="w-[200px] border-none rounded-lg p-1"
               >
+                {typeof removeVideo === "function" ? (
+                  <Button
+                    variant="ghost"
+                    className="flex gap-2 justify-start hover:bg-accent rounded-lg p-2 text-xs cursor-pointer w-full"
+                    onClick={() => removeVideo(videoId)}
+                  >
+                    <Trash2 className="h-4 w-4 mr-2" />
+                    Remove video
+                  </Button>
+                ) : null}
                 <Button
                   variant="ghost"
                   className="flex gap-2 justify-start hover:bg-accent rounded-lg p-2 text-xs cursor-pointer w-full"

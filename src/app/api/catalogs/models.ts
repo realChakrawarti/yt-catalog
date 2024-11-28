@@ -343,7 +343,7 @@ export async function getValidCatalogIds() {
           thumbnails: getVideoThumbnails(catalogData),
           title: catalogData?.title,
           description: catalogData?.description,
-          id: "@" + catalogId,
+          id: catalogId,
           updatedAt: catalogData?.data.updatedAt.toDate(),
         };
 

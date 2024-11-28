@@ -5,10 +5,16 @@ import useSWR from "swr";
 import { z } from "zod";
 
 import withAuth from "~/app/auth/with-auth-hoc";
+import Spinner from "~/components/custom/spinner";
+import YouTubeCard from "~/components/custom/youtube-card";
+import { Button } from "~/components/shadcn/button";
 import { Input } from "~/components/shadcn/input";
 import { Label } from "~/components/shadcn/label";
+import { Separator } from "~/components/shadcn/separator";
 import { toast } from "~/hooks/use-toast";
 import fetchApi from "~/utils/fetch";
+
+import AddVideoDialog from "./add-video-dialog";
 
 type ArchivePageParams = {
   archiveId: string;
@@ -56,32 +62,6 @@ function EditArchive({ params }: { params: ArchivePageParams }) {
     description: "",
   });
 
-  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-
-  const handleSubmit = async () => {
-    if (archiveMetaError.title || archiveMetaError.description) {
-      return;
-    }
-
-    const payload = {
-      title: archiveMeta.title,
-      description: archiveMeta.description,
-    };
-
-    setIsSubmitting(true);
-    const result = await fetchApi(`/archives/${archiveId}/update`, {
-      method: "PATCH",
-      body: JSON.stringify(payload),
-    });
-
-    if (result.success) {
-      revalidateArchive();
-    }
-
-    toast({ title: result.message });
-    setIsSubmitting(false);
-  };
-
   const handleMetaUpdate = (e: any) => {
     setArchiveMeta((prev) => ({
       ...prev,
@@ -111,15 +91,59 @@ function EditArchive({ params }: { params: ArchivePageParams }) {
   };
 
   useEffect(() => {
-    setArchiveMeta({
-      title: archiveData?.data?.title,
-      description: archiveData?.data?.description,
-    });
+    if (archiveData?.data?.title || archiveData?.data?.description) {
+      setArchiveMeta({
+        title: archiveData?.data?.title,
+        description: archiveData?.data?.description,
+      });
+    }
   }, [archiveData?.data]);
+
+  async function handleArchiveMeta() {
+    const result = await fetchApi(`/archives/${archiveId}`, {
+      method: "PATCH",
+      body: JSON.stringify({
+        title: archiveMeta.title,
+        description: archiveMeta.description,
+      }),
+    });
+
+    if (!result.success) {
+      toast({ title: result.message });
+    } else {
+      revalidateArchive();
+    }
+  }
+
+  async function removeVideo(videoId: string) {
+    const video = archiveData?.data?.videos.find(
+      (item: any) => item.videoId === videoId
+    );
+    const result = await fetchApi(`/archives/${archiveId}/remove-video`, {
+      method: "PATCH",
+      body: JSON.stringify(video),
+    });
+
+    if (result.success) {
+      return revalidateArchive();
+    }
+    toast({ title: result.message });
+  }
 
   return (
     <div className="p-3">
-      <h1>Edit Archive</h1>
+      <div className="flex items-center justify-between">
+        <h1 className="text-lg lg:text-xl">Edit Archive</h1>
+        <Button
+          disabled={Boolean(
+            archiveMetaError.title || archiveMetaError.description
+          )}
+          onClick={handleArchiveMeta}
+        >
+          Apply
+        </Button>
+      </div>
+      <Separator className="my-4" />
       <div className="flex flex-col gap-1">
         <div className="space-y-2">
           <Label htmlFor="title">Title</Label>
@@ -149,6 +173,36 @@ function EditArchive({ params }: { params: ArchivePageParams }) {
               {archiveMetaError.description}
             </p>
           ) : null}
+        </div>
+        <Separator className="my-4" />
+
+        <div>
+          <div className="flex items-center justify-between">
+            <h2 className="text-base lg:text-lg">Videos</h2>
+            <AddVideoDialog
+              archiveId={archiveId}
+              revalidateArchive={revalidateArchive}
+            />
+          </div>
+          <Separator className="my-4" />
+          {error ? <div>Something went wrong!</div> : null}
+          {isLoading ? (
+            <Spinner className="size-8" />
+          ) : archiveData?.data?.videos ? (
+            <section className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+              {archiveData?.data?.videos.map((item: any) => {
+                return (
+                  <YouTubeCard
+                    removeVideo={removeVideo}
+                    key={item.id}
+                    {...item}
+                  />
+                );
+              })}
+            </section>
+          ) : (
+            <p>No videos added yet.</p>
+          )}
         </div>
       </div>
     </div>

@@ -143,7 +143,7 @@ export default function CreateCatalogDialog({ revalidateCatalogs }: any) {
             ) : null}
           </div>
           <DialogFooter>
-            <DialogClose>
+            <DialogClose asChild>
               <Button type="submit">Create</Button>
             </DialogClose>
           </DialogFooter>

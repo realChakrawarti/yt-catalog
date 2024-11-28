@@ -2,6 +2,7 @@
 import dynamic from "next/dynamic";
 import { Metadata, ResolvingMetadata } from "next/types";
 
+import YouTubeCard from "~/components/custom/youtube-card";
 import fetchApi from "~/utils/fetch";
 
 import { AddToFavorites } from "./add-to-fav";
@@ -9,10 +10,8 @@ import FilterChannel, { CurrentActive } from "./filter-channel";
 import {
   filterChannel,
   getActiveChannelIds,
-  parseCatalogHandle,
 } from "./helper-methods";
 import NextUpdate from "./next-update";
-import YouTubeCard from "./youtube-card";
 
 // Refer: https://nextjs.org/docs/pages/building-your-application/optimizing/lazy-loading#with-no-ssr
 const DynamicShareCatalog = dynamic(() => import("./share-catalog"), {
@@ -20,7 +19,7 @@ const DynamicShareCatalog = dynamic(() => import("./share-catalog"), {
 });
 
 type PageProps = {
-  params: { catalogHandle: string };
+  params: { catalogId: string };
   searchParams?: {
     channelId: string;
   };
@@ -30,10 +29,9 @@ export async function generateMetadata(
   { params }: PageProps,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-  const catalogHandle = decodeURIComponent(params.catalogHandle);
-  const catalogId = parseCatalogHandle(catalogHandle);
+  const { catalogId } = params;
 
-  const result = await fetchApi(`/catalogs/${catalogId}/video`);
+  const result = await fetchApi(`/catalogs/${catalogId}/videos`);
   const catalogData = result.data;
 
   return {
@@ -41,7 +39,7 @@ export async function generateMetadata(
     openGraph: {
       type: "website",
       title: catalogData?.title,
-      url: `https://ytcatalog.707x.in/${catalogHandle}`,
+      url: `https://ytcatalog.707x.in/${catalogId}`,
       description: catalogData?.description,
       siteName: "YTCatalog",
     },
@@ -56,10 +54,9 @@ export default async function CatalogHandle({
 }: PageProps) {
   const channelId = searchParams?.channelId;
 
-  const catalogHandle = decodeURIComponent(params.catalogHandle);
-  const catalogId = parseCatalogHandle(catalogHandle);
+  const { catalogId } = params;
 
-  const result = await fetchApi(`/catalogs/${catalogId}/video`);
+  const result = await fetchApi(`/catalogs/${catalogId}/videos`);
 
   const catalogData = result.data;
 
@@ -124,9 +121,7 @@ export default async function CatalogHandle({
             ))}
           </div>
         </section>
-      ) : (
-        <></>
-      )}
+      ) : null}
       {/* This week */}
       {week?.length ? (
         <section className="px-0 md:px-3 space-y-3">
@@ -137,9 +132,7 @@ export default async function CatalogHandle({
             ))}
           </div>
         </section>
-      ) : (
-        <></>
-      )}
+      ) : null}
       {/* This month */}
       {month?.length ? (
         <section className="px-0 md:px-3 space-y-3">
@@ -150,9 +143,7 @@ export default async function CatalogHandle({
             ))}
           </div>
         </section>
-      ) : (
-        <></>
-      )}
+      ) : null}
     </div>
   );
 }
