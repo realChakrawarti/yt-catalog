@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.10](https://github.com/realChakrawarti/YTCatalog/compare/v1.3.9...v1.3.10) (2024-12-03)
+
+
+### Features
+
+* limit catalog & archive creation, polling last updated time ([82e2917](https://github.com/realChakrawarti/YTCatalog/commit/82e2917265dcd154bcdb3e6c947706f186a6109b))
+
 ### [1.3.9](https://github.com/realChakrawarti/YTCatalog/compare/v1.3.8...v1.3.9) (2024-11-28)
 
 ### [1.3.8](https://github.com/realChakrawarti/YTCatalog/compare/v1.3.7...v1.3.8) (2024-11-28)

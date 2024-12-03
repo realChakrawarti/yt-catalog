@@ -85,7 +85,7 @@ export default function CatalogEditor({ catalogId }: any) {
         <h1 className="text-lg lg:text-xl">Edit Catalog</h1>
         <div className="flex items-center gap-3">
           {savedChannels?.length ? (
-            <Link href={`/@${catalogId}`} target="_blank">
+            <Link href={`/c/${catalogId}`} target="_blank">
               <JustTip label="Visit Catalog">
                 <Button variant="outline">
                   <LinkIcon className="size-8" />

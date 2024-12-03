@@ -1,16 +1,14 @@
 /* eslint-disable @next/next/no-img-element */
 import dynamic from "next/dynamic";
 import { Metadata, ResolvingMetadata } from "next/types";
+import { ReactNode } from "react";
 
 import YouTubeCard from "~/components/custom/youtube-card";
 import fetchApi from "~/utils/fetch";
 
 import { AddToFavorites } from "./add-to-fav";
 import FilterChannel, { CurrentActive } from "./filter-channel";
-import {
-  filterChannel,
-  getActiveChannelIds,
-} from "./helper-methods";
+import { filterChannel, getActiveChannelIds } from "./helper-methods";
 import NextUpdate from "./next-update";
 
 // Refer: https://nextjs.org/docs/pages/building-your-application/optimizing/lazy-loading#with-no-ssr
@@ -61,7 +59,6 @@ export default async function CatalogHandle({
   const catalogData = result.data;
 
   const videos: Record<string, any> = catalogData?.data;
-  const nextUpdate = catalogData?.nextUpdate;
   const catalogTitle = catalogData?.title;
   const catalogDescription = catalogData?.description;
 
@@ -82,7 +79,7 @@ export default async function CatalogHandle({
       <section className="px-0 md:px-3">
         <div className="space-y-0">
           <div className="flex flex-col gap-3 lg:flex-row lg:justify-between lg:items-center">
-            <div className="space-y-1">
+            <div className="px-2 md:px-0 space-y-1">
               <h1 className="text-2xl font-semibold tracking-tight">
                 {catalogTitle}
               </h1>
@@ -91,7 +88,7 @@ export default async function CatalogHandle({
               </p>
             </div>
 
-            <div className="mt-4 sm:mt-0 flex items-center gap-4">
+            <div className="px-2 md:px-0 mt-4 sm:mt-0 flex items-center gap-4">
               <DynamicShareCatalog
                 catalogId={catalogId}
                 catalogTitle={catalogTitle}
@@ -102,7 +99,7 @@ export default async function CatalogHandle({
                 catalogTitle={catalogTitle}
                 catalogDescription={catalogDescription}
               />
-              <NextUpdate dateTime={nextUpdate} />
+              <NextUpdate catalogId={catalogId} />
               <FilterChannel activeChannels={activeChannels} />
             </div>
           </div>
@@ -113,37 +110,44 @@ export default async function CatalogHandle({
 
       {/* Today */}
       {today?.length ? (
-        <section className="px-0 md:px-3 space-y-3">
-          <h2 className="text-lg">Today</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {today.map((video) => (
-              <YouTubeCard key={video.videoId} {...video} />
-            ))}
-          </div>
-        </section>
+        <VideoSection label="Today">
+          {today.map((video) => (
+            <YouTubeCard key={video.videoId} {...video} />
+          ))}
+        </VideoSection>
       ) : null}
       {/* This week */}
       {week?.length ? (
-        <section className="px-0 md:px-3 space-y-3">
-          <h2 className="text-lg">This week</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {week.map((video) => (
-              <YouTubeCard key={video.videoId} {...video} />
-            ))}
-          </div>
-        </section>
+        <VideoSection label="This week">
+          {week.map((video) => (
+            <YouTubeCard key={video.videoId} {...video} />
+          ))}
+        </VideoSection>
       ) : null}
       {/* This month */}
       {month?.length ? (
-        <section className="px-0 md:px-3 space-y-3">
-          <h2 className="text-lg">This month</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {month.map((video) => (
-              <YouTubeCard key={video.videoId} {...video} />
-            ))}
-          </div>
-        </section>
+        <VideoSection label="This month">
+          {month.map((video) => (
+            <YouTubeCard key={video.videoId} {...video} />
+          ))}
+        </VideoSection>
       ) : null}
     </div>
+  );
+}
+
+type VideoSectionProps = {
+  label: string;
+  children: ReactNode;
+};
+
+function VideoSection({ label, children }: VideoSectionProps) {
+  return (
+    <section className="px-0 md:px-3 space-y-3">
+      <h2 className="px-2 md:px-0 text-lg">{label}</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {children}
+      </div>
+    </section>
   );
 }

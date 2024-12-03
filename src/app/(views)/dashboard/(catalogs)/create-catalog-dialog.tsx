@@ -1,5 +1,4 @@
 import { FormEvent, useState } from "react";
-import { z } from "zod";
 
 import { CatalogAddIcon } from "~/components/custom/icons";
 import { Button } from "~/components/shadcn/button";
@@ -15,20 +14,9 @@ import {
 import { Input } from "~/components/shadcn/input";
 import { Label } from "~/components/shadcn/label";
 import { toast } from "~/hooks/use-toast";
+import { TitleDescriptionSchema as CatalogSchema } from "~/types-schema/schemas";
+import type { TitleDescriptionType as CatalogMeta } from "~/types-schema/types";
 import fetchApi from "~/utils/fetch";
-
-const CatalogSchema = z.object({
-  title: z
-    .string()
-    .min(4, { message: "Title must be at least 4 characters long." })
-    .max(16, { message: "Title must be at most 16 characters long." }),
-  description: z
-    .string()
-    .min(8, { message: "Description must be at least 8 characters long." })
-    .max(64, { message: "Description must be at most 64 characters long." }),
-});
-
-type CatalogMeta = z.infer<typeof CatalogSchema>;
 
 const initialState = {
   title: "",
@@ -36,7 +24,10 @@ const initialState = {
 };
 
 // TODO: Consider using reducer to handle state updates, revalidate and show notification
-export default function CreateCatalogDialog({ revalidateCatalogs }: any) {
+export default function CreateCatalogDialog({
+  revalidateCatalogs,
+  disabled,
+}: any) {
   const [catalogMeta, setCatalogMeta] = useState<CatalogMeta>({
     title: "",
     description: "",
@@ -98,7 +89,7 @@ export default function CreateCatalogDialog({ revalidateCatalogs }: any) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button>
+        <Button disabled={disabled}>
           <span className="flex items-center gap-2">
             <CatalogAddIcon size={24} />
             Create Catalog

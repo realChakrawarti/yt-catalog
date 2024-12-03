@@ -217,8 +217,8 @@ export async function getVideosByCatalogId(catalogId: string) {
       { merge: true }
     );
 
-    revalidatePath(`/@${catalogId}`);
-    console.log(`Cached invalidated /@${catalogId}`);
+    revalidatePath(`/c/${catalogId}`);
+    console.log(`Cached invalidated /c/${catalogId}`);
   } else {
     videoFilterData = catalogSnapData.data.videos;
     recentUpdate = lastUpdated;
@@ -439,4 +439,13 @@ export async function createCatalog(userId: string, catalogMeta: CatalogMeta) {
   });
 
   return nanoidToken;
+}
+
+
+export async function getNextUpdate(catalogId: string) {
+  const catalogRef = doc(db, COLLECTION.catalogs, catalogId);
+  const catalogSnap = await getDoc(catalogRef);
+  const catalogData = catalogSnap.data();
+
+  return catalogData?.data.updatedAt.toDate()
 }

@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import useSWR from "swr";
-import { z } from "zod";
 
 import withAuth from "~/app/auth/with-auth-hoc";
 import Spinner from "~/components/custom/spinner";
@@ -12,6 +11,8 @@ import { Input } from "~/components/shadcn/input";
 import { Label } from "~/components/shadcn/label";
 import { Separator } from "~/components/shadcn/separator";
 import { toast } from "~/hooks/use-toast";
+import { TitleDescriptionSchema as ArchiveSchema } from "~/types-schema/schemas";
+import type { TitleDescriptionType as ArchiveMeta } from "~/types-schema/types";
 import fetchApi from "~/utils/fetch";
 
 import AddVideoDialog from "./add-video-dialog";
@@ -19,19 +20,6 @@ import AddVideoDialog from "./add-video-dialog";
 type ArchivePageParams = {
   archiveId: string;
 };
-
-const ArchiveSchema = z.object({
-  title: z
-    .string()
-    .min(4, { message: "Title must be at least 4 characters long." })
-    .max(16, { message: "Title must be at most 16 characters long." }),
-  description: z
-    .string()
-    .min(8, { message: "Description must be at least 8 characters long." })
-    .max(64, { message: "Description must be at most 64 characters long." }),
-});
-
-type ArchiveMeta = z.infer<typeof ArchiveSchema>;
 
 const initialState = {
   title: "",
