@@ -38,7 +38,7 @@ export async function DELETE(request: NextRequest, ctx: ContextParams) {
 
   await deleteChannel(userId, catalogId, channels);
 
-  revalidatePath(`/@${catalogId}`)
+  revalidatePath(`/c/${catalogId}`)
 
   return NxResponse.success<any>("Channel deleted successfully.", {}, 201);
 
@@ -68,7 +68,7 @@ export async function PATCH(request: NextRequest, ctx: ContextParams) {
 
   // Revalidate the /explore route
   revalidatePath("/explore");
-  revalidatePath(`/@${catalogId}`)
+  revalidatePath(`/c/${catalogId}`)
 
   return NxResponse.success<any>("Channel list update successfully.", {}, 201);
 }

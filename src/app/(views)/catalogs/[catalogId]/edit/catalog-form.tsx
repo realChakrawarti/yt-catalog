@@ -1,27 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { z } from "zod";
 
 import Spinner from "~/components/custom/spinner";
 import { Button } from "~/components/shadcn/button";
 import { Input } from "~/components/shadcn/input";
 import { Label } from "~/components/shadcn/label";
 import { useToast } from "~/hooks/use-toast";
+import { TitleDescriptionSchema as CatalogSchema } from "~/types-schema/schemas";
+import type { TitleDescriptionType as CatalogMetadata } from "~/types-schema/types";
 import fetchApi from "~/utils/fetch";
-
-const CatalogSchema = z.object({
-  title: z
-    .string()
-    .min(4, { message: "Title must be at least 4 characters long." })
-    .max(16, { message: "Title must be at most 16 characters long." }),
-  description: z
-    .string()
-    .min(8, { message: "Description must be at least 8 characters long." })
-    .max(64, { message: "Description must be at most 64 characters long." }),
-});
-
-type CatalogMetadata = z.infer<typeof CatalogSchema>;
 
 type UpdateCatalogPayload = {
   channels?: string[];

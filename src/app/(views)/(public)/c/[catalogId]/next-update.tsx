@@ -2,15 +2,17 @@
 import { Clock, RotateCw, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
+import useSWR from "swr";
 
-import JustTip from "~/components/custom/just-the-tip";
 import { Button } from "~/components/shadcn/button";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "~/components/shadcn/popover";
+import { Skeleton } from "~/components/shadcn/skeleton";
 import { getTimeDifference } from "~/utils/client-helper";
+import fetchApi from "~/utils/fetch";
 
 function ShowBanner({ showBanner, setShowBanner }: any) {
   const [bodyElement, setBodyElement] = useState<
@@ -29,7 +31,7 @@ function ShowBanner({ showBanner, setShowBanner }: any) {
     <div className="absolute inset-0 top-2 z-50 max-h-[75px]">
       <div className="bg-primary px-3 py-2 flex items-center justify-between rounded-lg">
         <div className="flex items-center space-x-2 text-white justify-between">
-          <span>A new version of catalog is available</span>
+          <span>A new version of catalog is available.</span>
         </div>
         <div className="flex gap-3">
           <Button
@@ -57,37 +59,76 @@ function ShowBanner({ showBanner, setShowBanner }: any) {
   );
 }
 
-export default function NextUpdate({ dateTime }: any) {
+export default function NextUpdate({ catalogId }: any) {
   const [time, setTime] = useState<string>("");
   const [showBanner, setShowBanner] = useState(false);
 
-  useEffect(() => {
-    const [when, timeDiff] = getTimeDifference(dateTime);
-    if ((when as number) < 0) {
-      setTime("Updating the catalog...");
-      setTimeout(() => {
-        setShowBanner(true);
-      }, 7000);
-    } else {
-      setTime(timeDiff as string);
+  const {
+    data: nextUpdate,
+    error,
+    isLoading,
+  } = useSWR(
+    catalogId ? `/catalogs/${catalogId}/next-update` : null,
+    (url) => fetchApi<string>(url),
+    {
+      refreshInterval: 5 * 60_000,
     }
-  }, [dateTime]);
+  );
 
+  useEffect(() => {
+    const updateTime = () => {
+      let timeoutId = null;
+      const [when, _] = getTimeDifference(nextUpdate?.data as string);
+      if ((when as number) < 0) {
+        timeoutId = setTimeout(() => {
+          setShowBanner(true);
+        }, 30_000);
+      }
+
+      return timeoutId;
+    };
+
+    let clearTimeoutId = null;
+    if (nextUpdate?.data) {
+      clearTimeoutId = updateTime();
+    }
+
+    return () => {
+      clearTimeoutId && clearTimeout(clearTimeoutId);
+    };
+  }, [nextUpdate?.data]);
+
+  const [when, timeDiff] = getTimeDifference(nextUpdate?.data as string);
+  const showTimeUpdate = () => {
+    if (error) {
+      return "Please reload the page.";
+    }
+
+    if ((when as number) < 0) {
+      return "Updating the catalog...";
+    } else {
+      return timeDiff;
+    }
+  };
   return (
     <>
       <ShowBanner showBanner={showBanner} setShowBanner={setShowBanner} />
-      <Popover>
-        <PopoverTrigger asChild>
-          <Button variant="outline" size="sm" className="h-9">
-            <Clock className="h-4 w-4" />
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent className="w-auto text-sm p-2">
-          <p>
-            <b>Next update:</b> {time}
-          </p>
-        </PopoverContent>
-      </Popover>
+      {isLoading ? (
+        <Skeleton className="size-9" />
+      ) : (
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button variant="outline" size="sm" className="h-9">
+              <Clock className="h-4 w-4" />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-auto text-sm p-2">
+            <p>
+              <b>Next update:</b> {showTimeUpdate()}
+            </p>
+          </PopoverContent>
+        </Popover>
+      )}
     </>
   );
 }

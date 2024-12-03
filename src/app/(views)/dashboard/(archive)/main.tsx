@@ -2,11 +2,14 @@ import { useRouter } from "next/navigation";
 import useSWR from "swr";
 
 import Spinner from "~/components/custom/spinner";
+import { Badge } from "~/components/shadcn/badge";
 import { toast } from "~/hooks/use-toast";
 import fetchApi from "~/utils/fetch";
 
 import ArchiveTable from "./archive-table";
 import CreateArchiveDialog from "./create-archive-dialog";
+
+const LIMIT_ARCHIVES = 10;
 
 export default function ArchiveView() {
   const router = useRouter();
@@ -36,8 +39,16 @@ export default function ArchiveView() {
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
-        <h1 className="text-lg lg:text-xl">Archives</h1>
-        <CreateArchiveDialog revalidateCatalogs={mutate} />
+        <h1 className="text-lg lg:text-xl flex items-center gap-3">
+          <p>Archives</p>
+          <Badge className="text-lg lg:text-xl text-primary" variant="outline">
+            {archives?.data.length}/{LIMIT_ARCHIVES}
+          </Badge>
+        </h1>
+        <CreateArchiveDialog
+          disabled={archives?.data.length >= LIMIT_ARCHIVES}
+          revalidateCatalogs={mutate}
+        />
       </div>
       {isArchiveError && <p>Error loading archives</p>}
       {isArchiveLoading ? (

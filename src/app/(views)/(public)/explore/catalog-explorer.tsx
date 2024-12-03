@@ -69,7 +69,7 @@ export function CatalogExplorer({ validCatalogs, validArchives }: any) {
                     return (
                       <Link
                         className="flex items-start space-x-4 p-4 rounded-lg border bg-card"
-                        href={`/@${favCatalog.id}`}
+                        href={`/c/${favCatalog.id}`}
                         key={favCatalog.id}
                       >
                         <section>
@@ -116,7 +116,7 @@ function Archives({ archives }: any) {
           }
         })
       ) : (
-        <div>No archives found</div>
+        <div>No archives found.</div>
       )}
     </div>
   );
@@ -138,7 +138,7 @@ function Catalogs({ catalogs }: any) {
           }
         })
       ) : (
-        <div>No catalogs found</div>
+        <div>No catalogs found.</div>
       )}
     </div>
   );
