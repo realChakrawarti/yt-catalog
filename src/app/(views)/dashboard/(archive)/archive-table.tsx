@@ -1,6 +1,19 @@
+import { AlertTriangle } from "lucide-react";
+import { ReactNode } from "react";
+
 import { DeleteIcon, EditIcon } from "~/components/custom/icons";
 import JustTip from "~/components/custom/just-the-tip";
 import { Button } from "~/components/shadcn/button";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "~/components/shadcn/dialog";
 import {
   Table,
   TableBody,
@@ -64,18 +77,14 @@ function ArchiveTable({ archives, onDelete, onEdit }: ArchiveTableProps) {
                       />
                     </Button>
                   </JustTip>
-
-                  <JustTip label="Remove Catalog">
-                    <Button
-                      variant="outline"
-                      onClick={() => onDelete(archive?.id)}
-                    >
+                  <DeleteModal handleDelete={() => onDelete(archive?.id)}>
+                    <Button variant="outline">
                       <DeleteIcon
                         size={24}
-                        className="text-red-700 hover:text-red-500 cursor-pointer"
+                        className="text-primary/70 hover:text-primary cursor-pointer"
                       />
                     </Button>
-                  </JustTip>
+                  </DeleteModal>
                 </div>
               </TableCell>
             </TableRow>
@@ -87,3 +96,38 @@ function ArchiveTable({ archives, onDelete, onEdit }: ArchiveTableProps) {
 }
 
 export default ArchiveTable;
+
+type DeleteModalProps = {
+  handleDelete: () => void;
+  children: ReactNode;
+};
+
+function DeleteModal({ children, handleDelete }: DeleteModalProps) {
+  return (
+    <Dialog>
+      <DialogTrigger asChild>{children}</DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle className="flex items-center gap-2">
+            <AlertTriangle className="h-5 w-5 text-primary" />
+            Confirm Deletion
+          </DialogTitle>
+          <DialogDescription className="text-primary/70">
+            This action is irreversible. The archive will be permanently
+            deleted.
+          </DialogDescription>
+        </DialogHeader>
+        <DialogFooter className="sm:justify-start">
+          <Button type="button" onClick={handleDelete}>
+            Delete
+          </Button>
+          <DialogClose>
+            <Button type="button" variant="outline">
+              Cancel
+            </Button>
+          </DialogClose>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+}
