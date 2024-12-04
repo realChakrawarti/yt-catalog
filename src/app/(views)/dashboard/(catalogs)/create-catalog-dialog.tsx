@@ -86,6 +86,12 @@ export default function CreateCatalogDialog({
     }
   };
 
+  const submitDisabled =
+    catalogMetaError.title ||
+    catalogMetaError.description ||
+    !catalogMeta.title ||
+    !catalogMeta.description;
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -135,7 +141,9 @@ export default function CreateCatalogDialog({
           </div>
           <DialogFooter>
             <DialogClose asChild>
-              <Button type="submit">Create</Button>
+              <Button disabled={Boolean(submitDisabled)} type="submit">
+                Create
+              </Button>
             </DialogClose>
           </DialogFooter>
         </form>
