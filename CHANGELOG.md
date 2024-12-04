@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.11](https://github.com/realChakrawarti/YTCatalog/compare/v1.3.10...v1.3.11) (2024-12-04)
+
+
+### Bug Fixes
+
+* basic styling and elements placement ([1cba30f](https://github.com/realChakrawarti/YTCatalog/commit/1cba30feb50ff00e36c9f4a846175bc424defdbb))
+* empty title and description in catalog & archive creation ([2e453fd](https://github.com/realChakrawarti/YTCatalog/commit/2e453fd2c482a89932bc325b5102b571ae579cb5))
+
 ### [1.3.10](https://github.com/realChakrawarti/YTCatalog/compare/v1.3.9...v1.3.10) (2024-12-03)
 
 

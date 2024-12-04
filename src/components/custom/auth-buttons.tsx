@@ -1,3 +1,5 @@
+"use client";
+
 import { useAuth } from "~/app/auth/context-provider";
 import { githubProvider, googleProvider } from "~/app/auth/service-providers";
 
@@ -25,7 +27,7 @@ export default function AuthButton() {
           onClick={signInWithGoogle}
         >
           <GmailIcon size={24} />
-          <p className="hidden md:block">Google</p>
+          <p>Google</p>
         </Button>
       </JustTip>
       <JustTip label="Login with GitHub">
@@ -35,7 +37,7 @@ export default function AuthButton() {
           onClick={signInWithGitHub}
         >
           <GithubIcon size={24} />
-          <p className="hidden md:block">GitHub</p>
+          <p>GitHub</p>
         </Button>
       </JustTip>
     </div>

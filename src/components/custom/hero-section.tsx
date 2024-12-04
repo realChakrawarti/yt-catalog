@@ -3,6 +3,7 @@
 import Link from "next/link";
 
 import { Button } from "../shadcn/button";
+import AuthButton from "./auth-buttons";
 
 function GlobeBackground() {
   return (
@@ -48,10 +49,8 @@ export default function HeroSection() {
                 </p>
               </div>
               {/* Buttons */}
-              <div className="mt-8 gap-3 flex justify-center">
-                <Link href="/explore">
-                  <Button size={"lg"}>Explore</Button>
-                </Link>
+              <div className="mt-8 gap-3 flex flex-col items-center">
+                <AuthButton />
               </div>
               {/* End Buttons */}
             </div>

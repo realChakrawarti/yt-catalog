@@ -18,14 +18,16 @@ import { TitleDescriptionSchema as ArchiveSchema } from "~/types-schema/schemas"
 import type { TitleDescriptionType as ArchiveMeta } from "~/types-schema/types";
 import fetchApi from "~/utils/fetch";
 
-
 const initialState = {
   title: "",
   description: "",
 };
 
 // TODO: Consider using reducer to handle state updates, revalidate and show notification
-export default function CreateArchiveDialog({ revalidateCatalogs, disabled }: any) {
+export default function CreateArchiveDialog({
+  revalidateCatalogs,
+  disabled,
+}: any) {
   const [archiveMeta, setArchiveMeta] = useState<ArchiveMeta>({
     title: "",
     description: "",
@@ -84,6 +86,12 @@ export default function CreateArchiveDialog({ revalidateCatalogs, disabled }: an
     }
   };
 
+  const submitDisabled =
+    archiveMetaError.title ||
+    archiveMetaError.description ||
+    !archiveMeta.title ||
+    !archiveMeta.description;
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -134,7 +142,9 @@ export default function CreateArchiveDialog({ revalidateCatalogs, disabled }: an
 
           <DialogFooter>
             <DialogClose asChild>
-              <Button type="submit">Create</Button>
+              <Button disabled={Boolean(submitDisabled)} type="submit">
+                Create
+              </Button>
             </DialogClose>
           </DialogFooter>
         </form>
@@ -142,3 +152,4 @@ export default function CreateArchiveDialog({ revalidateCatalogs, disabled }: an
     </Dialog>
   );
 }
+
