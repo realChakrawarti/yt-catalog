@@ -1,4 +1,4 @@
-import { ListPlus } from "lucide-react";
+import { ListPlus } from "~/components/custom/icons";
 import { useState } from "react";
 
 import { Button } from "~/components/shadcn/button";

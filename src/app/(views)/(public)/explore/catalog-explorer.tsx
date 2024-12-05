@@ -1,6 +1,6 @@
 "use client";
 
-import { Star } from "lucide-react";
+import { Star } from "~/components/custom/icons";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 

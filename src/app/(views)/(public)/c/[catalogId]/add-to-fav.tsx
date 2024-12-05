@@ -1,6 +1,6 @@
 "use client";
 
-import { Star } from "lucide-react";
+import { Star } from "~/components/custom/icons";
 import { useEffect, useState } from "react";
 
 import JustTip from "~/components/custom/just-the-tip";

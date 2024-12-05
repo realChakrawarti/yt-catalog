@@ -1,4 +1,4 @@
-import { Ban, BookOpen, Layout, Moon, RefreshCcw, Share2, Shield,Smartphone } from 'lucide-react'
+import { Ban, BookOpen, Layout, Moon, RefreshCcw, Share2, Shield,Smartphone } from '~/components/custom/icons'
 
 import { Card, CardDescription, CardHeader, CardTitle } from '../shadcn/card'
 
