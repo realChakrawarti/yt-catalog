@@ -1,5 +1,5 @@
 "use client";
-import { Clock, RotateCw, X } from "lucide-react";
+import { Clock, RotateCw, X } from "~/components/custom/icons";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import useSWR from "swr";

@@ -2,7 +2,7 @@
 
 import { YouTubeEmbed } from "@next/third-parties/google";
 import Linkify from "linkify-react";
-import { Info, Link, MoreVertical, Trash2 } from "lucide-react";
+import { Info, LinkIcon, MoreVertical, DeleteIcon } from "~/components/custom/icons";
 import { Inter } from "next/font/google";
 
 import {
@@ -142,7 +142,7 @@ export default function YouTubeCard(props: any) {
                     className="flex gap-2 justify-start hover:bg-accent rounded-lg p-2 text-xs cursor-pointer w-full"
                     onClick={() => removeVideo(videoId)}
                   >
-                    <Trash2 className="h-4 w-4 mr-2" />
+                    <DeleteIcon className="h-4 w-4 mr-2" />
                     Remove video
                   </Button>
                 ) : null}
@@ -151,7 +151,7 @@ export default function YouTubeCard(props: any) {
                   className="flex gap-2 justify-start hover:bg-accent rounded-lg p-2 text-xs cursor-pointer w-full"
                   onClick={() => copyLink(videoId)}
                 >
-                  <Link className="h-4 w-4 mr-2" />
+                  <LinkIcon className="h-4 w-4 mr-2" />
                   Copy link
                 </Button>
               </PopoverContent>

@@ -1,6 +1,6 @@
 "use client";
 
-import { LinkIcon } from "lucide-react";
+import { LinkIcon } from "~/components/custom/icons";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import useSWR from "swr";

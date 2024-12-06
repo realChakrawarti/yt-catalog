@@ -1,4 +1,4 @@
-import { Moon, Sun } from "lucide-react";
+import { Moon, Sun } from "~/components/custom/icons";
 import { useTheme } from "next-themes";
 import { useIsClient } from "usehooks-ts";
 

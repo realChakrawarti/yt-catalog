@@ -1,4 +1,4 @@
-import { AlertTriangle } from "lucide-react";
+import { AlertTriangle } from "~/components/custom/icons";
 import { ReactNode } from "react";
 
 import { DeleteIcon, EditIcon } from "~/components/custom/icons";

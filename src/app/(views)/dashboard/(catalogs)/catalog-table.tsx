@@ -1,4 +1,4 @@
-import { AlertTriangle } from "lucide-react";
+import { AlertTriangle } from "~/components/custom/icons";
 import Link from "next/link";
 import { PropsWithChildren, ReactNode } from "react";
 

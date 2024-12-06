@@ -1,4 +1,4 @@
-import { Eye } from "lucide-react";
+import { Eye } from "~/components/custom/icons";
 
 import { Card, CardContent } from "~/components/shadcn/card";
 

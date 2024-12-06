@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronDown } from "lucide-react";
+import { ChevronDown } from "~/components/custom/icons";
 import { useState } from "react";
 
 import { cn } from "~/utils/shadcn-helper";
