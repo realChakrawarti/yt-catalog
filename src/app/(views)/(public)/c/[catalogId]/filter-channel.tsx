@@ -1,9 +1,9 @@
 "use client";
 
-import { Filter } from "~/components/custom/icons";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 
+import { FilterIcon } from "~/components/custom/icons";
 import JustTip from "~/components/custom/just-the-tip";
 import {
   Avatar,
@@ -73,7 +73,7 @@ export default function FilterChannel({
       <JustTip label="Filter Channel">
         <SheetTrigger asChild>
           <Button variant="outline">
-            <Filter className="size-8" />
+            <FilterIcon className="size-8" />
             <p className="sr-only">Filter Channel</p>
           </Button>
         </SheetTrigger>

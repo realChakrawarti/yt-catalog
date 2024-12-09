@@ -29,7 +29,7 @@ const Header = () => {
           </Link>
           {user ? (
             <Link
-              className="text-primary/70 hover:text-primary"
+              className="dark:text-white/80 dark:hover:text-white text-primary/80 hover:text-primary"
               href="/dashboard"
             >
               Dashboard
@@ -38,7 +38,7 @@ const Header = () => {
         </div>
         <div className="flex gap-3 items-center">
           <Link
-            className="text-primary/70 hover:text-primary"
+            className="dark:text-white/80 dark:hover:text-white text-primary/80 hover:text-primary"
             href="/explore"
           >
             Explore

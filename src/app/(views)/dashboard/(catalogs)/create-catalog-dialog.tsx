@@ -1,6 +1,6 @@
 import { FormEvent, useState } from "react";
 
-import { CatalogAddIcon } from "~/components/custom/icons";
+import { PlusIcon } from "~/components/custom/icons";
 import { Button } from "~/components/shadcn/button";
 import {
   Dialog,
@@ -97,7 +97,7 @@ export default function CreateCatalogDialog({
       <DialogTrigger asChild>
         <Button disabled={disabled}>
           <span className="flex items-center gap-2">
-            <CatalogAddIcon size={24} />
+            <PlusIcon size={24} />
             Create Catalog
           </span>
         </Button>

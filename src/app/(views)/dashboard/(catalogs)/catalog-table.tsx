@@ -1,8 +1,6 @@
-import { AlertTriangle } from "~/components/custom/icons";
-import Link from "next/link";
-import { PropsWithChildren, ReactNode } from "react";
+import { ReactNode } from "react";
 
-import { DeleteIcon, EditIcon, LinkIcon } from "~/components/custom/icons";
+import { DeleteIcon, EditIcon, WarningIcon } from "~/components/custom/icons";
 import JustTip from "~/components/custom/just-the-tip";
 import { Button } from "~/components/shadcn/button";
 import {
@@ -111,7 +109,7 @@ function DeleteModal({ children, handleDelete }: DeleteModalProps) {
       <DialogContent>
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
-            <AlertTriangle className="h-5 w-5 text-primary" />
+            <WarningIcon className="h-5 w-5 text-primary" />
             Confirm Deletion
           </DialogTitle>
           <DialogDescription className="text-primary/70">

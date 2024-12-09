@@ -1,8 +1,8 @@
 "use client";
 
-import { ChevronDown } from "~/components/custom/icons";
 import { useState } from "react";
 
+import { ChevronDownIcon } from "~/components/custom/icons";
 import { cn } from "~/utils/shadcn-helper";
 
 interface FAQItem {
@@ -66,7 +66,7 @@ export default function FAQSection() {
               >
                 <span className="font-medium text-left">{faq.question}</span>
                 <span className="font-medium">
-                  <ChevronDown
+                  <ChevronDownIcon
                     className={cn(
                       "h-5 w-5 transition-transform duration-200",
                       openIndex === index && "rotate-180"

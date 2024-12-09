@@ -1,8 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
+import type { LucideIcon } from "lucide-react";
 import dynamic from "next/dynamic";
 import { Metadata, ResolvingMetadata } from "next/types";
 import { ReactNode } from "react";
 
+import { ClockIcon, MonthIcon, WeekIcon } from "~/components/custom/icons";
+import ScrollTop from "~/components/custom/scroll-top";
 import YouTubeCard from "~/components/custom/youtube-card";
 import fetchApi from "~/utils/fetch";
 
@@ -110,7 +113,7 @@ export default async function CatalogHandle({
 
       {/* Today */}
       {today?.length ? (
-        <VideoSection label="Today">
+        <VideoSection icon={ClockIcon} label="Today">
           {today.map((video) => (
             <YouTubeCard key={video.videoId} {...video} />
           ))}
@@ -118,7 +121,7 @@ export default async function CatalogHandle({
       ) : null}
       {/* This week */}
       {week?.length ? (
-        <VideoSection label="This week">
+        <VideoSection icon={WeekIcon} label="This week">
           {week.map((video) => (
             <YouTubeCard key={video.videoId} {...video} />
           ))}
@@ -126,12 +129,13 @@ export default async function CatalogHandle({
       ) : null}
       {/* This month */}
       {month?.length ? (
-        <VideoSection label="This month">
+        <VideoSection icon={MonthIcon} label="This month">
           {month.map((video) => (
             <YouTubeCard key={video.videoId} {...video} />
           ))}
         </VideoSection>
       ) : null}
+      <ScrollTop />
     </div>
   );
 }
@@ -139,12 +143,16 @@ export default async function CatalogHandle({
 type VideoSectionProps = {
   label: string;
   children: ReactNode;
+  icon: LucideIcon;
 };
 
-function VideoSection({ label, children }: VideoSectionProps) {
+function VideoSection({ label, children, icon: Icon }: VideoSectionProps) {
   return (
-    <section className="px-0 md:px-3 space-y-3">
-      <h2 className="px-2 md:px-0 text-lg">{label}</h2>
+    <section className="px-0 md:px-3 space-y-4">
+      <div className="px-2 md:px-0 flex items-center gap-2">
+        <Icon />
+        <h2 className="text-lg">{label}</h2>
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {children}
       </div>

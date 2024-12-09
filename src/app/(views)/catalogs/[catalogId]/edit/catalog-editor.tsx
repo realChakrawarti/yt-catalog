@@ -1,10 +1,10 @@
 "use client";
 
-import { LinkIcon } from "~/components/custom/icons";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
 
+import { LinkIcon } from "~/components/custom/icons";
 import JustTip from "~/components/custom/just-the-tip";
 import Spinner from "~/components/custom/spinner";
 import { Badge } from "~/components/shadcn/badge";

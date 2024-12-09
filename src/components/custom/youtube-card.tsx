@@ -2,9 +2,14 @@
 
 import { YouTubeEmbed } from "@next/third-parties/google";
 import Linkify from "linkify-react";
-import { Info, LinkIcon, MoreVertical, DeleteIcon } from "~/components/custom/icons";
 import { Inter } from "next/font/google";
 
+import {
+  DeleteIcon,
+  InfoIcon,
+  LinkIcon,
+  ThreeDotIcon,
+} from "~/components/custom/icons";
 import {
   Avatar,
   AvatarFallback,
@@ -74,7 +79,7 @@ export default function YouTubeCard(props: any) {
                 size="icon"
                 className="absolute top-2 left-2 h-8 w-8 bg-black/50 hover:bg-black/70"
               >
-                <Info className="h-4 w-4 text-white" />
+                <InfoIcon className="h-4 w-4 text-white" />
               </Button>
             </SheetTrigger>
             <SheetContent className="overflow-y-auto w-full md:max-w-[450px]">
@@ -98,7 +103,7 @@ export default function YouTubeCard(props: any) {
             </SheetContent>
           </Sheet>
         </div>
-        <div className="p-3 px-0 md:px-3">
+        <div className="p-3">
           <div className="flex items-start gap-3">
             {channelLogo ? (
               <Avatar className="h-8 w-8 rounded-lg">
@@ -127,7 +132,7 @@ export default function YouTubeCard(props: any) {
                   size="icon"
                   className="h-8 w-8 justify-self-end"
                 >
-                  <MoreVertical className="h-4 w-4" />
+                  <ThreeDotIcon className="h-4 w-4" />
                   <span className="sr-only">Open menu</span>
                 </Button>
               </PopoverTrigger>

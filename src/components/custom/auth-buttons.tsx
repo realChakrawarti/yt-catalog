@@ -26,7 +26,7 @@ export default function AuthButton() {
           variant="outline"
           onClick={signInWithGoogle}
         >
-          <GmailIcon size={24} />
+          <GmailIcon color="#EA4335" size={24} />
           <p>Google</p>
         </Button>
       </JustTip>
