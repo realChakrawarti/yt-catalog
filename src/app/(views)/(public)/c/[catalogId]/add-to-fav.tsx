@@ -1,8 +1,8 @@
 "use client";
 
-import { Star } from "lucide-react";
 import { useEffect, useState } from "react";
 
+import { StarIcon } from "~/components/custom/icons";
 import JustTip from "~/components/custom/just-the-tip";
 import { Button } from "~/components/shadcn/button";
 import { toast } from "~/hooks/use-toast";
@@ -81,7 +81,7 @@ export const AddToFavorites = ({
           catalogExists ? "Remove from favorites" : "Add to favorites"
         }
       >
-        <Star
+        <StarIcon
           className={`h-4 w-4 ${
             catalogExists ? "fill-primary text-primary" : ""
           }`}

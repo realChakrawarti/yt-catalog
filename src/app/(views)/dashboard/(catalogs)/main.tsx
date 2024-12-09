@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import useSWR from "swr";
 
+import {BookOpenIcon} from "~/components/custom/icons"
 import Spinner from "~/components/custom/spinner";
 import { Badge } from "~/components/shadcn/badge";
 import { toast } from "~/hooks/use-toast";
@@ -23,6 +24,7 @@ export default function CatalogView() {
     mutate,
   } = useSWR("/catalogs", (url) => fetchApi(url, { cache: "no-store" }));
 
+  // TODO: Normal navigation with pre-fetch catalog meta data on Link?
   const handleCatalogEdit = (catalogId: string) => {
     router.push(`/catalogs/${catalogId}/edit`);
   };
@@ -43,6 +45,7 @@ export default function CatalogView() {
     <div className="space-y-4">
       <div className="flex justify-between items-center">
         <h1 className="text-lg lg:text-xl flex items-center gap-3">
+          <BookOpenIcon />
           <p>Catalogs</p>
           <Badge className="text-lg lg:text-xl text-primary" variant="outline">
             {catalogs?.data.length}/{LIMIT_CATALOGS}

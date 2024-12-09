@@ -1,11 +1,10 @@
 "use client";
 
-import { Star } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
 import DetailsCard from "~/components/custom/details-card";
-import { HeartListIcon } from "~/components/custom/icons";
+import { HeartListIcon, StarIcon } from "~/components/custom/icons";
 import JustTip from "~/components/custom/just-the-tip";
 import { Button } from "~/components/shadcn/button";
 import {
@@ -55,7 +54,7 @@ export function CatalogExplorer({ validCatalogs, validArchives }: any) {
             <SheetContent side="left">
               <SheetHeader>
                 <SheetTitle className="flex items-center gap-2">
-                  <Star className="w-5 h-5" />
+                  <StarIcon className="w-5 h-5" />
                   Favorite Catalogs
                 </SheetTitle>
                 <SheetDescription>

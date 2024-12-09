@@ -1,6 +1,7 @@
 import { useRouter } from "next/navigation";
 import useSWR from "swr";
 
+import {ArchiveIcon} from "~/components/custom/icons"
 import Spinner from "~/components/custom/spinner";
 import { Badge } from "~/components/shadcn/badge";
 import { toast } from "~/hooks/use-toast";
@@ -40,6 +41,7 @@ export default function ArchiveView() {
     <div className="space-y-4">
       <div className="flex justify-between items-center">
         <h1 className="text-lg lg:text-xl flex items-center gap-3">
+          <ArchiveIcon />
           <p>Archives</p>
           <Badge className="text-lg lg:text-xl text-primary" variant="outline">
             {archives?.data.length}/{LIMIT_ARCHIVES}

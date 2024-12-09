@@ -1,10 +1,10 @@
 "use client";
 
-import { Star } from "lucide-react";
 import useSWR from "swr";
 
+import { StarIcon } from "~/components/custom/icons";
+
 import { Skeleton } from "../shadcn/skeleton";
-import { GithubIcon } from "./icons";
 import JustTip from "./just-the-tip";
 
 interface StargazerProps {
@@ -41,7 +41,7 @@ export function GitHubStargazer({
         className={`flex items-center gap-1 text-sm transition-colors duration-200 ${className}`}
         aria-label={`Star ${owner}/${repo} on GitHub`}
       >
-        <Star className="w-4 h-4 text-yellow-400 hover:fill-yellow-400" />
+        <StarIcon className="w-4 h-4 text-yellow-400 hover:fill-yellow-400" />
         <span className="font-medium">
           {data?.stargazers_count.toLocaleString()}
         </span>

@@ -1,9 +1,9 @@
 "use client";
-import { Clock, RotateCw, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import useSWR from "swr";
 
+import { ClockIcon, CloseIcon, RefreshIcon } from "~/components/custom/icons";
 import { Button } from "~/components/shadcn/button";
 import {
   Popover,
@@ -40,7 +40,7 @@ function ShowBanner({ showBanner, setShowBanner }: any) {
             className="h-8 w-8 p-0 bg-transparent text-white"
             onClick={() => window?.location?.reload()}
           >
-            <RotateCw className="h-4 w-4" />
+            <RefreshIcon className="h-4 w-4" />
             <span className="sr-only">Reload</span>
           </Button>
           <Button
@@ -49,7 +49,7 @@ function ShowBanner({ showBanner, setShowBanner }: any) {
             className="h-8 w-8 p-0 bg-transparent text-white"
             onClick={() => setShowBanner(false)}
           >
-            <X className="h-4 w-4" />
+            <CloseIcon className="h-4 w-4" />
             <span className="sr-only">Close</span>
           </Button>
         </div>
@@ -59,8 +59,10 @@ function ShowBanner({ showBanner, setShowBanner }: any) {
   );
 }
 
+const POLLING_INTERVAL = 5 * 60_000; // 5 minutes
+const SHOW_BANNER = 15_000; // 15 seconds
+
 export default function NextUpdate({ catalogId }: any) {
-  const [time, setTime] = useState<string>("");
   const [showBanner, setShowBanner] = useState(false);
 
   const {
@@ -71,7 +73,7 @@ export default function NextUpdate({ catalogId }: any) {
     catalogId ? `/catalogs/${catalogId}/next-update` : null,
     (url) => fetchApi<string>(url),
     {
-      refreshInterval: 5 * 60_000,
+      refreshInterval: POLLING_INTERVAL,
     }
   );
 
@@ -82,7 +84,7 @@ export default function NextUpdate({ catalogId }: any) {
       if ((when as number) < 0) {
         timeoutId = setTimeout(() => {
           setShowBanner(true);
-        }, 30_000);
+        }, SHOW_BANNER);
       }
 
       return timeoutId;
@@ -119,7 +121,7 @@ export default function NextUpdate({ catalogId }: any) {
         <Popover>
           <PopoverTrigger asChild>
             <Button variant="outline" size="sm" className="h-9">
-              <Clock className="h-4 w-4" />
+              <ClockIcon className="h-4 w-4" />
             </Button>
           </PopoverTrigger>
           <PopoverContent className="w-auto text-sm p-2">

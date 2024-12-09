@@ -1,6 +1,6 @@
-import { ListPlus } from "lucide-react";
 import { useState } from "react";
 
+import { ListPlusIcon } from "~/components/custom/icons";
 import { Button } from "~/components/shadcn/button";
 import {
   Dialog,
@@ -103,7 +103,7 @@ export default function ValidateVideoDialog({
       <DialogTrigger asChild>
         <Button variant="outline">
           <div className="flex gap-2 items-center">
-            <ListPlus className="size-8" />
+            <ListPlusIcon className="size-8" />
             <p>Add channel from video</p>
           </div>
         </Button>
