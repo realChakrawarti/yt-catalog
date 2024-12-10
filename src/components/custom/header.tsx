@@ -12,11 +12,45 @@ import { LogoutIcon } from "./icons";
 import JustTip from "./just-the-tip";
 import ThemeToggle from "./theme-toggle";
 
+import { useState, useEffect } from "react";
+
 const Header = () => {
   const { user, logout } = useAuth();
 
+
+  const [isHidden, setIsHidden] = useState(false);
+  const [prevScroll, setPrevScroll] = useState(0); 
+  const threshold = 200; // Threshold for hiding header - adjust it accordingly
+
+  const handleScroll = () => {
+    const currentScroll = window.scrollY;
+
+    if (currentScroll > prevScroll && currentScroll > threshold) {
+      setIsHidden(true); 
+    } else if (currentScroll < prevScroll) {
+      setIsHidden(false);
+    }
+
+    setPrevScroll(currentScroll);
+  };
+
+  useEffect(() => {
+    
+    window.addEventListener("scroll", handleScroll);
+
+    // Cleanup event listener on component unmount to prevent any memory leak
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [prevScroll]); 
+
+
   return (
-    <header className="h-14 sticky z-50 top-0 w-full border-b border-border/40 self-start flex justify-between items-center bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 dark:border-border">
+   
+    <header className={`h-14 sticky z-50 top-0 w-full border-b border-border/40 self-start flex justify-between items-center bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 dark:border-border transition-transform duration-300 ${
+        isHidden ? "-translate-y-full" : "translate-y-0"
+      }`}>
+
       <div className="flex-1 flex justify-between items-center px-2 container mx-auto">
         <div className="flex gap-2 items-center">
           <Link href="/">
