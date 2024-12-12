@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.14](https://github.com/realChakrawarti/YTCatalog/compare/v1.3.13...v1.3.14) (2024-12-12)
+
+
+### Features
+
+* add `/feedback` endpoint to share feedback from the application ([b70c11c](https://github.com/realChakrawarti/YTCatalog/commit/b70c11c49708af0e0269c6482b1ea8e301cb2ecb))
+
+
+### Bug Fixes
+
+* header dynamic & add back `env.example` file ([fd2be9a](https://github.com/realChakrawarti/YTCatalog/commit/fd2be9a10340d912558e416aa091e8d535c7e5e9))
+* **header:** add hide on scroll functionality ([fd92fd6](https://github.com/realChakrawarti/YTCatalog/commit/fd92fd6808a60a42d860c6eb4b17981ad490300d))
+* **tsconfig:** modified ([1830266](https://github.com/realChakrawarti/YTCatalog/commit/18302667b62ccf11d18f089ec79b412e9482d221))
+
 ### [1.3.13](https://github.com/realChakrawarti/YTCatalog/compare/v1.3.12...v1.3.13) (2024-12-09)
 
 ### [1.3.12](https://github.com/realChakrawarti/YTCatalog/compare/v1.3.11...v1.3.12) (2024-12-09)
