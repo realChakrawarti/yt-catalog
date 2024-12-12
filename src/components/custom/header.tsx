@@ -9,6 +9,7 @@ import AppIcon from "../../../public/icon.png";
 import { useAuth } from "../../app/auth/context-provider";
 import { Avatar, AvatarFallback, AvatarImage } from "../shadcn/avatar";
 import { Button } from "../shadcn/button";
+import Feedback from "./feedback";
 import { GitHubStargazer } from "./github-stargazers";
 import { LogoutIcon } from "./icons";
 import JustTip from "./just-the-tip";
@@ -16,14 +17,14 @@ import ThemeToggle from "./theme-toggle";
 
 const Header = () => {
   const { user, logout } = useAuth();
-  const isHidden = useScrollTrigger()
+  const isHidden = useScrollTrigger();
 
   return (
-   
-    <header className={`h-14 sticky z-50 top-0 w-full border-b border-border/40 self-start flex justify-between items-center bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 dark:border-border transition-transform duration-300 ${
+    <header
+      className={`h-14 sticky z-50 top-0 w-full border-b border-border/40 self-start flex justify-between items-center bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 dark:border-border transition-transform duration-300 ${
         isHidden ? "-translate-y-full" : "translate-y-0"
-      }`}>
-
+      }`}
+    >
       <div className="flex-1 flex justify-between items-center px-2 container mx-auto">
         <div className="flex gap-2 items-center">
           <Link href="/">
@@ -44,6 +45,7 @@ const Header = () => {
           ) : null}
         </div>
         <div className="flex gap-3 items-center">
+          <Feedback />
           <Link
             className="dark:text-white/80 dark:hover:text-white text-primary/80 hover:text-primary"
             href="/explore"

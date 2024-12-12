@@ -51,6 +51,13 @@ class NxResponseBuilder {
     return this.createResponse(true, message, data, null, statusCode);
   }
 
+  /**
+   * 
+   * @param message
+   * @param error - {code: string, details: string | null}
+   * @param statusCode 
+   * @returns 
+   */
   fail(
     message: string,
     error: ApiError,

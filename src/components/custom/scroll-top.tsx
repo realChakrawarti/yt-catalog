@@ -26,7 +26,7 @@ export default function ScrollTop() {
   return (
     <Button
       className={cn(
-        "fixed bottom-12 right-6 rounded-full p-3 shadow-lg transition-opacity duration-200",
+        "fixed bottom-12 right-6 p-2 shadow-lg transition-opacity duration-200",
         showScrollButton ? "opacity-100" : "opacity-0 pointer-events-none"
       )}
       size="icon"
