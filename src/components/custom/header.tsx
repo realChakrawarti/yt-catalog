@@ -3,6 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { useScrollTrigger } from "~/hooks/use-scroll-trigger";
+
 import AppIcon from "../../../public/icon.png";
 import { useAuth } from "../../app/auth/context-provider";
 import { Avatar, AvatarFallback, AvatarImage } from "../shadcn/avatar";
@@ -12,38 +14,9 @@ import { LogoutIcon } from "./icons";
 import JustTip from "./just-the-tip";
 import ThemeToggle from "./theme-toggle";
 
-import { useState, useEffect } from "react";
-
 const Header = () => {
   const { user, logout } = useAuth();
-
-
-  const [isHidden, setIsHidden] = useState(false);
-  const [prevScroll, setPrevScroll] = useState(0); 
-  const threshold = 200; // Threshold for hiding header - adjust it accordingly
-
-  const handleScroll = () => {
-    const currentScroll = window.scrollY;
-
-    if (currentScroll > prevScroll && currentScroll > threshold) {
-      setIsHidden(true); 
-    } else if (currentScroll < prevScroll) {
-      setIsHidden(false);
-    }
-
-    setPrevScroll(currentScroll);
-  };
-
-  useEffect(() => {
-    
-    window.addEventListener("scroll", handleScroll);
-
-    // Cleanup event listener on component unmount to prevent any memory leak
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [prevScroll]); 
-
+  const isHidden = useScrollTrigger()
 
   return (
    
