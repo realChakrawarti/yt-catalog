@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.15](https://github.com/realChakrawarti/YTCatalog/compare/v1.3.14...v1.3.15) (2024-12-13)
+
+
+### Bug Fixes
+
+* archive page layout, hide filtered channel avatar & filtered header ([d98d881](https://github.com/realChakrawarti/YTCatalog/commit/d98d8810e6f3b343ffacb28607821a4c6c4a7321))
+
 ### [1.3.14](https://github.com/realChakrawarti/YTCatalog/compare/v1.3.13...v1.3.14) (2024-12-12)
 
 

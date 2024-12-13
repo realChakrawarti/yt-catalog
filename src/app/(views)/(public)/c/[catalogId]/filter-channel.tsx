@@ -141,7 +141,7 @@ export function CurrentActive({ activeChannels }: { activeChannels: any }) {
 
   if (activeFilteredChannel) {
     return (
-      <div className="flex gap-2 items-center px-0 md:px-3">
+      <div className="flex gap-2 items-center px-2 md:px-3">
         <Avatar className="h-8 w-8 rounded-lg">
           <AvatarImage
             src={activeFilteredChannel.logo}
