@@ -56,6 +56,7 @@ export default function YouTubeCard(props: any) {
     channelLogo,
     description,
     removeVideo,
+    hideAvatar,
   } = props;
   const [_, timeElapsed] = getTimeDifference(publishedAt, true);
 
@@ -105,7 +106,7 @@ export default function YouTubeCard(props: any) {
         </div>
         <div className="p-3">
           <div className="flex items-start gap-3">
-            {channelLogo ? (
+            {channelLogo && !hideAvatar ? (
               <Avatar className="h-8 w-8 rounded-lg">
                 <AvatarImage src={channelLogo} alt={channelTitle} />
                 <AvatarFallback>{channelTitle}</AvatarFallback>

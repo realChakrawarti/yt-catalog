@@ -79,10 +79,10 @@ export default async function CatalogHandle({
 
   return (
     <div className="space-y-4 pb-6 pt-7">
-      <section className="px-0 md:px-3">
+      <section className="px-2 md:px-3">
         <div className="space-y-0">
           <div className="flex flex-col gap-3 lg:flex-row lg:justify-between lg:items-center">
-            <div className="px-2 md:px-0 space-y-1">
+            <div className="space-y-1">
               <h1 className="text-2xl font-semibold tracking-tight">
                 {catalogTitle}
               </h1>
@@ -91,7 +91,7 @@ export default async function CatalogHandle({
               </p>
             </div>
 
-            <div className="px-2 md:px-0 mt-4 sm:mt-0 flex items-center gap-4">
+            <div className="mt-4 sm:mt-0 flex items-center gap-4">
               <DynamicShareCatalog
                 catalogId={catalogId}
                 catalogTitle={catalogTitle}
@@ -115,7 +115,11 @@ export default async function CatalogHandle({
       {today?.length ? (
         <VideoSection icon={ClockIcon} label="Today">
           {today.map((video) => (
-            <YouTubeCard key={video.videoId} {...video} />
+            <YouTubeCard
+              hideAvatar={Boolean(channelId)}
+              key={video.videoId}
+              {...video}
+            />
           ))}
         </VideoSection>
       ) : null}
@@ -123,7 +127,11 @@ export default async function CatalogHandle({
       {week?.length ? (
         <VideoSection icon={WeekIcon} label="This week">
           {week.map((video) => (
-            <YouTubeCard key={video.videoId} {...video} />
+            <YouTubeCard
+              hideAvatar={Boolean(channelId)}
+              key={video.videoId}
+              {...video}
+            />
           ))}
         </VideoSection>
       ) : null}
@@ -131,7 +139,11 @@ export default async function CatalogHandle({
       {month?.length ? (
         <VideoSection icon={MonthIcon} label="This month">
           {month.map((video) => (
-            <YouTubeCard key={video.videoId} {...video} />
+            <YouTubeCard
+              hideAvatar={Boolean(channelId)}
+              key={video.videoId}
+              {...video}
+            />
           ))}
         </VideoSection>
       ) : null}
