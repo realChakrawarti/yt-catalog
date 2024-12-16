@@ -1,13 +1,15 @@
 import { useRouter } from "next/navigation";
 import useSWR from "swr";
 
-import {ArchiveIcon} from "~/components/custom/icons"
+import { ArchiveIcon } from "~/components/custom/icons";
+import ArchiveCard from "~/components/custom/item-card";
+import NoItemCard from "~/components/custom/no-item-card";
 import Spinner from "~/components/custom/spinner";
 import { Badge } from "~/components/shadcn/badge";
 import { toast } from "~/hooks/use-toast";
+import { getTimeDifference } from "~/utils/client-helper";
 import fetchApi from "~/utils/fetch";
 
-import ArchiveTable from "./archive-table";
 import CreateArchiveDialog from "./create-archive-dialog";
 
 const LIMIT_ARCHIVES = 10;
@@ -56,13 +58,33 @@ export default function ArchiveView() {
       {isArchiveLoading ? (
         <Spinner className="size-8" />
       ) : (
-        <section className="w-full rounded-lg">
+        <section className="w-full">
           {/* TODO: Maybe add a skeleton? */}
-          <ArchiveTable
-            archives={archives?.data}
-            onDelete={handleArchiveDelete}
-            onEdit={handleArchiveEdit}
-          />
+          {archives?.data.length ? (
+            <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+              {archives?.data.map((archive: any) => {
+                const [_, lastUpdated] = getTimeDifference(
+                  archive?.videoData?.updatedAt,
+                  true,
+                  false
+                );
+                return (
+                  <ArchiveCard
+                    type="archive"
+                    key={archive.id}
+                    onDelete={handleArchiveDelete}
+                    onEdit={handleArchiveEdit}
+                    id={archive?.id}
+                    title={archive?.title}
+                    description={archive?.description}
+                    lastUpdated={lastUpdated}
+                  />
+                );
+              })}
+            </div>
+          ) : (
+            <NoItemCard icon={ArchiveIcon} title="No archives added yet." />
+          )}
         </section>
       )}
     </div>

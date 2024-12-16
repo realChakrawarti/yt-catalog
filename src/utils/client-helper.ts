@@ -67,24 +67,30 @@ function getDifferenceString(
  *
  * @param {string} compareWithCurrent - Compare with current time
  * @param {boolean} [suffixEnabled=false] - Approximate time difference with `ago` and `later` appended
+ * @param {boolean} [limitMonth=true] - Show N/A when time difference exceeds 30 days
  * @returns {(string | number)[]}
  */
 export function getTimeDifference(
   compareWithCurrent: string,
-  suffixEnabled: boolean = false
-) {
+  suffixEnabled: boolean = false,
+  limitMonth: boolean = true
+): (string | number)[] {
   const currentTime = new Date().getTime();
   const serverTime = new Date(compareWithCurrent).getTime();
 
   const delta = currentTime - serverTime;
   const deltaMinutes = Math.abs(delta) / (60 * 1000); // In minutes
 
-  if (deltaMinutes > MINUTES_PER_MONTH) {
+  if (deltaMinutes > MINUTES_PER_MONTH && limitMonth) {
     return [0, "N/A"];
   }
 
+  // now
+  if (deltaMinutes < 1) {
+    return [0, "Just now"];
+  }
   // Past
-  if (delta >= 0) {
+  else if (delta > 0) {
     const suffix = "ago";
     const diffToString = getDifferenceString(
       deltaMinutes,
