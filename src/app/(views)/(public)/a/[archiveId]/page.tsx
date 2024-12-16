@@ -38,8 +38,8 @@ export default async function ArchivePage({ params }: PageProps) {
   const archiveDescription = archiveData.description;
 
   return (
-    <div className="space-y-4 pb-6 pt-7 px-2 md:px-3">
-      <section>
+    <div className="space-y-4 pb-6 pt-7">
+      <section className="px-2 md:px-3">
         <div className="space-y-1">
           <h1 className="text-2xl font-semibold tracking-tight">
             {archiveTitle}
