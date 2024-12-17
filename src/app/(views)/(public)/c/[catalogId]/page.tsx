@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import { Metadata, ResolvingMetadata } from "next/types";
 import { ReactNode } from "react";
 
+import GridContainer from "~/components/custom/grid-container";
 import { ClockIcon, MonthIcon, WeekIcon } from "~/components/custom/icons";
 import ScrollTop from "~/components/custom/scroll-top";
 import YouTubeCard from "~/components/custom/youtube-card";
@@ -116,6 +117,7 @@ export default async function CatalogHandle({
         <VideoSection icon={ClockIcon} label="Today">
           {today.map((video) => (
             <YouTubeCard
+              addWatchLater
               hideAvatar={Boolean(channelId)}
               key={video.videoId}
               {...video}
@@ -128,6 +130,7 @@ export default async function CatalogHandle({
         <VideoSection icon={WeekIcon} label="This week">
           {week.map((video) => (
             <YouTubeCard
+              addWatchLater
               hideAvatar={Boolean(channelId)}
               key={video.videoId}
               {...video}
@@ -140,6 +143,7 @@ export default async function CatalogHandle({
         <VideoSection icon={MonthIcon} label="This month">
           {month.map((video) => (
             <YouTubeCard
+              addWatchLater
               hideAvatar={Boolean(channelId)}
               key={video.videoId}
               {...video}
@@ -165,9 +169,7 @@ function VideoSection({ label, children, icon: Icon }: VideoSectionProps) {
         <Icon />
         <h2 className="text-lg">{label}</h2>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {children}
-      </div>
+      <GridContainer>{children}</GridContainer>
     </section>
   );
 }

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import useSWR from "swr";
 
 import withAuth from "~/app/auth/with-auth-hoc";
+import GridContainer from "~/components/custom/grid-container";
 import Spinner from "~/components/custom/spinner";
 import YouTubeCard from "~/components/custom/youtube-card";
 import { Button } from "~/components/shadcn/button";
@@ -177,7 +178,7 @@ function EditArchive({ params }: { params: ArchivePageParams }) {
           {isLoading ? (
             <Spinner className="size-8" />
           ) : archiveData?.data?.videos ? (
-            <section className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <GridContainer>
               {archiveData?.data?.videos.map((item: any) => {
                 return (
                   <YouTubeCard
@@ -187,7 +188,7 @@ function EditArchive({ params }: { params: ArchivePageParams }) {
                   />
                 );
               })}
-            </section>
+            </GridContainer>
           ) : (
             <p>No videos added yet.</p>
           )}

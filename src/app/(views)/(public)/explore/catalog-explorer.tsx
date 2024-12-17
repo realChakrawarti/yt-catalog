@@ -1,10 +1,17 @@
 "use client";
 
+import { Clock8 } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
 import DetailsCard from "~/components/custom/details-card";
-import { HeartListIcon, StarIcon } from "~/components/custom/icons";
+import GridContainer from "~/components/custom/grid-container";
+import {
+  ArchiveIcon,
+  BookOpenIcon,
+  HeartListIcon,
+  StarIcon,
+} from "~/components/custom/icons";
 import JustTip from "~/components/custom/just-the-tip";
 import { Button } from "~/components/shadcn/button";
 import {
@@ -16,6 +23,8 @@ import {
   SheetTrigger,
 } from "~/components/shadcn/sheet";
 import { Tabs, TabsList, TabsTrigger } from "~/components/shadcn/tabs";
+
+import WatchLater from "./watch-later";
 
 // TODO: A compact list for catalogs w/ toggle button
 export function CatalogExplorer({ validCatalogs, validArchives }: any) {
@@ -29,6 +38,16 @@ export function CatalogExplorer({ validCatalogs, validArchives }: any) {
 
   const [activeTab, setActiveTab] = useState<string>("catalog");
 
+  function renderCurrentTab(activeTab: string) {
+    if (activeTab === "catalog") {
+      return <Catalogs catalogs={validCatalogs} />;
+    } else if (activeTab === "archive") {
+      return <Archives archives={validArchives} />;
+    } else {
+      return <WatchLater />;
+    }
+  }
+
   return (
     <div className="w-full pt-7">
       <div className="flex items-center justify-between mb-6">
@@ -36,17 +55,33 @@ export function CatalogExplorer({ validCatalogs, validArchives }: any) {
           <Tabs
             value={activeTab}
             onValueChange={setActiveTab}
-            className="w-[300px]"
+            className="w-auto"
           >
-            <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="catalog">Catalogs</TabsTrigger>
-              <TabsTrigger value="archive">Archives</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-3 h-auto">
+              <TabsTrigger className="text-xs sm:text-sm" value="catalog">
+                <div className="flex gap-2 items-center">
+                  <BookOpenIcon className="size-4" />
+                  Catalogs
+                </div>
+              </TabsTrigger>
+              <TabsTrigger className="text-xs sm:text-sm" value="archive">
+                <div className="flex gap-2 items-center">
+                  <ArchiveIcon className="size-4" />
+                  Archives
+                </div>
+              </TabsTrigger>
+              <TabsTrigger className="text-xs sm:text-sm" value="watch-later">
+                <div className="flex gap-2 items-center">
+                  <Clock8 className="size-4" />
+                  Watch Later
+                </div>
+              </TabsTrigger>
             </TabsList>
           </Tabs>
           <Sheet>
             <JustTip label="Favorite Catalogs">
               <SheetTrigger asChild>
-                <Button>
+                <Button variant="ghost">
                   <HeartListIcon size={32} />
                 </Button>
               </SheetTrigger>
@@ -86,22 +121,14 @@ export function CatalogExplorer({ validCatalogs, validArchives }: any) {
           </Sheet>
         </div>
       </div>
-      <div>
-        {activeTab === "catalog" ? (
-          <>
-            <Catalogs catalogs={validCatalogs} />
-          </>
-        ) : (
-          <Archives archives={validArchives} />
-        )}
-      </div>
+      <div>{renderCurrentTab(activeTab)}</div>
     </div>
   );
 }
 
 function Archives({ archives }: any) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+    <GridContainer>
       {archives?.data?.length ? (
         archives?.data?.map((pageData: any) => {
           if (pageData?.id) {
@@ -117,13 +144,13 @@ function Archives({ archives }: any) {
       ) : (
         <div>No archives found.</div>
       )}
-    </div>
+    </GridContainer>
   );
 }
 
 function Catalogs({ catalogs }: any) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+    <GridContainer>
       {catalogs?.data?.length ? (
         catalogs?.data?.map((pageData: any) => {
           if (pageData?.id) {
@@ -139,6 +166,6 @@ function Catalogs({ catalogs }: any) {
       ) : (
         <div>No catalogs found.</div>
       )}
-    </div>
+    </GridContainer>
   );
 }

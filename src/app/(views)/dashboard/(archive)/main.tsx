@@ -1,6 +1,7 @@
 import { useRouter } from "next/navigation";
 import useSWR from "swr";
 
+import GridContainer from "~/components/custom/grid-container";
 import { ArchiveIcon } from "~/components/custom/icons";
 import ArchiveCard from "~/components/custom/item-card";
 import NoItemCard from "~/components/custom/no-item-card";
@@ -61,7 +62,7 @@ export default function ArchiveView() {
         <section className="w-full">
           {/* TODO: Maybe add a skeleton? */}
           {archives?.data.length ? (
-            <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+            <GridContainer>
               {archives?.data.map((archive: any) => {
                 const [_, lastUpdated] = getTimeDifference(
                   archive?.videoData?.updatedAt,
@@ -81,7 +82,7 @@ export default function ArchiveView() {
                   />
                 );
               })}
-            </div>
+            </GridContainer>
           ) : (
             <NoItemCard icon={ArchiveIcon} title="No archives added yet." />
           )}

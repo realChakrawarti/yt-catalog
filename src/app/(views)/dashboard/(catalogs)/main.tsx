@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import useSWR from "swr";
 
+import GridContainer from "~/components/custom/grid-container";
 import { BookOpenIcon } from "~/components/custom/icons";
 import CatalogCard from "~/components/custom/item-card";
 import NoItemCard from "~/components/custom/no-item-card";
@@ -67,7 +68,7 @@ export default function CatalogView() {
         <section className="w-full">
           {/* TODO: Maybe add a skeleton? */}
           {catalogs?.data.length ? (
-            <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+            <GridContainer>
               {catalogs?.data.map((catalog: any) => {
                 const [_, lastUpdated] = getTimeDifference(
                   catalog?.videoData?.updatedAt,
@@ -87,7 +88,7 @@ export default function CatalogView() {
                   />
                 );
               })}
-            </div>
+            </GridContainer>
           ) : (
             <NoItemCard icon={BookOpenIcon} title="No catalogs added yet." />
           )}

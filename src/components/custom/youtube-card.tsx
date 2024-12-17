@@ -2,6 +2,7 @@
 
 import { YouTubeEmbed } from "@next/third-parties/google";
 import Linkify from "linkify-react";
+import { Clock8 } from "lucide-react";
 import { Inter } from "next/font/google";
 
 import {
@@ -57,16 +58,64 @@ export default function YouTubeCard(props: any) {
     description,
     removeVideo,
     hideAvatar,
+    addWatchLater = false,
+    removeWatchLater = false,
   } = props;
   const [_, timeElapsed] = getTimeDifference(publishedAt, true);
 
-  const copyLink = (id: string) => {
+  function copyLink(id: string) {
     navigator.clipboard.writeText(`https://www.youtube.com/watch?v=${id}`);
     toast({
       title: "Link copied",
       description: "The video link has been copied to your clipboard.",
     });
-  };
+  }
+
+  function checkIfExists(exisitingVideos: any[], videoId: string) {
+    for (let i = 0; i < exisitingVideos?.length; i++) {
+      if (exisitingVideos[i].videoId === videoId) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  function addToWatchLater() {
+    const videoData = {
+      videoId,
+      title,
+      channelTitle,
+      publishedAt,
+      channelId,
+      channelLogo,
+      description,
+    };
+
+    const exisitingVideos = JSON.parse(
+      window?.localStorage?.getItem("watch-later") || "[]"
+    );
+
+    if (checkIfExists(exisitingVideos, videoId)) {
+      toast({ title: "Video already added." });
+    } else {
+      window?.localStorage.setItem(
+        "watch-later",
+        JSON.stringify([...exisitingVideos, videoData])
+      );
+      toast({ title: `"${title}" added to watch later.` });
+    }
+  }
+
+  function removeFromWatchLater(videoId: string) {
+    const exisitingVideos = JSON.parse(
+      window?.localStorage?.getItem("watch-later") || "[]"
+    );
+    const filteredVideos = exisitingVideos.filter(
+      (item: any) => item.videoId !== videoId
+    );
+    window?.localStorage.setItem("watch-later", JSON.stringify(filteredVideos));
+    toast({ title: "Video has been removed from watch later." });
+  }
 
   return (
     <div className="flex flex-col gap-3">
@@ -113,7 +162,11 @@ export default function YouTubeCard(props: any) {
               </Avatar>
             ) : null}
             <div className="flex-1 space-y-1">
-              <h3 className="font-semibold leading-tight text-sm">{title}</h3>
+              <h3 className="font-semibold leading-tight text-sm line-clamp-2">
+                <abbr className="no-underline cursor-pointer" title={title}>
+                  {title}
+                </abbr>
+              </h3>
               <div className="flex items-center gap-2 text-xs text-muted-foreground">
                 <a
                   className="hover:underline text-nowrap"
@@ -160,6 +213,26 @@ export default function YouTubeCard(props: any) {
                   <LinkIcon className="h-4 w-4 mr-2" />
                   Copy link
                 </Button>
+                {addWatchLater ? (
+                  <Button
+                    variant="ghost"
+                    className="flex gap-2 justify-start hover:bg-accent rounded-lg p-2 text-xs cursor-pointer w-full"
+                    onClick={addToWatchLater}
+                  >
+                    <Clock8 className="h-4 w-4 mr-2" />
+                    Add to watch later
+                  </Button>
+                ) : null}
+                {removeWatchLater ? (
+                  <Button
+                    variant="ghost"
+                    className="flex gap-2 justify-start hover:bg-accent rounded-lg p-2 text-xs cursor-pointer w-full"
+                    onClick={() => removeFromWatchLater(videoId)}
+                  >
+                    <DeleteIcon className="h-4 w-4 mr-2" />
+                    Remove from watch later
+                  </Button>
+                ) : null}
               </PopoverContent>
             </Popover>
           </div>
