@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.17](https://github.com/realChakrawarti/YTCatalog/compare/v1.3.16...v1.3.17) (2024-12-17)
+
+
+### Features
+
+* add catalog video to watch later ([1e2d16a](https://github.com/realChakrawarti/YTCatalog/commit/1e2d16afb91eb41d081a6c28c0cf3a631a57d632))
+
 ### [1.3.16](https://github.com/realChakrawarti/YTCatalog/compare/v1.3.15...v1.3.16) (2024-12-16)
 
 ### [1.3.15](https://github.com/realChakrawarti/YTCatalog/compare/v1.3.14...v1.3.15) (2024-12-13)

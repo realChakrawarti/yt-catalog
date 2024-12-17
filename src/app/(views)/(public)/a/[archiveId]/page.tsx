@@ -1,5 +1,6 @@
 import { Metadata, ResolvingMetadata } from "next/types";
 
+import GridContainer from "~/components/custom/grid-container";
 import YouTubeCard from "~/components/custom/youtube-card";
 import fetchApi from "~/utils/fetch";
 
@@ -50,11 +51,11 @@ export default async function ArchivePage({ params }: PageProps) {
         </div>
       </section>
       {archiveData.videos ? (
-        <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <GridContainer>
           {archiveData.videos.map((item: any) => {
             return <YouTubeCard key={item.id} {...item} />;
           })}
-        </section>
+        </GridContainer>
       ) : (
         <p>No videos added yet.</p>
       )}
