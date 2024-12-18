@@ -4,6 +4,7 @@ import { YouTubeEmbed } from "@next/third-parties/google";
 import Linkify from "linkify-react";
 import { Clock8 } from "lucide-react";
 import { Inter } from "next/font/google";
+import { useLocalStorage, useReadLocalStorage } from "usehooks-ts";
 
 import {
   DeleteIcon,
@@ -33,21 +34,30 @@ import {
 import { toast } from "~/hooks/use-toast";
 import { getTimeDifference } from "~/utils/client-helper";
 
-const YoutubePlayer = (props: any) => {
-  const { videoId, title } = props;
-
-  return (
-    <YouTubeEmbed
-      params="rel=0&playsinline=1&cc_load_policy=0"
-      videoid={videoId}
-      playlabel={title}
-    />
-  );
-};
-
 const inter = Inter({ subsets: ["latin"] });
 
-export default function YouTubeCard(props: any) {
+type VideoData = {
+  videoId: string;
+  title: string;
+  channelTitle: string;
+  publishedAt: string;
+  channelId: string;
+  channelLogo: string;
+  description: string;
+};
+
+interface YouTubeCardProps extends VideoData {
+  removeVideo: (videoId: string) => void;
+  hideAvatar: boolean;
+  addWatchLater: boolean;
+  removeWatchLater: boolean;
+}
+
+interface WatchLaterProps extends Pick<YouTubeCardProps, "addWatchLater"> {
+  videoData: VideoData;
+}
+
+export default function YouTubeCard(props: YouTubeCardProps) {
   const {
     videoId,
     title,
@@ -57,65 +67,21 @@ export default function YouTubeCard(props: any) {
     channelLogo,
     description,
     removeVideo,
-    hideAvatar,
+    hideAvatar = false,
     addWatchLater = false,
     removeWatchLater = false,
   } = props;
-  const [_, timeElapsed] = getTimeDifference(publishedAt, true);
+  const [_, timeElapsed] = getTimeDifference(publishedAt, true, false);
 
-  function copyLink(id: string) {
-    navigator.clipboard.writeText(`https://www.youtube.com/watch?v=${id}`);
-    toast({
-      title: "Link copied",
-      description: "The video link has been copied to your clipboard.",
-    });
-  }
-
-  function checkIfExists(exisitingVideos: any[], videoId: string) {
-    for (let i = 0; i < exisitingVideos?.length; i++) {
-      if (exisitingVideos[i].videoId === videoId) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  function addToWatchLater() {
-    const videoData = {
-      videoId,
-      title,
-      channelTitle,
-      publishedAt,
-      channelId,
-      channelLogo,
-      description,
-    };
-
-    const exisitingVideos = JSON.parse(
-      window?.localStorage?.getItem("watch-later") || "[]"
-    );
-
-    if (checkIfExists(exisitingVideos, videoId)) {
-      toast({ title: "Video already added." });
-    } else {
-      window?.localStorage.setItem(
-        "watch-later",
-        JSON.stringify([...exisitingVideos, videoData])
-      );
-      toast({ title: `"${title}" added to watch later.` });
-    }
-  }
-
-  function removeFromWatchLater(videoId: string) {
-    const exisitingVideos = JSON.parse(
-      window?.localStorage?.getItem("watch-later") || "[]"
-    );
-    const filteredVideos = exisitingVideos.filter(
-      (item: any) => item.videoId !== videoId
-    );
-    window?.localStorage.setItem("watch-later", JSON.stringify(filteredVideos));
-    toast({ title: "Video has been removed from watch later." });
-  }
+  const videoData = {
+    videoId,
+    title,
+    channelTitle,
+    publishedAt,
+    channelId,
+    channelLogo,
+    description,
+  };
 
   return (
     <div className="flex flex-col gap-3">
@@ -195,44 +161,16 @@ export default function YouTubeCard(props: any) {
                 align="end"
                 className="w-[200px] border-none rounded-lg p-1"
               >
-                {typeof removeVideo === "function" ? (
-                  <Button
-                    variant="ghost"
-                    className="flex gap-2 justify-start hover:bg-accent rounded-lg p-2 text-xs cursor-pointer w-full"
-                    onClick={() => removeVideo(videoId)}
-                  >
-                    <DeleteIcon className="h-4 w-4 mr-2" />
-                    Remove video
-                  </Button>
-                ) : null}
-                <Button
-                  variant="ghost"
-                  className="flex gap-2 justify-start hover:bg-accent rounded-lg p-2 text-xs cursor-pointer w-full"
-                  onClick={() => copyLink(videoId)}
-                >
-                  <LinkIcon className="h-4 w-4 mr-2" />
-                  Copy link
-                </Button>
-                {addWatchLater ? (
-                  <Button
-                    variant="ghost"
-                    className="flex gap-2 justify-start hover:bg-accent rounded-lg p-2 text-xs cursor-pointer w-full"
-                    onClick={addToWatchLater}
-                  >
-                    <Clock8 className="h-4 w-4 mr-2" />
-                    Add to watch later
-                  </Button>
-                ) : null}
-                {removeWatchLater ? (
-                  <Button
-                    variant="ghost"
-                    className="flex gap-2 justify-start hover:bg-accent rounded-lg p-2 text-xs cursor-pointer w-full"
-                    onClick={() => removeFromWatchLater(videoId)}
-                  >
-                    <DeleteIcon className="h-4 w-4 mr-2" />
-                    Remove from watch later
-                  </Button>
-                ) : null}
+                <RemoveVideo videoId={videoId} removeVideo={removeVideo} />
+                <CopyLink videoId={videoId} />
+                <WatchLater
+                  addWatchLater={addWatchLater}
+                  videoData={videoData}
+                />
+                <RemoveWatchLater
+                  videoId={videoId}
+                  removeWatchLater={removeWatchLater}
+                />
               </PopoverContent>
             </Popover>
           </div>
@@ -241,3 +179,127 @@ export default function YouTubeCard(props: any) {
     </div>
   );
 }
+
+function RemoveVideo({
+  removeVideo,
+  videoId,
+}: Pick<YouTubeCardProps, "removeVideo" | "videoId">) {
+  if (typeof removeVideo === "function")
+    return (
+      <Button
+        variant="ghost"
+        className="flex gap-2 justify-start hover:bg-accent rounded-lg p-2 text-xs cursor-pointer w-full"
+        onClick={() => removeVideo(videoId)}
+      >
+        <DeleteIcon className="h-4 w-4 mr-2" />
+        Remove video
+      </Button>
+    );
+  return null;
+}
+
+function CopyLink({ videoId }: Pick<YouTubeCardProps, "videoId">) {
+  function copyLink(id: string) {
+    navigator.clipboard.writeText(`https://www.youtube.com/watch?v=${id}`);
+    toast({
+      title: "Link copied",
+      description: "The video link has been copied to your clipboard.",
+    });
+  }
+  return (
+    <Button
+      variant="ghost"
+      className="flex gap-2 justify-start hover:bg-accent rounded-lg p-2 text-xs cursor-pointer w-full"
+      onClick={() => copyLink(videoId)}
+    >
+      <LinkIcon className="h-4 w-4 mr-2" />
+      Copy link
+    </Button>
+  );
+}
+
+function WatchLater({ addWatchLater, videoData }: WatchLaterProps) {
+  const [exisitingVideos, setWatchLater] = useLocalStorage<VideoData[]>(
+    "watch-later",
+    []
+  );
+
+  function addToWatchLater() {
+    function checkIfExists(exisitingVideos: VideoData[], videoId: string) {
+      for (let i = 0; i < exisitingVideos?.length; i++) {
+        if (exisitingVideos[i].videoId === videoId) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    if (checkIfExists(exisitingVideos, videoData.videoId)) {
+      toast({ title: "Video already added." });
+    } else {
+      setWatchLater([...exisitingVideos, videoData]);
+      toast({ title: `"${videoData.title}" added to watch later.` });
+    }
+  }
+
+  if (addWatchLater) {
+    return (
+      <Button
+        variant="ghost"
+        className="flex gap-2 justify-start hover:bg-accent rounded-lg p-2 text-xs cursor-pointer w-full"
+        onClick={addToWatchLater}
+      >
+        <Clock8 className="h-4 w-4 mr-2" />
+        Add to watch later
+      </Button>
+    );
+  }
+  return null;
+}
+
+function RemoveWatchLater({
+  removeWatchLater,
+  videoId,
+}: Pick<YouTubeCardProps, "removeWatchLater" | "videoId">) {
+  const exisitingVideos = useReadLocalStorage<VideoData[]>("watch-later") ?? [];
+  const [_, setWatchLater] = useLocalStorage<VideoData[]>(
+    "watch-later",
+    exisitingVideos
+  );
+
+  function removeFromWatchLater(videoId: string) {
+    const filteredVideos = exisitingVideos.filter(
+      (item: VideoData) => item.videoId !== videoId
+    );
+
+    setWatchLater(filteredVideos);
+    toast({ title: "Video has been removed from watch later." });
+  }
+
+  if (removeWatchLater) {
+    return (
+      <Button
+        variant="ghost"
+        className="flex gap-2 justify-start hover:bg-accent rounded-lg p-2 text-xs cursor-pointer w-full"
+        onClick={() => removeFromWatchLater(videoId)}
+      >
+        <DeleteIcon className="h-4 w-4 mr-2" />
+        Remove from watch later
+      </Button>
+    );
+  }
+
+  return null;
+}
+
+const YoutubePlayer = (props: Pick<YouTubeCardProps, "videoId" | "title">) => {
+  const { videoId, title } = props;
+
+  return (
+    <YouTubeEmbed
+      params="rel=0&playsinline=1&cc_load_policy=0"
+      videoid={videoId}
+      playlabel={title}
+    />
+  );
+};

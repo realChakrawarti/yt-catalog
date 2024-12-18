@@ -1,19 +1,12 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useReadLocalStorage } from "usehooks-ts";
 
 import GridContainer from "~/components/custom/grid-container";
 import YouTubeCard from "~/components/custom/youtube-card";
 
-export default function WatchLater() {
-  const [watchLater, setWatchLater] = useState<any[]>([]);
-
-  useLayoutEffect(() => {
-    const videos = JSON.parse(
-      window?.localStorage?.getItem("watch-later") || "[]"
-    );
-    setWatchLater(videos);
-  }, []);
+export default function WatchLaterPage() {
+  const watchLater = useReadLocalStorage<any[]>("watch-later") ?? [];
 
   return (
     <GridContainer>
@@ -23,4 +16,3 @@ export default function WatchLater() {
     </GridContainer>
   );
 }
-// }
