@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.18](https://github.com/realChakrawarti/YTCatalog/compare/v1.3.17...v1.3.18) (2024-12-18)
+
+
+### Bug Fixes
+
+* reactive watch-later component on localStorage update ([29a6ba8](https://github.com/realChakrawarti/YTCatalog/commit/29a6ba863cb6ea96cdc4f676e8e61ab911c340e4))
+
 ### [1.3.17](https://github.com/realChakrawarti/YTCatalog/compare/v1.3.16...v1.3.17) (2024-12-17)
 
 
