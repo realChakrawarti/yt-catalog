@@ -9,6 +9,7 @@ import AppIcon from "../../../public/icon.png";
 import { useAuth } from "../../app/auth/context-provider";
 import { Avatar, AvatarFallback, AvatarImage } from "../shadcn/avatar";
 import { Button } from "../shadcn/button";
+import { SidebarTrigger } from "../shadcn/sidebar";
 import Feedback from "./feedback";
 import { GitHubStargazer } from "./github-stargazers";
 import { LogoutIcon } from "./icons";
@@ -27,53 +28,44 @@ const Header = () => {
     >
       <div className="flex-1 flex justify-between items-center px-2 container mx-auto">
         <div className="flex gap-2 items-center">
+          <SidebarTrigger className="h-8 w-8 mr-2">
+            <Button variant="ghost" size="icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <line x1="3" y1="12" x2="21" y2="12" />
+                <line x1="3" y1="6" x2="21" y2="6" />
+                <line x1="3" y1="18" x2="21" y2="18" />
+              </svg>
+            </Button>
+          </SidebarTrigger>
           <Link href="/">
             <h1 className="flex gap-1">
               <Image src={AppIcon} alt="YTCatalog" className="size-7" />
-              {user ? null : (
-                <p className="self-end text-lg tracking-wide">YTCatalog</p>
-              )}
+              <p className="self-end text-lg tracking-wide dark:text-white/80 dark:hover:text-white text-primary/80 hover:text-primary">
+                YTCatalog
+              </p>
             </h1>
           </Link>
-          {user ? (
-            <Link
-              className="dark:text-white/80 dark:hover:text-white text-primary/80 hover:text-primary"
-              href="/dashboard"
-            >
-              Dashboard
-            </Link>
-          ) : null}
         </div>
         <div className="flex gap-3 items-center">
+          <GitHubStargazer owner="realChakrawarti" repo="yt-catalog" />
           <Feedback />
-          <Link
-            className="dark:text-white/80 dark:hover:text-white text-primary/80 hover:text-primary"
-            href="/explore"
-          >
-            Explore
-          </Link>
           {user ? (
-            <>
-              <Avatar className="size-8 rounded-lg hidden md:block">
-                <AvatarImage
-                  src={
-                    user?.photoURL ||
-                    `https://ui-avatars.com/api/?name=${user?.displayName}&background=random&size=96`
-                  }
-                  alt={user?.displayName || ""}
-                />
-                <AvatarFallback>{user?.displayName || ""}</AvatarFallback>
-              </Avatar>
-
-              <JustTip label="Logout">
-                <Button onClick={logout} variant="outline">
-                  <LogoutIcon size={24} />
-                </Button>
-              </JustTip>
-            </>
-          ) : (
-            <GitHubStargazer owner="realChakrawarti" repo="yt-catalog" />
-          )}
+            <JustTip label="Logout">
+              <Button onClick={logout} variant="outline">
+                <LogoutIcon size={24} />
+              </Button>
+            </JustTip>
+          ) : null}
           <ThemeToggle />
         </div>
       </div>

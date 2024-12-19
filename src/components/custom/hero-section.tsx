@@ -50,7 +50,9 @@ export default function HeroSection() {
               </div>
               {/* Buttons */}
               <div className="mt-8 gap-3 flex flex-col items-center">
-                <AuthButton />
+                <Link href="/explore">
+                  <Button className="px-4 w-24">Explore</Button>
+                </Link>
               </div>
               {/* End Buttons */}
             </div>

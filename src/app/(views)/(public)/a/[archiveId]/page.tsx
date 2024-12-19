@@ -50,12 +50,15 @@ export default async function ArchivePage({ params }: PageProps) {
           </p>
         </div>
       </section>
-      {archiveData.videos ? (
-        <GridContainer>
-          {archiveData.videos.map((item: any) => {
-            return <YouTubeCard key={item.id} {...item} />;
-          })}
-        </GridContainer>
+
+      {archiveData.videos.length ? (
+        <section className="px-0 md:px-3">
+          <GridContainer>
+            {archiveData.videos.map((item: any) => {
+              return <YouTubeCard key={item.id} {...item} />;
+            })}
+          </GridContainer>
+        </section>
       ) : (
         <p>No videos added yet.</p>
       )}
