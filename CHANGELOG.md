@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.19](https://github.com/realChakrawarti/YTCatalog/compare/v1.3.18...v1.3.19) (2024-12-19)
+
+
+### Features
+
+* add nested route inside `/explore` for catalogs, archives & watch later ([1710bde](https://github.com/realChakrawarti/YTCatalog/commit/1710bde5770084cdc8da7d408d72c2988157f9fa))
+
 ### [1.3.18](https://github.com/realChakrawarti/YTCatalog/compare/v1.3.17...v1.3.18) (2024-12-18)
 
 
