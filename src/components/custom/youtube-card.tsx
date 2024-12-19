@@ -119,8 +119,35 @@ export default function YouTubeCard(props: YouTubeCardProps) {
             </SheetContent>
           </Sheet>
         </div>
+        <Popover>
+          <PopoverTrigger asChild>
+            <div className="relative">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="absolute top-3 right-0 h-6 w-6"
+              >
+                <ThreeDotIcon className="h-6 w-6" />
+                <span className="sr-only">Open menu</span>
+              </Button>
+            </div>
+          </PopoverTrigger>
+          <PopoverContent
+            side="top"
+            align="end"
+            className="w-[200px] border-none rounded-lg p-1"
+          >
+            <RemoveVideo videoId={videoId} removeVideo={removeVideo} />
+            <CopyLink videoId={videoId} />
+            <WatchLater addWatchLater={addWatchLater} videoData={videoData} />
+            <RemoveWatchLater
+              videoId={videoId}
+              removeWatchLater={removeWatchLater}
+            />
+          </PopoverContent>
+        </Popover>
         <div className="p-3">
-          <div className="flex items-start gap-3">
+          <div className="flex gap-3">
             {channelLogo && !hideAvatar ? (
               <Avatar className="h-8 w-8 rounded-lg">
                 <AvatarImage src={channelLogo} alt={channelTitle} />
@@ -128,7 +155,7 @@ export default function YouTubeCard(props: YouTubeCardProps) {
               </Avatar>
             ) : null}
             <div className="flex-1 space-y-1">
-              <h3 className="font-semibold leading-tight text-sm line-clamp-2">
+              <h3 className="font-semibold leading-tight text-sm line-clamp-2 pr-6">
                 <abbr className="no-underline cursor-pointer" title={title}>
                   {title}
                 </abbr>
@@ -145,34 +172,6 @@ export default function YouTubeCard(props: YouTubeCardProps) {
                 <span className="text-nowrap">{timeElapsed}</span>
               </div>
             </div>
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-8 w-8 justify-self-end"
-                >
-                  <ThreeDotIcon className="h-4 w-4" />
-                  <span className="sr-only">Open menu</span>
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent
-                side="bottom"
-                align="end"
-                className="w-[200px] border-none rounded-lg p-1"
-              >
-                <RemoveVideo videoId={videoId} removeVideo={removeVideo} />
-                <CopyLink videoId={videoId} />
-                <WatchLater
-                  addWatchLater={addWatchLater}
-                  videoData={videoData}
-                />
-                <RemoveWatchLater
-                  videoId={videoId}
-                  removeWatchLater={removeWatchLater}
-                />
-              </PopoverContent>
-            </Popover>
           </div>
         </div>
       </div>

@@ -5,7 +5,6 @@ import useSWR from "swr";
 import { StarIcon } from "~/components/custom/icons";
 
 import { Skeleton } from "../shadcn/skeleton";
-import JustTip from "./just-the-tip";
 
 interface StargazerProps {
   owner: string;
@@ -31,21 +30,22 @@ export function GitHubStargazer({
     window.open(`https://github.com/${owner}/${repo}`, "_blank");
   };
 
-  if (isLoading) {
-    return <Skeleton className="w-7" />;
-  }
   return (
-    <JustTip label="🌟 on GitHub">
-      <button
-        onClick={handleClick}
-        className={`flex items-center gap-1 text-sm transition-colors duration-200 ${className}`}
-        aria-label={`Star ${owner}/${repo} on GitHub`}
-      >
-        <StarIcon className="w-4 h-4 text-yellow-400 hover:fill-yellow-400" />
-        <span className="font-medium">
-          {data?.stargazers_count.toLocaleString()}
-        </span>
-      </button>
-    </JustTip>
+    <div className="flex gap-2 items-center">
+      {isLoading ? (
+        <Skeleton className="w-7" />
+      ) : (
+        <button
+          onClick={handleClick}
+          className={`flex items-center gap-1 text-sm transition-colors duration-200 ${className}`}
+          aria-label={`Star ${owner}/${repo} on GitHub`}
+        >
+          <StarIcon className="w-4 h-4 text-yellow-400 hover:fill-yellow-400" />
+          <span className="font-medium">
+            {data?.stargazers_count.toLocaleString()}
+          </span>
+        </button>
+      )}
+    </div>
   );
 }

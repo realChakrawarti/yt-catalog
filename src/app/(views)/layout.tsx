@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Script from "next/script";
 
+import AppSidebar from "~/components/custom/app-sidebar";
 import BackgroundPattern from "~/components/custom/background-pattern";
 import Footer from "~/components/custom/footer";
 import Header from "~/components/custom/header";
@@ -29,16 +30,17 @@ export default function RootLayout({
 }>) {
   return (
     <html className="h-full" lang="en" suppressHydrationWarning>
-      <body
-        className={`min-h-full flex flex-col overflow-y-auto ${inter.className}`}
-      >
+      <body className={`min-h-full overflow-y-auto ${inter.className}`}>
         <BackgroundPattern />
         <Providers>
-          <Header />
-          <main className="flex-1 overflow-y-auto container mx-auto">
-            {children}
-          </main>
-          <Footer />
+          <AppSidebar />
+          <div className="flex flex-col flex-1">
+            <Header />
+            <main className="flex-1 overflow-y-auto container mx-auto">
+              {children}
+            </main>
+            <Footer />
+          </div>
         </Providers>
         <Toaster />
       </body>
