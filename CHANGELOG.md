@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.20](https://github.com/realChakrawarti/YTCatalog/compare/v1.3.19...v1.3.20) (2024-12-22)
+
+
+### Bug Fixes
+
+* individual archive page showing `404` due to route mismatch on `/archives` details card ([fec9e4f](https://github.com/realChakrawarti/YTCatalog/commit/fec9e4fbe4b5d5a5dda92d326df01cdef073b94e))
+
 ### [1.3.19](https://github.com/realChakrawarti/YTCatalog/compare/v1.3.18...v1.3.19) (2024-12-19)
 
 
