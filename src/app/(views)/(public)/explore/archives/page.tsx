@@ -18,7 +18,7 @@ export default async function ArchivesPage() {
               if (pageData?.id) {
                 return (
                   <DetailsCard
-                    path={`a/${pageData.id}`}
+                    path={`/a/${pageData.id}`}
                     key={pageData.id}
                     pageData={pageData}
                   />
