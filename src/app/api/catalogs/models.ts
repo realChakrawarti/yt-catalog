@@ -1,4 +1,4 @@
-import { BetaAnalyticsDataClient } from "@google-analytics/data";
+import { BetaAnalyticsDataClient, protos } from "@google-analytics/data";
 import {
   collection,
   doc,
@@ -50,9 +50,10 @@ type CatalogData = {
   pageviews: number;
 };
 
+type TopicId = keyof typeof topicData;
+
 const ONE_HOUR = 3_600_000;
 const FOUR_HOURS = 4 * ONE_HOUR;
-// const SIX_HOURS = 6 * ONE_HOUR
 
 const ONE_DAY = ONE_HOUR * 24;
 const ONE_WEEK = ONE_DAY * 7;
@@ -60,7 +61,15 @@ const ONE_MONTH = ONE_DAY * 30;
 
 const LIMIT = 10;
 
-type TopicId = keyof typeof topicData;
+const analyticsDataClient = new BetaAnalyticsDataClient({
+  credentials: {
+    client_email: process.env.GOOGLE_CLIENT_EMAIL,
+    // TODO: Consider storing private key as encoded base64, then decode and use
+    private_key: process.env
+      .GOOGLE_ANALYTICS_PRIVATE_KEY!.split(String.raw`\n`)
+      .join("\n"),
+  },
+});
 
 function extractTopics(topicIds: TopicId[]): string[] {
   let topicNames: string[] = [];
@@ -143,27 +152,26 @@ async function getPlaylistItems(channel: any) {
   }
 }
 
-function transformAnalyticsData(response: any) {
+function transformAnalyticsData(
+  response: protos.google.analytics.data.v1beta.IRunReportResponse
+) {
   // Check if response exists and has rows
-  if (!response?.at(0)?.rows) {
+  if (!response?.rows) {
     return [];
   }
 
   // Map through the rows and create an object with id and value of the catalog
-  return response[0].rows.map((row: any) => ({
-    id: row.dimensionValues[0].value,
-    pageviews: parseInt(row.metricValues[0].value, 10),
-  }));
+  return response.rows.map((row) => {
+    if (row.dimensionValues && row.metricValues) {
+      return {
+        id: row?.dimensionValues[0]?.value,
+        pageviews: parseInt(row?.metricValues[0]?.value ?? "0", 10),
+      };
+    }
+  });
 }
 
-async function getPageviewByCatalogId(catalogId: string) {
-  const analyticsDataClient = new BetaAnalyticsDataClient({
-    credentials: {
-      client_email: process.env.GOOGLE_CLIENT_EMAIL,
-      private_key: process.env.GOOGLE_ANALYTICS_PRIVATE_KEY,
-    },
-  });
-
+export async function getPageviewByCatalogId(catalogId: string) {
   const request = {
     property: `properties/${process.env.GOOGLE_ANALYTICS_PROPERTY_ID}`,
     dateRanges: [
@@ -191,24 +199,15 @@ async function getPageviewByCatalogId(catalogId: string) {
         },
       },
     },
-  };
+  } as protos.google.analytics.data.v1beta.IRunReportRequest;
 
   console.log(`Querying pageview of catalog: ${catalogId}.`);
 
-  try {
-    // @ts-ignore
-    const response = await analyticsDataClient.runReport(request);
-    const data = transformAnalyticsData(response);
+  // Refer: https://github.com/googleanalytics/nodejs-docs-samples/blob/e21670ab2c79a12c45bffa10ac26e0324279a718/google-analytics-data/run_report.js#L33-L93
+  const [response] = await analyticsDataClient.runReport(request);
 
-    return data?.at(0)?.pageviews ?? 0;
-  } catch (err) {
-    if (err instanceof Error) {
-      console.error(err.message);
-    } else {
-      console.error(JSON.stringify(err, null, 2));
-    }
-    return 0;
-  }
+  const data = transformAnalyticsData(response);
+  return data?.at(0)?.pageviews ?? 0;
 }
 
 export async function getVideosByCatalogId(catalogId: string) {
@@ -420,7 +419,7 @@ export async function getValidCatalogIds() {
           description: catalogData?.description,
           id: catalogId,
           updatedAt: catalogData?.data.updatedAt.toDate(),
-          pageviews: catalogData.pageviews,
+          pageviews: catalogData.pageviews ?? 0,
         };
 
         catalogListData.push(metaData);
