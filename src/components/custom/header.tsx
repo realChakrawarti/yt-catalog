@@ -7,7 +7,6 @@ import { useScrollTrigger } from "~/hooks/use-scroll-trigger";
 
 import AppIcon from "../../../public/icon.png";
 import { useAuth } from "../../app/auth/context-provider";
-import { Avatar, AvatarFallback, AvatarImage } from "../shadcn/avatar";
 import { Button } from "../shadcn/button";
 import { SidebarTrigger } from "../shadcn/sidebar";
 import Feedback from "./feedback";

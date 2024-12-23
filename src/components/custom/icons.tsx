@@ -14,7 +14,6 @@ import {
   Clock,
   Copy,
   Eye,
-  FilePlus,
   Filter,
   Heart,
   Info,

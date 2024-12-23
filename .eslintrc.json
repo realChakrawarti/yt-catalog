@@ -3,7 +3,15 @@
   "plugins": ["simple-import-sort"],
   "rules": {
     "simple-import-sort/imports": "error",
-    "simple-import-sort/exports": "error"
+    "simple-import-sort/exports": "error",
+    "import/no-duplicates": ["warn", { "prefer-inline": true }],
+    "no-unused-vars": [
+      "error",
+      {
+        "varsIgnorePattern": "^_.*",
+        "argsIgnorePattern": "^_.*"
+      }
+    ]
   },
   "parserOptions": {
     "sourceType": "module",

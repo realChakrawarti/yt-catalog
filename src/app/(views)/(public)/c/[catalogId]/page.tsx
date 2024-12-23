@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import type { LucideIcon } from "lucide-react";
 import dynamic from "next/dynamic";
-import { Metadata, ResolvingMetadata } from "next/types";
+import { Metadata } from "next/types";
 import { ReactNode } from "react";
 
 import GridContainer from "~/components/custom/grid-container";
@@ -27,10 +27,9 @@ type PageProps = {
   };
 };
 
-export async function generateMetadata(
-  { params }: PageProps,
-  parent: ResolvingMetadata
-): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
   const { catalogId } = params;
 
   const result = await fetchApi(`/catalogs/${catalogId}/videos`);

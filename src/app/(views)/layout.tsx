@@ -3,7 +3,6 @@ import "~/app/styles/globals.css";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import Script from "next/script";
 
 import AppSidebar from "~/components/custom/app-sidebar";
 import BackgroundPattern from "~/components/custom/background-pattern";

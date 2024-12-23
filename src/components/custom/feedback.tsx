@@ -42,7 +42,7 @@ interface FeedbackData {
   type: FeedbackType;
 }
 
-const feedbackTypes: { [key in FeedbackType]: JSX.Element } = {
+const feedbackTypes: { [_key in FeedbackType]: JSX.Element } = {
   Bug: <Bug className="mr-2 h-4 w-4" />,
   Improvement: <Lightbulb className="mr-2 h-4 w-4" />,
   Feature: <PlusCircle className="mr-2 h-4 w-4" />,
