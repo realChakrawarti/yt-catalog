@@ -47,7 +47,7 @@ type VideoData = {
 };
 
 interface YouTubeCardProps extends VideoData {
-  removeVideo: (videoId: string) => void;
+  removeVideo: (_videoId: string) => void;
   hideAvatar: boolean;
   addWatchLater: boolean;
   removeWatchLater: boolean;

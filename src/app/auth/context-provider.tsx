@@ -26,7 +26,7 @@ type UserContext = {
   user: User | null;
   loading: boolean;
   authenticateWith: (
-    provider: GoogleAuthProvider | GithubAuthProvider
+    _provider: GoogleAuthProvider | GithubAuthProvider
   ) => Promise<void>;
   logout: () => Promise<void>;
 };

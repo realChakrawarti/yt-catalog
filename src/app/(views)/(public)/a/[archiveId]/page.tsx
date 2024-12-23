@@ -1,4 +1,4 @@
-import { Metadata, ResolvingMetadata } from "next/types";
+import { Metadata } from "next/types";
 
 import GridContainer from "~/components/custom/grid-container";
 import YouTubeCard from "~/components/custom/youtube-card";
@@ -10,7 +10,6 @@ type PageProps = {
 
 export async function generateMetadata(
   { params }: PageProps,
-  parent: ResolvingMetadata
 ): Promise<Metadata> {
   const { archiveId } = params;
 

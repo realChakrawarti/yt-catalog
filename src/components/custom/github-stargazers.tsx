@@ -17,7 +17,7 @@ export function GitHubStargazer({
   repo,
   className = "",
 }: StargazerProps) {
-  const { data, error, isLoading } = useSWR(
+  const { data, isLoading } = useSWR(
     `https://api.github.com/repos/${owner}/${repo}`,
     (url) => fetch(url).then((res) => res.json()),
     {

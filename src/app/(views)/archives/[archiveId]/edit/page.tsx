@@ -41,15 +41,10 @@ function EditArchive({ params }: { params: ArchivePageParams }) {
     { revalidateOnFocus: false }
   );
 
-  const [archiveMeta, setArchiveMeta] = useState<ArchiveMeta>({
-    title: "",
-    description: "",
-  });
+  const [archiveMeta, setArchiveMeta] = useState<ArchiveMeta>(initialState);
 
-  const [archiveMetaError, setArchiveMetaError] = useState<ArchiveMeta>({
-    title: "",
-    description: "",
-  });
+  const [archiveMetaError, setArchiveMetaError] =
+    useState<ArchiveMeta>(initialState);
 
   const handleMetaUpdate = (e: any) => {
     setArchiveMeta((prev) => ({
@@ -72,10 +67,7 @@ function EditArchive({ params }: { params: ArchivePageParams }) {
         description: description._errors[0],
       });
     } else {
-      setArchiveMetaError({
-        title: "",
-        description: "",
-      });
+      setArchiveMetaError(initialState);
     }
   };
 

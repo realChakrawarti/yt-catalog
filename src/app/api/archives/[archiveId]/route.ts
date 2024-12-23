@@ -1,7 +1,6 @@
 import { NextRequest } from "next/server";
 
 import { NxResponse } from "~/utils/nx-response";
-import { getUserIdCookie } from "~/utils/server-helper";
 
 import { getArchiveById, updateArchiveMeta } from "../models";
 

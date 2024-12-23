@@ -3,7 +3,6 @@ import "~/app/styles/globals.css";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import Script from "next/script";
 
 import AppSidebar from "~/components/custom/app-sidebar";
 import BackgroundPattern from "~/components/custom/background-pattern";
@@ -46,13 +45,6 @@ export default function RootLayout({
       </body>
       {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
         <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
-      )}
-      {process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID && (
-        <Script
-          strategy="lazyOnload"
-          src="https://cloud.umami.is/script.js"
-          data-website-id={process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID}
-        />
       )}
     </html>
   );

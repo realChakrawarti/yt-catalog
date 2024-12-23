@@ -1,5 +1,4 @@
 import packageInfo from "../../../package.json";
-import { GithubIcon } from "./icons";
 
 export default function Footer() {
   return (

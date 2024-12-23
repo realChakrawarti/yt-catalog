@@ -3,7 +3,6 @@
 import Link from "next/link";
 
 import { Button } from "../shadcn/button";
-import AuthButton from "./auth-buttons";
 
 function GlobeBackground() {
   return (
