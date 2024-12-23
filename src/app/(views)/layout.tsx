@@ -47,13 +47,6 @@ export default function RootLayout({
       {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
         <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
       )}
-      {process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID && (
-        <Script
-          strategy="lazyOnload"
-          src="https://cloud.umami.is/script.js"
-          data-website-id={process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID}
-        />
-      )}
     </html>
   );
 }
