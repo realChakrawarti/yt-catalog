@@ -1,3 +1,4 @@
+import { BetaAnalyticsDataClient } from "@google-analytics/data";
 import {
   collection,
   doc,
@@ -46,6 +47,7 @@ type CatalogData = {
   title: string;
   description: string;
   updatedAt: string;
+  pageviews: number;
 };
 
 const ONE_HOUR = 3_600_000;
@@ -141,6 +143,74 @@ async function getPlaylistItems(channel: any) {
   }
 }
 
+function transformAnalyticsData(response: any) {
+  // Check if response exists and has rows
+  if (!response?.at(0)?.rows) {
+    return [];
+  }
+
+  // Map through the rows and create an object with id and value of the catalog
+  return response[0].rows.map((row: any) => ({
+    id: row.dimensionValues[0].value,
+    pageviews: parseInt(row.metricValues[0].value, 10),
+  }));
+}
+
+async function getPageviewByCatalogId(catalogId: string) {
+  const analyticsDataClient = new BetaAnalyticsDataClient({
+    credentials: {
+      client_email: process.env.GOOGLE_CLIENT_EMAIL,
+      private_key: process.env.GOOGLE_ANALYTICS_PRIVATE_KEY,
+    },
+  });
+
+  const request = {
+    property: `properties/${process.env.GOOGLE_ANALYTICS_PROPERTY_ID}`,
+    dateRanges: [
+      {
+        startDate: "90daysAgo",
+        endDate: "today",
+      },
+    ],
+    dimensions: [
+      {
+        name: "pagePath",
+      },
+    ],
+    metrics: [
+      {
+        name: "screenPageViews",
+      },
+    ],
+    dimensionFilter: {
+      filter: {
+        fieldName: "pagePath",
+        stringFilter: {
+          matchType: "EXACT",
+          value: `/c/${catalogId}`,
+        },
+      },
+    },
+  };
+
+  console.log(`Querying pageview of catalog: ${catalogId}.`);
+
+  try {
+    // @ts-ignore
+    const response = await analyticsDataClient.runReport(request);
+    const data = transformAnalyticsData(response);
+
+    return data?.at(0)?.pageviews ?? 0;
+  } catch (err) {
+    if (err instanceof Error) {
+      console.error(err.message);
+    } else {
+      console.error(JSON.stringify(err, null, 2));
+    }
+    return 0;
+  }
+}
+
 export async function getVideosByCatalogId(catalogId: string) {
   let videoList: VideoMetadata[] = [];
 
@@ -177,8 +247,11 @@ export async function getVideosByCatalogId(catalogId: string) {
   const lastUpdatedTime = new Date(lastUpdated).getTime();
 
   let recentUpdate = new Date(currentTime);
+  let pageviews = 0;
 
   if (currentTime - lastUpdatedTime > deltaTime) {
+    pageviews = await getPageviewByCatalogId(catalogId);
+
     for (const channel of channelList) {
       const data = await getPlaylistItems(channel);
       videoList = [...videoList, ...data];
@@ -213,6 +286,7 @@ export async function getVideosByCatalogId(catalogId: string) {
           videos: videoFilterData,
           updatedAt: recentUpdate,
         },
+        pageviews: pageviews,
       },
       { merge: true }
     );
@@ -234,6 +308,7 @@ export async function getVideosByCatalogId(catalogId: string) {
     description: catalogSnapData.description,
     videos: videoFilterData,
     nextUpdate: new Date(recentUpdate.getTime() + FOUR_HOURS).toUTCString(),
+    pageviews: catalogSnapData.pageviews ?? 0,
   };
 }
 
@@ -327,7 +402,7 @@ export async function getValidCatalogIds() {
   const validCatalogQuery = query(
     catalogsCollectionRef,
     where("data.videos", "!=", false),
-    limit(25)
+    limit(50)
   );
 
   const catalogsDoc = await getDocs(validCatalogQuery);
@@ -345,6 +420,7 @@ export async function getValidCatalogIds() {
           description: catalogData?.description,
           id: catalogId,
           updatedAt: catalogData?.data.updatedAt.toDate(),
+          pageviews: catalogData.pageviews,
         };
 
         catalogListData.push(metaData);
@@ -441,11 +517,10 @@ export async function createCatalog(userId: string, catalogMeta: CatalogMeta) {
   return nanoidToken;
 }
 
-
 export async function getNextUpdate(catalogId: string) {
   const catalogRef = doc(db, COLLECTION.catalogs, catalogId);
   const catalogSnap = await getDoc(catalogRef);
   const catalogData = catalogSnap.data();
 
-  return catalogData?.data.updatedAt.toDate()
+  return catalogData?.data.updatedAt.toDate();
 }
