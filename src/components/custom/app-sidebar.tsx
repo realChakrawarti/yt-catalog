@@ -35,6 +35,10 @@ export default function AppSidebar() {
 function UserGroup() {
   const { user } = useAuth();
 
+  const pathname = usePathname();
+
+  const isDashboardActive = pathname.includes("dashboard");
+
   if (!user) {
     return (
       <SidebarHeader className="border-b px-4 h-14 justify-center">
@@ -63,7 +67,11 @@ function UserGroup() {
         <SidebarContent>
           <SidebarMenu>
             <SidebarMenuItem>
-              <SidebarMenuButton className="px-0" asChild>
+              <SidebarMenuButton
+                className="px-0"
+                asChild
+                isActive={isDashboardActive}
+              >
                 <Link href={"/dashboard"}>
                   <Button variant="ghost" className="w-full justify-start px-2">
                     <LayoutDashboard className="mr-2 h-4 w-4" />
@@ -81,9 +89,14 @@ function UserGroup() {
 
 function ExploreGroup() {
   const exploreItems = [
-    { icon: BookOpen, label: "Catalogs", path: "catalogs" },
-    { icon: Archive, label: "Archives", path: "archives" },
-    { icon: Clock8, label: "Watch later", path: "watch-later" },
+    { icon: BookOpen, label: "Catalogs", path: "catalogs", shortPath: "/c/" },
+    { icon: Archive, label: "Archives", path: "archives", shortPath: "/a/" },
+    {
+      icon: Clock8,
+      label: "Watch later",
+      path: "watch-later",
+      shortPath: "watch-later",
+    },
   ];
 
   const pathname = usePathname();
@@ -93,22 +106,26 @@ function ExploreGroup() {
       <SidebarGroupLabel>Explore</SidebarGroupLabel>
       <SidebarGroupContent>
         <SidebarMenu>
-          {exploreItems.map((item) => (
-            <SidebarMenuItem key={item.label}>
-              <SidebarMenuButton
-                className="px-0"
-                asChild
-                isActive={pathname.includes(item.path)}
-              >
-                <Link href={`/explore/${item.path}`}>
-                  <Button variant="ghost" className="w-full justify-start px-2">
-                    <item.icon className="mr-2 h-4 w-4" />
-                    {item.label}
-                  </Button>
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          ))}
+          {exploreItems.map((item) => {
+            const isActive =
+              pathname.includes(`explore/${item.path}`) ||
+              pathname.includes(item.shortPath);
+            return (
+              <SidebarMenuItem key={item.label}>
+                <SidebarMenuButton className="px-0" asChild isActive={isActive}>
+                  <Link href={`/explore/${item.path}`}>
+                    <Button
+                      variant="ghost"
+                      className="w-full justify-start px-2"
+                    >
+                      <item.icon className="mr-2 h-4 w-4" />
+                      {item.label}
+                    </Button>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            );
+          })}
         </SidebarMenu>
       </SidebarGroupContent>
     </SidebarGroup>
