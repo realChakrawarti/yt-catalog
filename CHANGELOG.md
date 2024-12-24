@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.23](https://github.com/realChakrawarti/YTCatalog/compare/v1.3.22...v1.3.23) (2024-12-24)
+
+
+### Bug Fixes
+
+* revalidate `/explore/archives` & `/explore/catalogs` route on updation of respective resource ([7d21380](https://github.com/realChakrawarti/YTCatalog/commit/7d213803397d816097c0e8c98a2941b9902ff037))
+
 ### [1.3.22](https://github.com/realChakrawarti/YTCatalog/compare/v1.3.21...v1.3.22) (2024-12-23)
 
 

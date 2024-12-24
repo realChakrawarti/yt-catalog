@@ -201,7 +201,7 @@ export async function getPageviewByCatalogId(catalogId: string) {
     },
   } as protos.google.analytics.data.v1beta.IRunReportRequest;
 
-  console.log(`Querying pageview of catalog: ${catalogId}.`);
+  console.log(`Querying pageview of catalog: ${catalogId}`);
 
   // Refer: https://github.com/googleanalytics/nodejs-docs-samples/blob/e21670ab2c79a12c45bffa10ac26e0324279a718/google-analytics-data/run_report.js#L33-L93
   const [response] = await analyticsDataClient.runReport(request);
