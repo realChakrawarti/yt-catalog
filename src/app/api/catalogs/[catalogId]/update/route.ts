@@ -4,7 +4,11 @@ import { NextRequest } from "next/server";
 import { NxResponse } from "~/utils/nx-response";
 import { getUserIdCookie } from "~/utils/server-helper";
 
-import { deleteChannel, updateCatalogVideos, updateChannels } from "../../models";
+import {
+  deleteChannel,
+  updateCatalogVideos,
+  updateChannels,
+} from "../../models";
 
 type ContextParams = {
   params: {
@@ -38,10 +42,9 @@ export async function DELETE(request: NextRequest, ctx: ContextParams) {
 
   await deleteChannel(userId, catalogId, channels);
 
-  revalidatePath(`/c/${catalogId}`)
+  revalidatePath(`/c/${catalogId}`);
 
   return NxResponse.success<any>("Channel deleted successfully.", {}, 201);
-
 }
 
 export async function PATCH(request: NextRequest, ctx: ContextParams) {
@@ -67,8 +70,8 @@ export async function PATCH(request: NextRequest, ctx: ContextParams) {
   updateCatalogVideos(catalogId);
 
   // Revalidate the /explore route
-  revalidatePath("/explore");
-  revalidatePath(`/c/${catalogId}`)
+  revalidatePath("/explore/catalogs");
+  revalidatePath(`/c/${catalogId}`);
 
   return NxResponse.success<any>("Channel list update successfully.", {}, 201);
 }
