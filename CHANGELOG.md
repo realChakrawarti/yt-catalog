@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.24](https://github.com/realChakrawarti/YTCatalog/compare/v1.3.23...v1.3.24) (2024-12-26)
+
 ### [1.3.23](https://github.com/realChakrawarti/YTCatalog/compare/v1.3.22...v1.3.23) (2024-12-24)
 
 
