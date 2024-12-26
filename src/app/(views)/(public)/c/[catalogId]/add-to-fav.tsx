@@ -1,35 +1,30 @@
 "use client";
 
+import { useLiveQuery } from "dexie-react-hooks";
 import { useEffect, useState } from "react";
 
 import { StarIcon } from "~/components/custom/icons";
 import JustTip from "~/components/custom/just-the-tip";
 import { Button } from "~/components/shadcn/button";
 import { toast } from "~/hooks/use-toast";
+import { db } from "~/utils/db";
 
 export const AddToFavorites = ({
   catalogId,
-  catalogDescription,
   catalogTitle,
+  catalogDescription,
 }: any) => {
-  const [existingCatalogs, setExistingCatalogs] = useState<any[]>([]);
-
-  useEffect(() => {
-    setExistingCatalogs(
-      JSON.parse(window?.localStorage?.getItem("favorites") || "[]")
-    );
-  }, []);
-
+  let favoriteCatalogs = useLiveQuery(() => db["favorites"].toArray(), []) ?? []
   const [catalogExists, setCatalogExists] = useState<boolean>(false);
 
   useEffect(() => {
     checkIfExists();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [existingCatalogs]);
+  }, [favoriteCatalogs]);
 
   const checkIfExists = () => {
-    for (let i = 0; i < existingCatalogs?.length; i++) {
-      if (existingCatalogs[i].id === catalogId) {
+    for (let i = 0; i < favoriteCatalogs?.length; i++) {
+      if (favoriteCatalogs[i].id === catalogId) {
         setCatalogExists(true);
         return;
       }
@@ -37,21 +32,11 @@ export const AddToFavorites = ({
     setCatalogExists(false);
   };
 
-  const addToFav = () => {
+  const addToFav = async () => {
     if (catalogExists) {
-      // Remove the catalogId
-      const filterCatalogIds = existingCatalogs.filter(
-        (item: any) => item.id != catalogId
-      );
-
       toast({ title: "Catalog removed from favorites." });
 
-      window?.localStorage?.setItem(
-        "favorites",
-        JSON.stringify(filterCatalogIds)
-      );
-
-      setExistingCatalogs(filterCatalogIds);
+      await db["favorites"].delete(catalogId);
     }
     // Add the catalogId to favorites
     else {
@@ -60,11 +45,7 @@ export const AddToFavorites = ({
         title: catalogTitle,
         description: catalogDescription,
       };
-      window?.localStorage?.setItem(
-        "favorites",
-        JSON.stringify([...existingCatalogs, favCatalog])
-      );
-      setExistingCatalogs((prev) => [...prev, favCatalog]);
+      await db["favorites"].add(favCatalog);
       toast({ title: "Catalog added to favorites." });
     }
   };
