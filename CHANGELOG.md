@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.25](https://github.com/realChakrawarti/YTCatalog/compare/v1.3.24...v1.3.25) (2024-12-26)
+
+
+### Bug Fixes
+
+* return `69` for a catalog pageview without hitting the analytics API ([fb38128](https://github.com/realChakrawarti/YTCatalog/commit/fb3812834badc013ccf58f1d8ddfa83c9f10e76e))
+
 ### [1.3.24](https://github.com/realChakrawarti/YTCatalog/compare/v1.3.23...v1.3.24) (2024-12-26)
 
 ### [1.3.23](https://github.com/realChakrawarti/YTCatalog/compare/v1.3.22...v1.3.23) (2024-12-24)
