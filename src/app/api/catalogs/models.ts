@@ -171,7 +171,14 @@ function transformAnalyticsData(
   });
 }
 
-export async function getPageviewByCatalogId(catalogId: string) {
+export async function getPageviewByCatalogId(
+  catalogId: string
+): Promise<number> {
+  // TODO: Make a function to check if the code is running on development or on production server
+  if (process.env.NODE_ENV === "development") {
+    return 69;
+  }
+
   const request = {
     property: `properties/${process.env.GOOGLE_ANALYTICS_PROPERTY_ID}`,
     dateRanges: [

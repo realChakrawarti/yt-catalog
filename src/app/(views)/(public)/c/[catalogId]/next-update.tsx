@@ -70,7 +70,10 @@ export default function NextUpdate({ catalogId }: any) {
     error,
     isLoading,
   } = useSWR(
-    catalogId ? `/catalogs/${catalogId}/next-update` : null,
+    // TODO: Create a custom hook that gives whether the code is running on dev or on production server for client-only
+    catalogId && process.env.NODE_ENV !== "development"
+      ? `/catalogs/${catalogId}/next-update`
+      : null,
     (url) => fetchApi<string>(url),
     {
       refreshInterval: POLLING_INTERVAL,
@@ -102,6 +105,10 @@ export default function NextUpdate({ catalogId }: any) {
 
   const [when, timeDiff] = getTimeDifference(nextUpdate?.data as string);
   const showTimeUpdate = () => {
+    if (process.env.NODE_ENV === "development") {
+      return "Disabled during development";
+    }
+
     if (error) {
       return "Please reload the page.";
     }
