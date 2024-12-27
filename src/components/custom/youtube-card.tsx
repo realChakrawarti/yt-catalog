@@ -219,11 +219,12 @@ function CopyLink({ videoId }: Pick<YouTubeCardProps, "videoId">) {
 }
 
 function WatchLater({ addWatchLater, videoData }: WatchLaterProps) {
-  let existingVideos = useLiveQuery(() => db["watch-later"].toArray()) ?? [];
+  const existingVideos = useLiveQuery(() => db["watch-later"].toArray()) ?? [];
 
   async function addToWatchLater() { 
     function checkIfExists(existingVideos: VideoData[], videoId: string) {
       for (let i = 0; i < existingVideos?.length; i++) {
+        console.log(existingVideos[i].videoId, videoId)
         if (existingVideos[i].videoId === videoId) {
           return true;
         }
@@ -234,10 +235,7 @@ function WatchLater({ addWatchLater, videoData }: WatchLaterProps) {
     if (checkIfExists(existingVideos, videoData.videoId)) {
       toast({ title: "Video already added." });
     } else {
-      await db["watch-later"].add({
-        ...videoData,
-        id: videoData.videoId
-      });
+      await db["watch-later"].add(videoData);
       toast({ title: `"${videoData.title}" added to watch later.` });
     }
   }

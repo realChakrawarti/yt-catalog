@@ -1,26 +1,11 @@
 import Dexie, { type EntityTable } from 'dexie';
 
-type VideoData = {
-    id: string;
-    videoId: string;
-    title: string;
-    channelTitle: string;
-    publishedAt: string;
-    channelId: string;
-    channelLogo: string;
-    description: string;
-};
-
-type FavoriteData = {
-    id: string;
-    title: string;
-    description: string;
-}
+import { FavoriteData, VideoData } from '~/types-schema/types';
 
 const db = new Dexie('YTCatalogDatabase') as Dexie & {
   "watch-later": EntityTable<
     VideoData,
-    'id'
+    'videoId'
   >,
   favorites: EntityTable<
     FavoriteData,
@@ -29,7 +14,7 @@ const db = new Dexie('YTCatalogDatabase') as Dexie & {
 };
 
 db.version(1).stores({
-  "watch-later": '++id, videoId, title, channelTitle, publishedAt, channelId, channelLogo, description',
+  "watch-later": 'videoId, title, channelTitle, publishedAt, channelId, channelLogo, description',
   favorites: 'id, title, description'
 });
 

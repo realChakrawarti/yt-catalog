@@ -14,7 +14,7 @@ export const AddToFavorites = ({
   catalogTitle,
   catalogDescription,
 }: any) => {
-  let favoriteCatalogs = useLiveQuery(() => db["favorites"].toArray(), []) ?? []
+  const favoriteCatalogs = useLiveQuery(() => db["favorites"].toArray(), []) ?? []
   const [catalogExists, setCatalogExists] = useState<boolean>(false);
 
   useEffect(() => {
