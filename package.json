@@ -16,6 +16,9 @@
     "release:patch": "standard-version --release-as patch",
     "release:major": "standard-version --release-as major"
   },
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "dependencies": {
     "@google-analytics/data": "^4.12.0",
     "@icons-pack/react-simple-icons": "^10.2.0",
