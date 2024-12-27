@@ -1,12 +1,13 @@
 "use client";
 
-import { useReadLocalStorage } from "usehooks-ts";
+import { useLiveQuery } from "dexie-react-hooks";
 
 import GridContainer from "~/components/custom/grid-container";
 import YouTubeCard from "~/components/custom/youtube-card";
+import { db } from "~/utils/db";
 
 export default function WatchLaterPage() {
-  const watchLater = useReadLocalStorage<any[]>("watch-later") ?? [];
+  const watchLater = useLiveQuery<any[]>(() => db["watch-later"].toArray()) ?? [];
 
   return (
     <div className="p-3">

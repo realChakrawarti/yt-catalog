@@ -34,6 +34,8 @@
     "@radix-ui/react-tooltip": "^1.1.6",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "dexie": "^4.0.10",
+    "dexie-react-hooks": "^1.1.7",
     "firebase": "^10.13.1",
     "linkify-react": "^4.1.4",
     "linkifyjs": "^4.1.4",

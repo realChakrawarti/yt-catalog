@@ -1,10 +1,10 @@
 "use client";
 
 import { YouTubeEmbed } from "@next/third-parties/google";
+import {  useLiveQuery } from "dexie-react-hooks";
 import Linkify from "linkify-react";
 import { Clock8 } from "lucide-react";
 import { Inter } from "next/font/google";
-import { useLocalStorage, useReadLocalStorage } from "usehooks-ts";
 
 import {
   DeleteIcon,
@@ -33,6 +33,7 @@ import {
 } from "~/components/shadcn/sheet";
 import { toast } from "~/hooks/use-toast";
 import { getTimeDifference } from "~/utils/client-helper";
+import { db } from "~/utils/db";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -218,25 +219,23 @@ function CopyLink({ videoId }: Pick<YouTubeCardProps, "videoId">) {
 }
 
 function WatchLater({ addWatchLater, videoData }: WatchLaterProps) {
-  const [exisitingVideos, setWatchLater] = useLocalStorage<VideoData[]>(
-    "watch-later",
-    []
-  );
+  const existingVideos = useLiveQuery(() => db["watch-later"].toArray()) ?? [];
 
-  function addToWatchLater() {
-    function checkIfExists(exisitingVideos: VideoData[], videoId: string) {
-      for (let i = 0; i < exisitingVideos?.length; i++) {
-        if (exisitingVideos[i].videoId === videoId) {
+  async function addToWatchLater() { 
+    function checkIfExists(existingVideos: VideoData[], videoId: string) {
+      for (let i = 0; i < existingVideos?.length; i++) {
+        console.log(existingVideos[i].videoId, videoId)
+        if (existingVideos[i].videoId === videoId) {
           return true;
         }
       }
       return false;
     }
 
-    if (checkIfExists(exisitingVideos, videoData.videoId)) {
+    if (checkIfExists(existingVideos, videoData.videoId)) {
       toast({ title: "Video already added." });
     } else {
-      setWatchLater([...exisitingVideos, videoData]);
+      await db["watch-later"].add(videoData);
       toast({ title: `"${videoData.title}" added to watch later.` });
     }
   }
@@ -260,18 +259,9 @@ function RemoveWatchLater({
   removeWatchLater,
   videoId,
 }: Pick<YouTubeCardProps, "removeWatchLater" | "videoId">) {
-  const exisitingVideos = useReadLocalStorage<VideoData[]>("watch-later") ?? [];
-  const [_, setWatchLater] = useLocalStorage<VideoData[]>(
-    "watch-later",
-    exisitingVideos
-  );
+  async function removeFromWatchLater(videoId: string) {
 
-  function removeFromWatchLater(videoId: string) {
-    const filteredVideos = exisitingVideos.filter(
-      (item: VideoData) => item.videoId !== videoId
-    );
-
-    setWatchLater(filteredVideos);
+    await db["watch-later"].delete(videoId);
     toast({ title: "Video has been removed from watch later." });
   }
 
