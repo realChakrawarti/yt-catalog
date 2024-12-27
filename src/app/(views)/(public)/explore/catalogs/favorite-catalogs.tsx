@@ -1,7 +1,7 @@
 "use client";
 
+import { useLiveQuery } from "dexie-react-hooks";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 
 import { HeartListIcon, StarIcon } from "~/components/custom/icons";
 import JustTip from "~/components/custom/just-the-tip";
@@ -14,16 +14,10 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "~/components/shadcn/sheet";
+import { db } from "~/utils/db";
 
 export default function FavoriteCatalog() {
-  // TODO: Uset useLocalStorage from "ts-hooks"
-  const [favoriteCatalogs, setFavoriteCatalogs] = useState([]);
-
-  useEffect(() => {
-    setFavoriteCatalogs(
-      JSON.parse(window?.localStorage?.getItem("favorites") || "[]")
-    );
-  }, []);
+  const favoriteCatalogs = useLiveQuery(() => db["favorites"].toArray(), []) ?? []
 
   return (
     <Sheet>
