@@ -42,4 +42,8 @@ firestore-debug.log
 .firebaserc
 database-debug.log
 ui-debug.log
-
+node_modules/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
