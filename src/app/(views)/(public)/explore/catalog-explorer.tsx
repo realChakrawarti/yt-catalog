@@ -1,9 +1,8 @@
 "use client";
 
-import { useLiveQuery } from "dexie-react-hooks";
 import { Clock8 } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import DetailsCard from "~/components/custom/details-card";
 import GridContainer from "~/components/custom/grid-container";
@@ -24,13 +23,18 @@ import {
   SheetTrigger,
 } from "~/components/shadcn/sheet";
 import { Tabs, TabsList, TabsTrigger } from "~/components/shadcn/tabs";
-import { db } from "~/utils/db";
 
 import WatchLater from "./watch-later";
 
 // TODO: A compact list for catalogs w/ toggle button
 export function CatalogExplorer({ validCatalogs, validArchives }: any) {
-  const favoriteCatalogs = useLiveQuery(() => db["favorites"].toArray(), []) ?? [];
+  const [favoriteCatalogs, setFavoriteCatalogs] = useState([]);
+
+  useEffect(() => {
+    setFavoriteCatalogs(
+      JSON.parse(window?.localStorage?.getItem("favorites") || "[]")
+    );
+  }, []);
 
   const [activeTab, setActiveTab] = useState<string>("catalog");
 
