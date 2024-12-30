@@ -12,12 +12,10 @@ export function ArchiveLoadingSkeleton (){
         </section>
         <section className="px-0 md:px-3">
           {Array.from(Array(4).keys()).map((index) => (
-            <GridContainer>
-              {Array.from(
-                Array(4)
-                  .keys()
-                  .map((index) => <YouTubeSkeletonCard key={index} />)
-              )}
+            <GridContainer key={index}>
+              {Array.from(Array(4).keys()).map((index) => (
+                <YouTubeSkeletonCard key={index} />
+              ))}
             </GridContainer>
           ))}
         </section>
