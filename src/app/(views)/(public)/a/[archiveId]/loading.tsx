@@ -1,9 +1,8 @@
 import Spinner from "~/components/custom/spinner";
+import { ArchiveLoadingSkeleton } from "./skeleton-loader";
 
 export default function CatalogPublicLoading() {
   return (
-    <div className="h-full flex flex-col items-center mt-7">
-      <Spinner label="Archive videos are loading." className="size-7" />
-    </div>
+    <ArchiveLoadingSkeleton/>
   );
 }
