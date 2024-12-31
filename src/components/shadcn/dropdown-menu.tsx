@@ -7,7 +7,7 @@ import {
   CheckIcon,
   ChevronRightIcon,
   CircleIcon,
-} from "~/components/custom/icons";
+} from "~/components/shared/icons";
 import { cn } from "~/utils/shadcn-helper";
 
 const DropdownMenu = DropdownMenuPrimitive.Root;

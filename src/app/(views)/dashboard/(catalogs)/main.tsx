@@ -3,12 +3,12 @@
 import { useRouter } from "next/navigation";
 import useSWR from "swr";
 
-import GridContainer from "~/components/custom/grid-container";
-import { BookOpenIcon } from "~/components/custom/icons";
-import CatalogCard from "~/components/custom/item-card";
-import NoItemCard from "~/components/custom/no-item-card";
-import Spinner from "~/components/custom/spinner";
 import { Badge } from "~/components/shadcn/badge";
+import GridContainer from "~/components/shared/grid-container";
+import { BookOpenIcon } from "~/components/shared/icons";
+import CatalogCard from "~/components/shared/item-card";
+import NoItemCard from "~/components/shared/no-item-card";
+import Spinner from "~/components/shared/spinner";
 import { toast } from "~/hooks/use-toast";
 import { getTimeDifference } from "~/utils/client-helper";
 import fetchApi from "~/utils/fetch";

@@ -1,12 +1,12 @@
 import { useRouter } from "next/navigation";
 import useSWR from "swr";
 
-import GridContainer from "~/components/custom/grid-container";
-import { ArchiveIcon } from "~/components/custom/icons";
-import ArchiveCard from "~/components/custom/item-card";
-import NoItemCard from "~/components/custom/no-item-card";
-import Spinner from "~/components/custom/spinner";
 import { Badge } from "~/components/shadcn/badge";
+import GridContainer from "~/components/shared/grid-container";
+import { ArchiveIcon } from "~/components/shared/icons";
+import ArchiveCard from "~/components/shared/item-card";
+import NoItemCard from "~/components/shared/no-item-card";
+import Spinner from "~/components/shared/spinner";
 import { toast } from "~/hooks/use-toast";
 import { getTimeDifference } from "~/utils/client-helper";
 import fetchApi from "~/utils/fetch";

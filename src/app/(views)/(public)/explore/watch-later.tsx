@@ -2,8 +2,8 @@
 
 import { useLiveQuery } from "dexie-react-hooks";
 
-import GridContainer from "~/components/custom/grid-container";
-import YouTubeCard from "~/components/custom/youtube-card";
+import GridContainer from "~/components/shared/grid-container";
+import YouTubeCard from "~/components/shared/youtube/card";
 import { db } from "~/utils/db";
 
 export default function WatchLaterPage() {

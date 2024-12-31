@@ -1,5 +1,5 @@
-import GridContainer from "~/components/custom/grid-container";
 import { Skeleton } from "~/components/shadcn/skeleton";
+import GridContainer from "~/components/shared/grid-container";
 
 export function ArchiveLoadingSkeleton (){
     return (

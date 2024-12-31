@@ -2,9 +2,9 @@
 
 import { useMemo } from "react";
 
-import { CopyIcon, ShareIcon } from "~/components/custom/icons";
-import JustTip from "~/components/custom/just-the-tip";
 import { Button } from "~/components/shadcn/button";
+import { CopyIcon, ShareIcon } from "~/components/shared/icons";
+import JustTip from "~/components/shared/just-the-tip";
 import { toast } from "~/hooks/use-toast";
 
 export default function ShareCatalog(props: any) {

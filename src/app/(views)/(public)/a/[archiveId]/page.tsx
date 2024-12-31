@@ -1,7 +1,7 @@
 import { Metadata } from "next/types";
 
-import GridContainer from "~/components/custom/grid-container";
-import YouTubeCard from "~/components/custom/youtube-card";
+import GridContainer from "~/components/shared/grid-container";
+import YouTubeCard from "~/components/shared/youtube/card";
 import fetchApi from "~/utils/fetch";
 
 type PageProps = {

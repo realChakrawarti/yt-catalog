@@ -1,5 +1,5 @@
-import DetailsCard from "~/components/custom/details-card";
-import GridContainer from "~/components/custom/grid-container";
+import DetailsCard from "~/components/shared/details-card";
+import GridContainer from "~/components/shared/grid-container";
 import fetchApi from "~/utils/fetch";
 
 import FavoriteCatalog from "./favorite-catalogs";

@@ -4,11 +4,11 @@ import { GoogleAnalytics } from "@next/third-parties/google";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
-import AppSidebar from "~/components/custom/app-sidebar";
-import BackgroundPattern from "~/components/custom/background-pattern";
-import Footer from "~/components/custom/footer";
-import Header from "~/components/custom/header";
 import { Toaster } from "~/components/shadcn/toaster";
+import AppSidebar from "~/components/shared/app-sidebar";
+import BackgroundPattern from "~/components/shared/background-pattern";
+import Footer from "~/components/shared/footer";
+import Header from "~/components/shared/header";
 
 import Providers from "./context";
 

@@ -7,7 +7,7 @@ import {
   RefreshIcon,
   ShareIcon,
   ShieldIcon,
-} from "~/components/custom/icons";
+} from "~/components/shared/icons";
 
 import { Card, CardDescription, CardHeader, CardTitle } from "../shadcn/card";
 

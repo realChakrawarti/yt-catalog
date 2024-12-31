@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from "react";
 
-import Spinner from "~/components/custom/spinner";
 import { Button } from "~/components/shadcn/button";
 import { Input } from "~/components/shadcn/input";
 import { Label } from "~/components/shadcn/label";
+import Spinner from "~/components/shared/spinner";
 import { useToast } from "~/hooks/use-toast";
 import { TitleDescriptionSchema as CatalogSchema } from "~/types-schema/schemas";
 import type { TitleDescriptionType as CatalogMetadata } from "~/types-schema/types";

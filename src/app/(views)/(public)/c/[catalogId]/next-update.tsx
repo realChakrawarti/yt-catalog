@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import useSWR from "swr";
 
-import { ClockIcon, CloseIcon, RefreshIcon } from "~/components/custom/icons";
 import { Button } from "~/components/shadcn/button";
 import {
   Popover,
@@ -11,6 +10,7 @@ import {
   PopoverTrigger,
 } from "~/components/shadcn/popover";
 import { Skeleton } from "~/components/shadcn/skeleton";
+import { ClockIcon, CloseIcon, RefreshIcon } from "~/components/shared/icons";
 import { getTimeDifference } from "~/utils/client-helper";
 import fetchApi from "~/utils/fetch";
 

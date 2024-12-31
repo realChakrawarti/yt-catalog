@@ -1,5 +1,5 @@
-import GridContainer from "~/components/custom/grid-container";
 import { Skeleton } from "~/components/shadcn/skeleton";
+import GridContainer from "~/components/shared/grid-container";
 export default function CatalogLoadingSkeleton() {
   return (
     <div className="space-y-4 pb-6 pt-7">

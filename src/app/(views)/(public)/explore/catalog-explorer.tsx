@@ -5,15 +5,6 @@ import { Clock8 } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 
-import DetailsCard from "~/components/custom/details-card";
-import GridContainer from "~/components/custom/grid-container";
-import {
-  ArchiveIcon,
-  BookOpenIcon,
-  HeartListIcon,
-  StarIcon,
-} from "~/components/custom/icons";
-import JustTip from "~/components/custom/just-the-tip";
 import { Button } from "~/components/shadcn/button";
 import {
   Sheet,
@@ -24,6 +15,15 @@ import {
   SheetTrigger,
 } from "~/components/shadcn/sheet";
 import { Tabs, TabsList, TabsTrigger } from "~/components/shadcn/tabs";
+import DetailsCard from "~/components/shared/details-card";
+import GridContainer from "~/components/shared/grid-container";
+import {
+  ArchiveIcon,
+  BookOpenIcon,
+  HeartListIcon,
+  StarIcon,
+} from "~/components/shared/icons";
+import JustTip from "~/components/shared/just-the-tip";
 import { db } from "~/utils/db";
 
 import WatchLater from "./watch-later";

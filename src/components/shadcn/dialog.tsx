@@ -3,7 +3,7 @@
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import * as React from "react";
 
-import { CloseIcon } from "~/components/custom/icons";
+import { CloseIcon } from "~/components/shared/icons";
 import { cn } from "~/utils/shadcn-helper";
 
 const Dialog = DialogPrimitive.Root;

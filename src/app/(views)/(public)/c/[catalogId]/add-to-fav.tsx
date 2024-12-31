@@ -3,9 +3,9 @@
 import { useLiveQuery } from "dexie-react-hooks";
 import { useEffect, useState } from "react";
 
-import { StarIcon } from "~/components/custom/icons";
-import JustTip from "~/components/custom/just-the-tip";
 import { Button } from "~/components/shadcn/button";
+import { StarIcon } from "~/components/shared/icons";
+import JustTip from "~/components/shared/just-the-tip";
 import { toast } from "~/hooks/use-toast";
 import { db } from "~/utils/db";
 

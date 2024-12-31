@@ -3,8 +3,6 @@
 import { useLiveQuery } from "dexie-react-hooks";
 import Link from "next/link";
 
-import { HeartListIcon, StarIcon } from "~/components/custom/icons";
-import JustTip from "~/components/custom/just-the-tip";
 import { Button } from "~/components/shadcn/button";
 import {
   Sheet,
@@ -14,6 +12,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "~/components/shadcn/sheet";
+import { HeartListIcon, StarIcon } from "~/components/shared/icons";
+import JustTip from "~/components/shared/just-the-tip";
 import { db } from "~/utils/db";
 
 export default function FavoriteCatalog() {

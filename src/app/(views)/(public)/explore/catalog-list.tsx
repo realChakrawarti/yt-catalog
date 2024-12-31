@@ -1,6 +1,6 @@
-import GridContainer from "~/components/custom/grid-container";
-import { EyeIcon } from "~/components/custom/icons";
 import { Card, CardContent } from "~/components/shadcn/card";
+import GridContainer from "~/components/shared/grid-container";
+import { EyeIcon } from "~/components/shared/icons";
 
 // TODO: Not being used. When page view per catalog is implemented.
 export default function CatalogList({ catalogs }: any) {
