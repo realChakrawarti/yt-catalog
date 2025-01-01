@@ -3,6 +3,7 @@ import "~/app/styles/globals.css";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Script from "next/script";
 
 import { Toaster } from "~/components/shadcn/toaster";
 import AppSidebar from "~/components/shared/app-sidebar";
@@ -46,6 +47,10 @@ export default function RootLayout({
       {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
         <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
       )}
+      <Script
+        src="https://www.youtube.com/iframe_api"
+        strategy="lazyOnload"
+      />
     </html>
   );
 }

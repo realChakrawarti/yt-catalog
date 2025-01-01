@@ -174,9 +174,11 @@ function EditArchive({ params }: { params: ArchivePageParams }) {
               {archiveData?.data?.videos.map((item: any) => {
                 return (
                   <YouTubeCard
-                    removeVideo={removeVideo}
                     key={item.id}
-                    {...item}
+                    options={{
+                      removeVideo: removeVideo,
+                    }}
+                    video={item}
                   />
                 );
               })}

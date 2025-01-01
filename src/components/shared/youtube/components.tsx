@@ -1,8 +1,3 @@
-import { getTimeDifference } from "~/utils/client-helper";
-import { db } from "~/utils/db";
-
-const inter = Inter({ subsets: ["latin"] });
-
 import { YouTubeEmbed } from "@next/third-parties/google";
 import { useLiveQuery } from "dexie-react-hooks";
 import Linkify from "linkify-react";
@@ -25,11 +20,15 @@ import {
 } from "~/components/shadcn/sheet";
 import { DeleteIcon, InfoIcon, LinkIcon } from "~/components/shared/icons";
 import { toast } from "~/hooks/use-toast";
-import { VideoData, YouTubeCardProps } from "~/types-schema/types";
+import { VideoData, YouTubeCardOptions } from "~/types-schema/types";
+import { getTimeDifference } from "~/utils/client-helper";
+import { db } from "~/utils/db";
 
-interface WatchLaterProps extends Pick<YouTubeCardProps, "addWatchLater"> {
+interface WatchLaterProps extends Pick<YouTubeCardOptions, "addWatchLater"> {
   videoData: VideoData;
 }
+
+const inter = Inter({ subsets: ["latin"] });
 
 function ChannelMeta({
   channelLogo,
@@ -108,7 +107,7 @@ function DescriptionSheet({
   );
 }
 
-const YoutubePlayer = (props: Pick<YouTubeCardProps, "videoId" | "title">) => {
+const YoutubePlayer = (props: Pick<VideoData, "videoId" | "title">) => {
   const { videoId, title } = props;
 
   return (
@@ -124,7 +123,7 @@ const YoutubePlayer = (props: Pick<YouTubeCardProps, "videoId" | "title">) => {
 function RemoveVideo({
   removeVideo,
   videoId,
-}: Pick<YouTubeCardProps, "removeVideo" | "videoId">) {
+}: Pick<VideoData, "videoId"> & Pick<YouTubeCardOptions, "removeVideo">) {
   if (typeof removeVideo === "function")
     return (
       <Button
@@ -139,7 +138,7 @@ function RemoveVideo({
   return null;
 }
 
-function CopyLink({ videoId }: Pick<YouTubeCardProps, "videoId">) {
+function CopyLink({ videoId }: Pick<VideoData, "videoId">) {
   function copyLink(id: string) {
     navigator.clipboard.writeText(`https://www.youtube.com/watch?v=${id}`);
     toast({
@@ -165,7 +164,6 @@ function WatchLater({ addWatchLater, videoData }: WatchLaterProps) {
   async function addToWatchLater() {
     function checkIfExists(existingVideos: VideoData[], videoId: string) {
       for (let i = 0; i < existingVideos?.length; i++) {
-        console.log(existingVideos[i].videoId, videoId);
         if (existingVideos[i].videoId === videoId) {
           return true;
         }
@@ -199,7 +197,7 @@ function WatchLater({ addWatchLater, videoData }: WatchLaterProps) {
 function RemoveWatchLater({
   removeWatchLater,
   videoId,
-}: Pick<YouTubeCardProps, "removeWatchLater" | "videoId">) {
+}: Pick<YouTubeCardOptions, "removeWatchLater"> & Pick<VideoData, "videoId">) {
   async function removeFromWatchLater(videoId: string) {
     await db["watch-later"].delete(videoId);
     toast({ title: "Video has been removed from watch later." });

@@ -20,29 +20,16 @@ import {
 } from "./components";
 
 export default function YouTubeCard(props: YouTubeCardProps) {
+  const { video, options } = props;
+
+  const { videoId, title, description } = video;
+
   const {
-    videoId,
-    title,
-    channelTitle,
-    publishedAt,
-    channelId,
-    channelLogo,
-    description,
-    removeVideo,
+    removeVideo = undefined,
     hideAvatar = false,
     addWatchLater = false,
     removeWatchLater = false,
-  } = props;
-
-  const videoData = {
-    videoId,
-    title,
-    channelTitle,
-    publishedAt,
-    channelId,
-    channelLogo,
-    description,
-  };
+  } = options ?? {};
 
   return (
     <div className="flex flex-col gap-3">
@@ -71,7 +58,7 @@ export default function YouTubeCard(props: YouTubeCardProps) {
           >
             <RemoveVideo videoId={videoId} removeVideo={removeVideo} />
             <CopyLink videoId={videoId} />
-            <WatchLater addWatchLater={addWatchLater} videoData={videoData} />
+            <WatchLater addWatchLater={addWatchLater} videoData={video} />
             <RemoveWatchLater
               videoId={videoId}
               removeWatchLater={removeWatchLater}
@@ -79,7 +66,7 @@ export default function YouTubeCard(props: YouTubeCardProps) {
           </PopoverContent>
         </Popover>
         <div className="p-3">
-          <ChannelMeta hideAvatar={hideAvatar} {...videoData} />
+          <ChannelMeta hideAvatar={hideAvatar} {...video} />
         </div>
       </div>
     </div>

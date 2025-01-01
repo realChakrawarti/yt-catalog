@@ -8,9 +8,9 @@ type PageProps = {
   params: { archiveId: string };
 };
 
-export async function generateMetadata(
-  { params }: PageProps,
-): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
   const { archiveId } = params;
 
   const result = await fetchApi(`/archives/${archiveId}`);
@@ -54,7 +54,7 @@ export default async function ArchivePage({ params }: PageProps) {
         <section className="px-0 md:px-3">
           <GridContainer>
             {archiveData.videos.map((item: any) => {
-              return <YouTubeCard key={item.id} {...item} />;
+              return <YouTubeCard key={item.id} video={item} />;
             })}
           </GridContainer>
         </section>

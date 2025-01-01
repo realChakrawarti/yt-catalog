@@ -7,12 +7,17 @@ import YouTubeCard from "~/components/shared/youtube/card";
 import { db } from "~/utils/db";
 
 export default function WatchLaterPage() {
-  const watchLater = useLiveQuery<any[]>(() => db["watch-later"].toArray(), []) ?? [];
+  const watchLater =
+    useLiveQuery<any[]>(() => db["watch-later"].toArray(), []) ?? [];
 
   return (
     <GridContainer>
       {watchLater.map((item) => (
-        <YouTubeCard hideAvatar removeWatchLater key={item.videoId} {...item} />
+        <YouTubeCard
+          options={{ hideAvatar: true, removeWatchLater: true }}
+          key={item.videoId}
+          video={item}
+        />
       ))}
     </GridContainer>
   );

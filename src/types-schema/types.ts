@@ -12,11 +12,16 @@ type VideoData = {
   description: string;
 };
 
-export interface YouTubeCardProps extends VideoData {
+export type YouTubeCardOptions = {
   removeVideo: (_videoId: string) => void;
   hideAvatar: boolean;
   addWatchLater: boolean;
   removeWatchLater: boolean;
+};
+
+export interface YouTubeCardProps {
+  video: VideoData;
+  options?: Partial<YouTubeCardOptions> | any;
 }
 
 type FavoriteData = {

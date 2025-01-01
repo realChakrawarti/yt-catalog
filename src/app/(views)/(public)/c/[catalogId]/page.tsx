@@ -116,10 +116,12 @@ export default async function CatalogHandle({
         <VideoSection icon={ClockIcon} label="Today">
           {today.map((video) => (
             <YouTubeCard
-              addWatchLater
-              hideAvatar={Boolean(channelId)}
               key={video.videoId}
-              {...video}
+              options={{
+                addWatchLater: true,
+                hideAvatar: Boolean(channelId),
+              }}
+              video={video}
             />
           ))}
         </VideoSection>
@@ -129,10 +131,12 @@ export default async function CatalogHandle({
         <VideoSection icon={WeekIcon} label="This week">
           {week.map((video) => (
             <YouTubeCard
-              addWatchLater
-              hideAvatar={Boolean(channelId)}
               key={video.videoId}
-              {...video}
+              options={{
+                addWatchLater: true,
+                hideAvatar: Boolean(channelId),
+              }}
+              video={video}
             />
           ))}
         </VideoSection>
@@ -142,10 +146,12 @@ export default async function CatalogHandle({
         <VideoSection icon={MonthIcon} label="This month">
           {month.map((video) => (
             <YouTubeCard
-              addWatchLater
-              hideAvatar={Boolean(channelId)}
               key={video.videoId}
-              {...video}
+              options={{
+                addWatchLater: true,
+                hideAvatar: Boolean(channelId),
+              }}
+              video={video}
             />
           ))}
         </VideoSection>
