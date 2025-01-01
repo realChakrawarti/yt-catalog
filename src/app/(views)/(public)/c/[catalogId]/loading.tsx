@@ -1,9 +1,7 @@
-import Spinner from "~/components/custom/spinner";
+import CatalogLoadingSkeleton from "./skeleton-loader";
 
 export default function CatalogPublicLoading() {
   return (
-    <div className="h-full flex flex-col items-center mt-7">
-      <Spinner label="Catalog videos are getting updated." className="size-7" />
-    </div>
+    <CatalogLoadingSkeleton />
   );
 }
