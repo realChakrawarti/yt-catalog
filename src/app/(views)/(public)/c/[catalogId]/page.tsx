@@ -118,6 +118,7 @@ export default async function CatalogHandle({
             <YouTubeCard
               key={video.videoId}
               options={{
+                enableJsApi: true,
                 addWatchLater: true,
                 hideAvatar: Boolean(channelId),
               }}
@@ -133,6 +134,7 @@ export default async function CatalogHandle({
             <YouTubeCard
               key={video.videoId}
               options={{
+                enableJsApi: true,
                 addWatchLater: true,
                 hideAvatar: Boolean(channelId),
               }}
@@ -148,6 +150,7 @@ export default async function CatalogHandle({
             <YouTubeCard
               key={video.videoId}
               options={{
+                enableJsApi: true,
                 addWatchLater: true,
                 hideAvatar: Boolean(channelId),
               }}

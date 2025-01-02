@@ -4,11 +4,11 @@ import { useLiveQuery } from "dexie-react-hooks";
 
 import GridContainer from "~/components/shared/grid-container";
 import YouTubeCard from "~/components/shared/youtube/card";
-import { db } from "~/utils/db";
+import { indexedDB } from "~/utils/dexie";
 
 export default function WatchLaterPage() {
   const watchLater =
-    useLiveQuery<any[]>(() => db["watch-later"].toArray()) ?? [];
+    useLiveQuery<any[]>(() => indexedDB["watch-later"].toArray()) ?? [];
 
   return (
     <div className="p-3">
@@ -20,6 +20,7 @@ export default function WatchLaterPage() {
               <YouTubeCard
                 key={item.videoId}
                 options={{
+                  enableJsApi: true,
                   hideAvatar: true,
                   removeWatchLater: true,
                 }}

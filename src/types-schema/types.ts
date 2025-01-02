@@ -17,7 +17,14 @@ export type YouTubeCardOptions = {
   hideAvatar: boolean;
   addWatchLater: boolean;
   removeWatchLater: boolean;
+  enableJsApi: boolean;
 };
+
+export interface History extends VideoData {
+  updatedAt: number;
+  duration: number;
+  completed: number;
+}
 
 export interface YouTubeCardProps {
   video: VideoData;

@@ -14,10 +14,11 @@ import {
 } from "~/components/shadcn/sheet";
 import { HeartListIcon, StarIcon } from "~/components/shared/icons";
 import JustTip from "~/components/shared/just-the-tip";
-import { db } from "~/utils/db";
+import { indexedDB } from "~/utils/dexie";
 
 export default function FavoriteCatalog() {
-  const favoriteCatalogs = useLiveQuery(() => db["favorites"].toArray(), []) ?? []
+  const favoriteCatalogs =
+    useLiveQuery(() => indexedDB["favorites"].toArray(), []) ?? [];
 
   return (
     <Sheet>

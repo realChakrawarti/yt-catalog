@@ -1,23 +1,13 @@
-"use client";
+import dynamic from "next/dynamic";
 
-import { Button } from "~/components/shadcn/button";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "~/components/shadcn/popover";
-import { ThreeDotIcon } from "~/components/shared/icons";
 import { YouTubeCardProps } from "~/types-schema/types";
 
-import {
-  ChannelMeta,
-  CopyLink,
-  DescriptionSheet,
-  RemoveVideo,
-  RemoveWatchLater,
-  WatchLater,
-  YoutubePlayer,
-} from "./components";
+import { ChannelMeta, DescriptionSheet } from "./components";
+import ShowCardOption from "./show-card-options";
+
+const ClientYouTubePlayer = dynamic(() => import("./player"), {
+  ssr: false,
+});
 
 export default function YouTubeCard(props: YouTubeCardProps) {
   const { video, options } = props;
@@ -25,6 +15,7 @@ export default function YouTubeCard(props: YouTubeCardProps) {
   const { videoId, title, description } = video;
 
   const {
+    enableJsApi = false,
     removeVideo = undefined,
     hideAvatar = false,
     addWatchLater = false,
@@ -35,36 +26,15 @@ export default function YouTubeCard(props: YouTubeCardProps) {
     <div className="flex flex-col gap-3">
       <div key={videoId} className="relative overflow-hidden rounded-lg">
         <div className="relative aspect-video overflow-hidden">
-          <YoutubePlayer videoId={videoId} title={title} />
+          <ClientYouTubePlayer enableJsApi={enableJsApi} {...video} />
           <DescriptionSheet title={title} description={description} />
         </div>
-        <Popover>
-          <PopoverTrigger asChild>
-            <div className="relative">
-              <Button
-                variant="ghost"
-                size="icon"
-                className="absolute top-3 right-0 h-6 w-6"
-              >
-                <ThreeDotIcon className="h-6 w-6" />
-                <span className="sr-only">Open menu</span>
-              </Button>
-            </div>
-          </PopoverTrigger>
-          <PopoverContent
-            side="top"
-            align="end"
-            className="w-[200px] border-none rounded-lg p-1"
-          >
-            <RemoveVideo videoId={videoId} removeVideo={removeVideo} />
-            <CopyLink videoId={videoId} />
-            <WatchLater addWatchLater={addWatchLater} videoData={video} />
-            <RemoveWatchLater
-              videoId={videoId}
-              removeWatchLater={removeWatchLater}
-            />
-          </PopoverContent>
-        </Popover>
+        <ShowCardOption
+          video={video}
+          removeVideo={removeVideo}
+          addWatchLater={addWatchLater}
+          removeWatchLater={removeWatchLater}
+        />
         <div className="p-3">
           <ChannelMeta hideAvatar={hideAvatar} {...video} />
         </div>

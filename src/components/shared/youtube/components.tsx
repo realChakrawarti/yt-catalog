@@ -1,4 +1,3 @@
-import { YouTubeEmbed } from "@next/third-parties/google";
 import { useLiveQuery } from "dexie-react-hooks";
 import Linkify from "linkify-react";
 import { Clock8 } from "lucide-react";
@@ -22,7 +21,7 @@ import { DeleteIcon, InfoIcon, LinkIcon } from "~/components/shared/icons";
 import { toast } from "~/hooks/use-toast";
 import { VideoData, YouTubeCardOptions } from "~/types-schema/types";
 import { getTimeDifference } from "~/utils/client-helper";
-import { db } from "~/utils/db";
+import { indexedDB } from "~/utils/dexie";
 
 interface WatchLaterProps extends Pick<YouTubeCardOptions, "addWatchLater"> {
   videoData: VideoData;
@@ -107,19 +106,6 @@ function DescriptionSheet({
   );
 }
 
-const YoutubePlayer = (props: Pick<VideoData, "videoId" | "title">) => {
-  const { videoId, title } = props;
-
-  return (
-    <YouTubeEmbed
-      params="rel=0&playsinline=1&cc_load_policy=0"
-      videoid={videoId}
-      playlabel={title}
-      js-api
-    />
-  );
-};
-
 function RemoveVideo({
   removeVideo,
   videoId,
@@ -159,7 +145,8 @@ function CopyLink({ videoId }: Pick<VideoData, "videoId">) {
 }
 
 function WatchLater({ addWatchLater, videoData }: WatchLaterProps) {
-  const existingVideos = useLiveQuery(() => db["watch-later"].toArray()) ?? [];
+  const existingVideos =
+    useLiveQuery(() => indexedDB["watch-later"].toArray()) ?? [];
 
   async function addToWatchLater() {
     function checkIfExists(existingVideos: VideoData[], videoId: string) {
@@ -174,7 +161,7 @@ function WatchLater({ addWatchLater, videoData }: WatchLaterProps) {
     if (checkIfExists(existingVideos, videoData.videoId)) {
       toast({ title: "Video already added." });
     } else {
-      await db["watch-later"].add(videoData);
+      await indexedDB["watch-later"].add(videoData);
       toast({ title: `"${videoData.title}" added to watch later.` });
     }
   }
@@ -199,7 +186,7 @@ function RemoveWatchLater({
   videoId,
 }: Pick<YouTubeCardOptions, "removeWatchLater"> & Pick<VideoData, "videoId">) {
   async function removeFromWatchLater(videoId: string) {
-    await db["watch-later"].delete(videoId);
+    await indexedDB["watch-later"].delete(videoId);
     toast({ title: "Video has been removed from watch later." });
   }
 
@@ -226,5 +213,4 @@ export {
   RemoveVideo,
   RemoveWatchLater,
   WatchLater,
-  YoutubePlayer,
 };

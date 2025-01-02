@@ -30,6 +30,12 @@ export default function RootLayout({
 }>) {
   return (
     <html className="h-full" lang="en" suppressHydrationWarning>
+      <head>
+        <Script
+          src="https://www.youtube.com/iframe_api"
+          strategy="lazyOnload"
+        />
+      </head>
       <body className={`min-h-full overflow-y-auto ${inter.className}`}>
         <BackgroundPattern />
         <Providers>
@@ -47,10 +53,6 @@ export default function RootLayout({
       {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
         <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
       )}
-      <Script
-        src="https://www.youtube.com/iframe_api"
-        strategy="lazyOnload"
-      />
     </html>
   );
 }

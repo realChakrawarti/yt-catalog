@@ -170,6 +170,8 @@ function EditArchive({ params }: { params: ArchivePageParams }) {
           {isLoading ? (
             <Spinner className="size-8" />
           ) : archiveData?.data?.videos ? (
+            // TODO: Show the thumbnails instead of the showing the player?
+            // This will allow to remove the removeVideo functionality from the player
             <GridContainer>
               {archiveData?.data?.videos.map((item: any) => {
                 return (
