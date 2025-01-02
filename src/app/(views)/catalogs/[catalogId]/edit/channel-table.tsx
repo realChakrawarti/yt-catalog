@@ -1,5 +1,3 @@
-import { DeleteIcon } from "~/components/custom/icons";
-import JustTip from "~/components/custom/just-the-tip";
 import { Button } from "~/components/shadcn/button";
 import {
   Table,
@@ -10,6 +8,8 @@ import {
   TableHeader,
   TableRow,
 } from "~/components/shadcn/table";
+import { DeleteIcon } from "~/components/shared/icons";
+import JustTip from "~/components/shared/just-the-tip";
 
 function ChannelTable({ channels, handleDelete }: any) {
   return (

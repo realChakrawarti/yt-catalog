@@ -3,12 +3,13 @@ import "~/app/styles/globals.css";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Script from "next/script";
 
-import AppSidebar from "~/components/custom/app-sidebar";
-import BackgroundPattern from "~/components/custom/background-pattern";
-import Footer from "~/components/custom/footer";
-import Header from "~/components/custom/header";
 import { Toaster } from "~/components/shadcn/toaster";
+import AppSidebar from "~/components/shared/app-sidebar";
+import BackgroundPattern from "~/components/shared/background-pattern";
+import Footer from "~/components/shared/footer";
+import Header from "~/components/shared/header";
 
 import Providers from "./context";
 
@@ -29,6 +30,12 @@ export default function RootLayout({
 }>) {
   return (
     <html className="h-full" lang="en" suppressHydrationWarning>
+      <head>
+        <Script
+          src="https://www.youtube.com/iframe_api"
+          strategy="lazyOnload"
+        />
+      </head>
       <body className={`min-h-full overflow-y-auto ${inter.className}`}>
         <BackgroundPattern />
         <Providers>

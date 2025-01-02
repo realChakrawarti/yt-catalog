@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.4.0](https://github.com/realChakrawarti/YTCatalog/compare/v1.3.28...v1.4.0) (2025-01-02)
+
+### [1.3.28](https://github.com/realChakrawarti/YTCatalog/compare/v1.3.27...v1.3.28) (2025-01-02)
+
+
+### Features
+
+* intergrate `js-api` on YouTube IFrame on catalog and watch later, add history and explore page ([4f41352](https://github.com/realChakrawarti/YTCatalog/commit/4f41352fbb2ef6c49e1b96710e64a6c82d0f557f))
+
 ### [1.3.27](https://github.com/realChakrawarti/YTCatalog/compare/v1.3.26...v1.3.27) (2025-01-01)
 
 ### [1.3.26](https://github.com/realChakrawarti/YTCatalog/compare/v1.3.25...v1.3.26) (2024-12-27)

@@ -1,6 +1,13 @@
 "use client";
 
-import { Archive, BookOpen, Clock8, LayoutDashboard } from "lucide-react";
+import {
+  Archive,
+  BookOpen,
+  Clock8,
+  Compass,
+  History,
+  LayoutDashboard,
+} from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -13,11 +20,11 @@ import {
   SidebarContent,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  useSidebar,
 } from "../shadcn/sidebar";
 import AuthButton from "./auth-buttons";
 
@@ -36,6 +43,7 @@ function UserGroup() {
   const { user } = useAuth();
 
   const pathname = usePathname();
+  const { setOpenMobile } = useSidebar();
 
   const isDashboardActive = pathname.includes("dashboard");
 
@@ -68,6 +76,7 @@ function UserGroup() {
           <SidebarMenu>
             <SidebarMenuItem>
               <SidebarMenuButton
+                onClick={() => setOpenMobile(false)}
                 className="px-0"
                 asChild
                 isActive={isDashboardActive}
@@ -88,14 +97,33 @@ function UserGroup() {
 }
 
 function ExploreGroup() {
+  const { setOpenMobile } = useSidebar();
+
   const exploreItems = [
-    { icon: BookOpen, label: "Catalogs", path: "catalogs", shortPath: "/c/" },
-    { icon: Archive, label: "Archives", path: "archives", shortPath: "/a/" },
+    { icon: Compass, label: "Explore", path: "/explore", shortPath: "/e/" },
+    {
+      icon: BookOpen,
+      label: "Catalogs",
+      path: "/explore/catalogs",
+      shortPath: "/c/",
+    },
+    {
+      icon: Archive,
+      label: "Archives",
+      path: "/explore/archives",
+      shortPath: "/a/",
+    },
     {
       icon: Clock8,
       label: "Watch later",
-      path: "watch-later",
+      path: "/explore/watch-later",
       shortPath: "watch-later",
+    },
+    {
+      icon: History,
+      label: "History",
+      path: "/explore/history",
+      shortPath: "history",
     },
   ];
 
@@ -103,17 +131,20 @@ function ExploreGroup() {
 
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>Explore</SidebarGroupLabel>
       <SidebarGroupContent>
         <SidebarMenu>
           {exploreItems.map((item) => {
             const isActive =
-              pathname.includes(`explore/${item.path}`) ||
-              pathname.includes(item.shortPath);
+              pathname === item.path || pathname.includes(item.shortPath);
             return (
               <SidebarMenuItem key={item.label}>
-                <SidebarMenuButton className="px-0" asChild isActive={isActive}>
-                  <Link href={`/explore/${item.path}`}>
+                <SidebarMenuButton
+                  onClick={() => setOpenMobile(false)}
+                  className="px-0"
+                  asChild
+                  isActive={isActive}
+                >
+                  <Link href={item.path}>
                     <Button
                       variant="ghost"
                       className="w-full justify-start px-2"

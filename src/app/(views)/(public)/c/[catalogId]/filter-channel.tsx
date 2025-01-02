@@ -3,8 +3,6 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 
-import { FilterIcon } from "~/components/custom/icons";
-import JustTip from "~/components/custom/just-the-tip";
 import {
   Avatar,
   AvatarFallback,
@@ -19,6 +17,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "~/components/shadcn/sheet";
+import { FilterIcon } from "~/components/shared/icons";
+import JustTip from "~/components/shared/just-the-tip";
 
 export default function FilterChannel({
   activeChannels,

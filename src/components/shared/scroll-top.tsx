@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-import { ArrowUpIcon } from "~/components/custom/icons";
+import { ArrowUpIcon } from "~/components/shared/icons";
 import { cn } from "~/utils/shadcn-helper";
 
 import { Button } from "../shadcn/button";

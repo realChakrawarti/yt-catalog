@@ -1,8 +1,6 @@
 import { Check, Clock, Copy, Edit, Trash2 } from "lucide-react";
 import { ReactNode, useState } from "react";
 
-import { WarningIcon } from "~/components/custom/icons";
-import JustTip from "~/components/custom/just-the-tip";
 import { Button } from "~/components/shadcn/button";
 import {
   Card,
@@ -21,6 +19,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "~/components/shadcn/dialog";
+import { WarningIcon } from "~/components/shared/icons";
+import JustTip from "~/components/shared/just-the-tip";
 import { toast } from "~/hooks/use-toast";
 
 function CopyButton({ id, type }: any) {

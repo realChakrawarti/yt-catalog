@@ -1,6 +1,6 @@
-import FAQSection from "~/components/custom/faq-section";
-import FeatureList from "~/components/custom/feature-list";
-import HeroSection from "~/components/custom/hero-section";
+import FAQSection from "~/components/shared/faq-section";
+import FeatureList from "~/components/shared/feature-list";
+import HeroSection from "~/components/shared/hero-section";
 
 export default function LoginPage() {
   return (

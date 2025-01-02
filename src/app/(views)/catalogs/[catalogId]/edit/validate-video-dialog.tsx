@@ -1,6 +1,5 @@
 import { useState } from "react";
 
-import { ListPlusIcon } from "~/components/custom/icons";
 import { Button } from "~/components/shadcn/button";
 import {
   Dialog,
@@ -10,6 +9,7 @@ import {
   DialogTrigger,
 } from "~/components/shadcn/dialog";
 import { Input } from "~/components/shadcn/input";
+import { ListPlusIcon } from "~/components/shared/icons";
 import { toast } from "~/hooks/use-toast";
 import fetchApi from "~/utils/fetch";
 

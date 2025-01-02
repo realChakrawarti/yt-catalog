@@ -3,18 +3,19 @@
 import { useLiveQuery } from "dexie-react-hooks";
 import { useEffect, useState } from "react";
 
-import { StarIcon } from "~/components/custom/icons";
-import JustTip from "~/components/custom/just-the-tip";
 import { Button } from "~/components/shadcn/button";
+import { StarIcon } from "~/components/shared/icons";
+import JustTip from "~/components/shared/just-the-tip";
 import { toast } from "~/hooks/use-toast";
-import { db } from "~/utils/db";
+import { indexedDB } from "~/utils/dexie";
 
 export const AddToFavorites = ({
   catalogId,
   catalogTitle,
   catalogDescription,
 }: any) => {
-  const favoriteCatalogs = useLiveQuery(() => db["favorites"].toArray(), []) ?? []
+  const favoriteCatalogs =
+    useLiveQuery(() => indexedDB["favorites"].toArray(), []) ?? [];
   const [catalogExists, setCatalogExists] = useState<boolean>(false);
 
   useEffect(() => {
@@ -36,7 +37,7 @@ export const AddToFavorites = ({
     if (catalogExists) {
       toast({ title: "Catalog removed from favorites." });
 
-      await db["favorites"].delete(catalogId);
+      await indexedDB["favorites"].delete(catalogId);
     }
     // Add the catalogId to favorites
     else {
@@ -45,7 +46,7 @@ export const AddToFavorites = ({
         title: catalogTitle,
         description: catalogDescription,
       };
-      await db["favorites"].add(favCatalog);
+      await indexedDB["favorites"].add(favCatalog);
       toast({ title: "Catalog added to favorites." });
     }
   };
