@@ -4,10 +4,10 @@ import dynamic from "next/dynamic";
 import { Metadata } from "next/types";
 import { ReactNode } from "react";
 
-import GridContainer from "~/components/custom/grid-container";
-import { ClockIcon, MonthIcon, WeekIcon } from "~/components/custom/icons";
-import ScrollTop from "~/components/custom/scroll-top";
-import YouTubeCard from "~/components/custom/youtube-card";
+import GridContainer from "~/components/shared/grid-container";
+import { ClockIcon, MonthIcon, WeekIcon } from "~/components/shared/icons";
+import ScrollTop from "~/components/shared/scroll-top";
+import YouTubeCard from "~/components/shared/youtube/card";
 import fetchApi from "~/utils/fetch";
 
 import { AddToFavorites } from "./add-to-fav";
@@ -116,10 +116,13 @@ export default async function CatalogHandle({
         <VideoSection icon={ClockIcon} label="Today">
           {today.map((video) => (
             <YouTubeCard
-              addWatchLater
-              hideAvatar={Boolean(channelId)}
               key={video.videoId}
-              {...video}
+              options={{
+                enableJsApi: true,
+                addWatchLater: true,
+                hideAvatar: Boolean(channelId),
+              }}
+              video={video}
             />
           ))}
         </VideoSection>
@@ -129,10 +132,13 @@ export default async function CatalogHandle({
         <VideoSection icon={WeekIcon} label="This week">
           {week.map((video) => (
             <YouTubeCard
-              addWatchLater
-              hideAvatar={Boolean(channelId)}
               key={video.videoId}
-              {...video}
+              options={{
+                enableJsApi: true,
+                addWatchLater: true,
+                hideAvatar: Boolean(channelId),
+              }}
+              video={video}
             />
           ))}
         </VideoSection>
@@ -142,10 +148,13 @@ export default async function CatalogHandle({
         <VideoSection icon={MonthIcon} label="This month">
           {month.map((video) => (
             <YouTubeCard
-              addWatchLater
-              hideAvatar={Boolean(channelId)}
               key={video.videoId}
-              {...video}
+              options={{
+                enableJsApi: true,
+                addWatchLater: true,
+                hideAvatar: Boolean(channelId),
+              }}
+              video={video}
             />
           ))}
         </VideoSection>

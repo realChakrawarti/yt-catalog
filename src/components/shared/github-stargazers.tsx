@@ -2,7 +2,7 @@
 
 import useSWR from "swr";
 
-import { StarIcon } from "~/components/custom/icons";
+import { StarIcon } from "~/components/shared/icons";
 
 import { Skeleton } from "../shadcn/skeleton";
 

@@ -4,13 +4,13 @@ import { useEffect, useState } from "react";
 import useSWR from "swr";
 
 import withAuth from "~/app/auth/with-auth-hoc";
-import GridContainer from "~/components/custom/grid-container";
-import Spinner from "~/components/custom/spinner";
-import YouTubeCard from "~/components/custom/youtube-card";
 import { Button } from "~/components/shadcn/button";
 import { Input } from "~/components/shadcn/input";
 import { Label } from "~/components/shadcn/label";
 import { Separator } from "~/components/shadcn/separator";
+import GridContainer from "~/components/shared/grid-container";
+import Spinner from "~/components/shared/spinner";
+import YouTubeCard from "~/components/shared/youtube/card";
 import { toast } from "~/hooks/use-toast";
 import { TitleDescriptionSchema as ArchiveSchema } from "~/types-schema/schemas";
 import type { TitleDescriptionType as ArchiveMeta } from "~/types-schema/types";
@@ -170,13 +170,17 @@ function EditArchive({ params }: { params: ArchivePageParams }) {
           {isLoading ? (
             <Spinner className="size-8" />
           ) : archiveData?.data?.videos ? (
+            // TODO: Show the thumbnails instead of the showing the player?
+            // This will allow to remove the removeVideo functionality from the player
             <GridContainer>
               {archiveData?.data?.videos.map((item: any) => {
                 return (
                   <YouTubeCard
-                    removeVideo={removeVideo}
                     key={item.id}
-                    {...item}
+                    options={{
+                      removeVideo: removeVideo,
+                    }}
+                    video={item}
                   />
                 );
               })}

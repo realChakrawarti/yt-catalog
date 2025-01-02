@@ -4,12 +4,12 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
 
-import { LinkIcon } from "~/components/custom/icons";
-import JustTip from "~/components/custom/just-the-tip";
-import Spinner from "~/components/custom/spinner";
 import { Badge } from "~/components/shadcn/badge";
 import { Button } from "~/components/shadcn/button";
 import { Separator } from "~/components/shadcn/separator";
+import { LinkIcon } from "~/components/shared/icons";
+import JustTip from "~/components/shared/just-the-tip";
+import Spinner from "~/components/shared/spinner";
 import { useToast } from "~/hooks/use-toast";
 import fetchApi from "~/utils/fetch";
 

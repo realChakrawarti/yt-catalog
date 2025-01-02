@@ -1,4 +1,4 @@
-import Spinner from "~/components/custom/spinner";
+import Spinner from "~/components/shared/spinner";
 
 export default function ArchivesLoading() {
   return (

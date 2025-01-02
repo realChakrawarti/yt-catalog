@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { ChevronDownIcon } from "~/components/custom/icons";
+import { ChevronDownIcon } from "~/components/shared/icons";
 import { cn } from "~/utils/shadcn-helper";
 
 interface FAQItem {
