@@ -6,6 +6,7 @@ import {
   getDoc,
   getDocs,
   limit,
+  orderBy,
   query,
   setDoc,
   updateDoc,
@@ -131,9 +132,16 @@ async function getPlaylistItems(channel: any) {
       { cache: "no-store" }
     ).then((data) => data.json());
 
+    const currentTime = Date.now();
     const playlistVideoItems = result.items;
 
     for (const item of playlistVideoItems) {
+      // Don't return video older than 30 days (ONE_MONTH)
+      const videoPublished = item.contentDetails.videoPublishedAt;
+      if (currentTime - new Date(videoPublished).getTime() > ONE_MONTH) {
+        continue;
+      }
+
       playlistItemData.push({
         title: item.snippet.title,
         channelId: item.snippet.channelId,
@@ -219,6 +227,7 @@ export async function getPageviewByCatalogId(
 
 export async function getVideosByCatalogId(catalogId: string) {
   let videoList: VideoMetadata[] = [];
+  let totalVideos: number = 0;
 
   let videoFilterData: videoListData = {
     day: [],
@@ -278,9 +287,8 @@ export async function getVideosByCatalogId(catalogId: string) {
         videoFilterData.day.push(video);
       } else if (currentTime - videoPublishedAt < ONE_WEEK) {
         videoFilterData.week.push(video);
-      } else if (currentTime - videoPublishedAt < ONE_MONTH) {
-        videoFilterData.month.push(video);
       } else {
+        videoFilterData.month.push(video);
         continue;
       }
     }
@@ -291,6 +299,7 @@ export async function getVideosByCatalogId(catalogId: string) {
         data: {
           videos: videoFilterData,
           updatedAt: recentUpdate,
+          totalVideos: videoList.length,
         },
         pageviews: pageviews,
       },
@@ -301,6 +310,7 @@ export async function getVideosByCatalogId(catalogId: string) {
     console.log(`Cached invalidated /c/${catalogId}`);
   } else {
     videoFilterData = catalogSnapData.data.videos;
+    totalVideos = catalogSnapData.data.totalVideos;
     recentUpdate = lastUpdated;
     console.log(
       `Returning cached data, next update on ${new Date(
@@ -315,6 +325,7 @@ export async function getVideosByCatalogId(catalogId: string) {
     videos: videoFilterData,
     nextUpdate: new Date(recentUpdate.getTime() + FOUR_HOURS).toUTCString(),
     pageviews: catalogSnapData.pageviews ?? 0,
+    totalVideos: totalVideos,
   };
 }
 
@@ -405,9 +416,11 @@ export async function getValidCatalogIds() {
   let catalogListData: CatalogData[] = [];
   const catalogsCollectionRef = collection(db, COLLECTION.catalogs);
 
+  // Filter the catalog, where totalVideos is greater than 0 and pageviews are sorted 'desc'
   const validCatalogQuery = query(
     catalogsCollectionRef,
-    where("data.videos", "!=", false),
+    where("data.totalVideos", ">", 0),
+    orderBy("pageviews", "desc"),
     limit(50)
   );
 

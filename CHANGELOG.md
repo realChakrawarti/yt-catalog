@@ -6,7 +6,6 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### [1.3.28](https://github.com/realChakrawarti/YTCatalog/compare/v1.3.27...v1.3.28) (2025-01-02)
 
-
 ### Features
 
 * intergrate `js-api` on YouTube IFrame on catalog and watch later, add history and explore page ([4f41352](https://github.com/realChakrawarti/YTCatalog/commit/4f41352fbb2ef6c49e1b96710e64a6c82d0f557f))
