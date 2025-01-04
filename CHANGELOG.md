@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.3](https://github.com/realChakrawarti/yt-catalog/compare/v1.4.1...v1.4.3) (2025-01-04)
+
+
+### Bug Fixes
+
+* reset archive page cache on update ([b8b1293](https://github.com/realChakrawarti/yt-catalog/commit/b8b12933afff730db62e0d2fe39f9431b4c7e343))
+* reset archive page cache on video removal & explore page archive deletion ([1828c38](https://github.com/realChakrawarti/yt-catalog/commit/1828c380c5b5b76c994f19071574494073143d06))
+
 ### [1.4.2](https://github.com/realChakrawarti/yt-catalog/compare/v1.4.1...v1.4.2) (2025-01-04)
 
 
