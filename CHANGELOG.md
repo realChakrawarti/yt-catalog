@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.2](https://github.com/realChakrawarti/yt-catalog/compare/v1.4.1...v1.4.2) (2025-01-04)
+
+
+### Bug Fixes
+
+* reset archive page cache on update ([a43a2d2](https://github.com/realChakrawarti/yt-catalog/commit/a43a2d270b4e17f01db1fd0a5d5e6171ddb8417c))
+
+### [1.4.1](https://github.com/realChakrawarti/yt-catalog/compare/v1.4.0...v1.4.1) (2025-01-03)
+
+
+### Features
+
+* add `totalVideos` to filter catalogs by desc pageviews and update seed data ([744fb1b](https://github.com/realChakrawarti/yt-catalog/commit/744fb1ba0ace419dea7ef17bead2b65048fee812))
+
 ## [1.4.0](https://github.com/realChakrawarti/YTCatalog/compare/v1.3.28...v1.4.0) (2025-01-02)
 
 ### [1.3.28](https://github.com/realChakrawarti/YTCatalog/compare/v1.3.27...v1.3.28) (2025-01-02)
