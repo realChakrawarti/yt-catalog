@@ -32,6 +32,7 @@ export async function DELETE(_request: NextRequest, ctx: ContextParams) {
   await batch.commit();
 
   revalidatePath("/explore");
+  revalidatePath("/explore/archives");
 
   return NxResponse.success("Archive deleted successfully.", {}, 200);
 }
