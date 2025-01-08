@@ -16,7 +16,6 @@ export default function YouTubeCard(props: YouTubeCardProps) {
 
   const {
     enableJsApi = false,
-    removeVideo = undefined,
     hideAvatar = false,
     addWatchLater = false,
     removeWatchLater = false,
@@ -31,7 +30,6 @@ export default function YouTubeCard(props: YouTubeCardProps) {
         </div>
         <ShowCardOption
           video={video}
-          removeVideo={removeVideo}
           addWatchLater={addWatchLater}
           removeWatchLater={removeWatchLater}
         />

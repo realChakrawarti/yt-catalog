@@ -10,13 +10,13 @@ import { Label } from "~/components/shadcn/label";
 import { Separator } from "~/components/shadcn/separator";
 import GridContainer from "~/components/shared/grid-container";
 import Spinner from "~/components/shared/spinner";
-import YouTubeCard from "~/components/shared/youtube/card";
 import { toast } from "~/hooks/use-toast";
 import { TitleDescriptionSchema as ArchiveSchema } from "~/types-schema/schemas";
 import type { TitleDescriptionType as ArchiveMeta } from "~/types-schema/types";
 import fetchApi from "~/utils/fetch";
 
 import AddVideoDialog from "./add-video-dialog";
+import VideoCard from "./video-card";
 
 type ArchivePageParams = {
   archiveId: string;
@@ -111,6 +111,8 @@ function EditArchive({ params }: { params: ArchivePageParams }) {
     toast({ title: result.message });
   }
 
+  console.log(">>>images", archiveData?.data);
+
   return (
     <div className="p-3">
       <div className="flex items-center justify-between">
@@ -170,17 +172,13 @@ function EditArchive({ params }: { params: ArchivePageParams }) {
           {isLoading ? (
             <Spinner className="size-8" />
           ) : archiveData?.data?.videos ? (
-            // TODO: Show the thumbnails instead of the showing the player?
-            // This will allow to remove the removeVideo functionality from the player
             <GridContainer>
               {archiveData?.data?.videos.map((item: any) => {
                 return (
-                  <YouTubeCard
-                    key={item.id}
-                    options={{
-                      removeVideo: removeVideo,
-                    }}
+                  <VideoCard
+                    key={item.videoId}
                     video={item}
+                    removeVideo={removeVideo}
                   />
                 );
               })}

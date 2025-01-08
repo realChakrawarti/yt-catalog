@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 import GridContainer from "~/components/shared/grid-container";
-import YouTubeCard from "~/components/shared/youtube/card";
+import YouTubeCard from "~/components/shared/youtube/youtube-card";
 import type { History } from "~/types-schema/types";
 import { indexedDB } from "~/utils/dexie";
 export default function HistoryPage() {

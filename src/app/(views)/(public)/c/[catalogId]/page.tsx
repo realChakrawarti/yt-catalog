@@ -7,7 +7,7 @@ import { ReactNode } from "react";
 import GridContainer from "~/components/shared/grid-container";
 import { ClockIcon, MonthIcon, WeekIcon } from "~/components/shared/icons";
 import ScrollTop from "~/components/shared/scroll-top";
-import YouTubeCard from "~/components/shared/youtube/card";
+import YouTubeCard from "~/components/shared/youtube/youtube-card";
 import fetchApi from "~/utils/fetch";
 
 import { AddToFavorites } from "./add-to-fav";
