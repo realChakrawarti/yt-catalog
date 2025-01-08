@@ -46,19 +46,25 @@ function ChannelMeta({
           <AvatarFallback>{channelTitle}</AvatarFallback>
         </Avatar>
       ) : null}
-      <div className="flex-1 space-y-1">
-        <h3 className="font-semibold leading-tight text-sm line-clamp-2 pr-6">
+      <div
+        className={`flex-1 space-y-1 ${
+          hideAvatar ? "max-w-[100%]" : "max-w-[calc(100%-32px)]"
+        }`}
+      >
+        <h3 className="font-semibold leading-tight text-sm line-clamp-2 pr-6 text-wrap">
           <abbr className="no-underline cursor-pointer" title={title}>
             {title}
           </abbr>
         </h3>
         <div className="flex items-center gap-2 text-xs text-muted-foreground">
           <a
-            className="hover:underline text-nowrap"
+            className="hover:underline text-nowrap overflow-hidden"
             href={`https://youtube.com/channel/${channelId}`}
             target="_blank"
           >
-            {channelTitle}
+            <abbr className="no-underline cursor-pointer" title={channelTitle}>
+              {channelTitle}
+            </abbr>
           </a>
           <b>•</b>
           <span className="text-nowrap">{timeElapsed}</span>

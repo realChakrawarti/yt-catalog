@@ -54,7 +54,13 @@ export default async function ArchivePage({ params }: PageProps) {
         <section className="px-0 md:px-3">
           <GridContainer>
             {archiveData.videos.map((item: any) => {
-              return <YouTubeCard key={item.id} video={item} />;
+              return (
+                <YouTubeCard
+                  key={item.id}
+                  video={item}
+                  options={{ hideAvatar: true }}
+                />
+              );
             })}
           </GridContainer>
         </section>
