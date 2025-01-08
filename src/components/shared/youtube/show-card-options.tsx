@@ -1,5 +1,7 @@
 "use client";
 
+import { useState } from "react";
+
 import { Button } from "~/components/shadcn/button";
 import {
   Popover,
@@ -9,24 +11,19 @@ import {
 import { VideoData, YouTubeCardOptions } from "~/types-schema/types";
 
 import { ThreeDotIcon } from "../icons";
-import {
-  CopyLink,
-  RemoveVideo,
-  RemoveWatchLater,
-  WatchLater,
-} from "./components";
+import { CopyLink, RemoveWatchLater, WatchLater } from "./components";
 
 export default function ShowCardOption({
   addWatchLater,
   removeWatchLater,
-  removeVideo,
   video,
-}: Pick<
-  YouTubeCardOptions,
-  "addWatchLater" | "removeWatchLater" | "removeVideo"
-> & { video: VideoData }) {
+}: Pick<YouTubeCardOptions, "addWatchLater" | "removeWatchLater"> & {
+  video: VideoData;
+}) {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <Popover>
+    <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
         <div className="relative">
           <Button
@@ -40,11 +37,11 @@ export default function ShowCardOption({
         </div>
       </PopoverTrigger>
       <PopoverContent
+        onClick={() => setIsOpen(false)}
         side="top"
         align="end"
         className="w-[200px] border-none rounded-lg p-1"
       >
-        <RemoveVideo videoId={video.videoId} removeVideo={removeVideo} />
         <CopyLink videoId={video.videoId} />
         <WatchLater addWatchLater={addWatchLater} videoData={video} />
         <RemoveWatchLater
