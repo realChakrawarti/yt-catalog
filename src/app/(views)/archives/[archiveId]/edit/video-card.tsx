@@ -27,7 +27,12 @@ function RemoveVideo({
   return null;
 }
 
-export default function VideoCard({ video, removeVideo }: any) {
+interface VideoCardProps {
+  video: VideoData & { thumbnail: string };
+  removeVideo: (_videoId: string) => Promise<void>;
+}
+
+export default function VideoCard({ video, removeVideo }: VideoCardProps) {
   const { videoId, title, thumbnail } = video;
 
   return (

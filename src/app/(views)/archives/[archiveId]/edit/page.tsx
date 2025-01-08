@@ -106,12 +106,10 @@ function EditArchive({ params }: { params: ArchivePageParams }) {
     });
 
     if (result.success) {
-      return revalidateArchive();
+      revalidateArchive();
     }
     toast({ title: result.message });
   }
-
-  console.log(">>>images", archiveData?.data);
 
   return (
     <div className="p-3">
