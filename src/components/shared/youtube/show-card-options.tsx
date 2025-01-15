@@ -11,7 +11,12 @@ import {
 import { VideoData, YouTubeCardOptions } from "~/types-schema/types";
 
 import { ThreeDotIcon } from "../icons";
-import { CopyLink, RemoveWatchLater, WatchLater } from "./components";
+import {
+  CopyLink,
+  DownloadVideo,
+  RemoveWatchLater,
+  WatchLater,
+} from "./components";
 
 export default function ShowCardOption({
   addWatchLater,
@@ -48,6 +53,7 @@ export default function ShowCardOption({
           videoId={video.videoId}
           removeWatchLater={removeWatchLater}
         />
+        <DownloadVideo videoId={video.videoId} />
       </PopoverContent>
     </Popover>
   );
