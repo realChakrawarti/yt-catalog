@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.4](https://github.com/realChakrawarti/yt-catalog/compare/v1.4.3...v1.4.4) (2025-01-15)
+
+
+### Bug Fixes
+
+* channel title text overflow ([782098e](https://github.com/realChakrawarti/yt-catalog/commit/782098ea016a908dbdff088fef5c5cd462a3683e))
+* remove console.log & add types for VideoCard component ([81e778f](https://github.com/realChakrawarti/yt-catalog/commit/81e778fa4459d22c8a403b27e76ba2d380fc8c20))
+
 ### [1.4.3](https://github.com/realChakrawarti/yt-catalog/compare/v1.4.1...v1.4.3) (2025-01-04)
 
 
