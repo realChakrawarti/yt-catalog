@@ -172,7 +172,7 @@ type VideoSectionProps = {
 };
 
 function VideoSection({ label, children, icon: Icon }: VideoSectionProps) {
-  const id = label.replace(" ", "-").toLowerCase();
+  const id = label.replaceAll(" ", "-").toLowerCase();
   return (
     <section className="px-0 md:px-3 space-y-4">
       <div className="h-6 px-2 md:px-0 flex items-center gap-2 text-primary">

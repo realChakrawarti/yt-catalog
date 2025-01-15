@@ -132,6 +132,8 @@ export async function addArchiveVideo(
 
   const batch = writeBatch(db);
 
+  // Since both read and writes happening, consider using `runTransaction`
+  // Refer: https://firebase.google.com/docs/firestore/manage-data/transactions
   try {
     const userArchiveSnap = await getDoc(userArchiveRef);
     const userArchiveData = userArchiveSnap.data();

@@ -1,5 +1,7 @@
 import { ReactNode } from "react";
 
+import { cn } from "~/utils/shadcn-helper";
+
 interface OverlayTipProps {
   children: ReactNode;
   className?: string;
@@ -12,7 +14,7 @@ export default function OverlayTip({
   id,
 }: OverlayTipProps) {
   return (
-    <div id={id} className={`bg-accent/70 backdrop-blur-sm ${className}`}>
+    <div id={id} className={cn("bg-accent/70 backdrop-blur-sm", className)}>
       {children}
     </div>
   );
