@@ -1,6 +1,6 @@
 import { useLiveQuery } from "dexie-react-hooks";
 import Linkify from "linkify-react";
-import { Clock8 } from "lucide-react";
+import { Clock8, HardDriveDownloadIcon } from "lucide-react";
 import { Inter } from "next/font/google";
 
 import {
@@ -194,10 +194,48 @@ function RemoveWatchLater({
   return null;
 }
 
+function DownloadVideo({ videoId }: { videoId: string }) {
+  function handleDownload(id: string) {
+    const videoLink = `https://www.youtube.com/watch?v=${id}`;
+
+    navigator.clipboard.writeText(videoLink);
+    toast({
+      title: "Video link has copied to the clipboard.",
+      description: (
+        <p>
+          Opening{" "}
+          <a
+            className="cursor-pointer text-[hsl(var(--primary))] hover:text-[hsl(var(--primary))]/70"
+            href="https://cobalt.tools"
+          >
+            cobalt.tools
+          </a>{" "}
+          in a new tab. Please paste the video link.
+        </p>
+      ),
+    });
+    setTimeout(() => {
+      window.open("https://cobalt.tools", "_blank");
+    }, 1500);
+  }
+
+  return (
+    <Button
+      variant="ghost"
+      className="flex gap-2 justify-start hover:bg-accent rounded-lg p-2 text-xs cursor-pointer w-full"
+      onClick={() => handleDownload(videoId)}
+    >
+      <HardDriveDownloadIcon className="h-4 w-4 mr-2" />
+      Download via Cobalt
+    </Button>
+  );
+}
+
 export {
   ChannelMeta,
   CopyLink,
   DescriptionSheet,
+  DownloadVideo,
   RemoveWatchLater,
   WatchLater,
 };
