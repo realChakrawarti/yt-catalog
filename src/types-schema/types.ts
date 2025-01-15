@@ -2,6 +2,16 @@ import { z } from "zod";
 
 import { TitleDescriptionSchema } from "./schemas";
 
+export type ValidMetadata = {
+  totalVideos: number;
+  thumbnails: string[];
+  id: string;
+  title: string;
+  description: string;
+  updatedAt: string;
+  pageviews: number;
+};
+
 type VideoData = {
   videoId: string;
   title: string;

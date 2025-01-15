@@ -1,10 +1,16 @@
-import { EyeIcon } from "lucide-react";
+import { EyeIcon, VideoIcon } from "lucide-react";
 import Link from "next/link";
 
 import ThumbnailCarousel from "./carousel-thumbnails";
 import JustTip from "./just-the-tip";
+import OverlayTip from "./overlay-tip";
 
-export default function DetailsCard({ pageData, path }: any) {
+interface DetailsCardProps {
+  pageData: any;
+  path: string;
+}
+
+export default function DetailsCard({ pageData, path }: DetailsCardProps) {
   return (
     <Link
       key={pageData?.id}
@@ -15,6 +21,7 @@ export default function DetailsCard({ pageData, path }: any) {
         <ThumbnailCarousel thumbnails={pageData.thumbnails} />
       </section>
       <Pageview pageviews={pageData.pageviews} />
+      <TotalVideos totalVideos={pageData?.totalVideos ?? 0} />
 
       <div className="absolute inset-0 aspect-video bg-gradient-to-b from-transparent to-black/90"></div>
       <div className="p-4">
@@ -25,17 +32,31 @@ export default function DetailsCard({ pageData, path }: any) {
   );
 }
 
+function TotalVideos({ totalVideos }: { totalVideos: number }) {
+  return (
+    <JustTip label="Total videos">
+      <OverlayTip
+        id="pageviews"
+        className="flex gap-1 absolute top-2 left-2 items-center p-1 rounded-md z-20"
+      >
+        <p className="text-xs tracking-widest">{totalVideos}</p>
+        <VideoIcon className="size-3" />
+      </OverlayTip>
+    </JustTip>
+  );
+}
+
 function Pageview({ pageviews }: { pageviews: number }) {
   if (pageviews !== undefined) {
     return (
       <JustTip label="Unique views">
-        <div
+        <OverlayTip
           id="pageviews"
-          className="flex gap-1 absolute top-2 right-2 items-center p-1 bg-accent/70 rounded-md z-20"
+          className="flex gap-1 absolute top-2 right-2 items-center p-1 rounded-md z-20"
         >
-          <p className="text-xs">{pageviews}</p>
+          <p className="text-xs tracking-widest">{pageviews}</p>
           <EyeIcon className="size-3" />
-        </div>
+        </OverlayTip>
       </JustTip>
     );
   }

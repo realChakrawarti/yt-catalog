@@ -15,6 +15,7 @@ import {
 } from "firebase/firestore";
 import { unstable_noStore } from "next/cache";
 
+import { ValidMetadata } from "~/types-schema/types";
 import { db } from "~/utils/firebase";
 import {
   COLLECTION,
@@ -131,19 +132,31 @@ export async function addArchiveVideo(
 
   const batch = writeBatch(db);
 
-  batch.update(archiveRef, {
-    "data.updatedAt": new Date(),
-    "data.videos": arrayUnion(videoData),
-  });
+  try {
+    const userArchiveSnap = await getDoc(userArchiveRef);
+    const userArchiveData = userArchiveSnap.data();
 
-  batch.update(userArchiveRef, {
-    updatedAt: new Date(),
-    videoIds: arrayUnion(videoData.videoId),
-  });
+    const currentTotalVideos = userArchiveData?.videoIds?.length || 0;
+    batch.update(archiveRef, {
+      "data.updatedAt": new Date(),
+      "data.videos": arrayUnion(videoData),
+      "data.totalVideos": currentTotalVideos + 1,
+    });
 
-  batch.commit();
+    batch.update(userArchiveRef, {
+      updatedAt: new Date(),
+      videoIds: arrayUnion(videoData.videoId),
+    });
 
-  return "Video added successfully.";
+    batch.commit();
+
+    return "Video added successfully.";
+  } catch (err) {
+    if (err instanceof Error) {
+      return err.message;
+    }
+    return "Unable to add video to archive.";
+  }
 }
 
 export async function updateArchiveMeta(archiveId: string, archiveMeta: any) {
@@ -176,6 +189,10 @@ export async function removeVideoFromArchive(
   const batch = writeBatch(db);
 
   try {
+    const userArchiveSnap = await getDoc(userArchiveRef);
+    const userArchiveData = userArchiveSnap.data();
+
+    const currentTotalVideos = userArchiveData?.videoIds?.length || 0;
     batch.update(userArchiveRef, {
       updatedAt: new Date(),
       videoIds: arrayRemove(payload.videoId),
@@ -184,6 +201,7 @@ export async function removeVideoFromArchive(
     batch.update(archiveRef, {
       "data.updatedAt": new Date(),
       "data.videos": arrayRemove(payload),
+      "data.totalVideos": Math.max(0, currentTotalVideos - 1),
     });
 
     batch.commit();
@@ -230,12 +248,13 @@ export async function getValidArchiveIds() {
     archiveIds.map(async (archiveId) => {
       const archiveData = await getArchiveMetadata(archiveId);
       if (archiveData) {
-        const metaData = {
+        const metaData: Omit<ValidMetadata, "pageviews"> = {
           thumbnails: getVideoThumbnails(archiveData),
           title: archiveData?.title,
           description: archiveData?.description,
           id: archiveId,
           updatedAt: archiveData?.data.updatedAt.toDate(),
+          totalVideos: archiveData?.data?.totalVideos,
         };
 
         archiveListData.push(metaData);

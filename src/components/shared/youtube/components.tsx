@@ -23,6 +23,8 @@ import { VideoData, YouTubeCardOptions } from "~/types-schema/types";
 import { getTimeDifference } from "~/utils/client-helper";
 import { indexedDB } from "~/utils/dexie";
 
+import OverlayTip from "../overlay-tip";
+
 interface WatchLaterProps extends Pick<YouTubeCardOptions, "addWatchLater"> {
   videoData: VideoData;
 }
@@ -81,12 +83,13 @@ function DescriptionSheet({
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button
-          variant="ghost"
-          size="icon"
-          className="absolute top-2 left-2 h-8 w-8 bg-black/50 hover:bg-black/70"
-        >
-          <InfoIcon className="h-4 w-4 text-white" />
+        <Button className="absolute top-2 left-2" variant="ghost" size="icon">
+          <OverlayTip
+            className="h-8 w-8 flex place-items-center rounded-md"
+            id="description"
+          >
+            <InfoIcon className="h-4 w-4 flex-grow" />
+          </OverlayTip>
         </Button>
       </SheetTrigger>
       <SheetContent className="overflow-y-auto w-full md:max-w-[450px]">
