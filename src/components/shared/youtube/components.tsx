@@ -46,19 +46,25 @@ function ChannelMeta({
           <AvatarFallback>{channelTitle}</AvatarFallback>
         </Avatar>
       ) : null}
-      <div className="flex-1 space-y-1">
-        <h3 className="font-semibold leading-tight text-sm line-clamp-2 pr-6">
-          <abbr className="no-underline cursor-pointer" title={title}>
+      <div
+        className={`flex-1 space-y-1 ${
+          hideAvatar ? "max-w-[100%]" : "max-w-[calc(100%-32px)]"
+        }`}
+      >
+        <h3 className="font-semibold leading-tight text-sm line-clamp-2 pr-6 text-wrap">
+          <abbr className="no-underline cursor-help" title={title}>
             {title}
           </abbr>
         </h3>
         <div className="flex items-center gap-2 text-xs text-muted-foreground">
           <a
-            className="hover:underline text-nowrap"
+            className="hover:underline text-nowrap overflow-hidden"
             href={`https://youtube.com/channel/${channelId}`}
             target="_blank"
           >
-            {channelTitle}
+            <abbr className="no-underline cursor-pointer" title={channelTitle}>
+              {channelTitle}
+            </abbr>
           </a>
           <b>•</b>
           <span className="text-nowrap">{timeElapsed}</span>
@@ -104,24 +110,6 @@ function DescriptionSheet({
       </SheetContent>
     </Sheet>
   );
-}
-
-function RemoveVideo({
-  removeVideo,
-  videoId,
-}: Pick<VideoData, "videoId"> & Pick<YouTubeCardOptions, "removeVideo">) {
-  if (typeof removeVideo === "function")
-    return (
-      <Button
-        variant="ghost"
-        className="flex gap-2 justify-start hover:bg-accent rounded-lg p-2 text-xs cursor-pointer w-full"
-        onClick={() => removeVideo(videoId)}
-      >
-        <DeleteIcon className="h-4 w-4 mr-2" />
-        Remove video
-      </Button>
-    );
-  return null;
 }
 
 function CopyLink({ videoId }: Pick<VideoData, "videoId">) {
@@ -210,7 +198,6 @@ export {
   ChannelMeta,
   CopyLink,
   DescriptionSheet,
-  RemoveVideo,
   RemoveWatchLater,
   WatchLater,
 };

@@ -1,7 +1,7 @@
 import { Metadata } from "next/types";
 
 import GridContainer from "~/components/shared/grid-container";
-import YouTubeCard from "~/components/shared/youtube/card";
+import YouTubeCard from "~/components/shared/youtube/youtube-card";
 import fetchApi from "~/utils/fetch";
 
 type PageProps = {
@@ -54,7 +54,13 @@ export default async function ArchivePage({ params }: PageProps) {
         <section className="px-0 md:px-3">
           <GridContainer>
             {archiveData.videos.map((item: any) => {
-              return <YouTubeCard key={item.id} video={item} />;
+              return (
+                <YouTubeCard
+                  key={item.id}
+                  video={item}
+                  options={{ hideAvatar: true }}
+                />
+              );
             })}
           </GridContainer>
         </section>
