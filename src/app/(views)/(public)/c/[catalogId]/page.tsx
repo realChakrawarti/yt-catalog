@@ -6,6 +6,7 @@ import { ReactNode } from "react";
 
 import GridContainer from "~/components/shared/grid-container";
 import { ClockIcon, MonthIcon, WeekIcon } from "~/components/shared/icons";
+import Marker from "~/components/shared/marker";
 import ScrollTop from "~/components/shared/scroll-top";
 import YouTubeCard from "~/components/shared/youtube/youtube-card";
 import fetchApi from "~/utils/fetch";
@@ -171,11 +172,15 @@ type VideoSectionProps = {
 };
 
 function VideoSection({ label, children, icon: Icon }: VideoSectionProps) {
+  const id = label.replaceAll(" ", "-").toLowerCase();
   return (
     <section className="px-0 md:px-3 space-y-4">
-      <div className="px-2 md:px-0 flex items-center gap-2">
+      <div className="h-6 px-2 md:px-0 flex items-center gap-2 text-primary">
+        <Marker />
+        <h2 id={id} className="text-lg">
+          <a href={`#${id}`}>{label}</a>
+        </h2>
         <Icon />
-        <h2 className="text-lg">{label}</h2>
       </div>
       <GridContainer>{children}</GridContainer>
     </section>

@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.5](https://github.com/realChakrawarti/yt-catalog/compare/v1.4.4...v1.4.5) (2025-01-15)
+
+
+### Features
+
+* add `totalVideos` to catalog & archive cards, add title marker ([c2a925b](https://github.com/realChakrawarti/yt-catalog/commit/c2a925b30054c12a126706f4b20e4756270a0538))
+* download video via `cobalt.tools` ([83254a1](https://github.com/realChakrawarti/yt-catalog/commit/83254a18b8f1a940e5b5c66014e3110909922c16))
+
+
+### Bug Fixes
+
+* coderabbit suggestions ([93c75e1](https://github.com/realChakrawarti/yt-catalog/commit/93c75e16741f1ddaab24f6a90bde0ba148b6b718))
+
 ### [1.4.4](https://github.com/realChakrawarti/yt-catalog/compare/v1.4.3...v1.4.4) (2025-01-15)
 
 

@@ -14,6 +14,7 @@ import {
 } from "firebase/firestore";
 import { revalidatePath, unstable_noStore } from "next/cache";
 
+import type { ValidMetadata } from "~/types-schema/types";
 import { db } from "~/utils/firebase";
 import {
   COLLECTION,
@@ -40,15 +41,6 @@ type videoListData = {
   day: VideoMetadata[];
   week: VideoMetadata[];
   month: VideoMetadata[];
-};
-
-type CatalogData = {
-  thumbnails: string[];
-  id: string;
-  title: string;
-  description: string;
-  updatedAt: string;
-  pageviews: number;
 };
 
 type TopicId = keyof typeof topicData;
@@ -413,7 +405,7 @@ export async function getCatalogByUser(userId: string) {
 
 export async function getValidCatalogIds() {
   unstable_noStore();
-  let catalogListData: CatalogData[] = [];
+  let catalogListData: ValidMetadata[] = [];
   const catalogsCollectionRef = collection(db, COLLECTION.catalogs);
 
   // Filter the catalog, where totalVideos is greater than 0 and pageviews are sorted 'desc'
@@ -433,13 +425,14 @@ export async function getValidCatalogIds() {
     catalogIds.map(async (catalogId) => {
       const catalogData = await getCatalogMetadata(catalogId);
       if (catalogData) {
-        const metaData: CatalogData = {
+        const metaData: ValidMetadata = {
           thumbnails: getVideoThumbnails(catalogData),
           title: catalogData?.title,
           description: catalogData?.description,
           id: catalogId,
           updatedAt: catalogData?.data.updatedAt.toDate(),
           pageviews: catalogData.pageviews ?? 0,
+          totalVideos: catalogData?.data?.totalVideos,
         };
 
         catalogListData.push(metaData);
