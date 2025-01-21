@@ -2,7 +2,6 @@ import { Timestamp } from "firebase/firestore";
 import { customAlphabet } from "nanoid";
 import { cookies } from "next/headers";
 
-
 export const YOUTUBE_CHANNEL_PLAYLIST_VIDEOS = (
   playlistId: string,
   limit: number
@@ -20,6 +19,16 @@ export const YOUTUBE_CHANNELS_INFORMATION = (
 export const YOUTUBE_VIDEO_DATA = (videoId: string) =>
   `https://youtube.googleapis.com/youtube/v3/videos?part=snippet&id=${videoId}&key=${process.env.YOUTUBE_API_KEY}`;
 
+export const YOUTUBE_CHANNEL_PLAYLISTS = (
+  channelId: string,
+  nextPageToken?: string,
+  limit: number = 50
+) => {
+  if (nextPageToken) {
+    return `https://www.googleapis.com/youtube/v3/playlists?part=snippet,contentDetails&channelId=${channelId}&maxResults=${limit}&pageToken=${nextPageToken}&key=${process.env.YOUTUBE_API_KEY}`;
+  }
+  return `https://www.googleapis.com/youtube/v3/playlists?part=snippet,contentDetails&channelId=${channelId}&maxResults=${limit}&key=${process.env.YOUTUBE_API_KEY}`;
+};
 const tokenCharacters =
   "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
@@ -38,9 +47,9 @@ export function getUserIdCookie(): string {
 export const COLLECTION = {
   users: "users",
   catalogs: "catalogs",
-  archives: "archives"
+  archives: "archives",
 } as const;
 
 export function toUTCString(dateTime: Timestamp) {
-  return new Date(dateTime.toDate()).toUTCString()
-} 
+  return new Date(dateTime.toDate()).toUTCString();
+}

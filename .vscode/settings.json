@@ -2,16 +2,16 @@
   "files.exclude": {
     ".next": false,
     "node_modules": false,
-    ".commitlintrc.json": false,
-    ".env.example": false,
-    ".eslintrc.json": false,
-    ".gitignore": false,
-    ".versionrc.json": false,
+    ".commitlintrc.json": true,
+    ".env.example": true,
+    ".eslintrc.json": true,
+    ".gitignore": true,
+    ".versionrc.json": true,
     "CHANGELOG.md": false,
-    "firebase-debug.log": false,
-    "firestore-debug.log": false,
-    "next-env.d.ts": false,
-    "ui-debug.log": false,
+    "firebase-debug.log": true,
+    "firestore-debug.log": true,
+    "next-env.d.ts": true,
+    "ui-debug.log": true,
     "package-lock.json": false,
     "firebase.json": false,
     "postcss.config.mjs": false,
@@ -22,5 +22,8 @@
     "DEPENDENCIES.md": false,
     ".husky": false
   },
-  "typescript.preferences.autoImportFileExcludePatterns": ["@radix-ui/*"]
+  "typescript.preferences.autoImportFileExcludePatterns": [
+    "@radix-ui/*"
+  ],
+  "deno.enable": false
 }

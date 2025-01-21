@@ -60,7 +60,7 @@ export default function AddVideoDialog({
     }
 
     if (videoId) {
-      const result = await fetchApi(`/youtube/videoId?videoId=${videoId}`);
+      const result = await fetchApi(`/youtube/get-video?videoId=${videoId}`);
 
       if (!result.success) {
         toast({ title: result.message });

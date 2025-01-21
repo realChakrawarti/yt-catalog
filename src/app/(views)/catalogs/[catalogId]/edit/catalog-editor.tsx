@@ -13,9 +13,10 @@ import Spinner from "~/components/shared/spinner";
 import { useToast } from "~/hooks/use-toast";
 import fetchApi from "~/utils/fetch";
 
+import AddChannelPlaylist from "./add-channel-playlist";
 import CatalogForm from "./catalog-form";
 import ChannelTable from "./channel-table";
-import ValidateVideoDialog from "./validate-video-dialog";
+// import ValidateVideoDialog from "./validate-video-dialog";
 
 type LocalChannel = {
   title: string;
@@ -93,7 +94,8 @@ export default function CatalogEditor({ catalogId }: any) {
               </JustTip>
             </Link>
           ) : null}
-          <ValidateVideoDialog
+          <AddChannelPlaylist
+            catalogId={catalogId}
             localChannel={localChannel}
             savedChannels={savedChannels}
             setLocalChannel={setLocalChannel}

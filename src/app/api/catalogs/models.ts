@@ -15,6 +15,7 @@ import {
 import { revalidatePath, unstable_noStore } from "next/cache";
 
 import type { ValidMetadata } from "~/types-schema/types";
+import { FOUR_HOURS, ONE_DAY, ONE_MONTH, ONE_WEEK } from "~/utils/constant";
 import { db } from "~/utils/firebase";
 import {
   COLLECTION,
@@ -44,13 +45,6 @@ type videoListData = {
 };
 
 type TopicId = keyof typeof topicData;
-
-const ONE_HOUR = 3_600_000;
-const FOUR_HOURS = 4 * ONE_HOUR;
-
-const ONE_DAY = ONE_HOUR * 24;
-const ONE_WEEK = ONE_DAY * 7;
-const ONE_MONTH = ONE_DAY * 30;
 
 const LIMIT = 10;
 
@@ -535,4 +529,12 @@ export async function getNextUpdate(catalogId: string) {
   const catalogData = catalogSnap.data();
 
   return catalogData?.data.updatedAt.toDate();
+}
+
+export async function updateCatalogPlaylists(
+  catalogId: string,
+  playlists: any
+) {
+  console.log("userid", catalogId);
+  console.log(playlists);
 }
