@@ -1,5 +1,6 @@
 import { BetaAnalyticsDataClient, protos } from "@google-analytics/data";
 import {
+  arrayUnion,
   collection,
   doc,
   DocumentData,
@@ -14,7 +15,7 @@ import {
 } from "firebase/firestore";
 import { revalidatePath, unstable_noStore } from "next/cache";
 
-import type { ValidMetadata } from "~/types-schema/types";
+import type { PlaylistItem, ValidMetadata } from "~/types-schema/types";
 import { FOUR_HOURS, ONE_DAY, ONE_MONTH, ONE_WEEK } from "~/utils/constant";
 import { db } from "~/utils/firebase";
 import {
@@ -335,8 +336,9 @@ export async function getCatalogById(catalogId: string, userId: string) {
   try {
     const userCatalogRef = doc(userRef, COLLECTION.catalogs, catalogId);
 
-    const channelList = await getDoc(userCatalogRef);
-    const channelListData = channelList.data()?.channels;
+    const userCatalogData = await getDoc(userCatalogRef);
+    const channelListData = userCatalogData.data()?.channels;
+    const playlistData = userCatalogData.data()?.playlists;
 
     // Get title and description
 
@@ -348,6 +350,7 @@ export async function getCatalogById(catalogId: string, userId: string) {
       title: catalogData?.title,
       description: catalogData?.description,
       channelList: channelListData,
+      playlist: playlistData,
     };
   } catch (err) {
     console.error(err);
@@ -445,7 +448,7 @@ export async function deleteChannel(
   const userRef = doc(db, COLLECTION.users, userId);
   const userCatalogRef = doc(userRef, COLLECTION.catalogs, catalogId);
 
-  await setDoc(userCatalogRef, {
+  await updateDoc(userCatalogRef, {
     channels: channels,
     updatedAt: new Date(),
   });
@@ -532,9 +535,53 @@ export async function getNextUpdate(catalogId: string) {
 }
 
 export async function updateCatalogPlaylists(
+  userId: string,
+  catalogId: string,
+  playlists: PlaylistItem[]
+) {
+  const userRef = doc(db, COLLECTION.users, userId);
+  const userCatalogRef = doc(userRef, COLLECTION.catalogs, catalogId);
+
+  const playlistList = [];
+
+  for (let i = 0; i < playlists.length; i++) {
+    const { channelId } = playlists[i];
+    const response = await fetch(YOUTUBE_CHANNELS_INFORMATION([channelId]));
+    const result = await response.json();
+
+    const channelInfo = result?.items[0];
+
+    const playlistItem = {
+      id: playlists[i].id,
+      title: playlists[i].title,
+      description: playlists[i].description,
+      publishedAt: playlists[i].publishedAt,
+      channelId: playlists[i].channelId,
+      channelHandle: channelInfo.snippet.customUrl,
+      channelTitle: channelInfo.snippet.title,
+      channelDescription: channelInfo.snippet.description,
+      channelLogo: channelInfo.snippet.thumbnails.medium.url,
+    };
+
+    playlistList.push(playlistItem);
+  }
+
+  await updateDoc(userCatalogRef, {
+    playlists: arrayUnion(...playlistList),
+    updatedAt: new Date(),
+  });
+}
+
+export async function deletePlaylist(
+  userId: string,
   catalogId: string,
   playlists: any
 ) {
-  console.log("userid", catalogId);
-  console.log(playlists);
+  const userRef = doc(db, COLLECTION.users, userId);
+  const userCatalogRef = doc(userRef, COLLECTION.catalogs, catalogId);
+
+  await updateDoc(userCatalogRef, {
+    playlists: playlists,
+    updatedAt: new Date(),
+  });
 }

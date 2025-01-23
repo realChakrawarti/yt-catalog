@@ -1,19 +1,17 @@
+import { revalidatePath } from "next/cache";
 import { NextRequest } from "next/server";
 
+import { PlaylistItem } from "~/types-schema/types";
 import { NxResponse } from "~/utils/nx-response";
 import { getUserIdCookie } from "~/utils/server-helper";
 
-import { updateCatalogPlaylists } from "../../models";
+import { deletePlaylist, updateCatalogPlaylists } from "../../models";
 
 type ContextParams = {
   params: {
     catalogId: string;
   };
 };
-
-export async function GET() {
-  return NxResponse.success<any>("Hello", {}, 200);
-}
 
 export async function PATCH(request: NextRequest, ctx: ContextParams) {
   const userId = getUserIdCookie();
@@ -30,11 +28,22 @@ export async function PATCH(request: NextRequest, ctx: ContextParams) {
     );
   }
 
-  const playlistPayload = await request.json();
+  const playlistPayload: PlaylistItem[] = await request.json();
 
-  console.log(">>>pp", playlistPayload);
-
-  await updateCatalogPlaylists(userId, playlistPayload);
+  await updateCatalogPlaylists(userId, catalogId, playlistPayload);
 
   return NxResponse.success<any>("Playlist update successfully.", {}, 201);
+}
+
+export async function DELETE(request: NextRequest, ctx: ContextParams) {
+  const userId = getUserIdCookie();
+  const { catalogId } = ctx.params;
+
+  const playlists = await request.json();
+
+  await deletePlaylist(userId, catalogId, playlists);
+
+  revalidatePath(`/c/${catalogId}`);
+
+  return NxResponse.success<any>("Playlist deleted successfully.", {}, 201);
 }

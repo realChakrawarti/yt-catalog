@@ -14,6 +14,11 @@ async function getAllPlaylists(channelId: string, data: any, playlists: any[]) {
   return playlists;
 }
 
+// TODO: Consider checking if a playlist has 0 items, hence don't take that into account
+//  "contentDetails": {
+// "itemCount": 0
+// }
+
 // Get all playlists by channel
 export async function getPlaylistsByChannel(channelId: string) {
   const response = await fetch(YOUTUBE_CHANNEL_PLAYLISTS(channelId));

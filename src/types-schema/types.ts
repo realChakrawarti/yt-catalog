@@ -59,3 +59,13 @@ type FavoriteData = {
 
 export type { FavoriteData, VideoData };
 export type TitleDescriptionType = z.infer<typeof TitleDescriptionSchema>;
+
+export type PlaylistItem = {
+  title: string;
+  thumbnail: string;
+  id: string;
+  channelId: string;
+  channelTitle: string;
+  publishedAt: string;
+  description: string;
+};

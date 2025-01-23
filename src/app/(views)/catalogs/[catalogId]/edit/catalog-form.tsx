@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import type { KeyedMutator } from "swr";
 
 import { Button } from "~/components/shadcn/button";
 import { Input } from "~/components/shadcn/input";
@@ -10,6 +11,9 @@ import { useToast } from "~/hooks/use-toast";
 import { TitleDescriptionSchema as CatalogSchema } from "~/types-schema/schemas";
 import type { TitleDescriptionType as CatalogMetadata } from "~/types-schema/types";
 import fetchApi from "~/utils/fetch";
+import type { ApiResponse } from "~/utils/nx-response";
+
+import useCatalogStore from "./catalogStore";
 
 type UpdateCatalogPayload = {
   channels?: string[];
@@ -17,14 +21,19 @@ type UpdateCatalogPayload = {
   description?: string;
 };
 
+interface CatalogFormProps {
+  title: string;
+  description: string;
+  catalogId: string;
+  revalidateCatalog: KeyedMutator<ApiResponse<any>>;
+}
+
 export default function CatalogForm({
-  savedChannels,
-  localChannel,
-  catalogData,
+  title,
+  description,
   catalogId,
   revalidateCatalog,
-  setLocalChannel,
-}: any) {
+}: CatalogFormProps) {
   const [catalogMetadata, setCatalogMetadata] = useState<CatalogMetadata>({
     title: "",
     description: "",
@@ -40,12 +49,14 @@ export default function CatalogForm({
 
   const { toast } = useToast();
 
+  const { setLocalChannels, localChannels, savedChannels } = useCatalogStore();
+
   useEffect(() => {
     setCatalogMetadata({
-      title: catalogData?.title,
-      description: catalogData?.description,
+      title: title,
+      description: description,
     });
-  }, [catalogData]);
+  }, [catalogId, description, title]);
 
   const handleSubmit = async () => {
     if (catalogMetadataError.title || catalogMetadataError.description) {
@@ -53,13 +64,13 @@ export default function CatalogForm({
     }
 
     const payload: UpdateCatalogPayload = {
-      channels: savedChannels.map((channel: any) => channel.id),
+      channels: savedChannels.map((channel) => channel.id),
       title: catalogMetadata.title,
       description: catalogMetadata.description,
     };
 
-    if (localChannel.length) {
-      payload.channels?.push(...localChannel.map((item: any) => item.id));
+    if (localChannels.length) {
+      payload.channels?.push(...localChannels.map((item: any) => item.id));
     }
 
     setIsSubmitting(true);
@@ -70,11 +81,11 @@ export default function CatalogForm({
 
     if (result.success) {
       revalidateCatalog();
+      setLocalChannels([]);
     }
 
     toast({ title: result.message });
     setIsSubmitting(false);
-    setLocalChannel([]);
   };
 
   const handleMetaUpdate = (e: any) => {
@@ -144,7 +155,7 @@ export default function CatalogForm({
       <div className="flex gap-2 mt-5 justify-end">
         <Button
           disabled={Boolean(
-            (!localChannel.length &&
+            (!localChannels.length &&
               (catalogMetadataError.title ||
                 catalogMetadataError.description)) ||
               isSubmitting

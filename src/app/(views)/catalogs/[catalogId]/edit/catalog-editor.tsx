@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import useSWR from "swr";
 
 import { Badge } from "~/components/shadcn/badge";
@@ -15,13 +15,8 @@ import fetchApi from "~/utils/fetch";
 
 import AddChannelPlaylist from "./add-channel-playlist";
 import CatalogForm from "./catalog-form";
+import useCatalogStore from "./catalogStore";
 import ChannelTable from "./channel-table";
-// import ValidateVideoDialog from "./validate-video-dialog";
-
-type LocalChannel = {
-  title: string;
-  id: string;
-};
 
 export default function CatalogEditor({ catalogId }: any) {
   const { toast } = useToast();
@@ -37,14 +32,24 @@ export default function CatalogEditor({ catalogId }: any) {
     { revalidateOnFocus: false }
   );
 
-  const [localChannel, setLocalChannel] = useState<LocalChannel[]>([]);
-  const [savedChannels, setSavedChannels] = useState<any[]>([]);
+  const {
+    localChannels,
+    setLocalChannels,
+    savedChannels,
+    setSavedChannels,
+    localPlaylists,
+    setLocalPlaylists,
+    resetLocalPlaylist,
+    setSavedPlaylists,
+    savedPlaylists,
+  } = useCatalogStore();
 
   useEffect(() => {
     if (catalogData?.data) {
       setSavedChannels(catalogData?.data?.channelList);
+      setSavedPlaylists(catalogData?.data?.playlist);
     }
-  }, [catalogData?.data]);
+  }, [catalogData?.data, setSavedChannels, setSavedPlaylists]);
 
   const handleDeleteSaved = async (id: string) => {
     const deleteChannel = savedChannels.find((channel) => channel.id === id);
@@ -73,11 +78,60 @@ export default function CatalogEditor({ catalogId }: any) {
     }
   };
 
+  const handleDeleteSavedPlaylist = async (id: string) => {
+    const deletePlaylist = savedPlaylists.find((channel) => channel.id === id);
+    if (deletePlaylist) {
+      alert(
+        `Are you sure you want to remove ${deletePlaylist.title}'s playlist from the catalog?`
+      );
+
+      const payload = savedPlaylists.filter(
+        (playlist) => playlist.id != deletePlaylist.id
+      );
+
+      const result = await fetchApi(`/catalogs/${catalogId}/playlist`, {
+        method: "DELETE",
+        body: JSON.stringify(payload),
+      });
+
+      if (result.success) {
+        toast({
+          title: `${deletePlaylist.title}'s playlist deleted from the catalog.`,
+        });
+        mutate();
+      } else {
+        toast({ title: "Something went wrong." });
+      }
+    }
+  };
+
   const handleDeleteLocal = (id: string) => {
-    const filteredChannels = localChannel.filter(
+    const filteredChannels = localChannels.filter(
       (channel) => channel.id !== id
     );
-    setLocalChannel(filteredChannels || []);
+    setLocalChannels(filteredChannels || []);
+  };
+
+  const handleDeleteLocalPlaylist = (id: string) => {
+    const filteredPlaylists = localPlaylists.filter(
+      (playlist) => playlist.id !== id
+    );
+    setLocalPlaylists(filteredPlaylists);
+  };
+
+  const handleAddPlaylistsToCatalog = async () => {
+    const result = await fetchApi(`/catalogs/${catalogId}/playlist`, {
+      method: "PATCH",
+      body: JSON.stringify(localPlaylists),
+    });
+
+    if (result.success) {
+      toast({ title: "Catalog has been updated with new playlists." });
+      resetLocalPlaylist();
+      mutate();
+    } else {
+      toast({ title: "Something went wrong!" });
+    }
   };
 
   return (
@@ -94,12 +148,7 @@ export default function CatalogEditor({ catalogId }: any) {
               </JustTip>
             </Link>
           ) : null}
-          <AddChannelPlaylist
-            catalogId={catalogId}
-            localChannel={localChannel}
-            savedChannels={savedChannels}
-            setLocalChannel={setLocalChannel}
-          />
+          <AddChannelPlaylist />
         </div>
       </div>
       <Separator className="my-3" />
@@ -112,19 +161,17 @@ export default function CatalogEditor({ catalogId }: any) {
       {!isLoading && !error && (
         <div className="space-y-7">
           <CatalogForm
-            setLocalChannel={setLocalChannel}
             revalidateCatalog={mutate}
             catalogId={catalogId}
-            savedChannels={savedChannels}
-            localChannel={localChannel}
-            catalogData={catalogData?.data}
+            title={catalogData?.data.title}
+            description={catalogData?.data.description}
           />
 
           <div className="space-y-3">
             <div className="flex items-center justify-between">
               <h2 className="text-xl font-semibold">Saved Channels</h2>
               <Badge variant="secondary">
-                {savedChannels.length} of 15 channels added
+                {savedChannels?.length} of 15 channels added
               </Badge>
             </div>
             <ChannelTable
@@ -133,18 +180,49 @@ export default function CatalogEditor({ catalogId }: any) {
             />
           </div>
 
-          {localChannel?.length ? (
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
+              <h2 className="text-xl font-semibold">Saved Playlists</h2>
+              <Badge variant="secondary">
+                {savedPlaylists?.length} of 15 channels added
+              </Badge>
+            </div>
+            <ChannelTable
+              channels={savedPlaylists}
+              handleDelete={handleDeleteSavedPlaylist}
+            />
+          </div>
+
+          {localChannels?.length ? (
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <h2 className="text-xl font-semibold">Unsaved Channels</h2>
                 <Badge variant="secondary">
-                  Can add {15 - (savedChannels.length + localChannel.length)}{" "}
+                  Can add {15 - (savedChannels.length + localChannels.length)}{" "}
                   more channels
                 </Badge>
               </div>
               <ChannelTable
-                channels={localChannel}
+                channels={localChannels}
                 handleDelete={handleDeleteLocal}
+              />
+            </div>
+          ) : null}
+          {localPlaylists?.length ? (
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <h2 className="text-xl font-semibold">Unsaved Playlists</h2>
+                <Button onClick={handleAddPlaylistsToCatalog}>
+                  Add to catalog
+                </Button>
+                {/* <Badge variant="secondary">
+                            Can add {15 - (savedChannels.length + localChannels.length)}{" "}
+                            more channels
+                          </Badge> */}
+              </div>
+              <ChannelTable
+                channels={localPlaylists}
+                handleDelete={handleDeleteLocalPlaylist}
               />
             </div>
           ) : null}

@@ -1,5 +1,5 @@
 import { ListPlusIcon } from "lucide-react";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 
 import { Button } from "~/components/shadcn/button";
 import { Input } from "~/components/shadcn/input";
@@ -14,57 +14,42 @@ import {
 import { toast } from "~/hooks/use-toast";
 import fetchApi from "~/utils/fetch";
 
+import useCatalogStore from "./catalogStore";
 import ShowPlaylist from "./show-playlist";
-
-type VideoLink = {
-  link: string;
-  error: string;
-};
 
 const YouTubeVideoLinkRegex =
   /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/|shorts\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*/;
 
-export default function AddChannelPlaylist({
-  localChannel,
-  savedChannels,
-  setLocalChannel,
-  catalogId,
-}: any) {
-  const [videoLink, setVideoLink] = useState<VideoLink>({
-    link: "",
-    error: "",
-  });
-
-  const [channelInfo, setChannelInfo] = useState<{ title: string; id: string }>(
-    {
-      title: "",
-      id: "",
-    }
-  );
+export default function AddChannelPlaylist() {
+  const {
+    localChannels,
+    savedChannels,
+    setLocalChannels,
+    setChannelPlaylists,
+    channelInfo,
+    setChannelInfo,
+    setVideoLink,
+    videoLink,
+  } = useCatalogStore();
 
   const [fetchedChannelPlaylists, setFetchedChannelPlaylists] =
     useState<boolean>(false);
 
-  const [channelPlaylists, setChannelPlaylists] = useState<any[]>([]);
-
-  const handleVideoLink = (e: any) => {
-    setVideoLink((prev) => ({
-      ...prev,
+  const handleVideoLink = (e: ChangeEvent<HTMLInputElement>) => {
+    setVideoLink({
       link: e.target.value,
-    }));
+    });
 
     if (!YouTubeVideoLinkRegex.test(e.target.value)) {
-      setVideoLink((prev) => ({
-        ...prev,
+      setVideoLink({
         error: "Invalid YouTube video link.",
-      }));
+      });
 
       return;
     } else {
-      setVideoLink((prev) => ({
-        ...prev,
+      setVideoLink({
         error: "",
-      }));
+      });
     }
   };
 
@@ -94,7 +79,7 @@ export default function AddChannelPlaylist({
   };
 
   const addChannelToLocal = () => {
-    const alreadyExists = localChannel.find(
+    const alreadyExists = localChannels.find(
       (item: any) => item.id === channelInfo.id
     );
 
@@ -103,10 +88,11 @@ export default function AddChannelPlaylist({
     );
 
     if (!alreadyExists && !alreadySaved) {
-      setLocalChannel((prev: any) => [
-        ...prev,
+      const localChannel = [
+        ...localChannels,
         { id: channelInfo.id, title: channelInfo.title },
-      ]);
+      ];
+      setLocalChannels(localChannel);
       setChannelInfo({ title: "", id: "" });
       toast({ title: `${channelInfo.title}'s channel added to the list.` });
     } else if (alreadyExists) {
@@ -211,10 +197,7 @@ export default function AddChannelPlaylist({
                   Add channel
                 </Button>
               </div>
-              <ShowPlaylist
-                channelPlaylists={channelPlaylists}
-                catalogId={catalogId}
-              />
+              <ShowPlaylist />
             </section>
           ) : null}
         </SheetContent>
