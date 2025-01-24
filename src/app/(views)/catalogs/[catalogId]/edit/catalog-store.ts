@@ -14,7 +14,7 @@ type VideoLink = {
 
 type ChannelInfo = { title: string; id: string };
 
-interface CatalogStore {
+interface State {
   channelInfo: ChannelInfo;
   videoLink: VideoLink;
   localChannels: LocalChannel[];
@@ -24,6 +24,10 @@ interface CatalogStore {
   channelPlaylists: any[];
   playlistInput: string;
   savedPlaylists: any[];
+  fetchedChannelPlaylists: boolean;
+}
+
+interface Actions {
   setChannelInfo: (_channelInfo: ChannelInfo) => void;
   setVideoLink: (_videoLink: Partial<VideoLink>) => void;
   setSavedPlaylists: (_playlist: any[]) => void;
@@ -34,9 +38,10 @@ interface CatalogStore {
   setChannelPlaylists: (_channelPlaylists: any[]) => void;
   setPlaylistInput: (_input: string) => void;
   resetLocalPlaylist: () => void;
+  setFetchedChannelPlaylists: (_arg: boolean) => void;
 }
 
-const useCatalogStore = create<CatalogStore>((set) => ({
+const useCatalogStore = create<State & Actions>((set) => ({
   channelInfo: {
     title: "",
     id: "",
@@ -49,6 +54,8 @@ const useCatalogStore = create<CatalogStore>((set) => ({
   playlistInput: "",
   savedPlaylists: [],
   videoLink: { error: "", link: "" },
+  fetchedChannelPlaylists: false,
+  setFetchedChannelPlaylists: (arg) => set({ fetchedChannelPlaylists: arg }),
   setChannelInfo: (channelInfo) => set({ channelInfo: channelInfo }),
   setVideoLink: (link) => {
     return set((state) => ({
@@ -79,6 +86,7 @@ const useCatalogStore = create<CatalogStore>((set) => ({
         title: "",
         id: "",
       },
+      fetchedChannelPlaylists: false,
     }),
 }));
 

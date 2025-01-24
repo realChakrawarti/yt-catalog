@@ -11,59 +11,62 @@ import {
 import { DeleteIcon } from "~/components/shared/icons";
 import JustTip from "~/components/shared/just-the-tip";
 
-function ChannelTable({ channels, handleDelete }: any) {
+export default function PlaylistTable({ playlists, handleDelete }: any) {
   return (
     <Table>
-      <TableCaption>A list of channels.</TableCaption>
+      <TableCaption>A list of playlists.</TableCaption>
       <TableHeader>
         <TableRow>
           <TableHead className="max-w-[50px] font-semibold">SL No</TableHead>
-          <TableHead className="max-w-[150px] font-semibold">Channel</TableHead>
-          <TableHead className="font-semibold">Channel ID</TableHead>
+          <TableHead className="max-w-[150px] font-semibold">
+            Playlist Title
+          </TableHead>
+          <TableHead className="font-semibold">Playlist ID</TableHead>
+          <TableHead className="text-center font-semibold">Channel</TableHead>
           <TableHead></TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
-        {channels?.length === 0 ? (
+        {playlists?.length === 0 ? (
           <TableRow>
             <TableCell colSpan={5} className="h-4 text-center">
-              No channel added yet.
+              No playlist added yet.
             </TableCell>
           </TableRow>
         ) : (
-          channels?.map((channel: any, idx: number) => (
-            <TableRow key={channel?.id}>
+          playlists?.map((playlist: any, idx: number) => (
+            <TableRow key={playlist?.id}>
               <TableCell>{idx + 1}</TableCell>
+              <TableCell>{playlist?.title}</TableCell>
+              <TableCell>{playlist?.id}</TableCell>
               <TableCell>
                 <div className="flex gap-2 items-center">
-                  {channel?.logo ? (
+                  {playlist?.channelLogo ? (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img
-                      src={channel?.logo}
-                      alt={channel?.title}
+                      src={playlist?.channelLogo}
+                      alt={playlist?.channelTitle}
                       className="size-4 rounded-lg"
                     />
                   ) : null}
-
-                  {channel?.handle ? (
+                  {playlist?.channelHandle ? (
                     <a
                       className="text-indigo-600 hover:text-indigo-500 visited:text-indigo-700"
                       target="_blank"
-                      href={`https://www.youtube.com/${channel?.handle}`}
+                      href={`https://www.youtube.com/${playlist?.channelHandle}`}
                     >
-                      <p>{channel?.title}</p>
+                      <p>{playlist?.channelTitle}</p>
                     </a>
                   ) : (
-                    <p>{channel?.title}</p>
+                    <p>{playlist?.channelTitle}</p>
                   )}
                 </div>
               </TableCell>
-              <TableCell>{channel?.id}</TableCell>
               <TableCell>
                 <JustTip label="Remove Channel">
                   <Button
                     variant="outline"
-                    onClick={() => handleDelete(channel?.id)}
+                    onClick={() => handleDelete(playlist?.id)}
                   >
                     <DeleteIcon
                       size={24}
@@ -79,5 +82,3 @@ function ChannelTable({ channels, handleDelete }: any) {
     </Table>
   );
 }
-
-export default ChannelTable;

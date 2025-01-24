@@ -10,7 +10,7 @@ import {
 } from "~/components/shadcn/collapsible";
 import { Input } from "~/components/shadcn/input";
 
-import useCatalogStore from "./catalogStore";
+import useCatalogStore from "./catalog-store";
 
 export default function ShowPlaylist() {
   const {

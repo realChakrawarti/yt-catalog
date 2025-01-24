@@ -6,7 +6,7 @@ export const YOUTUBE_CHANNEL_PLAYLIST_VIDEOS = (
   playlistId: string,
   limit: number
 ) =>
-  `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet,contentDetails&playlistId=${playlistId}&maxResults=${limit}&key=${process.env.YOUTUBE_API_KEY}`;
+  `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet,contentDetails,status&playlistId=${playlistId}&maxResults=${limit}&key=${process.env.YOUTUBE_API_KEY}`;
 
 export const YOUTUBE_CHANNELS_INFORMATION = (
   channelIds: string[],

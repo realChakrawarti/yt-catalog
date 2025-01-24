@@ -1,5 +1,5 @@
 import { ListPlusIcon } from "lucide-react";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent } from "react";
 
 import { Button } from "~/components/shadcn/button";
 import { Input } from "~/components/shadcn/input";
@@ -14,7 +14,7 @@ import {
 import { toast } from "~/hooks/use-toast";
 import fetchApi from "~/utils/fetch";
 
-import useCatalogStore from "./catalogStore";
+import useCatalogStore from "./catalog-store";
 import ShowPlaylist from "./show-playlist";
 
 const YouTubeVideoLinkRegex =
@@ -30,10 +30,10 @@ export default function AddChannelPlaylist() {
     setChannelInfo,
     setVideoLink,
     videoLink,
+    fetchedChannelPlaylists,
+    setFetchedChannelPlaylists,
+    resetLocalPlaylist
   } = useCatalogStore();
-
-  const [fetchedChannelPlaylists, setFetchedChannelPlaylists] =
-    useState<boolean>(false);
 
   const handleVideoLink = (e: ChangeEvent<HTMLInputElement>) => {
     setVideoLink({
@@ -54,6 +54,10 @@ export default function AddChannelPlaylist() {
   };
 
   const validateVideoLink = async () => {
+
+    // Reset playlist state
+    resetLocalPlaylist();
+
     const found = videoLink.link.match(YouTubeVideoLinkRegex);
     let videoId = "";
     if (found?.length) {
@@ -93,13 +97,12 @@ export default function AddChannelPlaylist() {
         { id: channelInfo.id, title: channelInfo.title },
       ];
       setLocalChannels(localChannel);
-      setChannelInfo({ title: "", id: "" });
+
       toast({ title: `${channelInfo.title}'s channel added to the list.` });
     } else if (alreadyExists) {
       toast({
         title: `${channelInfo.title}'s channel already added to the list.`,
       });
-      setChannelInfo({ title: "", id: "" });
     } else if (alreadySaved) {
       toast({ title: `${channelInfo.title}'s channel already saved.` });
     }
@@ -108,6 +111,7 @@ export default function AddChannelPlaylist() {
       link: "",
       error: "",
     });
+    setChannelInfo({ title: "", id: "" });
   };
 
   const fetchChannelPlaylists = async () => {
