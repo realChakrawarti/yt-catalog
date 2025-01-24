@@ -1,5 +1,6 @@
 import { BetaAnalyticsDataClient, protos } from "@google-analytics/data";
 import {
+  arrayUnion,
   collection,
   doc,
   DocumentData,
@@ -14,7 +15,8 @@ import {
 } from "firebase/firestore";
 import { revalidatePath, unstable_noStore } from "next/cache";
 
-import type { ValidMetadata } from "~/types-schema/types";
+import type { PlaylistItem, ValidMetadata } from "~/types-schema/types";
+import { FOUR_HOURS, ONE_DAY, ONE_MONTH, ONE_WEEK } from "~/utils/constant";
 import { db } from "~/utils/firebase";
 import {
   COLLECTION,
@@ -44,13 +46,6 @@ type videoListData = {
 };
 
 type TopicId = keyof typeof topicData;
-
-const ONE_HOUR = 3_600_000;
-const FOUR_HOURS = 4 * ONE_HOUR;
-
-const ONE_DAY = ONE_HOUR * 24;
-const ONE_WEEK = ONE_DAY * 7;
-const ONE_MONTH = ONE_DAY * 30;
 
 const LIMIT = 10;
 
@@ -87,6 +82,7 @@ async function getChannelsInfo(channels: string[]) {
       title: channelInfo.snippet.title,
       description: channelInfo.snippet.description,
       logo: channelInfo.snippet.thumbnails.medium.url,
+      // TODO: Remove Topics, feels a bit redundant
       topics: extractTopics(channelInfo.topicDetails.topicIds),
     };
 
@@ -115,7 +111,47 @@ function createPlaylistId(channel: string) {
   return channel.substring(0, 1) + "U" + channel.substring(2);
 }
 
-async function getPlaylistItems(channel: any) {
+// TODO: Clean this file up, it is an eyesore 😵
+async function getPlaylistVideos(playlist: any) {
+  let playlistItemData: VideoMetadata[] = [];
+  try {
+    const result = await fetch(
+      YOUTUBE_CHANNEL_PLAYLIST_VIDEOS(playlist.id, LIMIT),
+      { cache: "no-store" }
+    ).then((data) => data.json());
+
+    const currentTime = Date.now();
+    const playlistVideoItems = result.items;
+
+    for (const item of playlistVideoItems) {
+      // Don't return video which are private or are older than 30 days (ONE MONTH)
+      const videoPublished = item.contentDetails.videoPublishedAt;
+      if (
+        item.status.privacyStatus === "private" ||
+        currentTime - new Date(videoPublished).getTime() > ONE_MONTH
+      ) {
+        continue;
+      }
+
+      playlistItemData.push({
+        title: item.snippet.title,
+        channelId: item.snippet.channelId,
+        thumbnail: item.snippet.thumbnails.medium,
+        channelLogo: playlist.channelLogo,
+        channelTitle: item.snippet.channelTitle,
+        videoId: item.contentDetails.videoId,
+        description: item.snippet.description,
+        publishedAt: item.contentDetails.videoPublishedAt,
+      });
+    }
+  } catch (err) {
+    console.error(err);
+  } finally {
+    return playlistItemData;
+  }
+}
+
+async function getChannelVideos(channel: any) {
   const playlistId = createPlaylistId(channel.id);
   let playlistItemData: VideoMetadata[] = [];
   try {
@@ -128,9 +164,12 @@ async function getPlaylistItems(channel: any) {
     const playlistVideoItems = result.items;
 
     for (const item of playlistVideoItems) {
-      // Don't return video older than 30 days (ONE_MONTH)
+      // Don't return video which are private and or older than 30 days (ONE MONTH)
       const videoPublished = item.contentDetails.videoPublishedAt;
-      if (currentTime - new Date(videoPublished).getTime() > ONE_MONTH) {
+      if (
+        item.status.privacyStatus === "private" ||
+        currentTime - new Date(videoPublished).getTime() > ONE_MONTH
+      ) {
         continue;
       }
 
@@ -240,10 +279,12 @@ export async function getVideosByCatalogId(catalogId: string) {
 
   const userCatalogSnap = await getDoc(userRef);
   const userSnapData: any = userCatalogSnap.data();
-  const channelList = userSnapData?.channels;
+  const channelListData = userSnapData?.channels;
 
-  if (!channelList.length) {
-    return "No channel is yet added!";
+  const playlistData = userSnapData?.playlists;
+
+  if (!channelListData.length && !playlistData.length) {
+    return "Catalog is empty. Channel or playlist is yet to be added!";
   }
 
   // Get last updated, check if time has been 6 hours or not, if so make call to YouTube API, if not fetch from firestore
@@ -259,8 +300,13 @@ export async function getVideosByCatalogId(catalogId: string) {
   if (currentTime - lastUpdatedTime > deltaTime) {
     pageviews = await getPageviewByCatalogId(catalogId);
 
-    for (const channel of channelList) {
-      const data = await getPlaylistItems(channel);
+    for (const channel of channelListData) {
+      const data = await getChannelVideos(channel);
+      videoList = [...videoList, ...data];
+    }
+
+    for (const playlist of playlistData) {
+      const data = await getPlaylistVideos(playlist);
       videoList = [...videoList, ...data];
     }
 
@@ -341,8 +387,9 @@ export async function getCatalogById(catalogId: string, userId: string) {
   try {
     const userCatalogRef = doc(userRef, COLLECTION.catalogs, catalogId);
 
-    const channelList = await getDoc(userCatalogRef);
-    const channelListData = channelList.data()?.channels;
+    const userCatalogData = await getDoc(userCatalogRef);
+    const channelListData = userCatalogData.data()?.channels;
+    const playlistData = userCatalogData.data()?.playlists;
 
     // Get title and description
 
@@ -354,6 +401,7 @@ export async function getCatalogById(catalogId: string, userId: string) {
       title: catalogData?.title,
       description: catalogData?.description,
       channelList: channelListData,
+      playlist: playlistData,
     };
   } catch (err) {
     console.error(err);
@@ -451,7 +499,7 @@ export async function deleteChannel(
   const userRef = doc(db, COLLECTION.users, userId);
   const userCatalogRef = doc(userRef, COLLECTION.catalogs, catalogId);
 
-  await setDoc(userCatalogRef, {
+  await updateDoc(userCatalogRef, {
     channels: channels,
     updatedAt: new Date(),
   });
@@ -535,4 +583,56 @@ export async function getNextUpdate(catalogId: string) {
   const catalogData = catalogSnap.data();
 
   return catalogData?.data.updatedAt.toDate();
+}
+
+export async function updateCatalogPlaylists(
+  userId: string,
+  catalogId: string,
+  playlists: PlaylistItem[]
+) {
+  const userRef = doc(db, COLLECTION.users, userId);
+  const userCatalogRef = doc(userRef, COLLECTION.catalogs, catalogId);
+
+  const playlistList = [];
+
+  for (let i = 0; i < playlists.length; i++) {
+    const { channelId } = playlists[i];
+    const response = await fetch(YOUTUBE_CHANNELS_INFORMATION([channelId]));
+    const result = await response.json();
+
+    const channelInfo = result?.items[0];
+
+    const playlistItem = {
+      id: playlists[i].id,
+      title: playlists[i].title,
+      description: playlists[i].description,
+      publishedAt: playlists[i].publishedAt,
+      channelId: playlists[i].channelId,
+      channelHandle: channelInfo.snippet.customUrl,
+      channelTitle: channelInfo.snippet.title,
+      channelDescription: channelInfo.snippet.description,
+      channelLogo: channelInfo.snippet.thumbnails.medium.url,
+    };
+
+    playlistList.push(playlistItem);
+  }
+
+  await updateDoc(userCatalogRef, {
+    playlists: arrayUnion(...playlistList),
+    updatedAt: new Date(),
+  });
+}
+
+export async function deletePlaylist(
+  userId: string,
+  catalogId: string,
+  playlists: any
+) {
+  const userRef = doc(db, COLLECTION.users, userId);
+  const userCatalogRef = doc(userRef, COLLECTION.catalogs, catalogId);
+
+  await updateDoc(userCatalogRef, {
+    playlists: playlists,
+    updatedAt: new Date(),
+  });
 }

@@ -1,84 +1,17 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
-import { Button } from "~/components/shadcn/button";
 import { Input } from "~/components/shadcn/input";
 import { Label } from "~/components/shadcn/label";
-import Spinner from "~/components/shared/spinner";
-import { useToast } from "~/hooks/use-toast";
 import { TitleDescriptionSchema as CatalogSchema } from "~/types-schema/schemas";
-import type { TitleDescriptionType as CatalogMetadata } from "~/types-schema/types";
-import fetchApi from "~/utils/fetch";
-
-type UpdateCatalogPayload = {
-  channels?: string[];
-  title?: string;
-  description?: string;
-};
 
 export default function CatalogForm({
-  savedChannels,
-  localChannel,
-  catalogData,
-  catalogId,
-  revalidateCatalog,
-  setLocalChannel,
+  catalogMetadataError,
+  catalogMetadata,
+  setCatalogMetadata,
+  setCatalogMetadataError,
 }: any) {
-  const [catalogMetadata, setCatalogMetadata] = useState<CatalogMetadata>({
-    title: "",
-    description: "",
-  });
-
-  const [catalogMetadataError, setCatalogMetadataError] =
-    useState<CatalogMetadata>({
-      title: "",
-      description: "",
-    });
-
-  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-
-  const { toast } = useToast();
-
-  useEffect(() => {
-    setCatalogMetadata({
-      title: catalogData?.title,
-      description: catalogData?.description,
-    });
-  }, [catalogData]);
-
-  const handleSubmit = async () => {
-    if (catalogMetadataError.title || catalogMetadataError.description) {
-      return;
-    }
-
-    const payload: UpdateCatalogPayload = {
-      channels: savedChannels.map((channel: any) => channel.id),
-      title: catalogMetadata.title,
-      description: catalogMetadata.description,
-    };
-
-    if (localChannel.length) {
-      payload.channels?.push(...localChannel.map((item: any) => item.id));
-    }
-
-    setIsSubmitting(true);
-    const result = await fetchApi(`/catalogs/${catalogId}/update`, {
-      method: "PATCH",
-      body: JSON.stringify(payload),
-    });
-
-    if (result.success) {
-      revalidateCatalog();
-    }
-
-    toast({ title: result.message });
-    setIsSubmitting(false);
-    setLocalChannel([]);
-  };
-
   const handleMetaUpdate = (e: any) => {
-    setCatalogMetadata((prev) => ({
+    setCatalogMetadata((prev: any) => ({
       ...prev,
       [e.target.name]: e.target.value,
     }));
@@ -113,7 +46,7 @@ export default function CatalogForm({
             <Label htmlFor="title">Title</Label>
             <Input
               id="title"
-              value={catalogMetadata.title}
+              value={catalogMetadata.title || ""}
               name="title"
               onChange={handleMetaUpdate}
             />
@@ -128,7 +61,7 @@ export default function CatalogForm({
             <Label htmlFor="description">Description</Label>
             <Input
               id="description"
-              value={catalogMetadata.description}
+              value={catalogMetadata.description || ""}
               name="description"
               onChange={handleMetaUpdate}
             />
@@ -139,21 +72,6 @@ export default function CatalogForm({
             ) : null}
           </div>
         </div>
-      </div>
-
-      <div className="flex gap-2 mt-5 justify-end">
-        <Button
-          disabled={Boolean(
-            (!localChannel.length &&
-              (catalogMetadataError.title ||
-                catalogMetadataError.description)) ||
-              isSubmitting
-          )}
-          onClick={handleSubmit}
-        >
-          {isSubmitting ? <Spinner className="size-4" /> : null}
-          Apply
-        </Button>
       </div>
     </>
   );

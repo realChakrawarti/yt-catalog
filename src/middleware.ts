@@ -26,8 +26,10 @@ export const config = {
   matcher: [
     "/api/catalogs/",
     "/api/catalogs/:catalogId/update",
+    "/api/catalogs/:catalogId/playlist",
     "/api/catalogs/:catalogId/delete",
     "/api/logout",
-    "/api/youtube/videoId",
+    "/api/youtube/get-video",
+    "/api/youtube/get-playlists",
   ],
 };
