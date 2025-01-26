@@ -32,6 +32,12 @@ export const YOUTUBE_CHANNEL_PLAYLISTS = (
 const tokenCharacters =
   "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
+/**
+ * Generates a unique token using a custom nanoid alphabet.
+ *
+ * @param length - The desired length of the generated token
+ * @returns A unique random string token of specified length
+ */
 export function createNanoidToken(length: number): string {
   const nanoid = customAlphabet(tokenCharacters, length);
   return nanoid();
@@ -50,6 +56,12 @@ export const COLLECTION = {
   archives: "archives",
 } as const;
 
+/**
+ * Converts a Firestore Timestamp to a UTC formatted string.
+ *
+ * @param dateTime - The Firestore Timestamp to be converted
+ * @returns A string representation of the timestamp in UTC format
+ */
 export function toUTCString(dateTime: Timestamp) {
   return new Date(dateTime.toDate()).toUTCString();
 }

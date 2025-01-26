@@ -65,6 +65,18 @@ function extractTopics(topicIds: TopicId[]): string[] {
   return topicNames;
 }
 
+/**
+ * Retrieves detailed information for a list of YouTube channels.
+ * 
+ * @param channels - An array of YouTube channel IDs to fetch information for
+ * @returns An array of channel metadata objects containing details like ID, handle, title, description, logo, and topics
+ * 
+ * @remarks
+ * Fetches channel information from the YouTube API and transforms the response into a structured format.
+ * Extracts key details such as channel title, description, custom URL, thumbnail, and associated topics.
+ * 
+ * @throws {Error} If there's an issue fetching channel information from the YouTube API
+ */
 async function getChannelsInfo(channels: string[]) {
   let channelsInfo: any[] = [];
   // Create a separate doc with channels information, fetch from youtube API
@@ -107,11 +119,33 @@ const getVideoThumbnails = (catalogData: DocumentData) => {
   return [...dayThumbnails, ...weekThumbnails, ...monthThumbnails];
 };
 
+/**
+ * Generates a unique playlist ID based on a channel ID.
+ * 
+ * @param channel - The original YouTube channel ID
+ * @returns A modified playlist ID derived from the input channel ID
+ * 
+ * @remarks
+ * This function transforms a channel ID by replacing the second character with 'U',
+ * which is a convention used by YouTube to generate playlist IDs from channel IDs.
+ */
 function createPlaylistId(channel: string) {
   return channel.substring(0, 1) + "U" + channel.substring(2);
 }
 
-// TODO: Clean this file up, it is an eyesore 😵
+/**
+ * Retrieves videos from a specified YouTube playlist, filtering out private and older videos.
+ *
+ * @param playlist - The playlist object containing playlist details
+ * @returns An array of video metadata for public videos published within the last 30 days
+ *
+ * @remarks
+ * This function fetches playlist items from the YouTube API and applies the following filters:
+ * - Excludes private videos
+ * - Excludes videos older than 30 days
+ *
+ * @throws {Error} Logs any errors encountered during the API fetch process
+ */
 async function getPlaylistVideos(playlist: any) {
   let playlistItemData: VideoMetadata[] = [];
   try {
@@ -151,6 +185,18 @@ async function getPlaylistVideos(playlist: any) {
   }
 }
 
+/**
+ * Retrieves videos from a YouTube channel's uploads playlist.
+ * 
+ * @param channel - The channel object containing channel details
+ * @returns An array of video metadata for public videos published within the last 30 days
+ * 
+ * @remarks
+ * This function filters out private videos and videos older than 30 days from the channel's uploads playlist.
+ * It uses the YouTube API to fetch playlist items and transforms them into a standardized video metadata format.
+ * 
+ * @throws {Error} Logs any errors encountered during the API request
+ */
 async function getChannelVideos(channel: any) {
   const playlistId = createPlaylistId(channel.id);
   let playlistItemData: VideoMetadata[] = [];
@@ -256,6 +302,24 @@ export async function getPageviewByCatalogId(
   return data?.at(0)?.pageviews ?? 0;
 }
 
+/**
+ * Retrieves and manages video metadata for a specific catalog.
+ * 
+ * @param catalogId - Unique identifier for the catalog
+ * @returns Catalog video metadata, including filtered videos, pageviews, and update information
+ * 
+ * @remarks
+ * This function performs the following key operations:
+ * - Checks if catalog exists
+ * - Retrieves videos from associated channels and playlists
+ * - Caches video data in Firestore
+ * - Filters videos by publication time (day, week, month)
+ * - Manages cache invalidation and update intervals
+ * 
+ * @throws Will return error messages if catalog is empty or doesn't exist
+ * 
+ * @beta
+ */
 export async function getVideosByCatalogId(catalogId: string) {
   let videoList: VideoMetadata[] = [];
   let totalVideos: number = 0;
@@ -373,10 +437,18 @@ export async function updateCatalogVideos(catalogId: string) {
 }
 
 /**
- * This function sends the response of a specific catalog provided a valid catalogId
- * @param catalogId
- * @param userId
- * @returns
+ * Retrieves detailed information for a specific catalog by its ID.
+ * 
+ * @param catalogId - The unique identifier of the catalog to retrieve
+ * @param userId - The ID of the user who owns the catalog
+ * @returns An object containing catalog metadata including title, description, channels, and playlists
+ * 
+ * @remarks
+ * This function fetches catalog details from two Firestore collections:
+ * 1. User-specific catalog document in the user's subcollection
+ * 2. Global catalog document in the catalogs collection
+ * 
+ * @throws {Error} Logs any errors encountered during Firestore document retrieval
  */
 export async function getCatalogById(catalogId: string, userId: string) {
   // Get channel list
@@ -491,6 +563,14 @@ export async function getValidCatalogIds() {
   return catalogListData;
 }
 
+/**
+ * Removes specified channels from a user's catalog.
+ * 
+ * @param userId - The unique identifier of the user
+ * @param catalogId - The unique identifier of the catalog to update
+ * @param channels - An array of channels to replace the existing channel list
+ * @returns A promise that resolves when the catalog is updated
+ */
 export async function deleteChannel(
   userId: string,
   catalogId: string,
@@ -577,6 +657,12 @@ export async function createCatalog(userId: string, catalogMeta: CatalogMeta) {
   return nanoidToken;
 }
 
+/**
+ * Retrieves the next scheduled update time for a specific catalog.
+ *
+ * @param catalogId - The unique identifier of the catalog
+ * @returns The timestamp of the catalog's last update
+ */
 export async function getNextUpdate(catalogId: string) {
   const catalogRef = doc(db, COLLECTION.catalogs, catalogId);
   const catalogSnap = await getDoc(catalogRef);
@@ -585,6 +671,22 @@ export async function getNextUpdate(catalogId: string) {
   return catalogData?.data.updatedAt.toDate();
 }
 
+/**
+ * Updates the playlists for a specific user catalog by fetching additional channel information.
+ *
+ * @param userId - The unique identifier of the user
+ * @param catalogId - The unique identifier of the catalog to update
+ * @param playlists - An array of playlist items to be added to the catalog
+ * @returns A promise that resolves when the catalog is updated with new playlist information
+ *
+ * @remarks
+ * This function performs the following steps:
+ * 1. Fetches channel details for each playlist's channel
+ * 2. Enriches playlist items with channel metadata
+ * 3. Updates the catalog document in Firestore with the new playlist information
+ *
+ * @throws {Error} If there are issues fetching channel information or updating Firestore
+ */
 export async function updateCatalogPlaylists(
   userId: string,
   catalogId: string,
@@ -623,6 +725,17 @@ export async function updateCatalogPlaylists(
   });
 }
 
+/**
+ * Removes specified playlists from a user's catalog.
+ *
+ * @param userId - The unique identifier of the user
+ * @param catalogId - The unique identifier of the catalog to update
+ * @param playlists - The updated list of playlists after deletion
+ * @returns A promise that resolves when the catalog is updated
+ *
+ * @remarks
+ * This function updates the playlists array in a user's catalog document and sets the update timestamp.
+ */
 export async function deletePlaylist(
   userId: string,
   catalogId: string,
