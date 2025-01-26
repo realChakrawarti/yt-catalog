@@ -41,9 +41,18 @@ export async function DELETE(request: NextRequest, ctx: ContextParams) {
 
   const playlists = await request.json();
 
-  await deletePlaylist(userId, catalogId, playlists);
-
-  revalidatePath(`/c/${catalogId}`);
-
-  return NxResponse.success<any>("Playlist deleted successfully.", {}, 201);
+  try {
+    await deletePlaylist(userId, catalogId, playlists);
+    revalidatePath(`/c/${catalogId}`);
+    return NxResponse.success<any>("Playlist deleted successfully.", {}, 201);
+  } catch (err) {
+    return NxResponse.fail(
+      "Unable to delete playlist from the catalog.",
+      {
+        code: "PLAYLIST_DELETE_FAILED",
+        details: "Unable to delete playlist from the catalog.",
+      },
+      400
+    );
+  }
 }

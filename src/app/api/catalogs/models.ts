@@ -146,9 +146,9 @@ async function getPlaylistVideos(playlist: any) {
     }
   } catch (err) {
     console.error(err);
-  } finally {
-    return playlistItemData;
   }
+
+  return playlistItemData;
 }
 
 async function getChannelVideos(channel: any) {
@@ -300,6 +300,7 @@ export async function getVideosByCatalogId(catalogId: string) {
   if (currentTime - lastUpdatedTime > deltaTime) {
     pageviews = await getPageviewByCatalogId(catalogId);
 
+    // TODO: Parallelize the requests made
     for (const channel of channelListData) {
       const data = await getChannelVideos(channel);
       videoList = [...videoList, ...data];

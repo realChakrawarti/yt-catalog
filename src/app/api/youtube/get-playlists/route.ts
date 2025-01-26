@@ -30,6 +30,12 @@ export async function GET(request: NextRequest) {
         { code: "YOUTUBE_API", details: err.message },
         400
       );
+    } else {
+      return NxResponse.fail(
+        "Unable to fetch playlists.",
+        { code: "YOUTUBE_API", details: "Unable to fetch playlists." },
+        400
+      );
     }
   }
 }

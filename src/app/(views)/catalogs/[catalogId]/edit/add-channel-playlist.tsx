@@ -32,7 +32,7 @@ export default function AddChannelPlaylist() {
     videoLink,
     fetchedChannelPlaylists,
     setFetchedChannelPlaylists,
-    resetLocalPlaylist
+    resetLocalPlaylist,
   } = useCatalogStore();
 
   const handleVideoLink = (e: ChangeEvent<HTMLInputElement>) => {
@@ -54,7 +54,6 @@ export default function AddChannelPlaylist() {
   };
 
   const validateVideoLink = async () => {
-
     // Reset playlist state
     resetLocalPlaylist();
 
@@ -64,7 +63,11 @@ export default function AddChannelPlaylist() {
       videoId = found[1];
     }
 
-    if (videoId) {
+    if (!videoId) {
+      return;
+    }
+
+    try {
       const result = await fetchApi(`/youtube/get-video?videoId=${videoId}`);
 
       if (!result.success) {
@@ -79,6 +82,8 @@ export default function AddChannelPlaylist() {
         id: channelId,
         title: channelTitle,
       });
+    } catch (err) {
+      console.error(String(err));
     }
   };
 

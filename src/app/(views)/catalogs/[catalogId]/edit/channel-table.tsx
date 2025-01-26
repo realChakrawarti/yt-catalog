@@ -8,8 +8,8 @@ import {
   TableHeader,
   TableRow,
 } from "~/components/shadcn/table";
+import { DeleteModal } from "~/components/shared/delete-modal";
 import { DeleteIcon } from "~/components/shared/icons";
-import JustTip from "~/components/shared/just-the-tip";
 
 function ChannelTable({ channels, handleDelete }: any) {
   return (
@@ -60,17 +60,23 @@ function ChannelTable({ channels, handleDelete }: any) {
               </TableCell>
               <TableCell>{channel?.id}</TableCell>
               <TableCell>
-                <JustTip label="Remove Channel">
-                  <Button
-                    variant="outline"
-                    onClick={() => handleDelete(channel?.id)}
-                  >
+                <DeleteModal
+                  label={
+                    <>
+                      This action cannot be undone. This will permanently remove{" "}
+                      <span className="text-primary">{channel.title}</span>{" "}
+                      channel from the catalog?
+                    </>
+                  }
+                  onDelete={() => handleDelete(channel?.id)}
+                >
+                  <Button variant="outline">
                     <DeleteIcon
                       size={24}
                       className="text-red-700 hover:text-red-500 cursor-pointer"
                     />
                   </Button>
-                </JustTip>
+                </DeleteModal>
               </TableCell>
             </TableRow>
           ))
