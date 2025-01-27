@@ -1,17 +1,27 @@
 "use client";
 
+import { ChangeEvent, Dispatch, SetStateAction } from "react";
+
 import { Input } from "~/components/shadcn/input";
 import { Label } from "~/components/shadcn/label";
-import { TitleDescriptionSchema as CatalogSchema } from "~/types-schema/schemas";
+import { TitleDescriptionSchema } from "~/types-schema/schemas";
+import type { TitleDescriptionType } from "~/types-schema/types";
+
+interface CatalogFormProps {
+  catalogMetadataError: TitleDescriptionType;
+  catalogMetadata: TitleDescriptionType;
+  setCatalogMetadata: Dispatch<SetStateAction<TitleDescriptionType>>;
+  setCatalogMetadataError: Dispatch<SetStateAction<TitleDescriptionType>>;
+}
 
 export default function CatalogForm({
   catalogMetadataError,
   catalogMetadata,
   setCatalogMetadata,
   setCatalogMetadataError,
-}: any) {
-  const handleMetaUpdate = (e: any) => {
-    setCatalogMetadata((prev: any) => ({
+}: CatalogFormProps) {
+  const handleMetaUpdate = (e: ChangeEvent<HTMLInputElement>) => {
+    setCatalogMetadata((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
     }));
@@ -21,7 +31,7 @@ export default function CatalogForm({
       [e.target.name]: e.target.value,
     };
 
-    const result = CatalogSchema.safeParse(parseCatalogMetadata);
+    const result = TitleDescriptionSchema.safeParse(parseCatalogMetadata);
 
     if (!result.success) {
       const { title = { _errors: [""] }, description = { _errors: [""] } } =

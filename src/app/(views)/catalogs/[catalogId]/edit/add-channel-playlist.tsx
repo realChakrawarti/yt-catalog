@@ -17,6 +17,7 @@ import fetchApi from "~/utils/fetch";
 import useCatalogStore from "./catalog-store";
 import ShowPlaylist from "./show-playlist";
 
+// TODO: Consider using a constant for the regex patterns
 const YouTubeVideoLinkRegex =
   /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/|shorts\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*/;
 
@@ -32,7 +33,7 @@ export default function AddChannelPlaylist() {
     videoLink,
     fetchedChannelPlaylists,
     setFetchedChannelPlaylists,
-    resetLocalPlaylist
+    resetLocalPlaylist,
   } = useCatalogStore();
 
   const handleVideoLink = (e: ChangeEvent<HTMLInputElement>) => {
@@ -54,7 +55,6 @@ export default function AddChannelPlaylist() {
   };
 
   const validateVideoLink = async () => {
-
     // Reset playlist state
     resetLocalPlaylist();
 
@@ -64,7 +64,11 @@ export default function AddChannelPlaylist() {
       videoId = found[1];
     }
 
-    if (videoId) {
+    if (!videoId) {
+      return;
+    }
+
+    try {
       const result = await fetchApi(`/youtube/get-video?videoId=${videoId}`);
 
       if (!result.success) {
@@ -79,6 +83,8 @@ export default function AddChannelPlaylist() {
         id: channelId,
         title: channelTitle,
       });
+    } catch (err) {
+      console.error(String(err));
     }
   };
 
@@ -157,8 +163,9 @@ export default function AddChannelPlaylist() {
           <div className="space-y-2">
             <div className="flex gap-2">
               <Input
-                className="search-me-daddy"
+                className="input-search-icon"
                 type="search"
+                aria-label="YouTube video URL"
                 placeholder="Enter video URL"
                 value={videoLink.link}
                 onChange={handleVideoLink}

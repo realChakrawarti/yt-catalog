@@ -60,6 +60,18 @@ type FavoriteData = {
 export type { FavoriteData, VideoData };
 export type TitleDescriptionType = z.infer<typeof TitleDescriptionSchema>;
 
+export type CatalogPlaylist = {
+  channelDescription: string;
+  channelHandle: string;
+  channelId: string;
+  channelLogo: string;
+  channelTitle: string;
+  description: string;
+  id: string;
+  publishedAt: string;
+  title: string;
+};
+
 export type PlaylistItem = {
   title: string;
   thumbnail: string;
@@ -68,4 +80,20 @@ export type PlaylistItem = {
   channelTitle: string;
   publishedAt: string;
   description: string;
+};
+
+export type CatalogChannel = {
+  description: string;
+  handle: string;
+  id: string;
+  logo: string;
+  title: string;
+  topics: string[];
+};
+
+export type CatalogByIdResponse = {
+  title: string;
+  description: string;
+  channelList: CatalogChannel[];
+  playlist: CatalogPlaylist[];
 };

@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-import type { PlaylistItem } from "~/types-schema/types";
+import type { CatalogPlaylist, PlaylistItem } from "~/types-schema/types";
 
 export type LocalChannel = {
   title: string;
@@ -23,14 +23,14 @@ interface State {
   searchPlaylists: any[];
   channelPlaylists: any[];
   playlistInput: string;
-  savedPlaylists: any[];
+  savedPlaylists: CatalogPlaylist[];
   fetchedChannelPlaylists: boolean;
 }
 
 interface Actions {
   setChannelInfo: (_channelInfo: ChannelInfo) => void;
   setVideoLink: (_videoLink: Partial<VideoLink>) => void;
-  setSavedPlaylists: (_playlist: any[]) => void;
+  setSavedPlaylists: (_playlist: CatalogPlaylist[]) => void;
   setLocalChannels: (_localChannels: LocalChannel[]) => void;
   setSavedChannels: (_channels: any[]) => void;
   setLocalPlaylists: (_localPlaylists: PlaylistItem[]) => void;

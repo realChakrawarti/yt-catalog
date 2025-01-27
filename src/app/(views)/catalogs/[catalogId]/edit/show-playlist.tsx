@@ -93,7 +93,7 @@ function RenderLocalList() {
           <h2>Selected {localPlaylists.length} playlists</h2>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {localPlaylists.map((item: any) => {
+          {localPlaylists.map((item) => {
             return (
               <section
                 key={item.id}

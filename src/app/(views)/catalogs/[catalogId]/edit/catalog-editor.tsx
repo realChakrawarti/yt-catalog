@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
 import useSWR from "swr";
 
 import { Badge } from "~/components/shadcn/badge";
@@ -11,7 +11,7 @@ import { LinkIcon } from "~/components/shared/icons";
 import JustTip from "~/components/shared/just-the-tip";
 import Spinner from "~/components/shared/spinner";
 import { useToast } from "~/hooks/use-toast";
-import type { TitleDescriptionType as CatalogMetadata } from "~/types-schema/types";
+import type { TitleDescriptionType } from "~/types-schema/types";
 import fetchApi from "~/utils/fetch";
 
 import AddChannelPlaylist from "./add-channel-playlist";
@@ -26,7 +26,7 @@ type UpdateCatalogPayload = {
   description?: string;
 };
 
-export default function CatalogEditor({ catalogId }: any) {
+export default function CatalogEditor({ catalogId }: { catalogId: string }) {
   const { toast } = useToast();
 
   const {
@@ -61,55 +61,51 @@ export default function CatalogEditor({ catalogId }: any) {
 
   const handleDeleteSaved = async (id: string) => {
     const deleteChannel = savedChannels.find((channel) => channel.id === id);
-    if (deleteChannel) {
-      alert(
-        `Are you sure you want to remove ${deleteChannel.title}'s channel from the catalog?`
-      );
+    if (!deleteChannel) {
+      return;
+    }
 
-      const payload = savedChannels.filter(
-        (channel) => channel.id != deleteChannel.id
-      );
+    const payload = savedChannels.filter(
+      (channel) => channel.id != deleteChannel.id
+    );
 
-      const result = await fetchApi(`/catalogs/${catalogId}/update`, {
-        method: "DELETE",
-        body: JSON.stringify(payload),
+    const result = await fetchApi(`/catalogs/${catalogId}/update`, {
+      method: "DELETE",
+      body: JSON.stringify(payload),
+    });
+
+    if (result.success) {
+      toast({
+        title: `${deleteChannel.title}'s channel deleted from the catalog.`,
       });
-
-      if (result.success) {
-        toast({
-          title: `${deleteChannel.title}'s channel deleted from the catalog.`,
-        });
-        mutate();
-      } else {
-        toast({ title: "Something went wrong." });
-      }
+      mutate();
+    } else {
+      toast({ title: "Something went wrong." });
     }
   };
 
   const handleDeleteSavedPlaylist = async (id: string) => {
     const deletePlaylist = savedPlaylists.find((channel) => channel.id === id);
-    if (deletePlaylist) {
-      alert(
-        `Are you sure you want to remove ${deletePlaylist.title}'s playlist from the catalog?`
-      );
+    if (!deletePlaylist) {
+      return;
+    }
 
-      const payload = savedPlaylists.filter(
-        (playlist) => playlist.id != deletePlaylist.id
-      );
+    const payload = savedPlaylists.filter(
+      (playlist) => playlist.id != deletePlaylist.id
+    );
 
-      const result = await fetchApi(`/catalogs/${catalogId}/playlist`, {
-        method: "DELETE",
-        body: JSON.stringify(payload),
+    const result = await fetchApi(`/catalogs/${catalogId}/playlist`, {
+      method: "DELETE",
+      body: JSON.stringify(payload),
+    });
+
+    if (result.success) {
+      toast({
+        title: `${deletePlaylist.title}'s playlist deleted from the catalog.`,
       });
-
-      if (result.success) {
-        toast({
-          title: `${deletePlaylist.title}'s playlist deleted from the catalog.`,
-        });
-        mutate();
-      } else {
-        toast({ title: "Something went wrong." });
-      }
+      mutate();
+    } else {
+      toast({ title: "Something went wrong." });
     }
   };
 
@@ -127,10 +123,9 @@ export default function CatalogEditor({ catalogId }: any) {
     setLocalPlaylists(filteredPlaylists);
   };
 
-  // TODO: Allow only adding playlist when the channel id is not in saved channels, avoid conflict
   const handleAddPlaylistsToCatalog = async () => {
     // Check if channelId already exists in savedChannels
-    const alreadyExists = savedChannels.some((channel) => {
+    const alreadyExists = savedChannels?.some((channel) => {
       if (channel.id === localPlaylists[0].channelId) {
         toast({
           title: `${channel.title}'s channel is already added to the catalog.`,
@@ -158,13 +153,13 @@ export default function CatalogEditor({ catalogId }: any) {
     }
   };
 
-  const [catalogMetadata, setCatalogMetadata] = useState<CatalogMetadata>({
+  const [catalogMetadata, setCatalogMetadata] = useState<TitleDescriptionType>({
     title: "",
     description: "",
   });
 
   const [catalogMetadataError, setCatalogMetadataError] =
-    useState<CatalogMetadata>({
+    useState<TitleDescriptionType>({
       title: "",
       description: "",
     });
@@ -190,12 +185,12 @@ export default function CatalogEditor({ catalogId }: any) {
     };
 
     if (localChannels.length) {
-      payload.channels?.push(...localChannels.map((item: any) => item.id));
+      payload.channels?.push(...localChannels.map((item) => item.id));
     }
 
     // Check if any playlist is already added of the channel, if so ask to remove the playlists
-    const playlistExists = localChannels.some((channel) => {
-      return savedPlaylists.some((playlist) => {
+    const playlistExists = localChannels?.some((channel) => {
+      return savedPlaylists?.some((playlist) => {
         if (playlist.channelId === channel.id) {
           toast({
             title: `${channel.title} has already added specific playlists.`,
@@ -208,19 +203,28 @@ export default function CatalogEditor({ catalogId }: any) {
 
     if (playlistExists) return;
 
-    setIsSubmitting(true);
-    const result = await fetchApi(`/catalogs/${catalogId}/update`, {
-      method: "PATCH",
-      body: JSON.stringify(payload),
-    });
+    try {
+      setIsSubmitting(true);
+      const result = await fetchApi(`/catalogs/${catalogId}/update`, {
+        method: "PATCH",
+        body: JSON.stringify(payload),
+      });
 
-    if (result.success) {
-      mutate();
-      setLocalChannels([]);
+      if (result.success) {
+        mutate();
+        setLocalChannels([]);
+      }
+
+      toast({ title: result.message });
+    } catch (err) {
+      if (err instanceof Error) {
+        console.error(err.message);
+      } else {
+        console.error(err);
+      }
+    } finally {
+      setIsSubmitting(false);
     }
-
-    toast({ title: result.message });
-    setIsSubmitting(false);
   };
 
   // TODO: Instead of table for rendering saved and unsaved channels/playlist, consider using cards

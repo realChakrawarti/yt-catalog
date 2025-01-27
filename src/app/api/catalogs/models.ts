@@ -15,7 +15,13 @@ import {
 } from "firebase/firestore";
 import { revalidatePath, unstable_noStore } from "next/cache";
 
-import type { PlaylistItem, ValidMetadata } from "~/types-schema/types";
+import type {
+  CatalogByIdResponse,
+  CatalogChannel,
+  CatalogPlaylist,
+  PlaylistItem,
+  ValidMetadata,
+} from "~/types-schema/types";
 import { FOUR_HOURS, ONE_DAY, ONE_MONTH, ONE_WEEK } from "~/utils/constant";
 import { db } from "~/utils/firebase";
 import {
@@ -147,7 +153,7 @@ function createPlaylistId(channel: string) {
  * @throws {Error} Logs any errors encountered during the API fetch process
  */
 async function getPlaylistVideos(playlist: any) {
-  let playlistItemData: VideoMetadata[] = [];
+  const playlistItemData: VideoMetadata[] = [];
   try {
     const result = await fetch(
       YOUTUBE_CHANNEL_PLAYLIST_VIDEOS(playlist.id, LIMIT),
@@ -180,9 +186,9 @@ async function getPlaylistVideos(playlist: any) {
     }
   } catch (err) {
     console.error(err);
-  } finally {
-    return playlistItemData;
   }
+
+  return playlistItemData;
 }
 
 /**
@@ -199,7 +205,7 @@ async function getPlaylistVideos(playlist: any) {
  */
 async function getChannelVideos(channel: any) {
   const playlistId = createPlaylistId(channel.id);
-  let playlistItemData: VideoMetadata[] = [];
+  const playlistItemData: VideoMetadata[] = [];
   try {
     const result = await fetch(
       YOUTUBE_CHANNEL_PLAYLIST_VIDEOS(playlistId, LIMIT),
@@ -364,6 +370,7 @@ export async function getVideosByCatalogId(catalogId: string) {
   if (currentTime - lastUpdatedTime > deltaTime) {
     pageviews = await getPageviewByCatalogId(catalogId);
 
+    // TODO: Parallelize the requests made
     for (const channel of channelListData) {
       const data = await getChannelVideos(channel);
       videoList = [...videoList, ...data];
@@ -454,14 +461,19 @@ export async function getCatalogById(catalogId: string, userId: string) {
   // Get channel list
   const userRef = doc(db, COLLECTION.users, userId);
 
-  let catalogResponseData = {};
+  let catalogResponseData: CatalogByIdResponse = {
+    title: "",
+    description: "",
+    channelList: [],
+    playlist: [],
+  };
 
   try {
     const userCatalogRef = doc(userRef, COLLECTION.catalogs, catalogId);
 
     const userCatalogData = await getDoc(userCatalogRef);
-    const channelListData = userCatalogData.data()?.channels;
-    const playlistData = userCatalogData.data()?.playlists;
+    const channelListData: CatalogChannel[] = userCatalogData.data()?.channels;
+    const playlistData: CatalogPlaylist[] = userCatalogData.data()?.playlists;
 
     // Get title and description
 

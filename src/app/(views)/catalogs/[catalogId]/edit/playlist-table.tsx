@@ -8,10 +8,18 @@ import {
   TableHeader,
   TableRow,
 } from "~/components/shadcn/table";
+import { DeleteModal } from "~/components/shared/delete-modal";
 import { DeleteIcon } from "~/components/shared/icons";
-import JustTip from "~/components/shared/just-the-tip";
 
-export default function PlaylistTable({ playlists, handleDelete }: any) {
+interface PlaylistTableProps {
+  playlists: any[];
+  handleDelete: (_id: string) => void;
+}
+
+export default function PlaylistTable({
+  playlists,
+  handleDelete,
+}: PlaylistTableProps) {
   return (
     <Table>
       <TableCaption>A list of playlists.</TableCaption>
@@ -34,7 +42,7 @@ export default function PlaylistTable({ playlists, handleDelete }: any) {
             </TableCell>
           </TableRow>
         ) : (
-          playlists?.map((playlist: any, idx: number) => (
+          playlists?.map((playlist, idx: number) => (
             <TableRow key={playlist?.id}>
               <TableCell>{idx + 1}</TableCell>
               <TableCell>{playlist?.title}</TableCell>
@@ -63,17 +71,23 @@ export default function PlaylistTable({ playlists, handleDelete }: any) {
                 </div>
               </TableCell>
               <TableCell>
-                <JustTip label="Remove Channel">
-                  <Button
-                    variant="outline"
-                    onClick={() => handleDelete(playlist?.id)}
-                  >
+                <DeleteModal
+                  label={
+                    <>
+                      This action cannot be undone. This will permanently remove{" "}
+                      <span className="text-primary">{playlist.title}</span>{" "}
+                      playlist from the catalog?
+                    </>
+                  }
+                  onDelete={() => handleDelete(playlist?.id)}
+                >
+                  <Button variant="outline">
                     <DeleteIcon
                       size={24}
                       className="text-red-700 hover:text-red-500 cursor-pointer"
                     />
                   </Button>
-                </JustTip>
+                </DeleteModal>
               </TableCell>
             </TableRow>
           ))

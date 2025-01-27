@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 
 import { Button } from "~/components/shadcn/button";
 import {
@@ -31,7 +31,7 @@ export default function AddVideoDialog({
     link: "",
     error: "",
   });
-  const handleVideoLink = (e: any) => {
+  const handleVideoLink = (e: ChangeEvent<HTMLInputElement>) => {
     setVideoLink((prev) => ({
       ...prev,
       link: e.target.value,
@@ -59,7 +59,11 @@ export default function AddVideoDialog({
       videoId = found[1];
     }
 
-    if (videoId) {
+    if (!videoId) {
+      return;
+    }
+
+    try {
       const result = await fetchApi(`/youtube/get-video?videoId=${videoId}`);
 
       if (!result.success) {
@@ -75,7 +79,7 @@ export default function AddVideoDialog({
         channelTitle: videoData.channelTitle,
         channelId: videoData.channelId,
         thumbnail: videoData.thumbnails.medium.url,
-        publishedAt: videoData.publishedAt
+        publishedAt: videoData.publishedAt,
       };
 
       const resultAdd = await fetchApi(`/archives/${archiveId}/update`, {
@@ -94,6 +98,9 @@ export default function AddVideoDialog({
         link: "",
         error: "",
       });
+    } catch (err) {
+      console.error(String(err));
+      toast({ title: "Something went wrong." });
     }
   };
 
