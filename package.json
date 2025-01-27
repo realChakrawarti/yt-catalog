@@ -24,7 +24,9 @@
     "@google-analytics/data": "^4.12.0",
     "@icons-pack/react-simple-icons": "^10.2.0",
     "@next/third-parties": "^14.2.8",
+    "@radix-ui/react-alert-dialog": "^1.1.5",
     "@radix-ui/react-avatar": "^1.1.1",
+    "@radix-ui/react-collapsible": "^1.1.2",
     "@radix-ui/react-dialog": "^1.1.4",
     "@radix-ui/react-dropdown-menu": "^2.1.2",
     "@radix-ui/react-label": "^2.1.0",
@@ -42,6 +44,7 @@
     "dexie": "^4.0.10",
     "dexie-react-hooks": "^1.1.7",
     "firebase": "^10.13.1",
+    "fuse.js": "^7.0.0",
     "linkify-react": "^4.1.4",
     "linkifyjs": "^4.1.4",
     "lucide-react": "^0.439.0",
@@ -58,7 +61,8 @@
     "tailwind-variants": "^0.2.1",
     "tailwindcss-animate": "^1.0.7",
     "usehooks-ts": "^3.1.0",
-    "zod": "^3.23.8"
+    "zod": "^3.23.8",
+    "zustand": "^5.0.3"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.5.0",
