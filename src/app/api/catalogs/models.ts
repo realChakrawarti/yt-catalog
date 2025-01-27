@@ -164,10 +164,11 @@ async function getPlaylistVideos(playlist: any) {
     const playlistVideoItems = result.items;
 
     for (const item of playlistVideoItems) {
-      // Don't return video which are private or are older than 30 days (ONE MONTH)
+      // Don't return video which are private, deleted (privacyStatusUnspecified) or are older than 30 days (ONE MONTH)
       const videoPublished = item.contentDetails.videoPublishedAt;
       if (
         item.status.privacyStatus === "private" ||
+        item.status.privacyStatus === "privacyStatusUnspecified" ||
         currentTime - new Date(videoPublished).getTime() > ONE_MONTH
       ) {
         continue;
