@@ -73,14 +73,14 @@ function extractTopics(topicIds: TopicId[]): string[] {
 
 /**
  * Retrieves detailed information for a list of YouTube channels.
- * 
+ *
  * @param channels - An array of YouTube channel IDs to fetch information for
  * @returns An array of channel metadata objects containing details like ID, handle, title, description, logo, and topics
- * 
+ *
  * @remarks
  * Fetches channel information from the YouTube API and transforms the response into a structured format.
  * Extracts key details such as channel title, description, custom URL, thumbnail, and associated topics.
- * 
+ *
  * @throws {Error} If there's an issue fetching channel information from the YouTube API
  */
 async function getChannelsInfo(channels: string[]) {
@@ -127,10 +127,10 @@ const getVideoThumbnails = (catalogData: DocumentData) => {
 
 /**
  * Generates a unique playlist ID based on a channel ID.
- * 
+ *
  * @param channel - The original YouTube channel ID
  * @returns A modified playlist ID derived from the input channel ID
- * 
+ *
  * @remarks
  * This function transforms a channel ID by replacing the second character with 'U',
  * which is a convention used by YouTube to generate playlist IDs from channel IDs.
@@ -193,14 +193,14 @@ async function getPlaylistVideos(playlist: any) {
 
 /**
  * Retrieves videos from a YouTube channel's uploads playlist.
- * 
+ *
  * @param channel - The channel object containing channel details
  * @returns An array of video metadata for public videos published within the last 30 days
- * 
+ *
  * @remarks
  * This function filters out private videos and videos older than 30 days from the channel's uploads playlist.
  * It uses the YouTube API to fetch playlist items and transforms them into a standardized video metadata format.
- * 
+ *
  * @throws {Error} Logs any errors encountered during the API request
  */
 async function getChannelVideos(channel: any) {
@@ -310,10 +310,10 @@ export async function getPageviewByCatalogId(
 
 /**
  * Retrieves and manages video metadata for a specific catalog.
- * 
+ *
  * @param catalogId - Unique identifier for the catalog
  * @returns Catalog video metadata, including filtered videos, pageviews, and update information
- * 
+ *
  * @remarks
  * This function performs the following key operations:
  * - Checks if catalog exists
@@ -321,9 +321,9 @@ export async function getPageviewByCatalogId(
  * - Caches video data in Firestore
  * - Filters videos by publication time (day, week, month)
  * - Manages cache invalidation and update intervals
- * 
+ *
  * @throws Will return error messages if catalog is empty or doesn't exist
- * 
+ *
  * @beta
  */
 export async function getVideosByCatalogId(catalogId: string) {
@@ -353,7 +353,7 @@ export async function getVideosByCatalogId(catalogId: string) {
 
   const playlistData = userSnapData?.playlists;
 
-  if (!channelListData.length && !playlistData.length) {
+  if (!channelListData?.length && !playlistData?.length) {
     return "Catalog is empty. Channel or playlist is yet to be added!";
   }
 
@@ -371,14 +371,18 @@ export async function getVideosByCatalogId(catalogId: string) {
     pageviews = await getPageviewByCatalogId(catalogId);
 
     // TODO: Parallelize the requests made
-    for (const channel of channelListData) {
-      const data = await getChannelVideos(channel);
-      videoList = [...videoList, ...data];
+    if (channelListData?.length) {
+      for (const channel of channelListData) {
+        const data = await getChannelVideos(channel);
+        videoList = [...videoList, ...data];
+      }
     }
 
-    for (const playlist of playlistData) {
-      const data = await getPlaylistVideos(playlist);
-      videoList = [...videoList, ...data];
+    if (playlistData?.length) {
+      for (const playlist of playlistData) {
+        const data = await getPlaylistVideos(playlist);
+        videoList = [...videoList, ...data];
+      }
     }
 
     // Sort the videoList by time
@@ -402,18 +406,16 @@ export async function getVideosByCatalogId(catalogId: string) {
       }
     }
 
-    await setDoc(
-      catalogRef,
-      {
-        data: {
-          videos: videoFilterData,
-          updatedAt: recentUpdate,
-          totalVideos: videoList.length,
-        },
-        pageviews: pageviews,
+    const catalogVideos = {
+      data: {
+        videos: videoFilterData,
+        updatedAt: recentUpdate,
+        totalVideos: videoList.length,
       },
-      { merge: true }
-    );
+      pageviews: pageviews,
+    };
+
+    await setDoc(catalogRef, catalogVideos, { merge: true });
 
     revalidatePath(`/c/${catalogId}`);
     console.log(`Cached invalidated /c/${catalogId}`);
@@ -445,16 +447,16 @@ export async function updateCatalogVideos(catalogId: string) {
 
 /**
  * Retrieves detailed information for a specific catalog by its ID.
- * 
+ *
  * @param catalogId - The unique identifier of the catalog to retrieve
  * @param userId - The ID of the user who owns the catalog
  * @returns An object containing catalog metadata including title, description, channels, and playlists
- * 
+ *
  * @remarks
  * This function fetches catalog details from two Firestore collections:
  * 1. User-specific catalog document in the user's subcollection
  * 2. Global catalog document in the catalogs collection
- * 
+ *
  * @throws {Error} Logs any errors encountered during Firestore document retrieval
  */
 export async function getCatalogById(catalogId: string, userId: string) {
@@ -577,7 +579,7 @@ export async function getValidCatalogIds() {
 
 /**
  * Removes specified channels from a user's catalog.
- * 
+ *
  * @param userId - The unique identifier of the user
  * @param catalogId - The unique identifier of the catalog to update
  * @param channels - An array of channels to replace the existing channel list
@@ -653,6 +655,7 @@ export async function createCatalog(userId: string, catalogMeta: CatalogMeta) {
   // Create catalog sub-collection
   await setDoc(userCatalogRef, {
     channels: [],
+    playlists: [],
     updatedAt: new Date(),
   });
 
