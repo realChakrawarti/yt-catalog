@@ -20,7 +20,9 @@ interface DeleteModalProps extends PropsWithChildren {
 export function DeleteModal({ children, label, onDelete }: DeleteModalProps) {
   return (
     <AlertDialog>
-      <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
+      <AlertDialogTrigger asChild aria-label="Delete confirmation dialog">
+        {children}
+      </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>

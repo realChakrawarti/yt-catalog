@@ -17,6 +17,7 @@ import fetchApi from "~/utils/fetch";
 import useCatalogStore from "./catalog-store";
 import ShowPlaylist from "./show-playlist";
 
+// TODO: Consider using a constant for the regex patterns
 const YouTubeVideoLinkRegex =
   /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/|shorts\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*/;
 
@@ -162,8 +163,9 @@ export default function AddChannelPlaylist() {
           <div className="space-y-2">
             <div className="flex gap-2">
               <Input
-                className="search-me-daddy"
+                className="input-search-icon"
                 type="search"
+                aria-label="YouTube video URL"
                 placeholder="Enter video URL"
                 value={videoLink.link}
                 onChange={handleVideoLink}

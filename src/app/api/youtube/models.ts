@@ -25,7 +25,7 @@ export async function getPlaylistsByChannel(channelId: string) {
   const response = await fetch(YOUTUBE_CHANNEL_PLAYLISTS(channelId));
   const firstPageData = await response.json();
   if (response.status === 200) {
-    let playlistItems = firstPageData.items;
+    const playlistItems = firstPageData.items;
     const allPlaylistItems = await getAllPlaylists(
       channelId,
       firstPageData,

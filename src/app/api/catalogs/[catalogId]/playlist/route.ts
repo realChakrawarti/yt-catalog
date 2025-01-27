@@ -32,7 +32,7 @@ export async function PATCH(request: NextRequest, ctx: ContextParams) {
 
   await updateCatalogPlaylists(userId, catalogId, playlistPayload);
 
-  return NxResponse.success<any>("Playlist update successfully.", {}, 201);
+  return NxResponse.success<any>("Playlist update successfully.", {}, 200);
 }
 
 export async function DELETE(request: NextRequest, ctx: ContextParams) {
@@ -44,7 +44,7 @@ export async function DELETE(request: NextRequest, ctx: ContextParams) {
   try {
     await deletePlaylist(userId, catalogId, playlists);
     revalidatePath(`/c/${catalogId}`);
-    return NxResponse.success<any>("Playlist deleted successfully.", {}, 201);
+    return NxResponse.success<any>("Playlist deleted successfully.", {}, 200);
   } catch (err) {
     return NxResponse.fail(
       "Unable to delete playlist from the catalog.",

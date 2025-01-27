@@ -42,7 +42,7 @@ export default function PlaylistTable({
             </TableCell>
           </TableRow>
         ) : (
-          playlists?.map((playlist: any, idx: number) => (
+          playlists?.map((playlist, idx: number) => (
             <TableRow key={playlist?.id}>
               <TableCell>{idx + 1}</TableCell>
               <TableCell>{playlist?.title}</TableCell>
