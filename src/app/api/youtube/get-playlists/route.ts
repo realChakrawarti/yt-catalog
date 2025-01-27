@@ -4,6 +4,19 @@ import { NxResponse } from "~/utils/nx-response";
 
 import { getPlaylistsByChannel } from "../models";
 
+/**
+ * Handles GET requests to retrieve playlists for a specific YouTube channel.
+ *
+ * @param request - The incoming Next.js HTTP request containing the channel ID
+ * @returns A response with either the fetched playlists or an error message
+ *
+ * @remarks
+ * - Requires a `channelId` search parameter in the request URL
+ * - Returns a 400 status code for missing or invalid channel ID
+ * - Catches and handles errors from the YouTube API playlist retrieval
+ *
+ * @throws {NxResponse} Fails with a 400 status code if channel ID is missing or an error occurs
+ */
 export async function GET(request: NextRequest) {
   const channelId = request.nextUrl.searchParams.get("channelId");
 
