@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.6](https://github.com/realChakrawarti/yt-catalog/compare/v1.4.5...v1.4.6) (2025-01-27)
+
+
+### Features
+
+* add playlist to db and show playlist ([61fae42](https://github.com/realChakrawarti/yt-catalog/commit/61fae422455351d9207958314ae00c9d832d20fa))
+* generate catalog with playlist videos and also filter out private videos ([f19608f](https://github.com/realChakrawarti/yt-catalog/commit/f19608f0195945be5242edfe6d7a9d03d56b4f01))
+* support adding playlist in catalog ([f01e723](https://github.com/realChakrawarti/yt-catalog/commit/f01e7237d95e64eaef8359292d12a843ae70bf89))
+
+
+### Bug Fixes
+
+* coderabbit suggestions ([ab548dc](https://github.com/realChakrawarti/yt-catalog/commit/ab548dca1578ceb4c232e21f374a0042883c44ba))
+* minor code review issues ([40d6001](https://github.com/realChakrawarti/yt-catalog/commit/40d600158d57430cabb1260320610ed7fd6c450a))
+
 ### [1.4.5](https://github.com/realChakrawarti/yt-catalog/compare/v1.4.4...v1.4.5) (2025-01-15)
 
 
