@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.8](https://github.com/realChakrawarti/yt-catalog/compare/v1.4.7...v1.4.8) (2025-01-27)
+
+
+### Bug Fixes
+
+* filter deleted videos, causing setDoc to error out on undefined value ([996b362](https://github.com/realChakrawarti/yt-catalog/commit/996b36207dbe09e0ae394fffae0de06843cab61e))
+
 ### [1.4.7](https://github.com/realChakrawarti/yt-catalog/compare/v1.4.6...v1.4.7) (2025-01-27)
 
 
