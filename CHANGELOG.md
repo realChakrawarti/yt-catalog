@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.7](https://github.com/realChakrawarti/yt-catalog/compare/v1.4.6...v1.4.7) (2025-01-27)
+
+
+### Bug Fixes
+
+* public page erroring out due to setDoc undefined ([adb89b4](https://github.com/realChakrawarti/yt-catalog/commit/adb89b46deb9f43e9fc2d5ce80c143cb6f055d30))
+
 ### [1.4.6](https://github.com/realChakrawarti/yt-catalog/compare/v1.4.5...v1.4.6) (2025-01-27)
 
 
