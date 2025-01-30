@@ -1,4 +1,5 @@
-import { FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
+import { KeyedMutator } from "swr";
 
 import { Button } from "~/components/shadcn/button";
 import {
@@ -13,21 +14,28 @@ import {
 import { Input } from "~/components/shadcn/input";
 import { Label } from "~/components/shadcn/label";
 import { PlusIcon } from "~/components/shared/icons";
+import { useConfetti } from "~/hooks/use-confetti";
 import { toast } from "~/hooks/use-toast";
 import { TitleDescriptionSchema as ArchiveSchema } from "~/types-schema/schemas";
 import type { TitleDescriptionType as ArchiveMeta } from "~/types-schema/types";
 import fetchApi from "~/utils/fetch";
+import { ApiResponse } from "~/utils/nx-response";
 
 const initialState = {
   title: "",
   description: "",
 };
 
+interface CreateArchiveDialogProps {
+  disabled: boolean;
+  revalidateCatalogs: KeyedMutator<ApiResponse<any>>;
+}
+
 // TODO: Consider using reducer to handle state updates, revalidate and show notification
 export default function CreateArchiveDialog({
   revalidateCatalogs,
   disabled,
-}: any) {
+}: CreateArchiveDialogProps) {
   const [archiveMeta, setArchiveMeta] = useState<ArchiveMeta>({
     title: "",
     description: "",
@@ -37,6 +45,8 @@ export default function CreateArchiveDialog({
     title: "",
     description: "",
   });
+
+  const triggerConfetti = useConfetti();
 
   const createNewArchive = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -53,12 +63,13 @@ export default function CreateArchiveDialog({
       toast({ title: result.message });
       setArchiveMeta(initialState);
       setArchiveMetaError(initialState);
+      triggerConfetti();
     } else {
       toast({ title: "Failed to create archive." });
     }
   };
 
-  const handleMetaUpdate = (e: any) => {
+  const handleMetaUpdate = (e: ChangeEvent<HTMLInputElement>) => {
     setArchiveMeta((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
