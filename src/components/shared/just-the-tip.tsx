@@ -1,5 +1,7 @@
 import { PropsWithChildren } from "react";
 
+import { useIsMobile } from "~/hooks/use-mobile";
+
 import {
   Tooltip,
   TooltipContent,
@@ -9,6 +11,10 @@ import {
 
 type JustTipProps = PropsWithChildren & { label: string };
 export default function JustTip({ children, label }: JustTipProps) {
+  const isMobile = useIsMobile();
+
+  if (isMobile) return <>{children}</>;
+
   return (
     <TooltipProvider>
       <Tooltip>
