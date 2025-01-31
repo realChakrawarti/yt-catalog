@@ -1,3 +1,5 @@
+"use client";
+
 import { PropsWithChildren } from "react";
 
 import { useIsMobile } from "~/hooks/use-mobile";
