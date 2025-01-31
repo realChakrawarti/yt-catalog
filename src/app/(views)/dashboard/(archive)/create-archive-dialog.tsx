@@ -75,12 +75,12 @@ export default function CreateArchiveDialog({
       [e.target.name]: e.target.value,
     }));
 
-    const parseCatalogMetadata = {
+    const parseArchiveMetadata = {
       ...archiveMeta,
       [e.target.name]: e.target.value,
     };
 
-    const result = ArchiveSchema.safeParse(parseCatalogMetadata);
+    const result = ArchiveSchema.safeParse(parseArchiveMetadata);
 
     if (!result.success) {
       const { title = { _errors: [""] }, description = { _errors: [""] } } =

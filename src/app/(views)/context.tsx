@@ -20,7 +20,7 @@ export default function Providers({
         <SidebarProvider>
           <div className="flex flex-grow min-h-screen">{children}</div>
           <ProgressBar
-            startPosition={0.8}
+            startPosition={0.3}
             height="4px"
             color="#e11d48"
             options={{ showSpinner: false }}

@@ -1,18 +1,18 @@
 import confetti from "canvas-confetti";
 import { useCallback } from "react";
 
+const count = 200;
+const defaults = {
+  origin: { y: 0 },
+  spread: 90,
+  ticks: 400,
+  gravity: 1,
+  decay: 0.94,
+  startVelocity: 30,
+};
+
 export function useConfetti() {
   const triggerConfetti = useCallback(() => {
-    const count = 200;
-    const defaults = {
-      origin: { y: 0 },
-      spread: 90,
-      ticks: 400,
-      gravity: 1,
-      decay: 0.94,
-      startVelocity: 30,
-    };
-
     function fire(particleRatio: number, opts: confetti.Options) {
       confetti(
         Object.assign({}, defaults, opts, {
