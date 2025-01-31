@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.5.0](https://github.com/realChakrawarti/yt-catalog/compare/v1.4.8...v1.5.0) (2025-01-31)
+
+
+### Features
+
+* add confetti when catalog & archive created ([4eb0a3d](https://github.com/realChakrawarti/yt-catalog/commit/4eb0a3dcf6fd8903948d223b091d54bd6e0b3199))
+* add top loader ([5918e3a](https://github.com/realChakrawarti/yt-catalog/commit/5918e3a74559d38b5dc98f0fdacafa05463dd0f6))
+
+
+### Bug Fixes
+
+* address comments left by coderabbit ([1511d62](https://github.com/realChakrawarti/yt-catalog/commit/1511d6213f5b11c4d19ede2bc30e93922f759203))
+* show tooltip on desktop only, hide on mobile & update faq ([d5bc178](https://github.com/realChakrawarti/yt-catalog/commit/d5bc178e96a1a7be5bb1d6c4d3ecd88f2db0d9fe))
+
 ### [1.4.8](https://github.com/realChakrawarti/yt-catalog/compare/v1.4.7...v1.4.8) (2025-01-27)
 
 

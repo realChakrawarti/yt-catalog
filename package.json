@@ -1,6 +1,6 @@
 {
   "name": "yt-catalog",
-  "version": "1.4.8",
+  "version": "1.5.0",
   "scripts": {
     "dev": "concurrently \"npm run emulate-firebase\" \"next dev\"",
     "dev:seed": "concurrently \"npm run emulate-firebase:import-seed\" \"next dev\"",
