@@ -1,5 +1,6 @@
 "use client";
 
+import Linkify from "linkify-react";
 import { useState } from "react";
 
 import { ChevronDownIcon } from "~/components/shared/icons";
@@ -12,29 +13,44 @@ interface FAQItem {
 
 const faqs: FAQItem[] = [
   {
-    question: "How does YTCatalog's personalized catalog system work?",
+    question: "What can I do with YTCatalog?",
     answer:
-      "YTCatalog allows you to create custom catalogs for your favorite YouTube channels, tailored to your specific interests. You can organize videos into different categories, making it easier to find and watch the content that matters most to you.",
+      "YTCatalog lets you create personalized collections of YouTube content. Instead of just subscribing to channels, you can build custom catalogs tailored to your interests. This makes it much easier to find exactly the videos you want to watch, when you want to watch them.",
   },
   {
-    question: "How often are the catalogs updated with new content?",
+    question: "How do I use YTCatalog to organize my YouTube content?",
     answer:
-      "Our automated system checks for and adds new videos from your selected channels every 4 hours. This ensures you never miss out on the latest content from your favorite creators while maintaining an organized viewing experience.",
+      "It's simple! You select the YouTube channels you like, and you can even choose specific playlists from those channels for finer-grained control. YTCatalog then automatically adds new videos to your curated catalogs, so you don't miss anything. Think of it as your own personalized TV guide for YouTube!",
   },
   {
-    question: "Is YTCatalog available on mobile devices?",
+    question: "How often are new videos added to my catalogs?",
     answer:
-      "Yes! YTCatalog is fully mobile-friendly. You can access your curated catalogs on your smartphone or tablet, allowing you to organize and watch your favorite content anytime, anywhere.",
+      "YTCatalog checks for new videos from your selected channels and playlists every 4 hours, so your catalogs are always up-to-date.",
   },
   {
-    question: "How does YTCatalog handle user privacy and data security?",
+    question: "Can I use YTCatalog on my phone or tablet?",
     answer:
-      "We prioritize your privacy and implement industry-standard security measures to protect your information. Your viewing habits and personal data are encrypted and never shared with third parties. You have full control over your data and sharing preferences.",
+      "Yes, YTCatalog is designed to work seamlessly on mobile devices. Access your catalogs from your smartphone or tablet anytime, anywhere.",
   },
   {
-    question: "Can I share my curated catalogs with others?",
+    question: "How secure is my data on YTCatalog?",
     answer:
-      "YTCatalog makes it easy to share your curated catalogs with friends and family. This social feature helps others discover new content and creates a collaborative viewing experience while maintaining your privacy settings.",
+      "We take your privacy seriously. Your viewing history and personal data are encrypted and never shared with anyone. You have full control over your data.",
+  },
+  {
+    question: "Can I share my catalogs with friends?",
+    answer:
+      "Yes, you can easily share your curated catalogs with friends and family, allowing them to discover great content too. Your privacy settings remain in control.",
+  },
+  {
+    question: "Can I download videos anonymously?",
+    answer:
+      "Yes, you can download videos anonymously using the privacy-focused cobalt.tools website. This allows you to save videos without revealing your identity or browsing history.",
+  },
+  {
+    question: "Is YTCatalog open source?",
+    answer:
+      "Yes! YTCatalog is completely open source and is hosted on GitHub. You can view the code, contribute to the project, or even host your own version.  Check it out here: https://github.com/realChakrawarti/yt-catalog.",
   },
 ];
 
@@ -81,7 +97,17 @@ export default function FAQSection() {
                   openIndex === index ? "max-h-96 pb-6" : "max-h-0"
                 )}
               >
-                <p className="px-6">{faq.answer}</p>
+                <p className="px-6">
+                  <Linkify
+                    options={{
+                      target: "_blank",
+                      className:
+                        "cursor-pointer text-[hsl(var(--primary))] hover:text-[hsl(var(--primary))]/70",
+                    }}
+                  >
+                    {faq.answer}
+                  </Linkify>
+                </p>
               </div>
             </div>
           ))}

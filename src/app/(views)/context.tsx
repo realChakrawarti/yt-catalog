@@ -1,5 +1,6 @@
 "use client";
 
+import { AppProgressBar as ProgressBar } from "next-nprogress-bar";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 
 import AuthContextProvider from "~/app/auth/context-provider";
@@ -18,6 +19,13 @@ export default function Providers({
       <AuthContextProvider>
         <SidebarProvider>
           <div className="flex flex-grow min-h-screen">{children}</div>
+          <ProgressBar
+            startPosition={0.3}
+            height="4px"
+            color="#e11d48"
+            options={{ showSpinner: false }}
+            shallowRouting
+          />
         </SidebarProvider>
       </AuthContextProvider>
     </NextThemesProvider>

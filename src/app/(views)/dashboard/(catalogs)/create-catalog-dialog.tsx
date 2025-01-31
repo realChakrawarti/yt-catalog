@@ -1,4 +1,5 @@
-import { FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
+import { KeyedMutator } from "swr";
 
 import { Button } from "~/components/shadcn/button";
 import {
@@ -13,21 +14,30 @@ import {
 import { Input } from "~/components/shadcn/input";
 import { Label } from "~/components/shadcn/label";
 import { PlusIcon } from "~/components/shared/icons";
+import { useConfetti } from "~/hooks/use-confetti";
 import { toast } from "~/hooks/use-toast";
 import { TitleDescriptionSchema as CatalogSchema } from "~/types-schema/schemas";
 import type { TitleDescriptionType as CatalogMeta } from "~/types-schema/types";
 import fetchApi from "~/utils/fetch";
+import { ApiResponse } from "~/utils/nx-response";
 
 const initialState = {
   title: "",
   description: "",
 };
 
+interface CreateCatalogDialogProps {
+  disabled: boolean;
+  revalidateCatalogs: KeyedMutator<ApiResponse<any>>;
+}
+
 // TODO: Consider using reducer to handle state updates, revalidate and show notification
 export default function CreateCatalogDialog({
   revalidateCatalogs,
   disabled,
-}: any) {
+}: CreateCatalogDialogProps) {
+  const triggerConfetti = useConfetti();
+
   const [catalogMeta, setCatalogMeta] = useState<CatalogMeta>({
     title: "",
     description: "",
@@ -53,12 +63,13 @@ export default function CreateCatalogDialog({
       toast({ title: result.message });
       setCatalogMeta(initialState);
       setCatalogMetaError(initialState);
+      triggerConfetti();
     } else {
       toast({ title: "Failed to create catalog." });
     }
   };
 
-  const handleMetaUpdate = (e: any) => {
+  const handleMetaUpdate = (e: ChangeEvent<HTMLInputElement>) => {
     setCatalogMeta((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
