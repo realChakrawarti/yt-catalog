@@ -1,4 +1,12 @@
-<h1 style="text-align: center;">YTCatalog: Organize Your YouTube Experience</h1>
+# <img src="https://github.com/realChakrawarti/yt-catalog/blob/main/public/icon.png" alt="Dev.to Rater" height="30"/> YTCatalog: Organize Your YouTube Experience
+
+<div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
+<img src="https://img.shields.io/github/stars/realChakrawarti/yt-catalog" alt="GitHub Repo stars" />
+<img src="https://img.shields.io/github/license/realChakrawarti/yt-catalog" alt="GitHub License" />
+<img src="https://img.shields.io/github/issues/realChakrawarti/yt-catalog" alt="GitHub Issues" />
+<img src="https://img.shields.io/github/commit-activity/m/realChakrawarti/yt-catalog" alt="Commit Activity" />
+<img alt="GitHub top language" src="https://img.shields.io/github/languages/top/realChakrawarti/yt-catalog">
+</div>
 
 ![ytcatalog-homepage](./screen-capture.png)
 
@@ -18,18 +26,16 @@ This web application empowers you to take control of your YouTube viewing by cre
 - **Stay Updated:** Never miss a new video from your favorite channels again.
 - **Organize and Share:** Keep your YouTube viewing organized and share your curated selections with others.
 
+<hr />
+
 # Contributing
 
 Read the [contributing](./CONTRIBUTING.md) guide.
 
-Get in touch with me on: https://x.com/@realChakrawarti
+<hr/>
 
-## Development dependencies guides
+### Contributors
 
-Reference: https://mokkapps.de/blog/how-to-automatically-generate-a-helpful-changelog-from-your-git-commit-messages
-
-- https://github.com/conventional-changelog/commitlint
-- https://github.com/angular/angular/blob/22b96b9/CONTRIBUTING.md#-commit-message-guidelines
-
-- Husky: https://typicode.github.io/husky/
-  - https://git-scm.com/docs/githooks
+<a href="https://github.com/realChakrawarti/yt-catalog/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=realChakrawarti/yt-catalog" />
+</a>
