@@ -2,6 +2,14 @@
 
 We appreciate your interest in contributing to YTCatalog! This guide outlines the process for setting up your development environment, making contributions, and submitting pull requests.
 
+<hr >
+
+### The project follows [FSD](https://feature-sliced.design/) (Feature-Sliced Design) architecture.
+
+Learn more about it in this [blog post](https://dev.to/m_midas/feature-sliced-design-the-best-frontend-architecture-4noj) by [Yan Levin](https://github.com/midas-png).
+
+<hr>
+
 ## Table of Contents
 
 - [Ways to contribute](#ways-to-contribute)

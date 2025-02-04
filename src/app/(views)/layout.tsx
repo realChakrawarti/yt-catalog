@@ -5,11 +5,11 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Script from "next/script";
 
-import { Toaster } from "~/components/shadcn/toaster";
-import AppSidebar from "~/components/shared/app-sidebar";
-import BackgroundPattern from "~/components/shared/background-pattern";
-import Footer from "~/components/shared/footer";
-import Header from "~/components/shared/header";
+import { Toaster } from "~/shared/ui/toaster";
+import AppSidebar from "~/widgets/app-sidebar";
+import BackgroundPattern from "~/widgets/background-pattern";
+import Footer from "~/widgets/footer";
+import Header from "~/widgets/header";
 
 import Providers from "./context";
 

@@ -1,21 +1,10 @@
 "use client";
 
-import withAuth from "~/app/auth/with-auth-hoc";
-import { Separator } from "~/components/shadcn/separator";
-
-import ArchiveView from "./(archive)/main";
-import CatalogView from "./(catalogs)/main";
+import withAuth from "~/features/auth/with-auth-hoc";
+import Dashboard from "~/views/dashboard";
 
 function DashboardPage() {
-  return (
-    <div className="p-3 flex flex-col gap-3">
-      <h1 className="text-2xl font-semibold tracking-tight">Dashboard</h1>
-      <Separator className="my-3" />
-      <CatalogView />
-      <Separator className="my-3" />
-      <ArchiveView />
-    </div>
-  );
+  return <Dashboard />;
 }
 
 export default withAuth(DashboardPage);

@@ -1,21 +1,14 @@
 "use client";
 
-import withAuth from "~/app/auth/with-auth-hoc";
+import withAuth from "~/features/auth/with-auth-hoc";
+import EditCatalog from "~/views/edit-catalog";
 
-import CatalogEditor from "./catalog-editor";
-
-type CatalogPageParams = {
+type EditCatalogPageParams = {
   catalogId: string;
 };
 
-function EditCatalog({ params }: { params: CatalogPageParams }) {
-  const { catalogId } = params;
-
-  return (
-    <div className="p-3">
-      <CatalogEditor catalogId={catalogId} />
-    </div>
-  );
+function EditCatalogPage({ params }: { params: EditCatalogPageParams }) {
+  return <EditCatalog catalogId={params.catalogId} />;
 }
 
-export default withAuth(EditCatalog);
+export default withAuth(EditCatalogPage);

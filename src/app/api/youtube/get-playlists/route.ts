@@ -1,8 +1,7 @@
 import { NextRequest } from "next/server";
 
+import { getPlaylistsByChannel } from "~/entities/youtube/services/get-playlists-by-channel";
 import { NxResponse } from "~/utils/nx-response";
-
-import { getPlaylistsByChannel } from "../models";
 
 /**
  * Handles GET requests to retrieve playlists for a specific YouTube channel.

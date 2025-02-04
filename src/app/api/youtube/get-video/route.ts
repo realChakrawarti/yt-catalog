@@ -1,7 +1,7 @@
 import { NextRequest } from "next/server";
 
+import { getVideoDetails } from "~/entities/youtube/services/get-video-details";
 import { NxResponse } from "~/utils/nx-response";
-import { YOUTUBE_VIDEO_DATA } from "~/utils/server-helper";
 
 export async function GET(request: NextRequest) {
   const videoIdParam = request.nextUrl.searchParams.get("videoId");
@@ -15,9 +15,8 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const response = await fetch(YOUTUBE_VIDEO_DATA(videoIdParam));
-    const data = await response.json();
-    if (response.status === 200) {
+    const data = await getVideoDetails(videoIdParam);
+    if (data.status === 200) {
       return NxResponse.success(
         `Channel associated with Video ID: ${videoIdParam} fetched successfully.`,
         data,

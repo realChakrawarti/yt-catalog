@@ -1,9 +1,10 @@
 import { NextRequest } from "next/server";
 
+import { getCatalogByUser } from "~/entities/catalogs/services/get-catalogs-by-user";
 import { NxResponse } from "~/utils/nx-response";
 import { getUserIdCookie } from "~/utils/server-helper";
 
-import { createCatalog, getCatalogByUser } from "./models";
+import { createCatalog } from "./models";
 
 export async function GET() {
   const userId = getUserIdCookie();

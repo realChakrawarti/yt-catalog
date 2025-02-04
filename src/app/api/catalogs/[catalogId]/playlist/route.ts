@@ -1,7 +1,7 @@
 import { revalidatePath } from "next/cache";
 import { NextRequest } from "next/server";
 
-import { PlaylistItem } from "~/types-schema/types";
+import { PlaylistItem } from "~/shared/types-schema/types";
 import { NxResponse } from "~/utils/nx-response";
 import { getUserIdCookie } from "~/utils/server-helper";
 
