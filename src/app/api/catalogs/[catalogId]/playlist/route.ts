@@ -1,11 +1,11 @@
 import { revalidatePath } from "next/cache";
 import { NextRequest } from "next/server";
 
-import { PlaylistItem } from "~/types-schema/types";
+import { deletePlaylist } from "~/entities/catalogs/services/delete-playlist";
+import { updateCatalogPlaylists } from "~/entities/catalogs/services/update-catalog-playlists";
+import { PlaylistItem } from "~/shared/types-schema/types";
 import { NxResponse } from "~/utils/nx-response";
 import { getUserIdCookie } from "~/utils/server-helper";
-
-import { deletePlaylist, updateCatalogPlaylists } from "../../models";
 
 type ContextParams = {
   params: {

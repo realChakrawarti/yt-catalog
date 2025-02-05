@@ -29,7 +29,7 @@ export const config = {
     "/api/catalogs/:catalogId/playlist",
     "/api/catalogs/:catalogId/delete",
     "/api/logout",
-    "/api/youtube/get-video",
-    "/api/youtube/get-playlists",
+    "/api/youtube/video",
+    "/api/youtube/playlists",
   ],
 };

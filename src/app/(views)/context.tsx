@@ -3,8 +3,8 @@
 import { AppProgressBar as ProgressBar } from "next-nprogress-bar";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 
-import AuthContextProvider from "~/app/auth/context-provider";
-import { SidebarProvider } from "~/components/shadcn/sidebar";
+import AuthContextProvider from "~/features/auth/context-provider";
+import { SidebarProvider } from "~/shared/ui/sidebar";
 
 export default function Providers({
   children,
