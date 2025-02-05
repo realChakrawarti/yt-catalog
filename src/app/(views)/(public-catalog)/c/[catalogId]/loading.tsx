@@ -1,7 +1,5 @@
-import CatalogLoadingSkeleton from "./skeleton-loader";
+import CatalogLoadingSkeleton from "~/views/public-catalog/skeleton-loader";
 
 export default function CatalogPublicLoading() {
-  return (
-    <CatalogLoadingSkeleton />
-  );
+  return <CatalogLoadingSkeleton />;
 }

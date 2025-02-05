@@ -1,8 +1,8 @@
 "use client";
 
+import { ArrowUpIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 
-import { ArrowUpIcon } from "~/components/shared/icons";
 import { cn } from "~/shared/lib/classname";
 
 import { Button } from "../shared/ui/button";

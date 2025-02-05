@@ -1,12 +1,12 @@
 import { NextRequest } from "next/server";
 
+import { createUser } from "~/entities/users/services/create-user";
+import { TWELEVE_HOURS } from "~/utils/constant";
 import { NxResponse } from "~/utils/nx-response";
-
-import { createUserDocument, TWELEVE_HOURS } from "./models";
 
 export async function POST(request: NextRequest) {
   const requestBody = await request.json();
-  const message = await createUserDocument(requestBody.uid);
+  const message = await createUser(requestBody.uid);
 
   const response = NxResponse.success<any>(message, {}, 201);
 

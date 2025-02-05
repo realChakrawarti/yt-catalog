@@ -64,22 +64,16 @@ export default function AddVideoDialog({
     }
 
     try {
-      const result = await fetchApi(`/youtube/get-video?videoId=${videoId}`);
+      const result = await fetchApi(`/youtube/video?videoId=${videoId}`);
 
       if (!result.success) {
         toast({ title: result.message });
         return;
       }
-      const videoData = result.data.items[0].snippet;
 
       const videoMeta = {
-        title: videoData.title,
-        description: videoData.description,
+        ...result.data,
         videoId: videoId,
-        channelTitle: videoData.channelTitle,
-        channelId: videoData.channelId,
-        thumbnail: videoData.thumbnails.medium.url,
-        publishedAt: videoData.publishedAt,
       };
 
       const resultAdd = await fetchApi(`/archives/${archiveId}/update`, {

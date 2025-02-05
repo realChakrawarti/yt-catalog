@@ -1,3 +1,5 @@
+"use client";
+
 import { ListPlusIcon } from "lucide-react";
 import { ChangeEvent } from "react";
 
@@ -69,13 +71,14 @@ export default function AddChannelPlaylist() {
     }
 
     try {
-      const result = await fetchApi(`/youtube/get-video?videoId=${videoId}`);
+      const result = await fetchApi(`/youtube/video?videoId=${videoId}`);
 
       if (!result.success) {
         toast({ title: result.message });
         return;
       }
-      const videoData = result.data.items[0].snippet;
+
+      const videoData = result.data;
       const channelId = videoData.channelId;
       const channelTitle = videoData.channelTitle;
 
@@ -122,7 +125,7 @@ export default function AddChannelPlaylist() {
 
   const fetchChannelPlaylists = async () => {
     const result = await fetchApi(
-      `/youtube/get-playlists?channelId=${channelInfo.id}`
+      `/youtube/playlists?channelId=${channelInfo.id}`
     );
 
     if (!result.success) {

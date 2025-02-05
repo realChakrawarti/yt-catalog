@@ -73,7 +73,7 @@ export default function AuthContextProvider({ children }: PropsWithChildren) {
       const response = await signInWithPopup(auth, provider);
       const user = response.user;
       if (user) {
-        const result = await fetchApi("/user", {
+        const result = await fetchApi("/users", {
           method: "POST",
           body: JSON.stringify({ uid: user.uid }),
         });

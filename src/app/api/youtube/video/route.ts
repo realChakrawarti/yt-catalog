@@ -16,15 +16,11 @@ export async function GET(request: NextRequest) {
 
   try {
     const data = await getVideoDetails(videoIdParam);
-    if (data.status === 200) {
-      return NxResponse.success(
-        `Channel associated with Video ID: ${videoIdParam} fetched successfully.`,
-        data,
-        200
-      );
-    } else {
-      throw Error(data.error.message);
-    }
+    return NxResponse.success(
+      `Channel associated with Video ID: ${videoIdParam} fetched successfully.`,
+      data,
+      200
+    );
   } catch (err) {
     if (err instanceof Error) {
       return NxResponse.fail(
