@@ -10,8 +10,8 @@ import JustTip from "~/widgets/just-the-tip";
 export default function ShareCatalog(props: any) {
   const shareData = useMemo(
     () => ({
-      title: props.catalogTitle,
       text: props.catalogDescription,
+      title: props.catalogTitle,
       url: `https://ytcatalog.707x.in/c/${props.catalogId}`,
     }),
     [props]

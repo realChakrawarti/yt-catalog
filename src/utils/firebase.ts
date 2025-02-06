@@ -5,11 +5,11 @@ import { connectFirestoreEmulator, getFirestore } from "firebase/firestore";
 // TODO: Use service account, for account token validation?
 const firebaseConfig: FirebaseOptions = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  appId: "1:874223131522:web:1cbe3657cb8eed060ccd9b",
   authDomain: "ytcatalog707.firebaseapp.com",
+  messagingSenderId: "874223131522",
   projectId: "ytcatalog707",
   storageBucket: "ytcatalog707.appspot.com",
-  messagingSenderId: "874223131522",
-  appId: "1:874223131522:web:1cbe3657cb8eed060ccd9b",
 };
 
 // Initialize Firebase

@@ -10,6 +10,7 @@ import {
   TableRow,
 } from "~/shared/ui/table";
 import { DeleteModal } from "~/widgets/delete-modal";
+import { OutLink } from "~/widgets/out-link";
 
 interface PlaylistTableProps {
   playlists: any[];
@@ -58,13 +59,12 @@ export default function PlaylistTable({
                     />
                   ) : null}
                   {playlist?.channelHandle ? (
-                    <a
+                    <OutLink
                       className="text-indigo-600 hover:text-indigo-500 visited:text-indigo-700"
-                      target="_blank"
                       href={`https://www.youtube.com/${playlist?.channelHandle}`}
                     >
                       <p>{playlist?.channelTitle}</p>
-                    </a>
+                    </OutLink>
                   ) : (
                     <p>{playlist?.channelTitle}</p>
                   )}

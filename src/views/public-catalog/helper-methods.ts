@@ -26,9 +26,9 @@ function getChannels(videos: any[]) {
   for (let i = 0; i < videos?.length; i++) {
     const video = videos[i];
     const channel = {
-      title: video.channelTitle,
       id: video.channelId,
       logo: video.channelLogo,
+      title: video.channelTitle,
     };
     channels.push(channel);
   }

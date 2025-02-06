@@ -1,7 +1,7 @@
 import { NextRequest } from "next/server";
 
 import { getVideosByCatalog } from "~/entities/catalogs/services/get-videos-by-catalog";
-import { NxResponse } from "~/utils/nx-response";
+import { NxResponse } from "~/shared/lib/nx-response";
 
 type ContextParams = {
   params: {
@@ -21,10 +21,10 @@ export async function GET(_request: NextRequest, ctx: ContextParams) {
       }
 
       const response = {
-        title: data.title,
-        description: data.description,
         data: data.videos,
+        description: data.description,
         nextUpdate: data.nextUpdate,
+        title: data.title,
       };
 
       return NxResponse.success<any>(

@@ -1,7 +1,7 @@
 import { NextRequest } from "next/server";
 
 import { getVideoDetails } from "~/entities/youtube/services/get-video-details";
-import { NxResponse } from "~/utils/nx-response";
+import { NxResponse } from "~/shared/lib/nx-response";
 
 export async function GET(request: NextRequest) {
   const videoIdParam = request.nextUrl.searchParams.get("videoId");

@@ -2,7 +2,7 @@ import { NextRequest } from "next/server";
 
 import { createCatalog } from "~/entities/catalogs/services/create-catalog";
 import { getCatalogByUser } from "~/entities/catalogs/services/get-catalogs-by-user";
-import { NxResponse } from "~/utils/nx-response";
+import { NxResponse } from "~/shared/lib/nx-response";
 import { getUserIdCookie } from "~/utils/server-helper";
 
 export async function GET() {

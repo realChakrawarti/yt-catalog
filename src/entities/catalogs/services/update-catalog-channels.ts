@@ -76,11 +76,11 @@ async function getChannelsInfo(channels: string[]) {
     const channelInfo = channelListItems[i];
 
     const channelMeta = {
-      id: channelInfo.id,
-      handle: channelInfo.snippet.customUrl,
-      title: channelInfo.snippet.title,
       description: channelInfo.snippet.description,
+      handle: channelInfo.snippet.customUrl,
+      id: channelInfo.id,
       logo: channelInfo.snippet.thumbnails.medium.url,
+      title: channelInfo.snippet.title,
       // TODO: Remove Topics, feels a bit redundant
       topics: extractTopics(channelInfo.topicDetails.topicIds),
     };

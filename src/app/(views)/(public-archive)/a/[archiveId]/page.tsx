@@ -18,11 +18,11 @@ export async function generateMetadata({
   return {
     title: `${archiveData?.title} | YTCatalog`,
     openGraph: {
-      type: "website",
-      title: archiveData?.title,
-      url: `https://ytcatalog.707x.in/a/${archiveId}`,
       description: archiveData?.description,
       siteName: "YTCatalog",
+      title: archiveData?.title,
+      type: "website",
+      url: `https://ytcatalog.707x.in/a/${archiveId}`,
     },
   };
 }

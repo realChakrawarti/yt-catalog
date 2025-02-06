@@ -30,14 +30,14 @@ class NxResponseBuilder {
     statusCode: number
   ): NextResponse<ApiResponse<T>> {
     const response: ApiResponse<T> = {
-      success,
-      message,
       data,
       error,
+      message,
       meta: {
         statusCode,
         timestamp: new Date().toISOString(),
       },
+      success,
     };
 
     return NextResponse.json(response, { status: statusCode });
@@ -52,11 +52,11 @@ class NxResponseBuilder {
   }
 
   /**
-   * 
+   *
    * @param message
    * @param error - {code: string, details: string | null}
-   * @param statusCode 
-   * @returns 
+   * @param statusCode
+   * @returns
    */
   fail(
     message: string,

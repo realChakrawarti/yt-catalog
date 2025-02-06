@@ -184,8 +184,8 @@ export default function EditCatalog({ catalogId }: { catalogId: string }) {
 
     const payload: UpdateCatalogPayload = {
       channels: savedChannels.map((channel) => channel.id),
-      title: catalogMetadata.title,
       description: catalogMetadata.description,
+      title: catalogMetadata.title,
     };
 
     if (localChannels.length) {

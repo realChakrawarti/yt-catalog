@@ -29,9 +29,9 @@ export async function getArchiveByUser(userId: string) {
       const archiveData = archiveSnap.data();
 
       userArchivesData.push({
+        description: archiveData?.description,
         id: archiveId,
         title: archiveData?.title,
-        description: archiveData?.description,
         videoData: {
           updatedAt: toUTCString(archiveData?.data?.updatedAt),
           videos: archiveData?.data?.videos,

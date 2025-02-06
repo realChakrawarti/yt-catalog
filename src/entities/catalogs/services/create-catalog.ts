@@ -32,9 +32,9 @@ export async function createCatalog(userId: string, catalogMeta: CatalogMeta) {
     data: {
       updatedAt: new Date(0),
     },
-    videoRef: userCatalogRef,
-    title: catalogMeta.title,
     description: catalogMeta.description,
+    title: catalogMeta.title,
+    videoRef: userCatalogRef,
   });
 
   return nanoidToken;

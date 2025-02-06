@@ -3,8 +3,8 @@ import { NextRequest } from "next/server";
 
 import { deletePlaylist } from "~/entities/catalogs/services/delete-playlist";
 import { updateCatalogPlaylists } from "~/entities/catalogs/services/update-catalog-playlists";
+import { NxResponse } from "~/shared/lib/nx-response";
 import { PlaylistItem } from "~/shared/types-schema/types";
-import { NxResponse } from "~/utils/nx-response";
 import { getUserIdCookie } from "~/utils/server-helper";
 
 type ContextParams = {

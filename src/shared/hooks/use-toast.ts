@@ -17,9 +17,9 @@ type ToasterToast = ToastProps & {
 
 const actionTypes = {
   ADD_TOAST: "ADD_TOAST",
-  UPDATE_TOAST: "UPDATE_TOAST",
   DISMISS_TOAST: "DISMISS_TOAST",
   REMOVE_TOAST: "REMOVE_TOAST",
+  UPDATE_TOAST: "UPDATE_TOAST",
 } as const;
 
 let count = 0;
@@ -152,18 +152,18 @@ function toast({ ...props }: Toast) {
   dispatch({
     type: "ADD_TOAST",
     toast: {
-      ...props,
       id,
-      open: true,
       onOpenChange: (open) => {
         if (!open) dismiss();
       },
+      open: true,
+      ...props,
     },
   });
 
   return {
-    id: id,
     dismiss,
+    id: id,
     update,
   };
 }
@@ -183,8 +183,8 @@ function useToast() {
 
   return {
     ...state,
-    toast,
     dismiss: (toastId?: string) => dispatch({ type: "DISMISS_TOAST", toastId }),
+    toast,
   };
 }
 

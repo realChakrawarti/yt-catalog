@@ -16,11 +16,11 @@ import Providers from "./context";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "YTCatalog - Organize Your YouTube Universe",
+  applicationName: "YTCatalog",
   description:
     "Discover new channels, curate your favorite videos, and stay organized.",
-  applicationName: "YTCatalog",
   keywords: ["youtube", "catalog", "channels", "videos", "organize"],
+  title: "YTCatalog - Organize Your YouTube Universe",
 };
 
 export default function RootLayout({

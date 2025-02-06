@@ -38,13 +38,13 @@ export async function getValidCatalogIds() {
       const catalogData = await getCatalogMetadata(catalogId);
       if (catalogData) {
         const metaData: ValidMetadata = {
-          thumbnails: getVideoThumbnails(catalogData),
-          title: catalogData?.title,
           description: catalogData?.description,
           id: catalogId,
-          updatedAt: catalogData?.data.updatedAt.toDate(),
           pageviews: catalogData.pageviews ?? 0,
+          thumbnails: getVideoThumbnails(catalogData),
+          title: catalogData?.title,
           totalVideos: catalogData?.data?.totalVideos,
+          updatedAt: catalogData?.data.updatedAt.toDate(),
         };
 
         catalogListData.push(metaData);
