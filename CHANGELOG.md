@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.3](https://github.com/realChakrawarti/yt-catalog/compare/v1.5.2...v1.5.3) (2025-02-06)
+
+
+### Features
+
+* structure the codebase with fsd ([089fa04](https://github.com/realChakrawarti/yt-catalog/commit/089fa04023a28c8e8543992944b938fbfb195b9c))
+
+
+### Bug Fixes
+
+* broken imports paths ([f567f27](https://github.com/realChakrawarti/yt-catalog/commit/f567f271bc682bb08bbbec6bc481a0cd8199de34))
+* sort keys ascending ([6b11199](https://github.com/realChakrawarti/yt-catalog/commit/6b1119949822b7bf89ee0f461c0b6914902775c7))
+
 ### [1.5.2](https://github.com/realChakrawarti/yt-catalog/compare/v1.5.1...v1.5.2) (2025-01-31)
 
 
