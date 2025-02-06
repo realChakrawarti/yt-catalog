@@ -29,9 +29,9 @@ export async function getCatalogByUser(userId: string) {
       const catalogData = catalogSnap.data();
 
       userCatalogsData.push({
+        description: catalogData?.description,
         id: catalogId,
         title: catalogData?.title,
-        description: catalogData?.description,
         videoData: {
           updatedAt: toUTCString(catalogData?.data?.updatedAt),
           videos: catalogData?.data?.videos,

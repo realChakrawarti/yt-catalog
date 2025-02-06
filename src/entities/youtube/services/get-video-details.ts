@@ -8,12 +8,12 @@ export async function getVideoDetails(videoIdParam: string) {
   const videoData = result.items[0].snippet;
 
   const data = {
-    title: videoData.title,
-    description: videoData.description,
-    channelTitle: videoData.channelTitle,
     channelId: videoData.channelId,
-    thumbnail: videoData.thumbnails.medium.url,
+    channelTitle: videoData.channelTitle,
+    description: videoData.description,
     publishedAt: videoData.publishedAt,
+    thumbnail: videoData.thumbnails.medium.url,
+    title: videoData.title,
   };
   return data;
 }

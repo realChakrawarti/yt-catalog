@@ -1,8 +1,8 @@
 import { NextRequest } from "next/server";
 
 import { createUser } from "~/entities/users/services/create-user";
+import { NxResponse } from "~/shared/lib/nx-response";
 import { TWELEVE_HOURS } from "~/utils/constant";
-import { NxResponse } from "~/utils/nx-response";
 
 export async function POST(request: NextRequest) {
   const requestBody = await request.json();

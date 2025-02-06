@@ -27,10 +27,10 @@ export async function getCatalogById(catalogId: string, userId: string) {
   const userRef = doc(db, COLLECTION.users, userId);
 
   let catalogResponseData: CatalogByIdResponse = {
-    title: "",
-    description: "",
     channelList: [],
+    description: "",
     playlist: [],
+    title: "",
   };
 
   try {
@@ -47,10 +47,10 @@ export async function getCatalogById(catalogId: string, userId: string) {
     const catalogData = catalogSnap.data();
 
     catalogResponseData = {
-      title: catalogData?.title,
-      description: catalogData?.description,
       channelList: channelListData,
+      description: catalogData?.description,
       playlist: playlistData,
+      title: catalogData?.title,
     };
   } catch (err) {
     console.error(err);

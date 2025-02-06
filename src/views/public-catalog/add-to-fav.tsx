@@ -42,9 +42,9 @@ export const AddToFavorites = ({
     // Add the catalogId to favorites
     else {
       const favCatalog = {
+        description: catalogDescription,
         id: catalogId,
         title: catalogTitle,
-        description: catalogDescription,
       };
       await indexedDB["favorites"].add(favCatalog);
       toast({ title: "Catalog added to favorites." });

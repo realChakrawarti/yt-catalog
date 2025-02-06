@@ -2,7 +2,7 @@ import { NextRequest } from "next/server";
 
 import { createArchive } from "~/entities/archives/services/create-archive";
 import { getArchiveByUser } from "~/entities/archives/services/get-archives-by-user";
-import { NxResponse } from "~/utils/nx-response";
+import { NxResponse } from "~/shared/lib/nx-response";
 import { getUserIdCookie } from "~/utils/server-helper";
 
 export async function GET() {

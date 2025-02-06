@@ -22,9 +22,9 @@ export async function addArchiveVideo(
 
     const currentTotalVideos = userArchiveData?.videoIds?.length || 0;
     batch.update(archiveRef, {
+      "data.totalVideos": currentTotalVideos + 1,
       "data.updatedAt": new Date(),
       "data.videos": arrayUnion(videoData),
-      "data.totalVideos": currentTotalVideos + 1,
     });
 
     batch.update(userArchiveRef, {

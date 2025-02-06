@@ -2,7 +2,7 @@ import { revalidatePath } from "next/cache";
 import { NextRequest } from "next/server";
 
 import { deleteArchive } from "~/entities/archives/services/delete-archive";
-import { NxResponse } from "~/utils/nx-response";
+import { NxResponse } from "~/shared/lib/nx-response";
 import { getUserIdCookie } from "~/utils/server-helper";
 
 type ContextParams = {

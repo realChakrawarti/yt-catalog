@@ -32,6 +32,7 @@ import {
   SelectValue,
 } from "../shared/ui/select";
 import { Textarea } from "../shared/ui/textarea";
+import { OutLink } from "./out-link";
 
 type FeedbackType = "Bug" | "Improvement" | "Feature" | "General";
 
@@ -44,17 +45,17 @@ interface FeedbackData {
 
 const feedbackTypes: { [_key in FeedbackType]: JSX.Element } = {
   Bug: <Bug className="mr-2 h-4 w-4" />,
-  Improvement: <Lightbulb className="mr-2 h-4 w-4" />,
   Feature: <PlusCircle className="mr-2 h-4 w-4" />,
   General: <HelpCircle className="mr-2 h-4 w-4" />,
+  Improvement: <Lightbulb className="mr-2 h-4 w-4" />,
 };
 
 const TITLE_CHAR_LIMIT = 96;
 
 const initialFeedbackData: FeedbackData = {
-  name: "",
   email: "",
   feedback: "",
+  name: "",
   type: "General",
 };
 
@@ -102,13 +103,12 @@ ${feedback}
         description: (
           <p>
             Issue link:{" "}
-            <a
+            <OutLink
               href={result.data.data}
-              target="_blank"
               className="cursor-pointer text-[hsl(var(--primary))] hover:text-[hsl(var(--primary))]/70"
             >
               {result.data.data}
-            </a>
+            </OutLink>
           </p>
         ),
       });

@@ -1,10 +1,7 @@
-import { HTMLAttributeAnchorTarget, PropsWithChildren } from "react";
+import { ComponentProps } from "react";
 
-// TODO: Make use of this for anchor linking to external site
-interface OutLinkProps extends PropsWithChildren {
+interface OutLinkProps extends ComponentProps<"a"> {
   href: `https://${string}`;
-  target: HTMLAttributeAnchorTarget;
-  className: string;
 }
 
 export function OutLink({

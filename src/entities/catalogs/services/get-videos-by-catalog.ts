@@ -62,8 +62,8 @@ export async function getVideosByCatalog(catalogId: string) {
 
   let videoFilterData: videoListData = {
     day: [],
-    week: [],
     month: [],
+    week: [],
   };
 
   const catalogRef = doc(db, COLLECTION.catalogs, catalogId);
@@ -138,9 +138,9 @@ export async function getVideosByCatalog(catalogId: string) {
 
     const catalogVideos = {
       data: {
-        videos: videoFilterData,
-        updatedAt: recentUpdate,
         totalVideos: videoList.length,
+        updatedAt: recentUpdate,
+        videos: videoFilterData,
       },
       pageviews: pageviews,
     };
@@ -161,12 +161,12 @@ export async function getVideosByCatalog(catalogId: string) {
   }
 
   return {
-    title: catalogSnapData.title,
     description: catalogSnapData.description,
-    videos: videoFilterData,
     nextUpdate: new Date(recentUpdate.getTime() + FOUR_HOURS).toUTCString(),
     pageviews: catalogSnapData.pageviews ?? 0,
+    title: catalogSnapData.title,
     totalVideos: totalVideos,
+    videos: videoFilterData,
   };
 }
 
@@ -206,14 +206,14 @@ async function getPlaylistVideos(playlist: any) {
       }
 
       playlistItemData.push({
-        title: item.snippet.title,
         channelId: item.snippet.channelId,
-        thumbnail: item.snippet.thumbnails.medium,
         channelLogo: playlist.channelLogo,
         channelTitle: item.snippet.channelTitle,
-        videoId: item.contentDetails.videoId,
         description: item.snippet.description,
         publishedAt: item.contentDetails.videoPublishedAt,
+        thumbnail: item.snippet.thumbnails.medium,
+        title: item.snippet.title,
+        videoId: item.contentDetails.videoId,
       });
     }
   } catch (err) {
@@ -258,14 +258,14 @@ async function getChannelVideos(channel: any) {
       }
 
       playlistItemData.push({
-        title: item.snippet.title,
         channelId: item.snippet.channelId,
-        thumbnail: item.snippet.thumbnails.medium,
         channelLogo: channel.logo,
         channelTitle: item.snippet.channelTitle,
-        videoId: item.contentDetails.videoId,
         description: item.snippet.description,
         publishedAt: item.contentDetails.videoPublishedAt,
+        thumbnail: item.snippet.thumbnails.medium,
+        title: item.snippet.title,
+        videoId: item.contentDetails.videoId,
       });
     }
   } catch (err) {
@@ -282,21 +282,10 @@ async function getPageviewByCatalogId(catalogId: string): Promise<number> {
   }
 
   const request = {
-    property: `properties/${process.env.GOOGLE_ANALYTICS_PROPERTY_ID}`,
     dateRanges: [
       {
         startDate: "90daysAgo",
         endDate: "today",
-      },
-    ],
-    dimensions: [
-      {
-        name: "pagePath",
-      },
-    ],
-    metrics: [
-      {
-        name: "screenPageViews",
       },
     ],
     dimensionFilter: {
@@ -308,6 +297,17 @@ async function getPageviewByCatalogId(catalogId: string): Promise<number> {
         },
       },
     },
+    dimensions: [
+      {
+        name: "pagePath",
+      },
+    ],
+    metrics: [
+      {
+        name: "screenPageViews",
+      },
+    ],
+    property: `properties/${process.env.GOOGLE_ANALYTICS_PROPERTY_ID}`,
   } as protos.google.analytics.data.v1beta.IRunReportRequest;
 
   console.log(`Querying pageview of catalog: ${catalogId}`);

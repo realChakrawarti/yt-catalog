@@ -6,14 +6,14 @@ import Slider, { type Settings } from "react-slick";
 
 function ThumbnailCarousel({ thumbnails }: { thumbnails: string[] }) {
   const settings: Settings = {
-    dots: false,
-    infinite: true,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
     arrows: false,
+    autoplay: true,
     autoplaySpeed: 3500,
     cssEase: "linear",
+    dots: false,
+    infinite: true,
+    slidesToScroll: 1,
+    slidesToShow: 1,
   };
 
   return (

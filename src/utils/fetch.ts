@@ -1,6 +1,6 @@
 // TODO: Retry, throttle, cancel after 10 seconds
 
-import { ApiResponse } from "./nx-response";
+import { ApiResponse } from "../shared/lib/nx-response";
 
 async function fetchApi<T = any>(endpoint: string, options?: RequestInit) {
   if (!endpoint.startsWith("/")) {

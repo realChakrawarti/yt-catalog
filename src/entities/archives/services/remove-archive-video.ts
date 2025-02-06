@@ -25,9 +25,9 @@ export async function removeArchiveVideo(
     });
 
     batch.update(archiveRef, {
+      "data.totalVideos": Math.max(0, currentTotalVideos - 1),
       "data.updatedAt": new Date(),
       "data.videos": arrayRemove(payload),
-      "data.totalVideos": Math.max(0, currentTotalVideos - 1),
     });
 
     batch.commit();

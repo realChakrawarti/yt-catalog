@@ -1,7 +1,7 @@
 import { NextRequest } from "next/server";
 
 import { createGitHubIssue } from "~/entities/feedback/services/create-github-issue";
-import { NxResponse } from "~/utils/nx-response";
+import { NxResponse } from "~/shared/lib/nx-response";
 
 export async function POST(request: NextRequest) {
   const { title, description } = await request.json();

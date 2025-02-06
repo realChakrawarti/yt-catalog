@@ -23,9 +23,9 @@ export async function createArchive(userId: string, archiveMeta: any) {
     data: {
       updatedAt: new Date(0),
     },
-    videoRef: userArchiveRef,
-    title: archiveMeta.title,
     description: archiveMeta.description,
+    title: archiveMeta.title,
+    videoRef: userArchiveRef,
   });
 
   return nanoidToken;

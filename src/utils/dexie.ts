@@ -9,11 +9,11 @@ const indexedDB = new Dexie("YTCatalogDatabase") as Dexie & {
 };
 
 indexedDB.version(2).stores({
-  "watch-later":
-    "videoId, title, channelTitle, publishedAt, channelId, channelLogo, description",
   favorites: "id, title, description",
   history:
     "videoId, duration, updatedAt, completed, title, channelTitle, publishedAt, channelId, channelLogo, description ",
+  "watch-later":
+    "videoId, title, channelTitle, publishedAt, channelId, channelLogo, description",
 });
 
 export type { FavoriteData };

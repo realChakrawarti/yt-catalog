@@ -10,6 +10,7 @@ import {
   TableRow,
 } from "~/shared/ui/table";
 import { DeleteModal } from "~/widgets/delete-modal";
+import { OutLink } from "~/widgets/out-link";
 
 function ChannelTable({ channels, handleDelete }: any) {
   return (
@@ -46,13 +47,12 @@ function ChannelTable({ channels, handleDelete }: any) {
                   ) : null}
 
                   {channel?.handle ? (
-                    <a
+                    <OutLink
                       className="text-indigo-600 hover:text-indigo-500 visited:text-indigo-700"
-                      target="_blank"
                       href={`https://www.youtube.com/${channel?.handle}`}
                     >
                       <p>{channel?.title}</p>
-                    </a>
+                    </OutLink>
                   ) : (
                     <p>{channel?.title}</p>
                   )}

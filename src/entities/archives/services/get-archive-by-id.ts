@@ -21,8 +21,8 @@ export async function getArchiveById(archiveId: string) {
     const archiveData = archiveSnap.data();
 
     archiveResponseData = {
-      title: archiveData?.title,
       description: archiveData?.description,
+      title: archiveData?.title,
       videos: archiveData?.data.videos,
     };
   } catch (err) {

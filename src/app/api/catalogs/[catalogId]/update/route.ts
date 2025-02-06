@@ -4,7 +4,7 @@ import { NextRequest } from "next/server";
 import { deleteChannel } from "~/entities/catalogs/services/delete-channel";
 import { getVideosByCatalog } from "~/entities/catalogs/services/get-videos-by-catalog";
 import { updateCatalogChannels } from "~/entities/catalogs/services/update-catalog-channels";
-import { NxResponse } from "~/utils/nx-response";
+import { NxResponse } from "~/shared/lib/nx-response";
 import { getUserIdCookie } from "~/utils/server-helper";
 
 type ContextParams = {

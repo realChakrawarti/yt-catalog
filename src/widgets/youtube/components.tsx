@@ -19,6 +19,7 @@ import {
 import { getTimeDifference } from "~/utils/client-helper";
 import { indexedDB } from "~/utils/dexie";
 
+import { OutLink } from "../out-link";
 import OverlayTip from "../overlay-tip";
 
 interface WatchLaterProps extends Pick<YouTubeCardOptions, "addWatchLater"> {
@@ -55,7 +56,7 @@ function ChannelMeta({
           </abbr>
         </h3>
         <div className="flex items-center gap-2 text-xs text-muted-foreground">
-          <a
+          <OutLink
             className="hover:underline text-nowrap overflow-hidden"
             href={`https://youtube.com/channel/${channelId}`}
             target="_blank"
@@ -63,7 +64,7 @@ function ChannelMeta({
             <abbr className="no-underline cursor-pointer" title={channelTitle}>
               {channelTitle}
             </abbr>
-          </a>
+          </OutLink>
           <b>•</b>
           <span className="text-nowrap">{timeElapsed}</span>
         </div>
@@ -98,9 +99,10 @@ function DescriptionSheet({
             className={`text-xs whitespace-pre-wrap ${inter.className}`}
             as="pre"
             options={{
-              target: "_blank",
               className:
                 "cursor-pointer text-[hsl(var(--primary))] hover:text-[hsl(var(--primary))]/70",
+              rel: "noopener noreferrer external",
+              target: "_blank",
             }}
           >
             {description}
@@ -203,12 +205,12 @@ function DownloadVideo({ videoId }: { videoId: string }) {
       description: (
         <p>
           Opening{" "}
-          <a
+          <OutLink
             className="cursor-pointer text-[hsl(var(--primary))] hover:text-[hsl(var(--primary))]/70"
             href="https://cobalt.tools"
           >
             cobalt.tools
-          </a>{" "}
+          </OutLink>{" "}
           in a new tab. Please paste the video link.
         </p>
       ),

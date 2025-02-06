@@ -32,10 +32,10 @@ type UserContext = {
 };
 
 const AuthContext = createContext<UserContext>({
-  user: null,
-  loading: true,
   authenticateWith: () => Promise.resolve(),
+  loading: true,
   logout: () => Promise.resolve(),
+  user: null,
 });
 
 export default function AuthContextProvider({ children }: PropsWithChildren) {
@@ -96,7 +96,7 @@ export default function AuthContextProvider({ children }: PropsWithChildren) {
 
   return (
     <AuthContext.Provider
-      value={{ user: userState, loading, authenticateWith, logout }}
+      value={{ authenticateWith, loading, logout, user: userState }}
     >
       {children}
     </AuthContext.Provider>

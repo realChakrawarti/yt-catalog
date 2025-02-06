@@ -9,6 +9,7 @@ import {
   CollapsibleTrigger,
 } from "~/shared/ui/collapsible";
 import { Input } from "~/shared/ui/input";
+import { OutLink } from "~/widgets/out-link";
 
 import useCatalogStore from "./catalog-store";
 
@@ -111,12 +112,11 @@ function RenderLocalList() {
                 )}
 
                 <div className="flex gap-2 items-center self-start">
-                  <a
-                    target="_blank"
+                  <OutLink
                     href={`https://www.youtube.com/playlist?list=${item?.id}`}
                   >
                     <Link className="size-3" />
-                  </a>
+                  </OutLink>
                 </div>
               </section>
             );
@@ -163,13 +163,13 @@ function PlaylistCard({ item }: any) {
 
   const handleLocalPlaylist = (playlist: any) => {
     const playlistItem = {
-      title: playlist.snippet.title,
-      thumbnail: playlist.snippet.thumbnails.medium.url,
-      id: playlist.id,
       channelId: playlist.snippet.channelId,
       channelTitle: playlist.snippet.channelTitle,
-      publishedAt: playlist.snippet.publishedAt,
       description: playlist.snippet.description,
+      id: playlist.id,
+      publishedAt: playlist.snippet.publishedAt,
+      thumbnail: playlist.snippet.thumbnails.medium.url,
+      title: playlist.snippet.title,
     };
 
     // Check if playlist already added
@@ -209,12 +209,9 @@ function PlaylistCard({ item }: any) {
       )}
 
       <div className="flex gap-2 items-center self-start">
-        <a
-          target="_blank"
-          href={`https://www.youtube.com/playlist?list=${item?.id}`}
-        >
+        <OutLink href={`https://www.youtube.com/playlist?list=${item?.id}`}>
           <Link className="size-3" />
-        </a>
+        </OutLink>
       </div>
     </section>
   );

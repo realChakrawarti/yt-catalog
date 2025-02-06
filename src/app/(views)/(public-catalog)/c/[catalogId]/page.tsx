@@ -22,11 +22,11 @@ export async function generateMetadata({
   return {
     title: `${catalogData?.title} | YTCatalog`,
     openGraph: {
-      type: "website",
-      title: catalogData?.title,
-      url: `https://ytcatalog.707x.in/${catalogId}`,
       description: catalogData?.description,
       siteName: "YTCatalog",
+      title: catalogData?.title,
+      type: "website",
+      url: `https://ytcatalog.707x.in/${catalogId}`,
     },
   };
 }

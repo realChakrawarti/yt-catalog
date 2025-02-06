@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { NxResponse } from "./utils/nx-response";
+import { NxResponse } from "./shared/lib/nx-response";
 import { getUserIdCookie } from "./utils/server-helper";
 
 export async function middleware(request: NextRequest) {

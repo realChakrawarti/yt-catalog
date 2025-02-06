@@ -3,12 +3,12 @@ import { useCallback } from "react";
 
 const count = 200;
 const defaults = {
+  decay: 0.94,
+  gravity: 1,
   origin: { y: 0 },
   spread: 90,
-  ticks: 400,
-  gravity: 1,
-  decay: 0.94,
   startVelocity: 30,
+  ticks: 400,
 };
 
 export function useConfetti() {
@@ -31,16 +31,16 @@ export function useConfetti() {
     });
 
     fire(0.35, {
-      spread: 100,
       decay: 0.91,
       scalar: 0.8,
+      spread: 100,
     });
 
     fire(0.1, {
-      spread: 120,
-      startVelocity: 25,
       decay: 0.92,
       scalar: 1.2,
+      spread: 120,
+      startVelocity: 25,
     });
 
     fire(0.1, {

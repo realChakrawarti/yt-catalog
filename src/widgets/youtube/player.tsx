@@ -62,8 +62,8 @@ export default function YoutubePlayer(
       );
 
       const payload: History = {
-        duration: currentTime,
         completed: percentCompleted,
+        duration: currentTime,
         updatedAt: Date.now(),
         ...video,
       };

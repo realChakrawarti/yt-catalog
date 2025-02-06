@@ -1,18 +1,15 @@
 import { revalidatePath } from "next/cache";
 import { NextRequest } from "next/server";
 
-import { NxResponse } from "~/utils/nx-response";
-
-import { getNextUpdate } from "../../models";
+import { getNextUpdate } from "~/entities/catalogs/services/get-next-update";
+import { NxResponse } from "~/shared/lib/nx-response";
+import { FOUR_HOURS } from "~/utils/constant";
 
 type ContextParams = {
   params: {
     catalogId: string;
   };
 };
-
-const ONE_HOUR = 3_600_000;
-const FOUR_HOURS = 4 * ONE_HOUR;
 
 export async function GET(_request: NextRequest, ctx: ContextParams) {
   const { catalogId } = ctx.params;

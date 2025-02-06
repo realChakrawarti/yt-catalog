@@ -15,6 +15,7 @@ import {
   SheetTrigger,
 } from "~/shared/ui/sheet";
 import fetchApi from "~/utils/fetch";
+import { OutLink } from "~/widgets/out-link";
 
 import useCatalogStore from "./catalog-store";
 import ShowPlaylist from "./show-playlist";
@@ -191,13 +192,12 @@ export default function AddChannelPlaylist() {
           {channelInfo.title && channelInfo.id ? (
             <section className="flex flex-col gap-3">
               <h1 className="text-base">
-                <a
+                <OutLink
                   href={`https://www.youtube.com/channel/${channelInfo.id}`}
                   className="text-primary hover:underline hover:underline-offset-2"
-                  target="_blank"
                 >
                   {channelInfo.title}
-                </a>
+                </OutLink>
               </h1>
               <div className="flex gap-3 flex-col md:flex-row flex-grow">
                 <Button

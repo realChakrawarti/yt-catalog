@@ -48,12 +48,12 @@ export async function getValidArchiveIds() {
       const archiveData = await getArchiveMetadata(archiveId);
       if (archiveData) {
         const metaData: Omit<ValidMetadata, "pageviews"> = {
-          thumbnails: getVideoThumbnails(archiveData),
-          title: archiveData?.title,
           description: archiveData?.description,
           id: archiveId,
-          updatedAt: archiveData?.data.updatedAt.toDate(),
+          thumbnails: getVideoThumbnails(archiveData),
+          title: archiveData?.title,
           totalVideos: archiveData?.data?.totalVideos,
+          updatedAt: archiveData?.data.updatedAt.toDate(),
         };
 
         archiveListData.push(metaData);

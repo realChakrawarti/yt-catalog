@@ -41,15 +41,15 @@ export async function updateCatalogPlaylists(
     const channelInfo = result?.items[0];
 
     const playlistItem = {
-      id: playlists[i].id,
-      title: playlists[i].title,
-      description: playlists[i].description,
-      publishedAt: playlists[i].publishedAt,
-      channelId: playlists[i].channelId,
-      channelHandle: channelInfo.snippet.customUrl,
-      channelTitle: channelInfo.snippet.title,
       channelDescription: channelInfo.snippet.description,
+      channelHandle: channelInfo.snippet.customUrl,
+      channelId: playlists[i].channelId,
       channelLogo: channelInfo.snippet.thumbnails.medium.url,
+      channelTitle: channelInfo.snippet.title,
+      description: playlists[i].description,
+      id: playlists[i].id,
+      publishedAt: playlists[i].publishedAt,
+      title: playlists[i].title,
     };
 
     playlistList.push(playlistItem);

@@ -1,6 +1,9 @@
 import { create } from "zustand";
 
-import type { CatalogPlaylist, PlaylistItem } from "~/shared/types-schema/types";
+import type {
+  CatalogPlaylist,
+  PlaylistItem,
+} from "~/shared/types-schema/types";
 
 export type LocalChannel = {
   title: string;
@@ -41,22 +44,49 @@ interface Actions {
   setFetchedChannelPlaylists: (_arg: boolean) => void;
 }
 
-const useCatalogStore = create<State & Actions>((set) => ({
+const initialState: State = {
   channelInfo: {
     title: "",
     id: "",
   },
-  localChannels: [],
-  savedChannels: [],
-  localPlaylists: [],
-  searchPlaylists: [],
   channelPlaylists: [],
-  playlistInput: "",
-  savedPlaylists: [],
-  videoLink: { error: "", link: "" },
   fetchedChannelPlaylists: false,
-  setFetchedChannelPlaylists: (arg) => set({ fetchedChannelPlaylists: arg }),
+  localChannels: [],
+  localPlaylists: [],
+  playlistInput: "",
+  savedChannels: [],
+  savedPlaylists: [],
+  searchPlaylists: [],
+  videoLink: { error: "", link: "" },
+};
+
+const useCatalogStore = create<State & Actions>((set) => ({
+  ...initialState,
+  resetLocalPlaylist: () =>
+    set({
+      channelInfo: {
+        title: "",
+        id: "",
+      },
+      channelPlaylists: [],
+      fetchedChannelPlaylists: false,
+      localPlaylists: [],
+      playlistInput: "",
+      searchPlaylists: [],
+      videoLink: { error: "", link: "" },
+    }),
   setChannelInfo: (channelInfo) => set({ channelInfo: channelInfo }),
+  setChannelPlaylists: (channelPlaylists) =>
+    set({ channelPlaylists: channelPlaylists }),
+  setFetchedChannelPlaylists: (arg) => set({ fetchedChannelPlaylists: arg }),
+  setLocalChannels: (localChannels) => set({ localChannels }),
+  setLocalPlaylists: (localPlaylists) =>
+    set({ localPlaylists: localPlaylists }),
+  setPlaylistInput: (inputValue) => set({ playlistInput: inputValue }),
+  setSavedChannels: (channels) => set({ savedChannels: channels }),
+  setSavedPlaylists: (playlists) => set({ savedPlaylists: playlists }),
+  setSearchPlaylists: (searchPlaylists) =>
+    set({ searchPlaylists: searchPlaylists }),
   setVideoLink: (link) => {
     return set((state) => ({
       videoLink: {
@@ -65,29 +95,6 @@ const useCatalogStore = create<State & Actions>((set) => ({
       },
     }));
   },
-  setSavedPlaylists: (playlists) => set({ savedPlaylists: playlists }),
-  setPlaylistInput: (inputValue) => set({ playlistInput: inputValue }),
-  setLocalChannels: (localChannels) => set({ localChannels }),
-  setSavedChannels: (channels) => set({ savedChannels: channels }),
-  setLocalPlaylists: (localPlaylists) =>
-    set({ localPlaylists: localPlaylists }),
-  setSearchPlaylists: (searchPlaylists) =>
-    set({ searchPlaylists: searchPlaylists }),
-  setChannelPlaylists: (channelPlaylists) =>
-    set({ channelPlaylists: channelPlaylists }),
-  resetLocalPlaylist: () =>
-    set({
-      playlistInput: "",
-      searchPlaylists: [],
-      localPlaylists: [],
-      channelPlaylists: [],
-      videoLink: { error: "", link: "" },
-      channelInfo: {
-        title: "",
-        id: "",
-      },
-      fetchedChannelPlaylists: false,
-    }),
 }));
 
 export default useCatalogStore;

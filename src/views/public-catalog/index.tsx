@@ -88,8 +88,8 @@ export default async function PubliCatalog({
             <YouTubeCard
               key={video.videoId}
               options={{
-                enableJsApi: true,
                 addWatchLater: true,
+                enableJsApi: true,
                 hideAvatar: Boolean(channelId),
               }}
               video={video}
@@ -104,8 +104,8 @@ export default async function PubliCatalog({
             <YouTubeCard
               key={video.videoId}
               options={{
-                enableJsApi: true,
                 addWatchLater: true,
+                enableJsApi: true,
                 hideAvatar: Boolean(channelId),
               }}
               video={video}
@@ -120,8 +120,8 @@ export default async function PubliCatalog({
             <YouTubeCard
               key={video.videoId}
               options={{
-                enableJsApi: true,
                 addWatchLater: true,
+                enableJsApi: true,
                 hideAvatar: Boolean(channelId),
               }}
               video={video}
