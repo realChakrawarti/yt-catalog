@@ -1,15 +1,15 @@
 import { NextRequest } from "next/server";
 
-import { NxResponse } from "~/utils/nx-response";
+import { createArchive } from "~/entities/archives/services/create-archive";
+import { getArchiveByUser } from "~/entities/archives/services/get-archives-by-user";
+import { NxResponse } from "~/shared/lib/nx-response";
 import { getUserIdCookie } from "~/utils/server-helper";
 
-import { createArchive, getArchiveByUser } from "./models";
-
 export async function GET() {
-    const userId = getUserIdCookie();
-    const data = await getArchiveByUser(userId);
-    return NxResponse.success("Archive data fetched successfully.", data, 200);
-  }
+  const userId = getUserIdCookie();
+  const data = await getArchiveByUser(userId);
+  return NxResponse.success("Archive data fetched successfully.", data, 200);
+}
 
 export async function POST(request: NextRequest) {
   const userId = getUserIdCookie();

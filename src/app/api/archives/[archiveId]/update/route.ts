@@ -1,10 +1,9 @@
 import { revalidatePath } from "next/cache";
 import { NextRequest } from "next/server";
 
-import { NxResponse } from "~/utils/nx-response";
+import { addArchiveVideo } from "~/entities/archives/services/add-archive-video";
+import { NxResponse } from "~/shared/lib/nx-response";
 import { getUserIdCookie } from "~/utils/server-helper";
-
-import { addArchiveVideo } from "../../models";
 
 type ContextParams = {
   params: {

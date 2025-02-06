@@ -11,6 +11,11 @@
         "varsIgnorePattern": "^_.*",
         "argsIgnorePattern": "^_.*"
       }
+    ],
+    "sort-keys": [
+      "error",
+      "asc",
+      { "caseSensitive": true, "natural": true, "minKeys": 3 }
     ]
   },
   "parserOptions": {

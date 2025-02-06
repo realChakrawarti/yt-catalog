@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { NxResponse } from "./utils/nx-response";
+import { NxResponse } from "./shared/lib/nx-response";
 import { getUserIdCookie } from "./utils/server-helper";
 
 export async function middleware(request: NextRequest) {
@@ -29,7 +29,7 @@ export const config = {
     "/api/catalogs/:catalogId/playlist",
     "/api/catalogs/:catalogId/delete",
     "/api/logout",
-    "/api/youtube/get-video",
-    "/api/youtube/get-playlists",
+    "/api/youtube/video",
+    "/api/youtube/playlists",
   ],
 };

@@ -1,10 +1,9 @@
 import { revalidatePath } from "next/cache";
 import { NextRequest } from "next/server";
 
-import { NxResponse } from "~/utils/nx-response";
+import { removeArchiveVideo } from "~/entities/archives/services/remove-archive-video";
+import { NxResponse } from "~/shared/lib/nx-response";
 import { getUserIdCookie } from "~/utils/server-helper";
-
-import { removeVideoFromArchive } from "../../models";
 
 type ContextParams = {
   params: {
@@ -18,7 +17,7 @@ export async function PATCH(request: NextRequest, ctx: ContextParams) {
 
   const payload = await request.json();
 
-  const message = await removeVideoFromArchive(userId, archiveId, payload);
+  const message = await removeArchiveVideo(userId, archiveId, payload);
 
   revalidatePath(`/a/${archiveId}`);
 

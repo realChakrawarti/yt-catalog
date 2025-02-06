@@ -1,14 +1,11 @@
 import { revalidatePath } from "next/cache";
 import { NextRequest } from "next/server";
 
-import { NxResponse } from "~/utils/nx-response";
+import { deleteChannel } from "~/entities/catalogs/services/delete-channel";
+import { getVideosByCatalog } from "~/entities/catalogs/services/get-videos-by-catalog";
+import { updateCatalogChannels } from "~/entities/catalogs/services/update-catalog-channels";
+import { NxResponse } from "~/shared/lib/nx-response";
 import { getUserIdCookie } from "~/utils/server-helper";
-
-import {
-  deleteChannel,
-  updateCatalogVideos,
-  updateChannels,
-} from "../../models";
 
 type ContextParams = {
   params: {
@@ -18,7 +15,7 @@ type ContextParams = {
 
 export async function GET(_request: NextRequest, ctx: ContextParams) {
   const { catalogId } = ctx.params;
-  const data = await updateCatalogVideos(catalogId);
+  const data = await getVideosByCatalog(catalogId);
 
   if (typeof data === "string") {
     return NxResponse.fail(data, { code: "UNKOWN", details: data }, 404);
@@ -64,10 +61,10 @@ export async function PATCH(request: NextRequest, ctx: ContextParams) {
 
   const catalogPayload = await request.json();
 
-  await updateChannels(userId, catalogId, catalogPayload);
+  await updateCatalogChannels(userId, catalogId, catalogPayload);
 
   // Update the catalog
-  updateCatalogVideos(catalogId);
+  getVideosByCatalog(catalogId);
 
   // Revalidate the /explore route
   revalidatePath("/explore/catalogs");
