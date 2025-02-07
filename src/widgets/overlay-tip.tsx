@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-import { cn } from "~/shared/lib/classname";
+import { cn } from "~/shared/lib/tailwind-merge";
 
 interface OverlayTipProps {
   children: ReactNode;

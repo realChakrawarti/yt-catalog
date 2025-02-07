@@ -18,9 +18,8 @@ import {
 } from "react";
 
 import { useToast } from "~/shared/hooks/use-toast";
-
-import fetchApi from "../../utils/fetch";
-import { auth } from "../../utils/firebase";
+import fetchApi from "~/shared/lib/api/fetch";
+import { auth } from "~/shared/lib/firebase/config";
 
 type UserContext = {
   user: User | null;

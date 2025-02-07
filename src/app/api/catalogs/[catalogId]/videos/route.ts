@@ -1,7 +1,7 @@
 import { NextRequest } from "next/server";
 
-import { getVideosByCatalog } from "~/entities/catalogs/services/get-videos-by-catalog";
-import { NxResponse } from "~/shared/lib/nx-response";
+import { getVideosByCatalog } from "~/entities/catalogs";
+import { NxResponse } from "~/shared/lib/next/nx-response";
 
 type ContextParams = {
   params: {

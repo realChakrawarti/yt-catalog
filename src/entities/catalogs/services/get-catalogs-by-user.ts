@@ -1,8 +1,8 @@
 import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 
-import { toUTCString } from "~/shared/lib/to-utc-string";
-import { db } from "~/utils/firebase";
-import { COLLECTION } from "~/utils/server-helper";
+import { toUTCString } from "~/shared/lib/date-time/to-utc-string";
+import { COLLECTION } from "~/shared/lib/firebase/collections";
+import { db } from "~/shared/lib/firebase/config";
 
 /**
  * This function returns all catalogs of a user

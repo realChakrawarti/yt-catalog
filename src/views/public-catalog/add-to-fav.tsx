@@ -5,8 +5,8 @@ import { StarIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { toast } from "~/shared/hooks/use-toast";
+import { indexedDB } from "~/shared/lib/api/dexie";
 import { Button } from "~/shared/ui/button";
-import { indexedDB } from "~/utils/dexie";
 import JustTip from "~/widgets/just-the-tip";
 
 export const AddToFavorites = ({

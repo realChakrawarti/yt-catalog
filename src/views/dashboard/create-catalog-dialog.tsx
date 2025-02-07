@@ -3,7 +3,7 @@ import { KeyedMutator } from "swr";
 
 import { useConfetti } from "~/shared/hooks/use-confetti";
 import { toast } from "~/shared/hooks/use-toast";
-import { ApiResponse } from "~/shared/lib/nx-response";
+import { ApiResponse } from "~/shared/lib/next/nx-response";
 import { TitleDescriptionSchema as CatalogSchema } from "~/shared/types-schema/schemas";
 import type { TitleDescriptionType as CatalogMeta } from "~/shared/types-schema/types";
 import { Button } from "~/shared/ui/button";

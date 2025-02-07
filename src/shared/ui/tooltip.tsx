@@ -3,7 +3,7 @@
 import * as TooltipPrimitive from "@radix-ui/react-tooltip"
 import * as React from "react"
 
-import { cn } from "~/shared/lib/classname"
+import { cn } from "~/shared/lib/tailwind-merge"
 
 const TooltipProvider = TooltipPrimitive.Provider
 

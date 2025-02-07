@@ -1,9 +1,8 @@
 import { NextRequest } from "next/server";
 
-import { createArchive } from "~/entities/archives/services/create-archive";
-import { getArchiveByUser } from "~/entities/archives/services/get-archives-by-user";
-import { NxResponse } from "~/shared/lib/nx-response";
-import { getUserIdCookie } from "~/utils/server-helper";
+import { createArchive, getArchiveByUser } from "~/entities/archives";
+import { getUserIdCookie } from "~/shared/lib/next/get-cookie";
+import { NxResponse } from "~/shared/lib/next/nx-response";
 
 export async function GET() {
   const userId = getUserIdCookie();

@@ -3,7 +3,7 @@
 import { ArrowUpIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 
-import { cn } from "~/shared/lib/classname";
+import { cn } from "~/shared/lib/tailwind-merge";
 
 import { Button } from "../shared/ui/button";
 

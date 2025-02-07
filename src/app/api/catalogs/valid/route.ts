@@ -1,7 +1,7 @@
 import { NextRequest } from "next/server";
 
-import { getValidCatalogIds } from "~/entities/catalogs/services/get-valid-catalogs-ids";
-import { NxResponse } from "~/shared/lib/nx-response";
+import { getValidCatalogIds } from "~/entities/catalogs";
+import { NxResponse } from "~/shared/lib/next/nx-response";
 
 export async function GET(_request: NextRequest) {
   const pageListData = await getValidCatalogIds();
