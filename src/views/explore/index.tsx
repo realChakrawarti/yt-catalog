@@ -1,8 +1,8 @@
 import { ChevronRightIcon } from "lucide-react";
 import Link from "next/link";
 
+import fetchApi from "~/shared/lib/api/fetch";
 import type { ValidMetadata } from "~/shared/types-schema/types";
-import fetchApi from "~/utils/fetch";
 import DetailsCard from "~/widgets/details-card";
 import GridContainer from "~/widgets/grid-container";
 import Marker from "~/widgets/marker";

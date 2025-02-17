@@ -1,6 +1,6 @@
 import { Metadata } from "next/types";
 
-import fetchApi from "~/utils/fetch";
+import fetchApi from "~/shared/lib/api/fetch";
 import PublicArchive from "~/views/public-archive";
 
 type PublicArchiveParams = {

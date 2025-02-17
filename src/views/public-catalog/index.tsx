@@ -3,8 +3,8 @@ import { ClockIcon, type LucideIcon } from "lucide-react";
 import dynamic from "next/dynamic";
 import { ReactNode } from "react";
 
+import fetchApi from "~/shared/lib/api/fetch";
 import { MonthIcon, WeekIcon } from "~/shared/ui/icons";
-import fetchApi from "~/utils/fetch";
 import GridContainer from "~/widgets/grid-container";
 import Marker from "~/widgets/marker";
 import ScrollTop from "~/widgets/scroll-top";

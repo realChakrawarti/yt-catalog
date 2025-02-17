@@ -1,7 +1,7 @@
 import { doc, getDoc } from "firebase/firestore";
 
-import { db } from "~/utils/firebase";
-import { COLLECTION } from "~/utils/server-helper";
+import { COLLECTION } from "~/shared/lib/firebase/collections";
+import { db } from "~/shared/lib/firebase/config";
 
 /**
  * Retrieves the next scheduled update time for a specific catalog.

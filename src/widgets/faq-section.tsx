@@ -4,7 +4,7 @@ import Linkify from "linkify-react";
 import { ChevronDownIcon } from "lucide-react";
 import { useState } from "react";
 
-import { cn } from "~/shared/lib/classname";
+import { cn } from "~/shared/lib/tailwind-merge";
 
 interface FAQItem {
   question: string;

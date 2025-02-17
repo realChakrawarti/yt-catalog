@@ -10,9 +10,9 @@ import {
 } from "firebase/firestore";
 import { unstable_noStore } from "next/cache";
 
+import { COLLECTION } from "~/shared/lib/firebase/collections";
+import { db } from "~/shared/lib/firebase/config";
 import { ValidMetadata } from "~/shared/types-schema/types";
-import { db } from "~/utils/firebase";
-import { COLLECTION } from "~/utils/server-helper";
 
 const getArchiveMetadata = async (archiveId: string) => {
   const archiveRef = doc(db, COLLECTION.archives, archiveId);

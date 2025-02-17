@@ -1,6 +1,3 @@
-import { customAlphabet } from "nanoid";
-import { cookies } from "next/headers";
-
 export const YOUTUBE_CHANNEL_PLAYLIST_VIDEOS = (
   playlistId: string,
   limit: number
@@ -28,29 +25,3 @@ export const YOUTUBE_CHANNEL_PLAYLISTS = (
   }
   return `https://www.googleapis.com/youtube/v3/playlists?part=snippet,contentDetails&channelId=${channelId}&maxResults=${limit}&key=${process.env.YOUTUBE_API_KEY}`;
 };
-const tokenCharacters =
-  "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-
-/**
- * Generates a unique token using a custom nanoid alphabet.
- *
- * @param length - The desired length of the generated token
- * @returns A unique random string token of specified length
- */
-export function createNanoidToken(length: number): string {
-  const nanoid = customAlphabet(tokenCharacters, length);
-  return nanoid();
-}
-
-export function getUserIdCookie(): string {
-  const cookieStore = cookies();
-  const userIdToken = cookieStore.get("userId")?.value || "";
-
-  return userIdToken;
-}
-
-export const COLLECTION = {
-  archives: "archives",
-  catalogs: "catalogs",
-  users: "users",
-} as const;

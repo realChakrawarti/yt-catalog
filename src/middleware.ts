@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { NxResponse } from "./shared/lib/nx-response";
-import { getUserIdCookie } from "./utils/server-helper";
+import { getUserIdCookie } from "./shared/lib/next/get-cookie";
+import { NxResponse } from "./shared/lib/next/nx-response";
 
 export async function middleware(request: NextRequest) {
   const userId = getUserIdCookie();

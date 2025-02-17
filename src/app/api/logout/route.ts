@@ -1,4 +1,4 @@
-import { NxResponse } from "~/shared/lib/nx-response";
+import { NxResponse } from "~/shared/lib/next/nx-response";
 
 export function GET(_request: Request) {
   const response = NxResponse.success<any>(

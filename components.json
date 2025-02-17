@@ -11,10 +11,10 @@
     "prefix": ""
   },
   "aliases": {
-    "components": "~/components",
+    "components": "~/shared",
     "utils": "~/utils",
     "ui": "~/shared/ui",
-    "lib": "~/shared/lib",
+    "lib": "~/shared/lib/tailwind-merge",
     "hooks": "~/shared/hooks"
   },
   "iconLibrary": "lucide"

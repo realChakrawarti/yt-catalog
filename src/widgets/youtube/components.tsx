@@ -4,6 +4,8 @@ import { Clock8, HardDriveDownloadIcon } from "lucide-react";
 import { Inter } from "next/font/google";
 
 import { toast } from "~/shared/hooks/use-toast";
+import { indexedDB } from "~/shared/lib/api/dexie";
+import { getTimeDifference } from "~/shared/lib/date-time/time-diff";
 import { VideoData, YouTubeCardOptions } from "~/shared/types-schema/types";
 import { Avatar, AvatarFallback, AvatarImage } from "~/shared/ui/avatar";
 import { Button } from "~/shared/ui/button";
@@ -16,8 +18,6 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "~/shared/ui/sheet";
-import { getTimeDifference } from "~/utils/client-helper";
-import { indexedDB } from "~/utils/dexie";
 
 import { OutLink } from "../out-link";
 import OverlayTip from "../overlay-tip";

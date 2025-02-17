@@ -1,6 +1,7 @@
 import { ChangeEvent, useState } from "react";
 
 import { toast } from "~/shared/hooks/use-toast";
+import fetchApi from "~/shared/lib/api/fetch";
 import { Button } from "~/shared/ui/button";
 import {
   Dialog,
@@ -10,7 +11,6 @@ import {
   DialogTrigger,
 } from "~/shared/ui/dialog";
 import { Input } from "~/shared/ui/input";
-import fetchApi from "~/utils/fetch";
 
 type VideoLink = {
   link: string;

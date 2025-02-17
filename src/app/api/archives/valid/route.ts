@@ -1,7 +1,7 @@
 import { NextRequest } from "next/server";
 
-import { getValidArchiveIds } from "~/entities/archives/services/get-valid-archive-ids";
-import { NxResponse } from "~/shared/lib/nx-response";
+import { getValidArchiveIds } from "~/entities/archives";
+import { NxResponse } from "~/shared/lib/next/nx-response";
 
 export async function GET(_request: NextRequest) {
   const pageListData = await getValidArchiveIds();

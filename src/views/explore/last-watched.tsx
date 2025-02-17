@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 
+import { indexedDB } from "~/shared/lib/api/dexie";
 import type { History } from "~/shared/types-schema/types";
-import { indexedDB } from "~/utils/dexie";
 import GridContainer from "~/widgets/grid-container";
 import YouTubeCard from "~/widgets/youtube/youtube-card";
 

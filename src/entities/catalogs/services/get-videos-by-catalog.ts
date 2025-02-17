@@ -2,12 +2,15 @@ import { BetaAnalyticsDataClient, protos } from "@google-analytics/data";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { revalidatePath } from "next/cache";
 
-import { FOUR_HOURS, ONE_DAY, ONE_MONTH, ONE_WEEK } from "~/utils/constant";
-import { db } from "~/utils/firebase";
+import { YOUTUBE_CHANNEL_PLAYLIST_VIDEOS } from "~/shared/lib/api/youtube-endpoints";
 import {
-  COLLECTION,
-  YOUTUBE_CHANNEL_PLAYLIST_VIDEOS,
-} from "~/utils/server-helper";
+  FOUR_HOURS,
+  ONE_DAY,
+  ONE_MONTH,
+  ONE_WEEK,
+} from "~/shared/lib/constants";
+import { COLLECTION } from "~/shared/lib/firebase/collections";
+import { db } from "~/shared/lib/firebase/config";
 
 type VideoMetadata = {
   description: string;

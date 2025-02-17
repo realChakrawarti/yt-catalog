@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.4](https://github.com/realChakrawarti/yt-catalog/compare/v1.5.3...v1.5.4) (2025-02-17)
+
+
+### Bug Fixes
+
+* barrel export entities services ([c3ec03d](https://github.com/realChakrawarti/yt-catalog/commit/c3ec03d7d0a38404e44411bc300288a17d053745))
+* fetchApi imports ([c726e19](https://github.com/realChakrawarti/yt-catalog/commit/c726e19c886bac4d8b7bc244e85abd14d76ff8e1))
+
 ### [1.5.3](https://github.com/realChakrawarti/yt-catalog/compare/v1.5.2...v1.5.3) (2025-02-06)
 
 

@@ -2,7 +2,7 @@
 
 import { useLiveQuery } from "dexie-react-hooks";
 
-import { indexedDB } from "~/utils/dexie";
+import { indexedDB } from "~/shared/lib/api/dexie";
 import GridContainer from "~/widgets/grid-container";
 import YouTubeCard from "~/widgets/youtube/youtube-card";
 

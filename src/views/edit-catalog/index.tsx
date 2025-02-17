@@ -5,12 +5,12 @@ import { useEffect, useState } from "react";
 import useSWR from "swr";
 
 import { useToast } from "~/shared/hooks/use-toast";
+import fetchApi from "~/shared/lib/api/fetch";
 import type { TitleDescriptionType } from "~/shared/types-schema/types";
 import { Badge } from "~/shared/ui/badge";
 import { Button } from "~/shared/ui/button";
 import { LinkIcon } from "~/shared/ui/icons";
 import { Separator } from "~/shared/ui/separator";
-import fetchApi from "~/utils/fetch";
 import JustTip from "~/widgets/just-the-tip";
 import Spinner from "~/widgets/spinner";
 

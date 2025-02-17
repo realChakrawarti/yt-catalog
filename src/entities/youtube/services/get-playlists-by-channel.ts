@@ -1,5 +1,6 @@
-import { YOUTUBE_CHANNEL_PLAYLISTS } from "~/utils/server-helper";
 // TODO: Limit no of recurive calls that could be made, probably limit result to 500, i.e; 10
+
+import { YOUTUBE_CHANNEL_PLAYLISTS } from "~/shared/lib/api/youtube-endpoints";
 
 /**
  * Recursively retrieves all playlists for a given YouTube channel using pagination.

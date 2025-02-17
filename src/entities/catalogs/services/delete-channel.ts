@@ -1,7 +1,7 @@
 import { doc, updateDoc } from "firebase/firestore";
 
-import { db } from "~/utils/firebase";
-import { COLLECTION } from "~/utils/server-helper";
+import { COLLECTION } from "~/shared/lib/firebase/collections";
+import { db } from "~/shared/lib/firebase/config";
 
 /**
  * Removes specified channels from a user's catalog.

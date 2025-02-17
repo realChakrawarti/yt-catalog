@@ -1,4 +1,4 @@
-import fetchApi from "~/utils/fetch";
+import fetchApi from "~/shared/lib/api/fetch";
 import DetailsCard from "~/widgets/details-card";
 import GridContainer from "~/widgets/grid-container";
 

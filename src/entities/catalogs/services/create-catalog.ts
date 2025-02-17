@@ -1,7 +1,8 @@
 import { doc, setDoc } from "firebase/firestore";
 
-import { db } from "~/utils/firebase";
-import { COLLECTION, createNanoidToken } from "~/utils/server-helper";
+import { COLLECTION } from "~/shared/lib/firebase/collections";
+import { db } from "~/shared/lib/firebase/config";
+import { createNanoidToken } from "~/shared/lib/nanoid-token";
 
 type CatalogMeta = {
   title: string;

@@ -10,7 +10,7 @@ import {
 import { useState } from "react";
 
 import { toast } from "~/shared/hooks/use-toast";
-import fetchApi from "~/utils/fetch";
+import fetchApi from "~/shared/lib/api/fetch";
 
 import { Button } from "../shared/ui/button";
 import {

@@ -1,12 +1,12 @@
 import { doc, getDoc } from "firebase/firestore";
 
+import { COLLECTION } from "~/shared/lib/firebase/collections";
+import { db } from "~/shared/lib/firebase/config";
 import {
   CatalogByIdResponse,
   CatalogChannel,
   CatalogPlaylist,
 } from "~/shared/types-schema/types";
-import { db } from "~/utils/firebase";
-import { COLLECTION } from "~/utils/server-helper";
 
 /**
  * Retrieves detailed information for a specific catalog by its ID.

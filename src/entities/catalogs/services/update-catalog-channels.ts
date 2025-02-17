@@ -1,10 +1,8 @@
 import { doc, updateDoc } from "firebase/firestore";
 
-import { db } from "~/utils/firebase";
-import {
-  COLLECTION,
-  YOUTUBE_CHANNELS_INFORMATION,
-} from "~/utils/server-helper";
+import { YOUTUBE_CHANNELS_INFORMATION } from "~/shared/lib/api/youtube-endpoints";
+import { COLLECTION } from "~/shared/lib/firebase/collections";
+import { db } from "~/shared/lib/firebase/config";
 
 import topicData from "./youtube-topics.json";
 

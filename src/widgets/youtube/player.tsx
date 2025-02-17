@@ -3,8 +3,8 @@
 import { YouTubeEmbed } from "@next/third-parties/google";
 import { useEffect, useRef } from "react";
 
+import { indexedDB } from "~/shared/lib/api/dexie";
 import type { History, VideoData } from "~/shared/types-schema/types";
-import { indexedDB } from "~/utils/dexie";
 
 const IframeParams = "rel=0&playsinline=1&origin=https://ytcatalog.707x.in";
 

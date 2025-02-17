@@ -1,8 +1,7 @@
 import { NextRequest } from "next/server";
 
-import { getArchiveById } from "~/entities/archives/services/get-archive-by-id";
-import { updateArchiveMeta } from "~/entities/archives/services/update-archive-meta";
-import { NxResponse } from "~/shared/lib/nx-response";
+import { getArchiveById, updateArchiveMeta } from "~/entities/archives";
+import { NxResponse } from "~/shared/lib/next/nx-response";
 
 type ContextParams = {
   params: {

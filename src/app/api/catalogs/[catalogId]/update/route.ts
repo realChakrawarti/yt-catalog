@@ -1,11 +1,13 @@
 import { revalidatePath } from "next/cache";
 import { NextRequest } from "next/server";
 
-import { deleteChannel } from "~/entities/catalogs/services/delete-channel";
-import { getVideosByCatalog } from "~/entities/catalogs/services/get-videos-by-catalog";
-import { updateCatalogChannels } from "~/entities/catalogs/services/update-catalog-channels";
-import { NxResponse } from "~/shared/lib/nx-response";
-import { getUserIdCookie } from "~/utils/server-helper";
+import {
+  deleteChannel,
+  getVideosByCatalog,
+  updateCatalogChannels,
+} from "~/entities/catalogs";
+import { getUserIdCookie } from "~/shared/lib/next/get-cookie";
+import { NxResponse } from "~/shared/lib/next/nx-response";
 
 type ContextParams = {
   params: {

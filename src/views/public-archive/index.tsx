@@ -1,4 +1,4 @@
-import fetchApi from "~/utils/fetch";
+import fetchApi from "~/shared/lib/api/fetch";
 import GridContainer from "~/widgets/grid-container";
 import YouTubeCard from "~/widgets/youtube/youtube-card";
 

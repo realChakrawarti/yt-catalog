@@ -3,6 +3,7 @@
 import { useLiveQuery } from "dexie-react-hooks";
 import Link from "next/link";
 
+import { indexedDB } from "~/shared/lib/api/dexie";
 import { Button } from "~/shared/ui/button";
 import { HeartListIcon, StarIcon } from "~/shared/ui/icons";
 import {
@@ -13,7 +14,6 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "~/shared/ui/sheet";
-import { indexedDB } from "~/utils/dexie";
 import JustTip from "~/widgets/just-the-tip";
 
 export default function FavoriteCatalog() {

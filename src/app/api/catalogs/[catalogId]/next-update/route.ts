@@ -1,9 +1,9 @@
 import { revalidatePath } from "next/cache";
 import { NextRequest } from "next/server";
 
-import { getNextUpdate } from "~/entities/catalogs/services/get-next-update";
-import { NxResponse } from "~/shared/lib/nx-response";
-import { FOUR_HOURS } from "~/utils/constant";
+import { getNextUpdate } from "~/entities/catalogs";
+import { FOUR_HOURS } from "~/shared/lib/constants";
+import { NxResponse } from "~/shared/lib/next/nx-response";
 
 type ContextParams = {
   params: {
