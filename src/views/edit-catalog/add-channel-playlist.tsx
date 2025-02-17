@@ -4,6 +4,7 @@ import { ListPlusIcon } from "lucide-react";
 import { ChangeEvent } from "react";
 
 import { toast } from "~/shared/hooks/use-toast";
+import fetchApi from "~/shared/lib/api/fetch";
 import { Button } from "~/shared/ui/button";
 import { Input } from "~/shared/ui/input";
 import {
@@ -14,7 +15,6 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "~/shared/ui/sheet";
-import fetchApi from "~/utils/fetch";
 import { OutLink } from "~/widgets/out-link";
 
 import useCatalogStore from "./catalog-store";

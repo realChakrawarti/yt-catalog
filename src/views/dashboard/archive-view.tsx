@@ -2,10 +2,10 @@ import { useRouter } from "next/navigation";
 import useSWR from "swr";
 
 import { toast } from "~/shared/hooks/use-toast";
+import fetchApi from "~/shared/lib/api/fetch";
+import { getTimeDifference } from "~/shared/lib/date-time/time-diff";
 import { Badge } from "~/shared/ui/badge";
 import { ArchiveIcon } from "~/shared/ui/icons";
-import { getTimeDifference } from "~/utils/client-helper";
-import fetchApi from "~/utils/fetch";
 import GridContainer from "~/widgets/grid-container";
 import ArchiveCard from "~/widgets/item-card";
 import NoItemCard from "~/widgets/no-item-card";

@@ -4,13 +4,13 @@ import { useEffect, useState } from "react";
 import useSWR from "swr";
 
 import { toast } from "~/shared/hooks/use-toast";
+import fetchApi from "~/shared/lib/api/fetch";
 import { TitleDescriptionSchema as ArchiveSchema } from "~/shared/types-schema/schemas";
 import type { TitleDescriptionType as ArchiveMeta } from "~/shared/types-schema/types";
 import { Button } from "~/shared/ui/button";
 import { Input } from "~/shared/ui/input";
 import { Label } from "~/shared/ui/label";
 import { Separator } from "~/shared/ui/separator";
-import fetchApi from "~/utils/fetch";
 import GridContainer from "~/widgets/grid-container";
 import Spinner from "~/widgets/spinner";
 

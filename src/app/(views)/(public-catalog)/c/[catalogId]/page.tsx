@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { Metadata } from "next/types";
 
-import fetchApi from "~/utils/fetch";
+import fetchApi from "~/shared/lib/api/fetch";
 import PubliCatalog from "~/views/public-catalog";
 
 type PublicCatalogParams = {

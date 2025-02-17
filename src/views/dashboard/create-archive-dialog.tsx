@@ -3,6 +3,7 @@ import { KeyedMutator } from "swr";
 
 import { useConfetti } from "~/shared/hooks/use-confetti";
 import { toast } from "~/shared/hooks/use-toast";
+import fetchApi from "~/shared/lib/api/fetch";
 import { ApiResponse } from "~/shared/lib/next/nx-response";
 import { TitleDescriptionSchema as ArchiveSchema } from "~/shared/types-schema/schemas";
 import type { TitleDescriptionType as ArchiveMeta } from "~/shared/types-schema/types";
@@ -19,7 +20,6 @@ import {
 import { PlusIcon } from "~/shared/ui/icons";
 import { Input } from "~/shared/ui/input";
 import { Label } from "~/shared/ui/label";
-import fetchApi from "~/utils/fetch";
 
 const initialState = {
   title: "",

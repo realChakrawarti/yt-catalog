@@ -4,12 +4,12 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import useSWR from "swr";
 
+import fetchApi from "~/shared/lib/api/fetch";
+import { getTimeDifference } from "~/shared/lib/date-time/time-diff";
 import { Button } from "~/shared/ui/button";
 import { RefreshIcon } from "~/shared/ui/icons";
 import { Popover, PopoverContent, PopoverTrigger } from "~/shared/ui/popover";
 import { Skeleton } from "~/shared/ui/skeleton";
-import { getTimeDifference } from "~/utils/client-helper";
-import fetchApi from "~/utils/fetch";
 
 function ShowBanner({ showBanner, setShowBanner }: any) {
   const [bodyElement, setBodyElement] = useState<
