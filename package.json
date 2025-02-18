@@ -2,8 +2,8 @@
   "name": "yt-catalog",
   "version": "1.5.4",
   "scripts": {
-    "dev": "concurrently \"npm run emulate-firebase\" \"next dev\"",
-    "dev:seed": "concurrently \"npm run emulate-firebase:import-seed\" \"next dev\"",
+    "dev": "concurrently \"pnpm run emulate-firebase\" \"next dev\" --kill-others",
+    "dev:seed": "concurrently \"pnpm run emulate-firebase:import-seed\" \"next dev\" --kill-others",
     "emulate-firebase": "firebase emulators:start --project ytcatalog707",
     "emulate-firebase:import-seed": "firebase emulators:start --project ytcatalog707 --import=seed",
     "emulate-firebase:export-seed": "firebase --project ytcatalog707  emulators:export seed",
@@ -79,6 +79,7 @@
     "eslint": "^8.57.1",
     "eslint-config-next": "14.2.7",
     "eslint-plugin-simple-import-sort": "^12.1.1",
+    "firebase-tools": "^13.31.1",
     "husky": "^9.1.7",
     "postcss": "^8.5.2",
     "standard-version": "^9.5.0",

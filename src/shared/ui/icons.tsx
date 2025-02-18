@@ -1,3 +1,4 @@
+// TODO: Consider using icons from lucide or use the svg directly
 import { SiGithub, SiGmail } from "@icons-pack/react-simple-icons";
 import {
   AlertTriangle,
@@ -33,7 +34,8 @@ import {
   Star,
   Sun,
   Trash2,
-  X} from "lucide-react";
+  X,
+} from "lucide-react";
 
 export {
   Archive as ArchiveIcon,

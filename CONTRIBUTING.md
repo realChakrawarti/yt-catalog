@@ -60,9 +60,9 @@ This project uses the following technologies:
 Before you begin contributing, make sure you have the necessary dependencies installed. You can install them by running the following command in your terminal:
 
 - Make sure you have [git](https://git-scm.com/downloads) installed.
+- Make sure you have [pnpm](https://pnpm.io/installation) installed.
 - Fork the [repository](https://github.com/realChakrawarti/yt-catalog) by
-  clicking on the **[Fork](https://github.com/realChakrawarti/yt-catalog/fork)** button on the repository's page. This creates a copy of the code
-  under your GitHub user account.
+  clicking on the **[Fork](https://github.com/realChakrawarti/yt-catalog/fork)** button on the repository's page. This creates a copy of the code under your GitHub user account.
 
   ```bash
   git clone git@github.com:<your Github handle>/yt-catalog.git
@@ -90,11 +90,10 @@ Before you begin contributing, make sure you have the necessary dependencies ins
   git checkout -b a-descriptive-name-for-your-changes
   ```
 
-- Install firebase tools package globally in the system, `npm i -g firebase-tools`
 - Install all the project dependencies
 
   ```bash
-  npm install
+  pnpm install
   ```
 
 ### Environment Variables
@@ -117,13 +116,13 @@ The project includes various scripts for development tasks. You can run them usi
 #### Firebase emulation without seed data
 
 ```bash
-npm run dev
+pnpm dev
 ```
 
 #### Firebase emulation with seed data
 
 ```bash
-npm run dev:seed
+pnpm dev:seed
 ```
 
 ## Commit Messages
