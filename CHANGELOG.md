@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.5](https://github.com/realChakrawarti/yt-catalog/compare/v1.5.4...v1.5.5) (2025-02-18)
+
+
+### Bug Fixes
+
+* add `firebase-tools` as part of dev-dependency ([b4bd047](https://github.com/realChakrawarti/yt-catalog/commit/b4bd047416497e0deedf616d5f6054e0dea2131c))
+
 ### [1.5.4](https://github.com/realChakrawarti/yt-catalog/compare/v1.5.3...v1.5.4) (2025-02-17)
 
 
