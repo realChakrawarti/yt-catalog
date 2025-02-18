@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.6](https://github.com/realChakrawarti/yt-catalog/compare/v1.5.5...v1.5.6) (2025-02-18)
+
+
+### Bug Fixes
+
+* typo in `env.d.ts` ([c034c90](https://github.com/realChakrawarti/yt-catalog/commit/c034c90ad40dcb46e5375d41563951b547c97193))
+
 ### [1.5.5](https://github.com/realChakrawarti/yt-catalog/compare/v1.5.4...v1.5.5) (2025-02-18)
 
 
