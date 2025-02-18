@@ -1,4 +1,4 @@
-import { YOUTUBE_VIDEO_DATA } from "~/utils/server-helper";
+import { YOUTUBE_VIDEO_DATA } from "~/shared/lib/api/youtube-endpoints";
 
 // TODO: Parse only the data required and sent it down
 export async function getVideoDetails(videoIdParam: string) {
