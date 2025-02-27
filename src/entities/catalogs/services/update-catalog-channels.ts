@@ -54,7 +54,7 @@ function extractTopics(topicIds: TopicId[]): string[] {
  * Retrieves detailed information for a list of YouTube channels.
  *
  * @param channels - An array of YouTube channel IDs to fetch information for
- * @returns An array of channel metadata objects containing details like ID, handle, title, description, logo, and topics
+ * @returns An array of channel metadata objects with ID, handle, title, description, logo, and topics
  *
  * @remarks
  * Fetches channel information from the YouTube API and transforms the response into a structured format.

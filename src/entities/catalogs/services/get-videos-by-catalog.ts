@@ -90,7 +90,8 @@ export async function getVideosByCatalog(catalogId: string) {
     return "Catalog is empty. Channel or playlist is yet to be added!";
   }
 
-  // Get last updated, check if time has been 6 hours or not, if so make call to YouTube API, if not fetch from firestore
+  // Get last updated, check if time has been 6 hours or not, if so make call to YouTube API,
+  // if not fetch from firestore
   const currentTime = Date.now();
   const deltaTime = FOUR_HOURS;
 

@@ -1,3 +1,5 @@
+/* eslint-disable @stylistic/max-len */
+
 "use client";
 
 import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu";

@@ -1,3 +1,5 @@
+/* eslint-disable @stylistic/max-len */
+
 "use client";
 
 import * as ToastPrimitives from "@radix-ui/react-toast";

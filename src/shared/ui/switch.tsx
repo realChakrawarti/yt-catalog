@@ -1,3 +1,5 @@
+/* eslint-disable @stylistic/max-len */
+
 "use client"
 
 import * as SwitchPrimitives from "@radix-ui/react-switch"
