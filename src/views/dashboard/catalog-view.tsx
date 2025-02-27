@@ -1,6 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import useSWR from "swr";
 
 import { toast } from "~/shared/hooks/use-toast";
@@ -18,19 +17,12 @@ import CreateCatalogDialog from "./create-catalog-dialog";
 const LIMIT_CATALOGS = 5;
 
 export default function CatalogView() {
-  const router = useRouter();
-
   const {
     data: catalogs,
     isLoading: isCatalogLoading,
     error: isCatalogError,
     mutate,
   } = useSWR("/catalogs", (url) => fetchApi(url, { cache: "no-store" }));
-
-  // TODO: Normal navigation with pre-fetch catalog meta data on Link?
-  const handleCatalogEdit = (catalogId: string) => {
-    router.push(`/catalogs/${catalogId}/edit`);
-  };
 
   const handleCatalogDelete = async (catalogId: string) => {
     if (catalogId) {
@@ -80,7 +72,6 @@ export default function CatalogView() {
                     type="catalog"
                     key={catalog.id}
                     onDelete={handleCatalogDelete}
-                    onEdit={handleCatalogEdit}
                     id={catalog?.id}
                     title={catalog?.title}
                     description={catalog?.description}
