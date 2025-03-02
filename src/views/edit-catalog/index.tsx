@@ -250,7 +250,9 @@ export default function EditCatalog({ catalogId }: { catalogId: string }) {
                 <div className="flex gap-2 mt-5 justify-end">
                   <Button
                     disabled={Boolean(
-                      !localChannels.length && !localPlaylists && isSubmitting
+                      !localChannels.length &&
+                        !localPlaylists.length &&
+                        isSubmitting
                     )}
                     onClick={handleSubmit}
                   >
