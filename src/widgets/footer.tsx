@@ -17,7 +17,7 @@ export default function Footer() {
           </p>
         </div>
         <OutLink
-          className="cursor-pointer text-xs text-gray-500 hover:text-gray-300"
+          className="cursor-pointer text-xs text-gray-300 hover:text-gray-100"
           href="https://github.com/realChakrawarti/yt-catalog/blob/main/CHANGELOG.md"
         >
           <p className="tracking-wider">v{packageInfo.version}</p>
