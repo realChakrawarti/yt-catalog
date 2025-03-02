@@ -1,3 +1,4 @@
+// TODO: Remove Topic data, payload should only be array of channels, make sure to type it
 import { doc, updateDoc } from "firebase/firestore";
 
 import { YOUTUBE_CHANNELS_INFORMATION } from "~/shared/lib/api/youtube-endpoints";
@@ -19,9 +20,8 @@ export async function updateCatalogChannels(
 ) {
   const userRef = doc(db, COLLECTION.users, userId);
   const userCatalogRef = doc(userRef, COLLECTION.catalogs, catalogId);
-  const catalogRef = doc(db, COLLECTION.catalogs, catalogId);
 
-  const { channels, title, description } = catalogPayload;
+  const { channels } = catalogPayload;
 
   try {
     const channelsInfo = await getChannelsInfo(channels);
@@ -30,13 +30,6 @@ export async function updateCatalogChannels(
       channels: channelsInfo,
       updatedAt: new Date(),
     });
-
-    if (title || description) {
-      await updateDoc(catalogRef, {
-        title: title,
-        description: description,
-      });
-    }
   } catch (err) {
     console.error(err);
   }
@@ -54,7 +47,7 @@ function extractTopics(topicIds: TopicId[]): string[] {
  * Retrieves detailed information for a list of YouTube channels.
  *
  * @param channels - An array of YouTube channel IDs to fetch information for
- * @returns An array of channel metadata objects containing details like ID, handle, title, description, logo, and topics
+ * @returns An array of channel metadata objects with ID, handle, title, description, logo, and topics
  *
  * @remarks
  * Fetches channel information from the YouTube API and transforms the response into a structured format.

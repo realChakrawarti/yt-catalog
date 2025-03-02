@@ -1,3 +1,5 @@
+/* eslint-disable @stylistic/max-len */
+
 "use client";
 
 import * as AlertDialogPrimitive from "@radix-ui/react-alert-dialog";

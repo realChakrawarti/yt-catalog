@@ -7,4 +7,5 @@ export { getNextUpdate } from "./services/get-next-update";
 export { getValidCatalogIds } from "./services/get-valid-catalogs-ids";
 export { getVideosByCatalog } from "./services/get-videos-by-catalog";
 export { updateCatalogChannels } from "./services/update-catalog-channels";
+export { updateCatalogMeta } from "./services/update-catalog-meta";
 export { updateCatalogPlaylists } from "./services/update-catalog-playlists";

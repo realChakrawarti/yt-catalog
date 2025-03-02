@@ -6,7 +6,6 @@ import useSWR from "swr";
 
 import { useToast } from "~/shared/hooks/use-toast";
 import fetchApi from "~/shared/lib/api/fetch";
-import type { TitleDescriptionType } from "~/shared/types-schema/types";
 import { Badge } from "~/shared/ui/badge";
 import { Button } from "~/shared/ui/button";
 import { LinkIcon } from "~/shared/ui/icons";
@@ -15,15 +14,13 @@ import JustTip from "~/widgets/just-the-tip";
 import Spinner from "~/widgets/spinner";
 
 import AddChannelPlaylist from "./add-channel-playlist";
-import CatalogForm from "./catalog-form";
 import useCatalogStore from "./catalog-store";
 import ChannelTable from "./channel-table";
 import PlaylistTable from "./playlist-table";
+import UpdateCatalogMeta from "./update-catalog-meta";
 
 type UpdateCatalogPayload = {
   channels?: string[];
-  title?: string;
-  description?: string;
 };
 
 // TODO: Instead of table for rendering saved and unsaved channels/playlist, consider using cards
@@ -37,7 +34,7 @@ export default function EditCatalog({ catalogId }: { catalogId: string }) {
     data: catalogData,
     isLoading,
     error,
-    mutate,
+    mutate: revalidateCatalog,
   } = useSWR(
     catalogId ? `/catalogs/${catalogId}` : null,
     (url) => fetchApi(url, { cache: "no-store" }),
@@ -82,7 +79,7 @@ export default function EditCatalog({ catalogId }: { catalogId: string }) {
       toast({
         title: `${deleteChannel.title}'s channel deleted from the catalog.`,
       });
-      mutate();
+      revalidateCatalog();
     } else {
       toast({ title: "Something went wrong." });
     }
@@ -107,7 +104,7 @@ export default function EditCatalog({ catalogId }: { catalogId: string }) {
       toast({
         title: `${deletePlaylist.title}'s playlist deleted from the catalog.`,
       });
-      mutate();
+      revalidateCatalog();
     } else {
       toast({ title: "Something went wrong." });
     }
@@ -151,41 +148,17 @@ export default function EditCatalog({ catalogId }: { catalogId: string }) {
     if (result.success) {
       toast({ title: "Catalog has been updated with new playlists." });
       resetLocalPlaylist();
-      mutate();
+      revalidateCatalog();
     } else {
       toast({ title: "Something went wrong!" });
     }
   };
 
-  const [catalogMetadata, setCatalogMetadata] = useState<TitleDescriptionType>({
-    title: "",
-    description: "",
-  });
-
-  const [catalogMetadataError, setCatalogMetadataError] =
-    useState<TitleDescriptionType>({
-      title: "",
-      description: "",
-    });
-
-  useEffect(() => {
-    setCatalogMetadata({
-      title: catalogData?.data.title,
-      description: catalogData?.data.description,
-    });
-  }, [catalogId, catalogData?.data]);
-
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const handleSubmit = async () => {
-    if (catalogMetadataError.title || catalogMetadataError.description) {
-      return;
-    }
-
     const payload: UpdateCatalogPayload = {
       channels: savedChannels.map((channel) => channel.id),
-      description: catalogMetadata.description,
-      title: catalogMetadata.title,
     };
 
     if (localChannels.length) {
@@ -215,7 +188,7 @@ export default function EditCatalog({ catalogId }: { catalogId: string }) {
       });
 
       if (result.success) {
-        mutate();
+        revalidateCatalog();
         setLocalChannels([]);
       }
 
@@ -232,111 +205,114 @@ export default function EditCatalog({ catalogId }: { catalogId: string }) {
   };
 
   return (
-    <div className="p-3">
-      <>
-        <div className="flex items-center justify-between">
-          <h1 className="text-lg lg:text-xl">Edit Catalog</h1>
-          <div className="flex items-center gap-3">
-            {savedChannels?.length ? (
-              <Link href={`/c/${catalogId}`} target="_blank">
-                <JustTip label="Visit Catalog">
-                  <Button variant="outline">
-                    <LinkIcon className="size-8" />
-                  </Button>
-                </JustTip>
-              </Link>
-            ) : null}
-            <AddChannelPlaylist />
-          </div>
+    <div>
+      <div className="flex flex-col md:flex-row gap-2 md:items-center justify-between p-3">
+        <div>
+          <h1 className="text-lg lg:text-xl">
+            {catalogData?.data.title ?? ""}
+          </h1>
+          <p className="text-xs lg:text-sm">
+            {catalogData?.data.description ?? ""}
+          </p>
         </div>
-        <Separator className="my-3" />
-        {error && <p>Something went wrong!</p>}
-        {isLoading && (
-          <div className="size-full grid items-center">
-            <Spinner className="size-8" />
-          </div>
-        )}
-        {!isLoading && !error && (
-          <div className="space-y-7">
-            <CatalogForm
-              catalogMetadataError={catalogMetadataError}
-              catalogMetadata={catalogMetadata}
-              setCatalogMetadata={setCatalogMetadata}
-              setCatalogMetadataError={setCatalogMetadataError}
-            />
-
-            {localChannels?.length ? (
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <h2 className="text-xl font-semibold">Unsaved Channels</h2>
-                  <div className="flex gap-2 mt-5 justify-end">
-                    <Button
-                      disabled={Boolean(
-                        (!localChannels.length &&
-                          (catalogMetadataError.title ||
-                            catalogMetadataError.description)) ||
-                          isSubmitting
-                      )}
-                      onClick={handleSubmit}
-                    >
-                      {isSubmitting ? <Spinner className="size-4" /> : null}
-                      Apply
-                    </Button>
-                  </div>
-                </div>
-                <ChannelTable
-                  channels={localChannels}
-                  handleDelete={handleDeleteLocal}
-                />
-              </div>
-            ) : null}
-            {localPlaylists?.length ? (
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <h2 className="text-xl font-semibold">Unsaved Playlists</h2>
-                  <Button onClick={handleAddPlaylistsToCatalog}>
-                    Add to catalog
+        <div className="flex items-center gap-3">
+          <UpdateCatalogMeta
+            catalogId={catalogId}
+            revalidateCatalog={revalidateCatalog}
+            title={catalogData?.data.title}
+            description={catalogData?.data.description}
+          />
+          {savedChannels?.length ? (
+            <Link href={`/c/${catalogId}`} target="_blank">
+              <JustTip label="Visit Catalog">
+                <Button variant="outline">
+                  <LinkIcon className="size-8" />
+                </Button>
+              </JustTip>
+            </Link>
+          ) : null}
+          <AddChannelPlaylist />
+        </div>
+      </div>
+      <Separator className="my-3" />
+      {error && <p>Something went wrong!</p>}
+      {isLoading && (
+        <div className="size-full grid items-center">
+          <Spinner className="size-8" />
+        </div>
+      )}
+      {!isLoading && !error && (
+        <div className="space-y-7 p-3">
+          {localChannels?.length ? (
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <h2 className="text-xl font-semibold">Unsaved Channels</h2>
+                <div className="flex gap-2 mt-5 justify-end">
+                  <Button
+                    disabled={Boolean(
+                      !localChannels.length &&
+                        !localPlaylists.length &&
+                        isSubmitting
+                    )}
+                    onClick={handleSubmit}
+                  >
+                    {isSubmitting ? <Spinner className="size-4" /> : null}
+                    Submit
                   </Button>
                 </div>
-                <PlaylistTable
-                  playlists={localPlaylists}
-                  handleDelete={handleDeleteLocalPlaylist}
-                />
               </div>
-            ) : null}
+              <ChannelTable
+                channels={localChannels}
+                handleDelete={handleDeleteLocal}
+              />
+            </div>
+          ) : null}
+          {localPlaylists?.length ? (
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <h2 className="text-xl font-semibold">Unsaved Playlists</h2>
+                <Button onClick={handleAddPlaylistsToCatalog}>
+                  Add to catalog
+                </Button>
+              </div>
+              <PlaylistTable
+                playlists={localPlaylists}
+                handleDelete={handleDeleteLocalPlaylist}
+              />
+            </div>
+          ) : null}
 
-            {savedChannels?.length ? (
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <h2 className="text-xl font-semibold">Saved Channels</h2>
-                  <Badge variant="secondary">
-                    {savedChannels?.length} of 15 channels added
-                  </Badge>
-                </div>
-                <ChannelTable
-                  channels={savedChannels}
-                  handleDelete={handleDeleteSaved}
-                />
+          {savedChannels?.length ? (
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <h2 className="text-xl font-semibold">Saved Channels</h2>
+                <Badge variant="secondary">
+                  {savedChannels?.length} of 15 channels added
+                </Badge>
               </div>
-            ) : null}
+              <ChannelTable
+                channels={savedChannels}
+                handleDelete={handleDeleteSaved}
+              />
+            </div>
+          ) : null}
 
-            {savedPlaylists?.length ? (
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <h2 className="text-xl font-semibold">Saved Playlists</h2>
-                  <Badge variant="secondary">
-                    {savedPlaylists?.length} of 15 channels added
-                  </Badge>
-                </div>
-                <PlaylistTable
-                  playlists={savedPlaylists}
-                  handleDelete={handleDeleteSavedPlaylist}
-                />
+          {savedPlaylists?.length ? (
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <h2 className="text-xl font-semibold">Saved Playlists</h2>
+                <Badge variant="secondary">
+                  {savedPlaylists?.length} of 15 playlists added
+                </Badge>
               </div>
-            ) : null}
-          </div>
-        )}
-      </>
+              <PlaylistTable
+                playlists={savedPlaylists}
+                handleDelete={handleDeleteSavedPlaylist}
+              />
+            </div>
+          ) : null}
+        </div>
+      )}
     </div>
   );
 }

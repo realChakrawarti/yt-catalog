@@ -1,7 +1,9 @@
-import { Check, Clock, Copy, Edit, Trash2 } from "lucide-react";
+import { Check, Clock, Copy, Trash2 } from "lucide-react";
+import Link from "next/link";
 import { ReactNode, useState } from "react";
 
 import { toast } from "~/shared/hooks/use-toast";
+import { cn } from "~/shared/lib/tailwind-merge";
 import { Button } from "~/shared/ui/button";
 import {
   Card,
@@ -56,6 +58,26 @@ function CopyButton({ id, type }: any) {
   );
 }
 
+const cardContainerStyles = cn(
+  "flex flex-col h-[200px]",
+  "rounded-md group overflow-hidden"
+);
+
+const cardContentStyles = cn(
+  "flex-grow outline-none ",
+  "hover:-outline-offset-1 hover:outline-primary hover:outline-8",
+  "focus:-outline-offset-1 focus:outline-primary focus:outline-8"
+);
+
+type ItemCardProps = {
+  type: "archive" | "catalog";
+  id: string;
+  title: string;
+  description: string;
+  lastUpdated: number | string;
+  onDelete: (_id: string) => Promise<void>;
+};
+
 export default function ItemCard({
   type,
   id,
@@ -63,36 +85,31 @@ export default function ItemCard({
   description,
   lastUpdated,
   onDelete,
-  onEdit,
-}: any) {
+}: ItemCardProps) {
+  const editLink =
+    type === "archive" ? `/archives/${id}/edit` : `/catalogs/${id}/edit`;
+
   return (
-    <Card className="rounded-md group overflow-hidden transition-all duration-300 hover:ring-2 hover:ring-primary hover:ring-offset-2 hover:ring-offset-background focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background focus:outline-none flex flex-col h-[200px]">
-      <CardHeader className="space-y-1 pb-2">
-        <CardTitle className="flex items-start justify-between">
-          <span className="text-lg line-clamp-2 flex-grow mr-2">{title}</span>
-          <CopyButton id={id} type={type} />
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="flex-grow overflow-hidden">
-        <p className="text-sm text-muted-foreground line-clamp-3">
-          {description}
-        </p>
-      </CardContent>
-      <CardFooter className="justify-between items-center pt-4 border-t h-[52px]">
+    <Card className={cardContainerStyles}>
+      <Link className={cardContentStyles} href={editLink} prefetch>
+        <CardHeader className="space-y-1 pb-2">
+          <CardTitle className="flex items-start justify-between">
+            <span className="text-lg line-clamp-2 flex-grow mr-2">{title}</span>
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="flex-grow overflow-hidden">
+          <p className="text-sm text-muted-foreground line-clamp-3">
+            {description}
+          </p>
+        </CardContent>
+      </Link>
+      <CardFooter className="justify-between items-center py-4 border-t h-[52px]">
         <div className="flex items-center text-xs text-muted-foreground">
           <Clock className="w-3 h-3 mr-1 flex-shrink-0" />
           <span className="truncate max-w-[100px]">{lastUpdated}</span>
         </div>
         <div className="flex gap-1 flex-shrink-0">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-8 w-8"
-            onClick={() => onEdit(id)}
-          >
-            <Edit className="w-4 h-4" />
-            <span className="sr-only">Edit catalog</span>
-          </Button>
+          <CopyButton id={id} type={type} />
           <DeleteModal handleDelete={() => onDelete(id)}>
             <Button
               variant="ghost"

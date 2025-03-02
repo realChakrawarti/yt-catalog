@@ -10,7 +10,8 @@ import { db } from "~/shared/lib/firebase/config";
  * @returns
  */
 
-// TODO: How would I handle the data? VideoId as an array in userArchive and data retrived from API stored as an object in the main archive?
+// TODO: How would I handle the data? VideoId as an array in userArchive and data
+// retrived from API stored as an object in the main archive?
 export async function getArchiveById(archiveId: string) {
   let archiveResponseData = {};
 

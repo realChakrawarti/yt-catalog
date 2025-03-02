@@ -1,3 +1,5 @@
+/* eslint-disable @stylistic/max-len */
+
 "use client";
 
 import * as SheetPrimitive from "@radix-ui/react-dialog";

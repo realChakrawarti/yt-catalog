@@ -11,6 +11,7 @@ type ContextParams = {
   };
 };
 
+// TODO: Consider changing this route to /archives/:id/add-video
 export async function PATCH(request: NextRequest, ctx: ContextParams) {
   const userId = getUserIdCookie();
   const { archiveId } = ctx.params;

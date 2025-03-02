@@ -20,6 +20,7 @@ export async function GET(_request: NextRequest, ctx: ContextParams) {
   );
 }
 
+// TODO: Consider moving this to /archives/:id/update
 export async function PATCH(request: NextRequest, ctx: ContextParams) {
   const { archiveId } = ctx.params;
 

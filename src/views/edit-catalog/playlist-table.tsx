@@ -55,7 +55,7 @@ export default function PlaylistTable({
                     <img
                       src={playlist?.channelLogo}
                       alt={playlist?.channelTitle}
-                      className="size-4 rounded-lg"
+                      className="size-6 rounded-lg"
                     />
                   ) : null}
                   {playlist?.channelHandle ? (
