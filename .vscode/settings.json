@@ -22,9 +22,14 @@
     "DEPENDENCIES.md": false,
     ".husky": false
   },
-  "typescript.preferences.autoImportFileExcludePatterns": [
-    "@radix-ui/*"
-  ],
+  "typescript.preferences.autoImportFileExcludePatterns": ["@radix-ui/*"],
   "deno.enable": false,
-  "pinnedProjects.lock": true
+  "pinnedProjects.lock": true,
+  "tailwindCSS.classAttributes": [
+    "class",
+    "className",
+    "ngClass",
+    "class:list",
+    ".*Styles"
+  ]
 }

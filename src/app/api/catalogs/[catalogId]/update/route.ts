@@ -46,6 +46,7 @@ export async function DELETE(request: NextRequest, ctx: ContextParams) {
   return NxResponse.success<any>("Channel deleted successfully.", {}, 201);
 }
 
+// TODO: Consider moving this to /catalogs/:id/channel
 export async function PATCH(request: NextRequest, ctx: ContextParams) {
   const userId = getUserIdCookie();
   const { catalogId } = ctx.params;

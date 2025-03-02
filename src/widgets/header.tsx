@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { useScrollTrigger } from "~/shared/hooks/use-scroll-trigger";
+import { cn } from "~/shared/lib/tailwind-merge";
 
 import AppIcon from "../../public/icon.png";
 import { useAuth } from "../features/auth/context-provider";
@@ -19,12 +20,16 @@ const Header = () => {
   const { user, logout } = useAuth();
   const isHidden = useScrollTrigger();
 
+  const headerStyles = cn(
+    "flex justify-between items-center self-start",
+    "h-14 w-full sticky z-50 top-0 border-b border-border/40 ",
+    "bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 dark:border-border",
+    "transition-transform duration-300",
+    isHidden ? "-translate-y-full" : "translate-y-0"
+  );
+
   return (
-    <header
-      className={`h-14 sticky z-50 top-0 w-full border-b border-border/40 self-start flex justify-between items-center bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 dark:border-border transition-transform duration-300 ${
-        isHidden ? "-translate-y-full" : "translate-y-0"
-      }`}
-    >
+    <header className={headerStyles}>
       <div className="flex-1 flex justify-between items-center px-2 container mx-auto">
         <div className="flex gap-2 items-center">
           <SidebarTrigger className="h-8 w-8 mr-2">

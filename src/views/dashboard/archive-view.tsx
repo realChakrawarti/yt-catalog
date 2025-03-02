@@ -1,4 +1,3 @@
-import { useRouter } from "next/navigation";
 import useSWR from "swr";
 
 import { toast } from "~/shared/hooks/use-toast";
@@ -16,17 +15,12 @@ import CreateArchiveDialog from "./create-archive-dialog";
 const LIMIT_ARCHIVES = 10;
 
 export default function ArchiveView() {
-  const router = useRouter();
   const {
     data: archives,
     isLoading: isArchiveLoading,
     error: isArchiveError,
     mutate,
   } = useSWR("/archives", (url) => fetchApi(url, { cache: "no-store" }));
-
-  const handleArchiveEdit = (archiveId: string) => {
-    router.push(`/archives/${archiveId}/edit`);
-  };
 
   const handleArchiveDelete = async (archiveId: string) => {
     if (archiveId) {
@@ -74,7 +68,7 @@ export default function ArchiveView() {
                     type="archive"
                     key={archive.id}
                     onDelete={handleArchiveDelete}
-                    onEdit={handleArchiveEdit}
+                    // onEdit={handleArchiveEdit}
                     id={archive?.id}
                     title={archive?.title}
                     description={archive?.description}

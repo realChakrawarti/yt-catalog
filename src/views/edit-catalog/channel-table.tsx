@@ -42,7 +42,7 @@ function ChannelTable({ channels, handleDelete }: any) {
                     <img
                       src={channel?.logo}
                       alt={channel?.title}
-                      className="size-4 rounded-lg"
+                      className="size-6 rounded-lg"
                     />
                   ) : null}
 

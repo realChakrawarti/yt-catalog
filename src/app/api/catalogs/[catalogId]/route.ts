@@ -1,6 +1,6 @@
 import { NextRequest } from "next/server";
 
-import { getCatalogById } from "~/entities/catalogs";
+import { getCatalogById, updateCatalogMeta } from "~/entities/catalogs";
 import { getUserIdCookie } from "~/shared/lib/next/get-cookie";
 import { NxResponse } from "~/shared/lib/next/nx-response";
 
@@ -9,6 +9,17 @@ type ContextParams = {
     catalogId: string;
   };
 };
+
+// TODO: Consider moving this to /catalogs/:id/update
+export async function PATCH(request: NextRequest, ctx: ContextParams) {
+  const { catalogId } = ctx.params;
+
+  const payload = await request.json();
+
+  const message = await updateCatalogMeta(catalogId, payload);
+
+  return NxResponse.success(message, {}, 201);
+}
 
 export async function GET(_request: NextRequest, ctx: ContextParams) {
   const userId = getUserIdCookie();

@@ -153,7 +153,7 @@ export default function AddChannelPlaylist() {
           <Button variant="outline">
             <div className="flex gap-2 items-center">
               <ListPlusIcon className="size-8" />
-              <p>Add channel from video</p>
+              <p>Add channel-playlist</p>
             </div>
           </Button>
         </SheetTrigger>

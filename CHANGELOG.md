@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.7](https://github.com/realChakrawarti/yt-catalog/compare/v1.5.6...v1.5.7) (2025-03-02)
+
+
+### Features
+
+* add meta dialog modal, endpoint for meta updates, resuable `use-meta-validate` hook ([91cb241](https://github.com/realChakrawarti/yt-catalog/commit/91cb241526ab7bafc4b3141b4ff8d0d8b0d7b447))
+* navigate catalog/archive edit using `<Link />` component w/ prefetch ([fa4bbab](https://github.com/realChakrawarti/yt-catalog/commit/fa4bbabb867cf1a1faee5d6d7750f6dbedd250d5))
+
+
+### Bug Fixes
+
+* address comments left by coderabbit ([25dca86](https://github.com/realChakrawarti/yt-catalog/commit/25dca86ffffbba6ea089d02f574c340e577e764f))
+* check `localPlaylists` array length ([646688d](https://github.com/realChakrawarti/yt-catalog/commit/646688d94399d8b5512bc41685a4fbb99de9b960))
+
 ### [1.5.6](https://github.com/realChakrawarti/yt-catalog/compare/v1.5.5...v1.5.6) (2025-02-18)
 
 

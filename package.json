@@ -1,6 +1,6 @@
 {
   "name": "yt-catalog",
-  "version": "1.5.6",
+  "version": "1.5.7",
   "scripts": {
     "dev": "concurrently \"pnpm run emulate-firebase\" \"next dev\" --kill-others",
     "dev:seed": "concurrently \"pnpm run emulate-firebase:import-seed\" \"next dev\" --kill-others",
@@ -70,6 +70,7 @@
   "devDependencies": {
     "@commitlint/cli": "^19.7.1",
     "@commitlint/config-conventional": "^19.7.1",
+    "@stylistic/eslint-plugin": "3",
     "@types/canvas-confetti": "^1.9.0",
     "@types/node": "^20.17.19",
     "@types/react": "^18.3.18",
