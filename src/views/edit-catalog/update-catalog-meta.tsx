@@ -1,7 +1,7 @@
+import { Edit } from "lucide-react";
 import { FormEvent } from "react";
 import { KeyedMutator } from "swr";
 
-import { useConfetti } from "~/shared/hooks/use-confetti";
 import { toast } from "~/shared/hooks/use-toast";
 import fetchApi from "~/shared/lib/api/fetch";
 import { ApiResponse } from "~/shared/lib/next/nx-response";
@@ -15,63 +15,59 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "~/shared/ui/dialog";
-import { PlusIcon } from "~/shared/ui/icons";
 import { Input } from "~/shared/ui/input";
 import { Label } from "~/shared/ui/label";
 import { useMetaValidate } from "~/widgets/use-meta-validate";
 
-interface CreateArchiveDialogProps {
-  disabled: boolean;
-  revalidateCatalogs: KeyedMutator<ApiResponse<any>>;
+interface UpdateCatalogMetaProps {
+  revalidateCatalog: KeyedMutator<ApiResponse<any>>;
+  catalogId: string;
+  title: string;
+  description: string;
 }
 
-// TODO: Consider using reducer to handle state updates, revalidate and show notification
-export default function CreateArchiveDialog({
-  revalidateCatalogs,
-  disabled,
-}: CreateArchiveDialogProps) {
-  const { meta, metaError, handleOnChange, submitDisabled, resetState } =
-    useMetaValidate({});
+export default function UpdateCatalogMeta({
+  revalidateCatalog,
+  catalogId,
+  title,
+  description,
+}: UpdateCatalogMetaProps) {
+  const { meta, metaError, handleOnChange, submitDisabled } = useMetaValidate({
+    title,
+    description,
+  });
 
-  const triggerConfetti = useConfetti();
-
-  const createNewArchive = async (e: FormEvent<HTMLFormElement>) => {
+  async function updateArchiveMeta(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const result = await fetchApi("/archives", {
-      method: "POST",
+    const result = await fetchApi(`/catalogs/${catalogId}`, {
+      method: "PATCH",
       body: JSON.stringify({
         title: meta.title,
         description: meta.description,
       }),
     });
 
-    if (result.success) {
-      revalidateCatalogs();
+    if (!result.success) {
       toast({ title: result.message });
-      resetState();
-      triggerConfetti();
     } else {
-      toast({ title: "Failed to create archive." });
+      revalidateCatalog();
     }
-  };
+  }
 
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button disabled={disabled}>
-          <span className="flex items-center gap-2">
-            <PlusIcon size={24} />
-            Create Archive
-          </span>
+        <Button>
+          <Edit />
         </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Add archive</DialogTitle>
+          <DialogTitle>Update Catalog</DialogTitle>
         </DialogHeader>
         <form
           className="flex flex-col gap-2"
-          onSubmit={(e) => createNewArchive(e)}
+          onSubmit={(e) => updateArchiveMeta(e)}
         >
           <div className="space-y-2">
             <Label htmlFor="title">Title</Label>
@@ -106,7 +102,7 @@ export default function CreateArchiveDialog({
           <DialogFooter>
             <DialogClose asChild>
               <Button disabled={Boolean(submitDisabled)} type="submit">
-                Create
+                Update
               </Button>
             </DialogClose>
           </DialogFooter>
