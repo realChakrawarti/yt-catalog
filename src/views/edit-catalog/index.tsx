@@ -208,8 +208,12 @@ export default function EditCatalog({ catalogId }: { catalogId: string }) {
     <div>
       <div className="flex flex-col md:flex-row gap-2 md:items-center justify-between p-3">
         <div>
-          <h1 className="text-lg lg:text-xl">{catalogData?.data.title}</h1>
-          <p className="text-xs lg:text-sm">{catalogData?.data.description}</p>
+          <h1 className="text-lg lg:text-xl">
+            {catalogData?.data.title ?? ""}
+          </h1>
+          <p className="text-xs lg:text-sm">
+            {catalogData?.data.description ?? ""}
+          </p>
         </div>
         <div className="flex items-center gap-3">
           <UpdateCatalogMeta
@@ -296,7 +300,7 @@ export default function EditCatalog({ catalogId }: { catalogId: string }) {
               <div className="flex items-center justify-between">
                 <h2 className="text-xl font-semibold">Saved Playlists</h2>
                 <Badge variant="secondary">
-                  {savedPlaylists?.length} of 15 channels added
+                  {savedPlaylists?.length} of 15 playlists added
                 </Badge>
               </div>
               <PlaylistTable

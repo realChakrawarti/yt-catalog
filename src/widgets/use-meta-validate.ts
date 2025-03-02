@@ -3,7 +3,7 @@ import { ChangeEvent, useLayoutEffect, useState } from "react";
 import { TitleDescriptionSchema } from "~/shared/types-schema/schemas";
 import { TitleDescriptionType } from "~/shared/types-schema/types";
 
-const initialState = {
+const initialState: TitleDescriptionType = {
   title: "",
   description: "",
 };
@@ -30,10 +30,9 @@ export function useMetaValidate({
     };
   }, [title, description]);
 
-  const [meta, setMeta] = useState<TitleDescriptionType>(initialState);
+  const [meta, setMeta] = useState(initialState);
 
-  const [metaError, setMetaError] =
-    useState<TitleDescriptionType>(initialState);
+  const [metaError, setMetaError] = useState(initialState);
 
   function resetState() {
     setMeta(initialState);
@@ -41,21 +40,23 @@ export function useMetaValidate({
   }
 
   function handleOnChange(e: ChangeEvent<HTMLInputElement>) {
+    const value = e.target.value;
+    const field = e.target.name;
     setMeta((prev) => ({
       ...prev,
-      [e.target.name]: e.target.value,
+      [field]: value,
     }));
 
     const parseMeta = {
       ...meta,
-      [e.target.name]: e.target.value,
+      [field]: value,
     };
 
-    const result = TitleDescriptionSchema.safeParse(parseMeta);
+    const parsedMeta = TitleDescriptionSchema.safeParse(parseMeta);
 
-    if (!result.success) {
+    if (!parsedMeta.success) {
       const { title = { _errors: [""] }, description = { _errors: [""] } } =
-        result.error.format();
+        parsedMeta.error.format();
       setMetaError({
         title: title._errors[0],
         description: description._errors[0],

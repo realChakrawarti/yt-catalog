@@ -25,6 +25,6 @@ export async function updateCatalogMeta(
     if (err instanceof Error) {
       return err.message;
     }
-    return "Unable to update archive details.";
+    return "Unable to update catalog details.";
   }
 }

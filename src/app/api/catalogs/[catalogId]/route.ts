@@ -10,6 +10,7 @@ type ContextParams = {
   };
 };
 
+// TODO: Consider moving this to /catalogs/:id/update
 export async function PATCH(request: NextRequest, ctx: ContextParams) {
   const { catalogId } = ctx.params;
 

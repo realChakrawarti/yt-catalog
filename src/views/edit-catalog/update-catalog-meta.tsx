@@ -37,7 +37,7 @@ export default function UpdateCatalogMeta({
     description,
   });
 
-  async function updateArchiveMeta(e: FormEvent<HTMLFormElement>) {
+  async function updateCatalogMeta(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const result = await fetchApi(`/catalogs/${catalogId}`, {
       method: "PATCH",
@@ -65,10 +65,7 @@ export default function UpdateCatalogMeta({
         <DialogHeader>
           <DialogTitle>Update Catalog</DialogTitle>
         </DialogHeader>
-        <form
-          className="flex flex-col gap-2"
-          onSubmit={(e) => updateArchiveMeta(e)}
-        >
+        <form className="flex flex-col gap-2" onSubmit={updateCatalogMeta}>
           <div className="space-y-2">
             <Label htmlFor="title">Title</Label>
             <Input

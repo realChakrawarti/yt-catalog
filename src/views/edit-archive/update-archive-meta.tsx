@@ -65,10 +65,7 @@ export default function UpdateArchiveMeta({
         <DialogHeader>
           <DialogTitle>Update Archive</DialogTitle>
         </DialogHeader>
-        <form
-          className="flex flex-col gap-2"
-          onSubmit={(e) => updateArchiveMeta(e)}
-        >
+        <form className="flex flex-col gap-2" onSubmit={updateArchiveMeta}>
           <div className="space-y-2">
             <Label htmlFor="title">Title</Label>
             <Input
