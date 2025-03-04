@@ -3,6 +3,7 @@ import DetailsCard from "~/widgets/details-card";
 import GridContainer from "~/widgets/grid-container";
 
 import FavoriteCatalog from "./favorite-catalogs";
+import MobileFooter from "~/widgets/mobile-footer";
 
 export default async function Catalogs() {
   const catalogs = await fetchApi("/catalogs/valid");
@@ -31,6 +32,7 @@ export default async function Catalogs() {
           )}
         </GridContainer>
       </div>
+      <MobileFooter />
     </div>
   );
 }

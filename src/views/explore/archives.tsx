@@ -1,6 +1,7 @@
 import fetchApi from "~/shared/lib/api/fetch";
 import DetailsCard from "~/widgets/details-card";
 import GridContainer from "~/widgets/grid-container";
+import MobileFooter from "~/widgets/mobile-footer";
 
 export default async function Archives() {
   const archives = await fetchApi("/archives/valid");
@@ -27,6 +28,7 @@ export default async function Archives() {
           )}
         </GridContainer>
       </div>
+      <MobileFooter />
     </div>
   );
 }
