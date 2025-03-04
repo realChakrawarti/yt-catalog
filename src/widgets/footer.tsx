@@ -6,7 +6,7 @@ export default function Footer() {
     <footer className="h-auto flex items-center border-t">
       <div className="p-3 self-end flex justify-between container mx-auto">
         <div>
-          <p className="text-xs text-gray-500">
+          <p className="text-xs text-gray-300">
             Developed by{" "}
             <OutLink
               className="cursor-pointer text-[hsl(var(--primary))] hover:text-[hsl(var(--primary))]/70"
