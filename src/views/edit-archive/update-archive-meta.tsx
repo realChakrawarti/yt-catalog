@@ -39,7 +39,7 @@ export default function UpdateArchiveMeta({
 
   async function updateArchiveMeta(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const result = await fetchApi(`/archives/${archiveId}`, {
+    const result = await fetchApi(`/archives/${archiveId}/update`, {
       method: "PATCH",
       body: JSON.stringify({
         title: meta.title,

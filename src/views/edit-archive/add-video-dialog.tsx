@@ -76,7 +76,7 @@ export default function AddVideoDialog({
         videoId: videoId,
       };
 
-      const resultAdd = await fetchApi(`/archives/${archiveId}/update`, {
+      const resultAdd = await fetchApi(`/archives/${archiveId}/add-video`, {
         method: "PATCH",
         body: JSON.stringify(videoMeta),
       });
@@ -85,8 +85,6 @@ export default function AddVideoDialog({
         toast({ title: resultAdd.message });
         revalidateArchive();
       }
-
-      // Add doc to archive
 
       setVideoLink({
         link: "",

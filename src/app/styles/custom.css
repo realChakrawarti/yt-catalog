@@ -81,3 +81,9 @@
   cursor: pointer;
   transition: background-color 0.35s ease;
 }
+
+/* Hide spotlight element anchor tags */
+a[href^="https://stoplight.io/"]
+{
+  display: none !important;
+}
