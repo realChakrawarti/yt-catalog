@@ -54,5 +54,5 @@ export async function PATCH(request: NextRequest, ctx: ContextParams) {
   revalidatePath("/explore/catalogs");
   revalidatePath(`/c/${catalogId}`);
 
-  return NxResponse.success<any>("Channel list update successfully.", {}, 201);
+  return NxResponse.success<any>("Channel list updated successfully.", {}, 201);
 }

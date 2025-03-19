@@ -46,7 +46,7 @@ export async function updateCatalogChannels(
  * @throws {Error} If there's an issue fetching channel information from the YouTube API
  */
 async function getChannelsInfo(channels: string[]) {
-  let channelsInfo: CatalogChannel[] = [];
+  const channelsInfo: CatalogChannel[] = [];
   // Create a separate doc with channels information, fetch from youtube API
   const response = await fetch(YOUTUBE_CHANNELS_INFORMATION(channels));
   const result = await response.json();

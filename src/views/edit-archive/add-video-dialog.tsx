@@ -86,8 +86,6 @@ export default function AddVideoDialog({
         revalidateArchive();
       }
 
-      // Add doc to archive
-
       setVideoLink({
         link: "",
         error: "",

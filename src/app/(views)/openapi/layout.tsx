@@ -4,7 +4,7 @@ export const metadata: Metadata = {
   title: "OpenAPI | YTCatalog",
 };
 
-export default function OpenApiSpecification({
+export default function OpenApiLayout({
   children,
 }: {
   children: React.ReactNode;
