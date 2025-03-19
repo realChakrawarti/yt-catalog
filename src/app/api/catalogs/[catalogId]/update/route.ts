@@ -15,24 +15,6 @@ type ContextParams = {
   };
 };
 
-export async function GET(_request: NextRequest, ctx: ContextParams) {
-  const { catalogId } = ctx.params;
-  const data = await getVideosByCatalog(catalogId);
-
-  if (typeof data === "string") {
-    return NxResponse.fail(data, { code: "UNKOWN", details: data }, 404);
-  }
-
-  return NxResponse.success<{ videos: any; nextUpdate: string }>(
-    "Catalog page updated successfully.",
-    {
-      videos: data.videos,
-      nextUpdate: data.nextUpdate,
-    },
-    200
-  );
-}
-
 export async function DELETE(request: NextRequest, ctx: ContextParams) {
   const userId = getUserIdCookie();
   const { catalogId } = ctx.params;
