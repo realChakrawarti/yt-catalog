@@ -53,8 +53,8 @@ const Header = () => {
           </SidebarTrigger>
           <Link href="/">
             <h1 className="flex gap-1">
-              <Image src={AppIcon} alt="YTCatalog" className="size-7" />
-              <p className="self-end text-lg tracking-wide dark:text-white/80 dark:hover:text-white text-primary/80 hover:text-primary">
+              <Image src={AppIcon} alt="YTCatalog logo" className="size-7" />
+              <p className="self-end text-lg tracking-wide dark:text-white/80 dark:hover:text-white text-primary/80 hover:text-primary" aria-hidden="true">
                 YTCatalog
               </p>
             </h1>

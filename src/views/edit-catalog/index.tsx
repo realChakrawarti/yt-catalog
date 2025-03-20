@@ -70,7 +70,7 @@ export default function EditCatalog({ catalogId }: { catalogId: string }) {
       (channel) => channel.id != deleteChannel.id
     );
 
-    const result = await fetchApi(`/catalogs/${catalogId}/update`, {
+    const result = await fetchApi(`/catalogs/${catalogId}/channel`, {
       method: "DELETE",
       body: JSON.stringify(payload),
     });
@@ -182,7 +182,7 @@ export default function EditCatalog({ catalogId }: { catalogId: string }) {
 
     try {
       setIsSubmitting(true);
-      const result = await fetchApi(`/catalogs/${catalogId}/update`, {
+      const result = await fetchApi(`/catalogs/${catalogId}/channel`, {
         method: "PATCH",
         body: JSON.stringify(payload),
       });

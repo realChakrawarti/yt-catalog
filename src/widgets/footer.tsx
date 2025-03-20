@@ -6,7 +6,7 @@ export default function Footer() {
     <footer className="h-auto flex items-center border-t">
       <div className="p-3 self-end flex justify-between container mx-auto">
         <div>
-          <p className="text-xs text-gray-500">
+          <p className="text-xs dark:text-gray-300">
             Developed by{" "}
             <OutLink
               className="cursor-pointer text-[hsl(var(--primary))] hover:text-[hsl(var(--primary))]/70"
@@ -17,7 +17,7 @@ export default function Footer() {
           </p>
         </div>
         <OutLink
-          className="cursor-pointer text-xs text-gray-500 hover:text-gray-300"
+          className="cursor-pointer text-xs dark:text-gray-300 dark:hover:text-gray-100"
           href="https://github.com/realChakrawarti/yt-catalog/blob/main/CHANGELOG.md"
         >
           <p className="tracking-wider">v{packageInfo.version}</p>

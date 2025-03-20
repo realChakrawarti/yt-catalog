@@ -12,6 +12,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { useAuth } from "~/features/auth/context-provider";
+import { cn } from "~/shared/lib/tailwind-merge";
 
 import { Avatar, AvatarFallback, AvatarImage } from "../shared/ui/avatar";
 import { Button } from "../shared/ui/button";
@@ -77,12 +78,23 @@ function UserGroup() {
             <SidebarMenuItem>
               <SidebarMenuButton
                 onClick={() => setOpenMobile(false)}
-                className="px-0"
+                className={cn(
+                  "px-0",
+                  "data-[active=true]:bg-primary/20 data-[active=true]:dark:text-white",
+                  "data-[state=open]:hover:bg-transparent",
+                  "hover:bg-transparent"
+                )}
                 asChild
                 isActive={isDashboardActive}
               >
                 <Link href={"/dashboard"}>
-                  <Button variant="ghost" className="w-full justify-start px-2">
+                  <Button
+                    variant="ghost"
+                    className={cn(
+                      "w-full justify-start px-2",
+                      "hover:bg-primary/5 hover:text-primary/80"
+                    )}
+                  >
                     <LayoutDashboard className="mr-2 h-4 w-4" />
                     Dashboard
                   </Button>
@@ -140,14 +152,22 @@ function ExploreGroup() {
               <SidebarMenuItem key={item.label}>
                 <SidebarMenuButton
                   onClick={() => setOpenMobile(false)}
-                  className="px-0"
+                  className={cn(
+                    "px-0",
+                    "data-[active=true]:bg-primary/20 data-[active=true]:dark:text-white",
+                    "data-[state=open]:hover:bg-transparent",
+                    "hover:bg-transparent"
+                  )}
                   asChild
                   isActive={isActive}
                 >
                   <Link href={item.path}>
                     <Button
                       variant="ghost"
-                      className="w-full justify-start px-2"
+                      className={cn(
+                        "w-full justify-start px-2",
+                        "hover:bg-primary/5 hover:text-primary/80"
+                      )}
                     >
                       <item.icon className="mr-2 h-4 w-4" />
                       {item.label}

@@ -24,12 +24,24 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
+    // Archives Routes
+    "/api/archives/",
+    "/api/archives/:archiveId/add-video",
+    "/api/archives/:archiveId/delete",
+    "/api/archives/:archiveId/remove-video",
+    "/api/archives/:archiveId/update",
+    // Catalogs Routes
     "/api/catalogs/",
-    "/api/catalogs/:catalogId/update",
-    "/api/catalogs/:catalogId/playlist",
+    "/api/catalogs/:catalogId/channel",
     "/api/catalogs/:catalogId/delete",
-    "/api/logout",
+    "/api/catalogs/:catalogId/next-update",
+    "/api/catalogs/:catalogId/playlist",
+    "/api/catalogs/:catalogId/update",
+    "/api/catalogs/:catalogId/video",
+    // YouTube Routes
     "/api/youtube/video",
     "/api/youtube/playlists",
+    // User Routes
+    "/api/logout",
   ],
 };
