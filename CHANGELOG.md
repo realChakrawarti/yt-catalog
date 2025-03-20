@@ -2,24 +2,6 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-### [1.5.8](https://github.com/realChakrawarti/yt-catalog/compare/v1.5.7...v1.5.8) (2025-03-20)
-
-
-### Features
-
-* embed stoplight web-component element for API documentation ([2683334](https://github.com/realChakrawarti/yt-catalog/commit/2683334b5a930dcca5ab8b5eda7f8598e909364b))
-* update `openapi.json` with all routes ([05eb720](https://github.com/realChakrawarti/yt-catalog/commit/05eb72066d7422e62869d0a8bcb4b7316706651d))
-
-
-### Bug Fixes
-
-* accessibility in footer and sidebar ([471f13b](https://github.com/realChakrawarti/yt-catalog/commit/471f13bbfb99434dfd707111dc4d2758d8c5fc26))
-* coderabbit suggestions ([551ab20](https://github.com/realChakrawarti/yt-catalog/commit/551ab200bbda3ee8b6ed9f4d242a215b9e414f24))
-* openapi docs with correct endpoints ([63f3052](https://github.com/realChakrawarti/yt-catalog/commit/63f3052bf34201e5c5fce115f5babf8e1757bb33))
-* remove channel topics from catalog ([f3e0286](https://github.com/realChakrawarti/yt-catalog/commit/f3e0286369f663a12aeecd58c8c33ffb91d3f746))
-* **ui:** remove type=button from div and move it outside of PopoverTrigger ([cd3ee70](https://github.com/realChakrawarti/yt-catalog/commit/cd3ee70149d3f1df34e5f894777507bef2f0ca7f))
-* update `config.matcher` with correct endpoints ([1902f01](https://github.com/realChakrawarti/yt-catalog/commit/1902f01888f43425081b3f5dcdfff43fee9f4782))
-
 ### [1.5.7](https://github.com/realChakrawarti/yt-catalog/compare/v1.5.6...v1.5.7) (2025-03-02)
 
 

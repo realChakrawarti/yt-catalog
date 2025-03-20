@@ -84,7 +84,6 @@ function DescriptionSheet({
           <OverlayTip
             className="h-8 w-8 flex place-items-center rounded-md"
             id="description"
-            aria-label="Show video information overlay"
           >
             <InfoIcon className="h-4 w-4 flex-grow" />
           </OverlayTip>

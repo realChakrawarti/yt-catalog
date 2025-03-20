@@ -88,6 +88,7 @@ export type CatalogChannel = {
   id: string;
   logo: string;
   title: string;
+  topics: string[];
 };
 
 export type CatalogByIdResponse = {
