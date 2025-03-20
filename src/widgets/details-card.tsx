@@ -43,7 +43,7 @@ function TotalVideos({ totalVideos }: { totalVideos: number }) {
         id="total-videos"
         className="flex gap-1 absolute top-2 left-2 items-center p-1 rounded-md z-20"
       >
-        <p className="text-xs tracking-widest">{totalVideos}</p>
+        <p className="text-xs">{totalVideos}</p>
         <VideoIcon className="size-3" />
       </OverlayTip>
     </JustTip>
@@ -58,7 +58,7 @@ function Pageview({ pageviews }: { pageviews: number }) {
           id="pageviews"
           className="flex gap-1 absolute top-2 right-2 items-center p-1 rounded-md z-20"
         >
-          <p className="text-xs tracking-widest">{pageviews}</p>
+          <p className="text-xs">{pageviews}</p>
           <EyeIcon className="size-3" />
         </OverlayTip>
       </JustTip>
