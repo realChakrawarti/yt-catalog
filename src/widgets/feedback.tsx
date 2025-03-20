@@ -124,7 +124,6 @@ ${feedback}
           <Button
             className="flex gap-2 group/feedback transition-all duration-200 ease-in"
             variant="outline"
-            aria-label="Open feedback modal"
           >
             <p className="hidden group-hover/feedback:block">Feedback</p>
             <MailQuestion size={24} />{" "}

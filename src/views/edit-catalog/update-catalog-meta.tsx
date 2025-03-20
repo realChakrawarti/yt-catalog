@@ -39,7 +39,7 @@ export default function UpdateCatalogMeta({
 
   async function updateCatalogMeta(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const result = await fetchApi(`/catalogs/${catalogId}/update`, {
+    const result = await fetchApi(`/catalogs/${catalogId}`, {
       method: "PATCH",
       body: JSON.stringify({
         title: meta.title,

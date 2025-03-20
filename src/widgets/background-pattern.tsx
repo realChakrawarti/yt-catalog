@@ -3,7 +3,8 @@ export default function BackgroundPattern() {
     <div
       className="-z-10 inset-0 fixed"
       style={{
-        backgroundImage: "url(background-noise.png)",
+        backgroundImage:
+          "url(https://framerusercontent.com/images/rR6HYXBrMmX4cRpXfXUOvpvpB0.png)",
         backgroundRepeat: "repeat",
         backgroundSize: "128px",
         borderRadius: "0px",
