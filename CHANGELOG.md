@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.9](https://github.com/realChakrawarti/yt-catalog/compare/v1.5.8...v1.5.9) (2025-03-21)
+
+
+### Bug Fixes
+
+* remove catalog `next-update` endpoint from middleware checks ([5877958](https://github.com/realChakrawarti/yt-catalog/commit/58779581ab55a174b84ce3100bf60d2bb0370e02))
+
 ### [1.5.8](https://github.com/realChakrawarti/yt-catalog/compare/v1.5.7...v1.5.8) (2025-03-20)
 
 
