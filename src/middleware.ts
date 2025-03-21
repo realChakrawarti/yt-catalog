@@ -34,7 +34,6 @@ export const config = {
     "/api/catalogs/",
     "/api/catalogs/:catalogId/channel",
     "/api/catalogs/:catalogId/delete",
-    "/api/catalogs/:catalogId/next-update",
     "/api/catalogs/:catalogId/playlist",
     "/api/catalogs/:catalogId/update",
     "/api/catalogs/:catalogId/video",
