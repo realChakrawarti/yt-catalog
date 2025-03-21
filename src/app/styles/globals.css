@@ -95,3 +95,9 @@
 }
 
 @import url("./custom.css");
+
+@media (max-width: 768px) {
+  .mobile-footer {
+    display: flex;
+  }
+}
