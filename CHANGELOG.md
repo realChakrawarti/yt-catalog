@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.10](https://github.com/realChakrawarti/yt-catalog/compare/v1.5.9...v1.5.10) (2025-04-21)
+
+
+### Features
+
+* dropdown for catalog actions and 80% next update banner width ([1daf345](https://github.com/realChakrawarti/yt-catalog/commit/1daf345e9933b7d5e9a1aa816e19927ec32a4915))
+
 ### [1.5.9](https://github.com/realChakrawarti/yt-catalog/compare/v1.5.8...v1.5.9) (2025-03-21)
 
 
