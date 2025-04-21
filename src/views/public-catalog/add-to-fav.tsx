@@ -6,8 +6,6 @@ import { useEffect, useState } from "react";
 
 import { toast } from "~/shared/hooks/use-toast";
 import { indexedDB } from "~/shared/lib/api/dexie";
-import { Button } from "~/shared/ui/button";
-import JustTip from "~/widgets/just-the-tip";
 
 export const AddToFavorites = ({
   catalogId,
@@ -52,23 +50,13 @@ export const AddToFavorites = ({
   };
 
   return (
-    <JustTip
-      label={catalogExists ? "Remove from favorites" : "Add to favorites"}
-    >
-      <Button
-        variant="outline"
-        size="icon"
-        onClick={addToFav}
-        aria-label={
-          catalogExists ? "Remove from favorites" : "Add to favorites"
-        }
-      >
-        <StarIcon
-          className={`h-4 w-4 ${
-            catalogExists ? "fill-primary text-primary" : ""
-          }`}
-        />
-      </Button>
-    </JustTip>
+    <span className="flex items-center gap-2 text-xs" onClick={addToFav}>
+      <StarIcon
+        className={`h-4 w-4 ${
+          catalogExists ? "fill-primary text-primary" : ""
+        }`}
+      />
+      {catalogExists ? "Remove from favorites" : "Add to favorites"}
+    </span>
   );
 };

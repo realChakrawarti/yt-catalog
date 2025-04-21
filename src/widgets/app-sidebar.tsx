@@ -13,12 +13,14 @@ import { usePathname } from "next/navigation";
 
 import { useAuth } from "~/features/auth/context-provider";
 import { cn } from "~/shared/lib/tailwind-merge";
+import NextUpdate from "~/views/public-catalog/next-update";
 
 import { Avatar, AvatarFallback, AvatarImage } from "../shared/ui/avatar";
 import { Button } from "../shared/ui/button";
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarHeader,
@@ -29,6 +31,21 @@ import {
 } from "../shared/ui/sidebar";
 import AuthButton from "./auth-buttons";
 
+function FooterNextUpdate() {
+  const pathname = usePathname();
+
+  const catalogId = pathname.includes("/c/") && pathname.split("/c/")[1];
+  return (
+    <>
+      {catalogId && (
+        <SidebarFooter>
+          <NextUpdate catalogId={catalogId} />
+        </SidebarFooter>
+      )}
+    </>
+  );
+}
+
 export default function AppSidebar() {
   return (
     <Sidebar className="border-r">
@@ -36,6 +53,9 @@ export default function AppSidebar() {
         <UserGroup />
         <ExploreGroup />
       </SidebarContent>
+      <SidebarFooter>
+        <FooterNextUpdate />
+      </SidebarFooter>
     </Sidebar>
   );
 }

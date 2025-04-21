@@ -67,11 +67,10 @@ export default function FilterChannel({
   return (
     <Sheet>
       <JustTip label="Filter Channel">
-        <SheetTrigger asChild>
-          <Button variant="outline">
-            <FilterIcon className="size-8" />
-            <p className="sr-only">Filter Channel</p>
-          </Button>
+        <SheetTrigger>
+          <JustTip label="Filter channel">
+            <FilterIcon className="size-6" />
+          </JustTip>
         </SheetTrigger>
       </JustTip>
       <SheetContent className="w-[280px] sm:w-[400px]">
