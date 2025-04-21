@@ -11,7 +11,7 @@ export default function CatalogLoadingSkeleton() {
               <Skeleton className="h-4 sm:w-96 w-64" />
             </div>
             <div className="mt-4 sm:mt-0">
-              <Skeleton className="size-9" />
+              <Skeleton className="size-6" />
             </div>
           </div>
         </div>
@@ -38,8 +38,8 @@ function VideoSection({ children }: any) {
   return (
     <section className="px-0 md:px-3 space-y-4">
       <div className="px-2 md:px-0 flex items-center gap-2">
-        <Skeleton className="size-6" />
         <Skeleton className="h-6 w-32" />
+        <Skeleton className="size-6" />
       </div>
       <GridContainer>{children}</GridContainer>
     </section>
