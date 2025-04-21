@@ -59,7 +59,7 @@ const POLLING_INTERVAL = 5 * 60_000; // 5 minutes
 const SHOW_BANNER = 15_000; // 15 seconds
 
 export default function NextUpdate({ catalogId }: any) {
-  const [showBanner, setShowBanner] = useState(true);
+  const [showBanner, setShowBanner] = useState(false);
 
   const {
     data: nextUpdate,
