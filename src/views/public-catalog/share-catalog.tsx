@@ -4,8 +4,6 @@ import { CopyIcon, ShareIcon } from "lucide-react";
 import { useMemo } from "react";
 
 import { toast } from "~/shared/hooks/use-toast";
-import { Button } from "~/shared/ui/button";
-import JustTip from "~/widgets/just-the-tip";
 
 export default function ShareCatalog(props: any) {
   const shareData = useMemo(
@@ -43,19 +41,17 @@ export default function ShareCatalog(props: any) {
     window.navigator.canShare(shareData)
   ) {
     return (
-      <JustTip label="Share catalog">
-        <Button variant="outline" onClick={shareLink}>
-          <ShareIcon className="size-8" />
-        </Button>
-      </JustTip>
+      <span className="flex items-center gap-2 text-xs" onClick={shareLink}>
+        <ShareIcon className="size-4" />
+        Share catalog
+      </span>
     );
   } else {
     return (
-      <JustTip label="Copy to clipboard">
-        <Button variant="outline" onClick={copyLink}>
-          <CopyIcon className="size-8" />
-        </Button>
-      </JustTip>
+      <span className="flex items-center gap-2 text-xs" onClick={copyLink}>
+        <CopyIcon className="size-4" />
+        Copy to Clipbaord
+      </span>
     );
   }
 }

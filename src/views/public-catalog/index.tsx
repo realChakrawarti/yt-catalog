@@ -4,7 +4,13 @@ import dynamic from "next/dynamic";
 import { ReactNode } from "react";
 
 import fetchApi from "~/shared/lib/api/fetch";
-import { MonthIcon, WeekIcon } from "~/shared/ui/icons";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "~/shared/ui/dropdown-menu";
+import { MonthIcon, ThreeDotIcon, WeekIcon } from "~/shared/ui/icons";
 import GridContainer from "~/widgets/grid-container";
 import Marker from "~/widgets/marker";
 import ScrollTop from "~/widgets/scroll-top";
@@ -13,7 +19,6 @@ import YouTubeCard from "~/widgets/youtube/youtube-card";
 import { AddToFavorites } from "./add-to-fav";
 import FilterChannel, { CurrentActive } from "./filter-channel";
 import { filterChannel, getActiveChannelIds } from "./helper-methods";
-import NextUpdate from "./next-update";
 
 // Refer: https://nextjs.org/docs/pages/building-your-application/optimizing/lazy-loading#with-no-ssr
 const DynamicShareCatalog = dynamic(() => import("./share-catalog"), {
@@ -51,29 +56,45 @@ export default async function PubliCatalog({
     <div className="space-y-4 pb-6 pt-7">
       <section className="px-2 md:px-3">
         <div className="space-y-0">
-          <div className="flex flex-col gap-3 lg:flex-row lg:justify-between lg:items-center">
+          <div className="flex justify-between items-center">
             <div className="space-y-1">
-              <h1 className="text-2xl font-semibold tracking-tight">
-                {catalogTitle}
-              </h1>
+              <span className="flex items-center gap-4">
+                <h1 className="text-2xl font-semibold tracking-tight">
+                  {catalogTitle}
+                </h1>
+                <FilterChannel activeChannels={activeChannels} />
+              </span>
               <p className="text-base text-muted-foreground">
                 {catalogDescription}
               </p>
             </div>
 
-            <div className="mt-4 sm:mt-0 flex items-center gap-4">
-              <DynamicShareCatalog
-                catalogId={catalogId}
-                catalogTitle={catalogTitle}
-                catalogDescription={catalogDescription}
-              />
-              <AddToFavorites
-                catalogId={catalogId}
-                catalogTitle={catalogTitle}
-                catalogDescription={catalogDescription}
-              />
-              <NextUpdate catalogId={catalogId} />
-              <FilterChannel activeChannels={activeChannels} />
+            <div className="mt-4 sm:mt-0 mr-2">
+              <DropdownMenu>
+                <DropdownMenuTrigger>
+                  <ThreeDotIcon />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent
+                  side="bottom"
+                  align="end"
+                  className="border-none flex flex-col gap-2"
+                >
+                  <DropdownMenuItem>
+                    <DynamicShareCatalog
+                      catalogId={catalogId}
+                      catalogTitle={catalogTitle}
+                      catalogDescription={catalogDescription}
+                    />
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <AddToFavorites
+                      catalogId={catalogId}
+                      catalogTitle={catalogTitle}
+                      catalogDescription={catalogDescription}
+                    />
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </div>
         </div>

@@ -1,5 +1,9 @@
 # <img src="https://github.com/realChakrawarti/yt-catalog/blob/main/public/icon.png" alt="Dev.to Rater" height="30"/> YTCatalog: Organize Your YouTube Experience
 
+## Project Stats
+
+![Project Analytics](https://repobeats.axiom.co/api/embed/884a306b91bf19b90cfa6d5e8e6b24454a96078c.svg "Repobeats analytics image")
+
 <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
 <img src="https://img.shields.io/github/stars/realChakrawarti/yt-catalog" alt="GitHub Repo stars" />
 <img src="https://img.shields.io/github/license/realChakrawarti/yt-catalog" alt="GitHub License" />
@@ -8,7 +12,10 @@
 <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/realChakrawarti/yt-catalog">
 </div>
 
+## Introduction
+
 ![ytcatalog-homepage](./screen-capture.png)
+
 
 Do you ever find yourself lost in a YouTube wormhole, spending hours watching unrelated videos? YTCatalog is here to help!
 

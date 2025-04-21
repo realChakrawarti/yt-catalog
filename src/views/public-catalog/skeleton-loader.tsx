@@ -5,15 +5,12 @@ export default function CatalogLoadingSkeleton() {
     <div className="space-y-4 pb-6 pt-7">
       <section className="px-2 md:px-3">
         <div className="space-y-0">
-          <div className="flex flex-col gap-3 lg:flex-row lg:justify-between lg:items-center">
+          <div className="flex justify-between items-center">
             <div className="space-y-1">
               <Skeleton className="h-6 w-64" />
               <Skeleton className="h-4 sm:w-96 w-64" />
             </div>
-            <div className="mt-4 sm:mt-0 flex items-center gap-4">
-              <Skeleton className="size-9" />
-              <Skeleton className="size-9" />
-              <Skeleton className="size-9" />
+            <div className="mt-4 sm:mt-0">
               <Skeleton className="size-9" />
             </div>
           </div>

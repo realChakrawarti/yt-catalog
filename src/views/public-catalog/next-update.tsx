@@ -8,7 +8,6 @@ import fetchApi from "~/shared/lib/api/fetch";
 import { getTimeDifference } from "~/shared/lib/date-time/time-diff";
 import { Button } from "~/shared/ui/button";
 import { RefreshIcon } from "~/shared/ui/icons";
-import { Popover, PopoverContent, PopoverTrigger } from "~/shared/ui/popover";
 import { Skeleton } from "~/shared/ui/skeleton";
 
 function ShowBanner({ showBanner, setShowBanner }: any) {
@@ -25,7 +24,7 @@ function ShowBanner({ showBanner, setShowBanner }: any) {
   if (!showBanner || !bodyElement) return null;
 
   return createPortal(
-    <div className="absolute inset-0 top-2 z-50 max-h-[75px]">
+    <div className="absolute inset-0 top-4 z-50 max-h-[75px] w-4/5 mx-auto">
       <div className="bg-primary px-3 py-2 flex items-center justify-between rounded-lg">
         <div className="flex items-center space-x-2 text-white justify-between">
           <span>A new version of catalog is available.</span>
@@ -34,7 +33,7 @@ function ShowBanner({ showBanner, setShowBanner }: any) {
           <Button
             size="sm"
             variant="outline"
-            className="h-8 w-8 p-0 bg-transparent text-white"
+            className="h-8 w-8 p-0 bg-transparent text-white dark:border-white"
             onClick={() => window?.location?.reload()}
           >
             <RefreshIcon className="h-4 w-4" />
@@ -43,7 +42,7 @@ function ShowBanner({ showBanner, setShowBanner }: any) {
           <Button
             size="sm"
             variant="outline"
-            className="h-8 w-8 p-0 bg-transparent text-white"
+            className="h-8 w-8 p-0 bg-transparent text-white dark:border-white"
             onClick={() => setShowBanner(false)}
           >
             <X className="h-4 w-4" />
@@ -60,7 +59,7 @@ const POLLING_INTERVAL = 5 * 60_000; // 5 minutes
 const SHOW_BANNER = 15_000; // 15 seconds
 
 export default function NextUpdate({ catalogId }: any) {
-  const [showBanner, setShowBanner] = useState(false);
+  const [showBanner, setShowBanner] = useState(true);
 
   const {
     data: nextUpdate,
@@ -122,18 +121,10 @@ export default function NextUpdate({ catalogId }: any) {
       {isLoading ? (
         <Skeleton className="size-9" />
       ) : (
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button variant="outline" size="sm" className="h-9">
-              <ClockIcon className="h-4 w-4" />
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-auto text-sm p-2">
-            <p>
-              <b>Next update:</b> {showTimeUpdate()}
-            </p>
-          </PopoverContent>
-        </Popover>
+        <span className="flex items-center gap-2">
+          <ClockIcon className="h-4 w-4" />
+          <p className="text-xs">Next update: {showTimeUpdate()}</p>
+        </span>
       )}
     </>
   );
