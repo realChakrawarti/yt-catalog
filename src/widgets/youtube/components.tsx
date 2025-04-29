@@ -80,15 +80,18 @@ function DescriptionSheet({
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button className="absolute top-2 left-2" variant="ghost" size="icon">
+        <div className="absolute top-1 cursor-pointer md:hidden group-hover/player:block">
           <OverlayTip
-            className="h-8 w-8 flex place-items-center rounded-md"
+            className="p-[5px] flex gap-1 place-items-center rounded-r-md group/description"
             id="description"
             aria-label="Show video information overlay"
           >
-            <InfoIcon className="h-4 w-4 flex-grow" />
+            <div className="hidden text-xs group-hover/description:block">
+              Description
+            </div>
+            <InfoIcon className="size-4 flex-grow" />
           </OverlayTip>
-        </Button>
+        </div>
       </SheetTrigger>
       <SheetContent className="overflow-y-auto w-full md:max-w-[450px]">
         <SheetHeader className="text-left">

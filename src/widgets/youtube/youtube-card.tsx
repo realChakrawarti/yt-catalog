@@ -4,6 +4,7 @@ import { YouTubeCardProps } from "~/shared/types-schema/types";
 
 import { ChannelMeta, DescriptionSheet } from "./components";
 import ShowCardOption from "./show-card-options";
+import { WatchedStatus } from "./watched-status";
 
 const ClientYouTubePlayer = dynamic(() => import("./player"), {
   ssr: false,
@@ -22,11 +23,12 @@ export default function YouTubeCard(props: YouTubeCardProps) {
   } = options ?? {};
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-3 group/player">
       <div key={videoId} className="relative overflow-hidden rounded-lg">
         <div className="relative aspect-video overflow-hidden">
           <ClientYouTubePlayer enableJsApi={enableJsApi} {...video} />
           <DescriptionSheet title={title} description={description} />
+          <WatchedStatus videoId={video.videoId} />
         </div>
         <ShowCardOption
           video={video}

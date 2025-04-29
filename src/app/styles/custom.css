@@ -87,3 +87,15 @@ a[href^="https://stoplight.io/"]
 {
   display: none !important;
 }
+
+lite-youtube {
+  transition: 0.5s ease-in-out;
+  &:hover {
+    transform: scale(1.07);
+  }
+  &:has(iframe) {
+    &:hover {
+      transform: none;
+    }
+  }
+}
