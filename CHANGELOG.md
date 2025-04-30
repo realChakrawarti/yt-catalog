@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.12](https://github.com/realChakrawarti/yt-catalog/compare/v1.5.11...v1.5.12) (2025-04-30)
+
+
+### Features
+
+* add favorite catalogs to sidebar ([7ddfa5a](https://github.com/realChakrawarti/yt-catalog/commit/7ddfa5a4e345a1e37f24fb27161a2d1361a75776))
+* favorite catalogs on sidebar & player ux ([97f8a00](https://github.com/realChakrawarti/yt-catalog/commit/97f8a00d26cd107620b1a65de0559fcc9ad12ed5))
+* player ux & sidebar favorites ([e9a7503](https://github.com/realChakrawarti/yt-catalog/commit/e9a7503ac480b7191fff4a05caa65d0da2a6e863))
+
+
+### Bug Fixes
+
+* coderabbit suggestion ([9fd2474](https://github.com/realChakrawarti/yt-catalog/commit/9fd247487c81979082b892a07673db59af64e481))
+
 ### [1.5.11](https://github.com/realChakrawarti/yt-catalog/compare/v1.5.10...v1.5.11) (2025-04-21)
 
 
