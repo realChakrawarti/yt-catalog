@@ -119,7 +119,7 @@ export default function NextUpdate({ catalogId }: any) {
     <>
       <ShowBanner showBanner={showBanner} setShowBanner={setShowBanner} />
       {isLoading ? (
-        <Skeleton className="size-9" />
+        <Skeleton className="h-8 w-full" />
       ) : (
         <span className="flex items-center gap-2">
           <ClockIcon className="h-4 w-4" />

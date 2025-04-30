@@ -10,6 +10,7 @@ import AppSidebar from "~/widgets/app-sidebar";
 import BackgroundPattern from "~/widgets/background-pattern";
 import Footer from "~/widgets/footer";
 import Header from "~/widgets/header";
+import { ReactScan } from "~/widgets/react-scan";
 
 import Providers from "./context";
 
@@ -30,6 +31,7 @@ export default function RootLayout({
 }>) {
   return (
     <html className="h-full" lang="en" suppressHydrationWarning>
+      {process.env.NODE_ENV === "development" ? <ReactScan /> : null}
       <head>
         <Script
           src="https://www.youtube.com/iframe_api"
