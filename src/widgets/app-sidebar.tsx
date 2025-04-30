@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
 
 import { useAuth } from "~/features/auth/context-provider";
 import { indexedDB } from "~/shared/lib/api/dexie";
@@ -78,8 +79,17 @@ export default function AppSidebar() {
 
 function LocalGroup() {
   const { setOpenMobile } = useSidebar();
+  const [isOpen, setIsOpen] = useState(false);
+
+  const favoriteCatalogs =
+    useLiveQuery(() => indexedDB["favorites"].toArray(), []) ?? [];
+
   return (
-    <Collapsible defaultOpen className="group/collapsible">
+    <Collapsible
+      open={isOpen}
+      onOpenChange={setIsOpen}
+      className="group/collapsible"
+    >
       <SidebarGroup>
         <SidebarGroupLabel
           asChild
@@ -89,43 +99,51 @@ function LocalGroup() {
             "hover:bg-primary/5 hover:text-primary/80"
           )}
         >
-          <CollapsibleTrigger className="flex items-center gap-2 group-data-[state=open]/collapsible:bg-primary/20 group-data-[state=open]/collapsible:dark:text-white">
+          <CollapsibleTrigger
+            className={cn(
+              "flex items-center gap-2 dark:text-white text-[#18181B]",
+              "group-data-[state=open]/collapsible:bg-primary/20 group-data-[state=open]/collapsible:dark:text-white"
+            )}
+          >
             <HeartListIcon className="mr-2 h-4 w-4" />
-            Favorites
+            Favorite Catalogs
             <ChevronRight className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-90" />
           </CollapsibleTrigger>
         </SidebarGroupLabel>
         <CollapsibleContent>
           <SidebarGroupContent>
             <SidebarMenu>
-              <SidebarMenuItem>
-                <SidebarMenuSub>
-                  <SidebarMenuSubItem>
-                    <SidebarMenuButton
-                      onClick={() => setOpenMobile(false)}
-                      className={cn(
-                        "px-0",
-                        "data-[active=true]:bg-primary/20 data-[active=true]:dark:text-white",
-                        "data-[state=open]:hover:bg-transparent",
-                        "hover:bg-transparent"
-                      )}
-                      asChild
-                    >
-                      <Link href="#">
-                        <Button
-                          variant="ghost"
-                          className={cn(
-                            "w-full justify-start px-2",
-                            "hover:bg-primary/5 hover:text-primary/80"
-                          )}
-                        >
-                          Link
-                        </Button>
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuSubItem>
-                </SidebarMenuSub>
-              </SidebarMenuItem>
+              {favoriteCatalogs.map((item) => (
+                <SidebarMenuItem key={item.id}>
+                  <SidebarMenuSub>
+                    <SidebarMenuSubItem>
+                      <SidebarMenuButton
+                        onClick={() => setOpenMobile(false)}
+                        className={cn(
+                          "px-0",
+                          "data-[active=true]:bg-primary/20 data-[active=true]:dark:text-white",
+                          "data-[state=open]:hover:bg-transparent",
+                          "hover:bg-transparent"
+                        )}
+                        asChild
+                      >
+                        <Link href={`/c/${item.id}`}>
+                          <Button
+                            onClick={() => setIsOpen(false)}
+                            variant="ghost"
+                            className={cn(
+                              "w-full justify-start px-2",
+                              "hover:bg-primary/5 hover:text-primary/80"
+                            )}
+                          >
+                            {item.title}
+                          </Button>
+                        </Link>
+                      </SidebarMenuButton>
+                    </SidebarMenuSubItem>
+                  </SidebarMenuSub>
+                </SidebarMenuItem>
+              ))}
             </SidebarMenu>
           </SidebarGroupContent>
         </CollapsibleContent>

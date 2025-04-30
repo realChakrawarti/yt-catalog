@@ -69,7 +69,7 @@ export default async function PubliCatalog({
               </p>
             </div>
 
-            <div className="mt-4 sm:mt-0 mr-2">
+            <div className="self-center mr-2">
               <DropdownMenu>
                 <DropdownMenuTrigger>
                   <ThreeDotIcon className="size-5" />
