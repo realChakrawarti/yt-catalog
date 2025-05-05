@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   title: `Explore | ${appConfig.marketName}`,
 };
 
-export default function DashboardLayout({
+export default function ExploreLayout({
   children,
 }: {
   children: React.ReactNode;

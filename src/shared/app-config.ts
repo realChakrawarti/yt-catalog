@@ -1,4 +1,4 @@
-import packageInfo from "../../package.json";
+import packageInfo from "../../package.json" assert { type: "json" };
 
 class AppConfig {
   private _domain: string = "707x.in";

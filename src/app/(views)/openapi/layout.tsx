@@ -3,7 +3,7 @@ import { Metadata } from "next";
 import appConfig from "~/shared/app-config";
 
 export const metadata: Metadata = {
-  title: `OpenAPI | ${appConfig.url}`,
+  title: `OpenAPI | ${appConfig.marketName}`,
 };
 
 export default function OpenApiLayout({

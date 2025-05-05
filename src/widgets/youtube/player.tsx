@@ -7,9 +7,9 @@ import appConfig from "~/shared/app-config";
 import { indexedDB } from "~/shared/lib/api/dexie";
 import type { VideoData } from "~/shared/types-schema/types";
 
-import { useVideoTracking } from "./useVideoTracking";
+import { useVideoTracking } from "./use-video-tracking";
 
-const IframeParams = `rel=0&playsinline=1&origin=${appConfig.url}`;
+const iframeParams = `rel=0&playsinline=1&origin=${appConfig.url}`;
 
 export default function YoutubePlayer(
   props: VideoData & { enableJsApi: boolean }
@@ -96,14 +96,14 @@ export default function YoutubePlayer(
       containerRef.current?.querySelector("lite-youtube") as any
     )?.getYTPlayer();
 
-    const playing = await indexedDB["history"].get(video.videoId);
+    const playing = await indexedDB["history"].get(videoId);
 
     firstLoad.current = true;
 
     if (playing?.videoId === videoId) {
-      // Set up player event listeners
       playerRef.current?.seekTo(playing.duration, true);
     }
+    // Set up player event listeners
     playerRef.current?.addEventListener("onStateChange", _onStateChange);
   }
 
@@ -117,7 +117,7 @@ export default function YoutubePlayer(
   return (
     <div ref={containerRef} onMouseDown={loadIFrameElement}>
       <YouTubeEmbed
-        params={enableJsApi ? IframeParams + "&enablejsapi=1" : IframeParams}
+        params={enableJsApi ? iframeParams + "&enablejsapi=1" : iframeParams}
         videoid={videoId}
         playlabel={title}
         js-api={enableJsApi}
