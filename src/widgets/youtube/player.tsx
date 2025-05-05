@@ -15,6 +15,8 @@ export default function YoutubePlayer(
   const containerRef = useRef<HTMLDivElement | null>(null);
   const trackingRef = useRef<NodeJS.Timeout | null>(null);
   const playerRef = useRef<YT.Player | null>(null);
+  const firstLoad = useRef<boolean>(false);
+  const isPlaying = useRef<boolean>(false);
 
   function percentCompleted(node: YT.Player) {
     const duration = node.getDuration() || 0;
@@ -44,6 +46,8 @@ export default function YoutubePlayer(
   };
 
   const stopTracking = () => {
+    isPlaying.current = false;
+
     if (trackingRef.current) {
       clearInterval(trackingRef.current);
       trackingRef.current = null;
@@ -64,27 +68,33 @@ export default function YoutubePlayer(
       (item) => item != target.getIframe()
     );
 
-    console.log("playerS", playingState);
-
     switch (playingState) {
       case playerState.CUED:
+        stopTracking();
+        firstLoad.current = false;
+        break;
       case playerState.PAUSED:
+        stopTracking();
+        break;
       case playerState.ENDED:
         stopTracking();
         break;
 
       case playerState.PLAYING:
-        filterPlayers.forEach((item) => playerControl(item, "stopVideo"));
-        const playedVideo = await indexedDB["history"].get(video.videoId);
-        if (playedVideo) {
-          target.seekTo(playedVideo.duration, false);
-          target.playVideo();
+        // Stop other players
+        filterPlayers.forEach((item) => {
+          playerControl(item, "stopVideo");
+        });
+
+        if (!firstLoad.current && !isPlaying.current) {
+          const playedVideo = await indexedDB["history"].get(video.videoId);
+          if (playedVideo) {
+            target.seekTo(playedVideo.duration, true);
+            isPlaying.current = true;
+          }
         }
+        isPlaying.current = true;
         startTracking();
-        break;
-      case playerState.BUFFERING:
-        await indexedDB["history"].put(percentCompleted(event.target));
-        console.log("Seeking");
         break;
     }
   }
@@ -102,36 +112,32 @@ export default function YoutubePlayer(
     iframe.contentWindow?.postMessage(payload, "*");
   }
 
+  // first load
   async function loadIFrameElement() {
-    // Check if something is already playing, if so pause it and play the loaded one
-    // const allPlayers = getActivePlayers();
-
-    // allPlayers?.forEach((node) => {
-    //   playerControl(node, "pauseVideo");
-    // });
-
     if (!enableJsApi) {
       return;
     }
 
-    if (!playerRef.current) {
-      playerRef.current = await (
-        containerRef.current?.querySelector("lite-youtube") as any
-      )?.getYTPlayer();
+    playerRef.current = await (
+      containerRef.current?.querySelector("lite-youtube") as any
+    )?.getYTPlayer();
 
-      // const playing = await indexedDB["history"].get(video.videoId);
+    const playing = await indexedDB["history"].get(video.videoId);
 
-      // if (playing?.videoId === video.videoId) {
-      //   playerRef.current?.seekTo(playing.duration, true);
-      // }
+    firstLoad.current = true;
 
+    if (playing?.videoId === video.videoId) {
       // Set up player event listeners
-      playerRef.current?.addEventListener("onStateChange", _onStateChange);
+      playerRef.current?.seekTo(playing.duration, true);
     }
+    playerRef.current?.addEventListener("onStateChange", _onStateChange);
   }
 
   useEffect(() => {
-    return () => stopTracking();
+    return () => {
+      stopTracking();
+      playerRef.current?.removeEventListener("onStateChange", _onStateChange);
+    };
   }, []);
 
   return (
