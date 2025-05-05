@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { Metadata } from "next/types";
 
+import appConfig from "~/shared/app-config";
 import fetchApi from "~/shared/lib/api/fetch";
 import PubliCatalog from "~/views/public-catalog";
 
@@ -20,13 +21,13 @@ export async function generateMetadata({
   const catalogData = result.data;
 
   return {
-    title: `${catalogData?.title} | YTCatalog`,
+    title: `${catalogData?.title} | ${appConfig.marketName}`,
     openGraph: {
       description: catalogData?.description,
-      siteName: "YTCatalog",
+      siteName: `${appConfig.marketName}`,
       title: catalogData?.title,
       type: "website",
-      url: `https://ytcatalog.707x.in/${catalogId}`,
+      url: `${appConfig.url}/${catalogId}`,
     },
   };
 }

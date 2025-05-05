@@ -1,4 +1,5 @@
-import packageInfo from "../../package.json";
+import appConfig from "~/shared/app-config";
+
 import { OutLink } from "./out-link";
 
 export default function Footer() {
@@ -10,17 +11,17 @@ export default function Footer() {
             Developed by{" "}
             <OutLink
               className="cursor-pointer text-[hsl(var(--primary))] hover:text-[hsl(var(--primary))]/70"
-              href="https://707x.in"
+              href={`https://${appConfig.domain}`}
             >
-              707x Labs
+              {appConfig.organization}
             </OutLink>
           </p>
         </div>
         <OutLink
           className="cursor-pointer text-xs dark:text-gray-300 dark:hover:text-gray-100"
-          href="https://github.com/realChakrawarti/yt-catalog/blob/main/CHANGELOG.md"
+          href={`${appConfig.githubRepo}/blob/main/CHANGELOG.md`}
         >
-          <p className="tracking-wider">v{packageInfo.version}</p>
+          <p className="tracking-wider">v{appConfig.version}</p>
         </OutLink>
       </div>
     </footer>

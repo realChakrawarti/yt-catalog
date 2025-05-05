@@ -2,6 +2,7 @@ import { Check, Clock, Copy, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { ReactNode, useState } from "react";
 
+import appConfig from "~/shared/app-config";
 import { toast } from "~/shared/hooks/use-toast";
 import { cn } from "~/shared/lib/tailwind-merge";
 import { Button } from "~/shared/ui/button";
@@ -31,7 +32,7 @@ function CopyButton({ id, type }: any) {
   const copyToClipboard = () => {
     const exploreType = type === "catalog" ? "c" : "a";
     navigator.clipboard
-      .writeText(`https://ytcatalog.707x.in/${exploreType}/${id}`)
+      .writeText(`${appConfig.url}/${exploreType}/${id}`)
       .then(() => {
         setCopied(true);
         toast({ title: "Catalog link has been copied to your clipboard." });

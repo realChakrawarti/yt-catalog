@@ -1,9 +1,11 @@
+/* eslint-disable @stylistic/max-len */
 "use client";
 
 import Linkify from "linkify-react";
 import { ChevronDownIcon } from "lucide-react";
 import { useState } from "react";
 
+import appConfig from "~/shared/app-config";
 import { cn } from "~/shared/lib/tailwind-merge";
 
 interface FAQItem {
@@ -13,27 +15,23 @@ interface FAQItem {
 
 const faqs: FAQItem[] = [
   {
-    question: "What can I do with YTCatalog?",
-    answer:
-      "YTCatalog lets you create personalized collections of YouTube content. Instead of just subscribing to channels, you can build custom catalogs tailored to your interests. This makes it much easier to find exactly the videos you want to watch, when you want to watch them.",
+    question: `What can I do with ${appConfig.marketName}?`,
+    answer: `${appConfig.marketName} lets you create personalized collections of YouTube content. Instead of just subscribing to channels, you can build custom catalogs tailored to your interests. This makes it much easier to find exactly the videos you want to watch, when you want to watch them.`,
   },
   {
-    question: "How do I use YTCatalog to organize my YouTube content?",
-    answer:
-      "It's simple! You select the YouTube channels you like, and you can even choose specific playlists from those channels for finer-grained control. YTCatalog then automatically adds new videos to your curated catalogs, so you don't miss anything. Think of it as your own personalized TV guide for YouTube!",
+    question: `How do I use ${appConfig.marketName} to organize my YouTube content?`,
+    answer: `It's simple! You select the YouTube channels you like, and you can even choose specific playlists from those channels for finer-grained control. ${appConfig.marketName} then automatically adds new videos to your curated catalogs, so you don't miss anything. Think of it as your own personalized TV guide for YouTube!`,
   },
   {
     question: "How often are new videos added to my catalogs?",
-    answer:
-      "YTCatalog checks for new videos from your selected channels and playlists every 4 hours, so your catalogs are always up-to-date.",
+    answer: `${appConfig.marketName} checks for new videos from your selected channels and playlists every 4 hours, so your catalogs are always up-to-date.`,
   },
   {
-    question: "Can I use YTCatalog on my phone or tablet?",
-    answer:
-      "Yes, YTCatalog is designed to work seamlessly on mobile devices. Access your catalogs from your smartphone or tablet anytime, anywhere.",
+    question: `Can I use ${appConfig.marketName} on my phone or tablet?`,
+    answer: `Yes, ${appConfig.marketName} is designed to work seamlessly on mobile devices. Access your catalogs from your smartphone or tablet anytime, anywhere.`,
   },
   {
-    question: "How secure is my data on YTCatalog?",
+    question: `How secure is my data on ${appConfig.marketName}?`,
     answer:
       "We take your privacy seriously. Your viewing history and personal data are encrypted and never shared with anyone. You have full control over your data.",
   },
@@ -48,9 +46,8 @@ const faqs: FAQItem[] = [
       "Yes, you can download videos anonymously using the privacy-focused cobalt.tools website. This allows you to save videos without revealing your identity or browsing history.",
   },
   {
-    question: "Is YTCatalog open source?",
-    answer:
-      "Yes! YTCatalog is completely open source and is hosted on GitHub. You can view the code, contribute to the project, or even host your own version.  Check it out here: https://github.com/realChakrawarti/yt-catalog.",
+    question: `Is ${appConfig.marketName} open source?`,
+    answer: `Yes! ${appConfig.marketName} is completely open source and is hosted on GitHub. You can view the code, contribute to the project, or even host your own version.  Check it out here: ${appConfig.githubRepo}.`,
   },
 ];
 

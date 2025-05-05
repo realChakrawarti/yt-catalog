@@ -3,8 +3,10 @@ import "slick-carousel/slick/slick-theme.css";
 
 import { Metadata } from "next";
 
+import appConfig from "~/shared/app-config";
+
 export const metadata: Metadata = {
-  title: "Catalogs | YTCatalog",
+  title: `Catalogs | ${appConfig.marketName}`,
 };
 
 export default function CatalogsLayout({

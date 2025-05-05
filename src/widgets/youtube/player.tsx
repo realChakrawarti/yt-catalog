@@ -3,56 +3,28 @@
 import { YouTubeEmbed } from "@next/third-parties/google";
 import { useEffect, useRef } from "react";
 
+import appConfig from "~/shared/app-config";
 import { indexedDB } from "~/shared/lib/api/dexie";
-import type { History, VideoData } from "~/shared/types-schema/types";
+import type { VideoData } from "~/shared/types-schema/types";
 
-const IframeParams = "rel=0&playsinline=1&origin=https://ytcatalog.707x.in";
+import { useVideoTracking } from "./useVideoTracking";
+
+const IframeParams = `rel=0&playsinline=1&origin=${appConfig.url}`;
 
 export default function YoutubePlayer(
   props: VideoData & { enableJsApi: boolean }
 ) {
   const { enableJsApi, ...video } = props;
+
+  const { videoId, title } = video;
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const trackingRef = useRef<NodeJS.Timeout | null>(null);
   const playerRef = useRef<YT.Player | null>(null);
   const firstLoad = useRef<boolean>(false);
-  const isPlaying = useRef<boolean>(false);
 
-  function percentCompleted(node: YT.Player) {
-    const duration = node.getDuration() || 0;
-    const currentTime = node.getCurrentTime() || 0;
-    const percentCompleted = parseInt(
-      ((currentTime / duration) * 100).toFixed(0)
-    );
-
-    const payload: History = {
-      completed: percentCompleted,
-      duration: currentTime,
-      updatedAt: Date.now(),
-      ...video,
-    };
-
-    return payload;
-  }
-
-  const startTracking = () => {
-    if (trackingRef.current) return;
-
-    trackingRef.current = setInterval(async () => {
-      if (!playerRef.current) return;
-
-      await indexedDB["history"].put(percentCompleted(playerRef.current));
-    }, 2_000);
-  };
-
-  const stopTracking = () => {
-    isPlaying.current = false;
-
-    if (trackingRef.current) {
-      clearInterval(trackingRef.current);
-      trackingRef.current = null;
-    }
-  };
+  const { stopTracking, startTracking, isPlaying } = useVideoTracking({
+    video,
+    playerRef,
+  });
 
   function getActivePlayers() {
     return document.querySelectorAll("iframe");
@@ -86,8 +58,10 @@ export default function YoutubePlayer(
           playerControl(item, "stopVideo");
         });
 
+        // firstLoad - The video is being played after loaded previously (after paused or stopped),
+        // isPlaying - Checks whether is video is actively playing, removal re-triggers the playing state causes a loop
         if (!firstLoad.current && !isPlaying.current) {
-          const playedVideo = await indexedDB["history"].get(video.videoId);
+          const playedVideo = await indexedDB["history"].get(videoId);
           if (playedVideo) {
             target.seekTo(playedVideo.duration, true);
             isPlaying.current = true;
@@ -126,7 +100,7 @@ export default function YoutubePlayer(
 
     firstLoad.current = true;
 
-    if (playing?.videoId === video.videoId) {
+    if (playing?.videoId === videoId) {
       // Set up player event listeners
       playerRef.current?.seekTo(playing.duration, true);
     }
@@ -144,8 +118,8 @@ export default function YoutubePlayer(
     <div ref={containerRef} onMouseDown={loadIFrameElement}>
       <YouTubeEmbed
         params={enableJsApi ? IframeParams + "&enablejsapi=1" : IframeParams}
-        videoid={video.videoId}
-        playlabel={video.title}
+        videoid={videoId}
+        playlabel={title}
         js-api={enableJsApi}
       />
     </div>
