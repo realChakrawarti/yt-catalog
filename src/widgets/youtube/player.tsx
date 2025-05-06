@@ -59,7 +59,8 @@ export default function YoutubePlayer(
         });
 
         // firstLoad - The video is being played after loaded previously (after paused or stopped),
-        // isPlaying - Checks whether is video is actively playing, removal re-triggers the playing state causes a loop
+        // isPlaying - Checks whether the video is actively playing,
+        // removal re-triggers the playing state causes a loop
         if (!firstLoad.current && !isPlaying.current) {
           const playedVideo = await indexedDB["history"].get(videoId);
           if (playedVideo) {
@@ -69,6 +70,13 @@ export default function YoutubePlayer(
         }
         isPlaying.current = true;
         startTracking();
+        break;
+      case playerState.BUFFERING:
+        const seekedTime = target.getCurrentTime();
+        if (seekedTime > 0) {
+          target.seekTo(seekedTime, true);
+          isPlaying.current = true;
+        }
         break;
     }
   }

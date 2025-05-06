@@ -29,13 +29,17 @@ export function useVideoTracking({ video, playerRef }: UseVideoTrackingProps) {
     return payload;
   }
 
+  const updateProgress = async (player: YT.Player) => {
+    await indexedDB["history"].put(getPercentCompleted(player));
+  };
+
   const startTracking = () => {
     if (trackingRef.current) return;
 
     trackingRef.current = setInterval(async () => {
       if (!playerRef.current) return;
 
-      await indexedDB["history"].put(getPercentCompleted(playerRef.current));
+      await updateProgress(playerRef.current);
     }, 2_000);
   };
 
