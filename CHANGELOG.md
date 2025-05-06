@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.13](https://github.com/realChakrawarti/yt-catalog/compare/v1.5.12...v1.5.13) (2025-05-06)
+
+
+### Features
+
+* `useVideoTracking` custom hook & add app-config for hardcoded values ([17192a4](https://github.com/realChakrawarti/yt-catalog/commit/17192a44446219cf135d19f4ee825d4e6af30ab9))
+* better ux on youtube player and configurable hardcoded value ([97953bf](https://github.com/realChakrawarti/yt-catalog/commit/97953bf882fa7e4c72205a346e1f8d000755e497))
+* player correctly plays from left off position ([7864783](https://github.com/realChakrawarti/yt-catalog/commit/786478362920b1b1d48b947f680f8a15e27c482a))
+* plays only one video at a time, stops other playing ([5b34957](https://github.com/realChakrawarti/yt-catalog/commit/5b34957766755b0ead4a664261c58aaebe0b032d))
+
+
+### Bug Fixes
+
+* coderabbit suggestion ([9f24103](https://github.com/realChakrawarti/yt-catalog/commit/9f24103507d20a2ce87f9cee1527e0f36bd40402))
+* stop, seek, resume on the player ([5efe7f1](https://github.com/realChakrawarti/yt-catalog/commit/5efe7f15b65788ea31406dfb0abc08755f9c9a2f))
+
 ### [1.5.12](https://github.com/realChakrawarti/yt-catalog/compare/v1.5.11...v1.5.12) (2025-04-30)
 
 
