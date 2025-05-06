@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import appConfig from "~/shared/app-config";
 import { useScrollTrigger } from "~/shared/hooks/use-scroll-trigger";
 import { cn } from "~/shared/lib/tailwind-merge";
 
@@ -53,9 +54,16 @@ const Header = () => {
           </SidebarTrigger>
           <Link href="/">
             <h1 className="flex gap-1">
-              <Image src={AppIcon} alt="YTCatalog logo" className="size-7" />
-              <p className="self-end text-lg tracking-wide dark:text-white/80 dark:hover:text-white text-primary/80 hover:text-primary" aria-hidden="true">
-                YTCatalog
+              <Image
+                src={AppIcon}
+                alt={`${appConfig.marketName} logo`}
+                className="size-7"
+              />
+              <p
+                className="self-end text-lg tracking-wide dark:text-white/80 dark:hover:text-white text-primary/80 hover:text-primary"
+                aria-hidden="true"
+              >
+                {appConfig.marketName}
               </p>
             </h1>
           </Link>

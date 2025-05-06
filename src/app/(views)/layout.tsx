@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Script from "next/script";
 
+import appConfig from "~/shared/app-config";
 import { Toaster } from "~/shared/ui/toaster";
 import AppSidebar from "~/widgets/app-sidebar";
 import BackgroundPattern from "~/widgets/background-pattern";
@@ -17,11 +18,11 @@ import Providers from "./context";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  applicationName: "YTCatalog",
+  applicationName: `${appConfig.marketName}`,
   description:
     "Discover new channels, curate your favorite videos, and stay organized.",
   keywords: ["youtube", "catalog", "channels", "videos", "organize"],
-  title: "YTCatalog - Organize Your YouTube Universe",
+  title: `${appConfig.marketName} - Organize Your YouTube Universe`,
 };
 
 export default function RootLayout({

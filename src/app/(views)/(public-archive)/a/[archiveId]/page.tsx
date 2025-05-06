@@ -1,5 +1,6 @@
 import { Metadata } from "next/types";
 
+import appConfig from "~/shared/app-config";
 import fetchApi from "~/shared/lib/api/fetch";
 import PublicArchive from "~/views/public-archive";
 
@@ -16,13 +17,13 @@ export async function generateMetadata({
   const archiveData = result.data;
 
   return {
-    title: `${archiveData?.title} | YTCatalog`,
+    title: `${archiveData?.title} | ${appConfig.marketName}`,
     openGraph: {
       description: archiveData?.description,
-      siteName: "YTCatalog",
+      siteName: `${appConfig.marketName}`,
       title: archiveData?.title,
       type: "website",
-      url: `https://ytcatalog.707x.in/a/${archiveId}`,
+      url: `${appConfig.url}/a/${archiveId}`,
     },
   };
 }

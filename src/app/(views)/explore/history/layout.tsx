@@ -1,7 +1,9 @@
 import { Metadata } from "next";
 
+import appConfig from "~/shared/app-config";
+
 export const metadata: Metadata = {
-  title: "History | YTCatalog",
+  title: `History | ${appConfig.marketName}`,
 };
 
 export default function HistoryLayout({

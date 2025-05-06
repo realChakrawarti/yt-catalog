@@ -3,6 +3,7 @@
 import { CopyIcon, ShareIcon } from "lucide-react";
 import { useMemo } from "react";
 
+import appConfig from "~/shared/app-config";
 import { toast } from "~/shared/hooks/use-toast";
 
 export default function ShareCatalog(props: any) {
@@ -10,7 +11,7 @@ export default function ShareCatalog(props: any) {
     () => ({
       text: props.catalogDescription,
       title: props.catalogTitle,
-      url: `https://ytcatalog.707x.in/c/${props.catalogId}`,
+      url: `${appConfig.url}/c/${props.catalogId}`,
     }),
     [props]
   );

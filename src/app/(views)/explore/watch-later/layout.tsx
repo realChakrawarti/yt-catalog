@@ -1,7 +1,9 @@
 import { Metadata } from "next";
 
+import appConfig from "~/shared/app-config";
+
 export const metadata: Metadata = {
-  title: "Watch later | YTCatalog",
+  title: `Watch later | ${appConfig.marketName}`,
 };
 
 export default function WatchLaterLayout({
