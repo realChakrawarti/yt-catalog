@@ -1,7 +1,7 @@
 import { ComponentProps } from "react";
 
 interface OutLinkProps extends ComponentProps<"a"> {
-  href: `https://${string}`;
+  href: `https://${string}` | string;
 }
 
 export function OutLink({

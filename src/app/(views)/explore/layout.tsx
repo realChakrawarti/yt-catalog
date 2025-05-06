@@ -3,11 +3,13 @@ import "slick-carousel/slick/slick-theme.css";
 
 import { Metadata } from "next";
 
+import appConfig from "~/shared/app-config";
+
 export const metadata: Metadata = {
-  title: "Explore | YTCatalog",
+  title: `Explore | ${appConfig.marketName}`,
 };
 
-export default function DashboardLayout({
+export default function ExploreLayout({
   children,
 }: {
   children: React.ReactNode;

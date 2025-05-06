@@ -3,94 +3,131 @@
 import { YouTubeEmbed } from "@next/third-parties/google";
 import { useEffect, useRef } from "react";
 
+import appConfig from "~/shared/app-config";
 import { indexedDB } from "~/shared/lib/api/dexie";
-import type { History, VideoData } from "~/shared/types-schema/types";
+import type { VideoData } from "~/shared/types-schema/types";
 
-const IframeParams = "rel=0&playsinline=1&origin=https://ytcatalog.707x.in";
+import { useVideoTracking } from "./use-video-tracking";
+
+const iframeParams = `rel=0&playsinline=1&origin=${appConfig.url}`;
 
 export default function YoutubePlayer(
   props: VideoData & { enableJsApi: boolean }
 ) {
   const { enableJsApi, ...video } = props;
+
+  const { videoId, title } = video;
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const trackingRef = useRef<NodeJS.Timeout | null>(null);
   const playerRef = useRef<YT.Player | null>(null);
+  const firstLoad = useRef<boolean>(false);
 
-  const startTracking = () => {
-    if (trackingRef.current) return;
+  const { stopTracking, startTracking, isPlaying } = useVideoTracking({
+    video,
+    playerRef,
+  });
 
-    trackingRef.current = setInterval(async () => {
-      if (!playerRef.current) return;
+  function getActivePlayers() {
+    return document.querySelectorAll("iframe");
+  }
 
-      const duration = playerRef.current.getDuration() || 0;
-      const currentTime = playerRef.current.getCurrentTime() || 0;
-      const percentCompleted = parseInt(
-        ((currentTime / duration) * 100).toFixed(0)
-      );
-
-      const payload: History = {
-        completed: percentCompleted,
-        duration: currentTime,
-        updatedAt: Date.now(),
-        ...video,
-      };
-
-      await indexedDB["history"].put(payload);
-    }, 2_000);
-  };
-
-  const stopTracking = () => {
-    if (trackingRef.current) {
-      clearInterval(trackingRef.current);
-      trackingRef.current = null;
-    }
-  };
-
-  function _onStateChange(event: YT.OnStateChangeEvent) {
+  async function _onStateChange(event: YT.OnStateChangeEvent) {
+    const { target, data: playingState } = event;
     const playerState = window.YT.PlayerState;
 
-    switch (event.data) {
-      case playerState.PLAYING:
-        startTracking();
+    const allPlayers = getActivePlayers();
+
+    const filterPlayers = Array.from(allPlayers).filter(
+      (item) => item != target.getIframe()
+    );
+
+    switch (playingState) {
+      case playerState.CUED:
+        stopTracking();
+        firstLoad.current = false;
         break;
       case playerState.PAUSED:
+        stopTracking();
+        break;
       case playerState.ENDED:
         stopTracking();
+        break;
+
+      case playerState.PLAYING:
+        // Stop other players
+        filterPlayers.forEach((item) => {
+          playerControl(item, "stopVideo");
+        });
+
+        // firstLoad - The video is being played after loaded previously (after paused or stopped),
+        // isPlaying - Checks whether the video is actively playing,
+        // removal re-triggers the playing state causes a loop
+        if (!firstLoad.current && !isPlaying.current) {
+          const playedVideo = await indexedDB["history"].get(videoId);
+          if (playedVideo) {
+            target.seekTo(playedVideo.duration, true);
+            isPlaying.current = true;
+          }
+        }
+        isPlaying.current = true;
+        startTracking();
+        break;
+      case playerState.BUFFERING:
+        const seekedTime = target.getCurrentTime();
+        if (seekedTime > 0) {
+          target.seekTo(seekedTime, true);
+          isPlaying.current = true;
+        }
         break;
     }
   }
 
+  async function playerControl(
+    iframe: HTMLIFrameElement,
+    action: "playVideo" | "stopVideo" | "pauseVideo" | "destroy"
+  ) {
+    const payload = JSON.stringify({
+      args: [],
+      event: "command",
+      func: action,
+    });
+
+    iframe.contentWindow?.postMessage(payload, "*");
+  }
+
+  // first load
   async function loadIFrameElement() {
     if (!enableJsApi) {
       return;
     }
 
-    if (!playerRef.current) {
-      playerRef.current = await (
-        containerRef.current?.querySelector("lite-youtube") as any
-      )?.getYTPlayer();
+    playerRef.current = await (
+      containerRef.current?.querySelector("lite-youtube") as any
+    )?.getYTPlayer();
 
-      const playing = await indexedDB["history"].get(video.videoId);
+    const playing = await indexedDB["history"].get(videoId);
 
-      if (playing?.videoId === video.videoId) {
-        playerRef.current?.seekTo(playing.duration, true);
-      }
+    firstLoad.current = true;
 
-      // Set up player event listeners
-      playerRef.current?.addEventListener("onStateChange", _onStateChange);
+    if (playing?.videoId === videoId) {
+      playerRef.current?.seekTo(playing.duration, true);
     }
+    // Set up player event listeners
+    playerRef.current?.addEventListener("onStateChange", _onStateChange);
   }
 
   useEffect(() => {
-    return () => stopTracking();
+    return () => {
+      stopTracking();
+      playerRef.current?.removeEventListener("onStateChange", _onStateChange);
+    };
   }, []);
 
   return (
     <div ref={containerRef} onMouseDown={loadIFrameElement}>
       <YouTubeEmbed
-        params={enableJsApi ? IframeParams + "&enablejsapi=1" : IframeParams}
-        videoid={video.videoId}
-        playlabel={video.title}
+        params={enableJsApi ? iframeParams + "&enablejsapi=1" : iframeParams}
+        videoid={videoId}
+        playlabel={title}
         js-api={enableJsApi}
       />
     </div>
