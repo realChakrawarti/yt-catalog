@@ -10,7 +10,10 @@ import { Button } from "~/shared/ui/button";
 import { RefreshIcon } from "~/shared/ui/icons";
 import { Skeleton } from "~/shared/ui/skeleton";
 
-function ShowBanner({ showBanner, setShowBanner }: any) {
+import useNextUpdateStore from "./next-update-store";
+
+export function ShowNextUpdateBanner() {
+  const { showBanner, setShowBanner } = useNextUpdateStore();
   const [bodyElement, setBodyElement] = useState<
     Element | DocumentFragment | null
   >(null);
@@ -26,27 +29,27 @@ function ShowBanner({ showBanner, setShowBanner }: any) {
   return createPortal(
     <div className="absolute inset-0 top-4 z-50 max-h-[75px] w-4/5 mx-auto">
       <div className="bg-primary px-3 py-2 flex items-center justify-between rounded-lg">
-        <div className="flex items-center space-x-2 text-white justify-between">
-          <span>A new version of catalog is available.</span>
+        <div className="flex text-sm items-center space-x-2 text-white justify-between">
+          <span>A new version of the catalog is available.</span>
         </div>
         <div className="flex gap-3">
           <Button
             size="sm"
             variant="outline"
-            className="h-8 w-8 p-0 bg-transparent text-white dark:border-white"
+            className="h-7 p-1.5 bg-transparent text-white dark:border-white group/button"
             onClick={() => window?.location?.reload()}
           >
-            <RefreshIcon className="h-4 w-4" />
-            <span className="sr-only">Reload</span>
+            <p className="hidden group-hover/button:block">Refresh</p>
+            <RefreshIcon className="size-4" />
           </Button>
           <Button
             size="sm"
             variant="outline"
-            className="h-8 w-8 p-0 bg-transparent text-white dark:border-white"
+            className="h-7 p-1.5 bg-transparent text-white dark:border-white group/button"
             onClick={() => setShowBanner(false)}
           >
-            <X className="h-4 w-4" />
-            <span className="sr-only">Close</span>
+            <p className="hidden group-hover/button:block">Close</p>
+            <X className="size-4" />
           </Button>
         </div>
       </div>
@@ -56,10 +59,10 @@ function ShowBanner({ showBanner, setShowBanner }: any) {
 }
 
 const POLLING_INTERVAL = 5 * 60_000; // 5 minutes
-const SHOW_BANNER = 15_000; // 15 seconds
+const SHOW_BANNER = 10_000; // 10 seconds
 
 export default function NextUpdate({ catalogId }: any) {
-  const [showBanner, setShowBanner] = useState(false);
+  const { setShowBanner } = useNextUpdateStore();
 
   const {
     data: nextUpdate,
@@ -97,7 +100,7 @@ export default function NextUpdate({ catalogId }: any) {
     return () => {
       clearTimeoutId && clearTimeout(clearTimeoutId);
     };
-  }, [nextUpdate?.data]);
+  }, [nextUpdate?.data, setShowBanner]);
 
   const [when, timeDiff] = getTimeDifference(nextUpdate?.data as string);
   const showTimeUpdate = () => {
@@ -117,7 +120,6 @@ export default function NextUpdate({ catalogId }: any) {
   };
   return (
     <>
-      <ShowBanner showBanner={showBanner} setShowBanner={setShowBanner} />
       {isLoading ? (
         <Skeleton className="h-8 w-full" />
       ) : (

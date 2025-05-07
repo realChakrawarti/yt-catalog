@@ -44,6 +44,7 @@ export default function YoutubePlayer(
       case playerState.CUED:
         stopTracking();
         firstLoad.current = false;
+        target.getIframe().style = "opacity:0;";
         break;
       case playerState.PAUSED:
         stopTracking();
@@ -53,6 +54,7 @@ export default function YoutubePlayer(
         break;
 
       case playerState.PLAYING:
+        target.getIframe().style = "opacity:1;";
         // Stop other players
         filterPlayers.forEach((item) => {
           playerControl(item, "stopVideo");
