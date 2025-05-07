@@ -80,9 +80,9 @@ function DescriptionSheet({
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <div className="absolute top-1 cursor-pointer md:hidden group-hover/player:block">
+        <div className="absolute top-2 cursor-pointer md:hidden group-hover/player:block">
           <OverlayTip
-            className="p-[5px] flex gap-1 place-items-center rounded-r-md group/description"
+            className="px-[5px] py-2 flex gap-1 place-items-center rounded-r-md group/description"
             id="description"
             aria-label="Show video information overlay"
           >
