@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.14](https://github.com/realChakrawarti/yt-catalog/compare/v1.5.13...v1.5.14) (2025-05-07)
+
+
+### Bug Fixes
+
+* catalog card info overlay & next update banner ([52d68ad](https://github.com/realChakrawarti/yt-catalog/commit/52d68ad8cdc09bf1137e5b7f5032a91875b8a494))
+
 ### [1.5.13](https://github.com/realChakrawarti/yt-catalog/compare/v1.5.12...v1.5.13) (2025-05-06)
 
 
