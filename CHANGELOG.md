@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.15](https://github.com/realChakrawarti/yt-catalog/compare/v1.5.14...v1.5.15) (2025-05-07)
+
+
+### Bug Fixes
+
+* build TypeError on style being only read-only ([9666e33](https://github.com/realChakrawarti/yt-catalog/commit/9666e3362e1acc8d3de39ac3f9841fefa003dc78))
+
 ### [1.5.14](https://github.com/realChakrawarti/yt-catalog/compare/v1.5.13...v1.5.14) (2025-05-07)
 
 
